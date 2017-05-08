@@ -1,6 +1,11 @@
-#spring setting
+#spring mvc setting
 spring:
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
+#jsp development setting
+server:
+  jsp-servlet:
+    init-parameters:
+      development: true

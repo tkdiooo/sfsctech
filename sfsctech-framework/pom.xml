@@ -10,15 +10,18 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>sfsctech-service-config</module>
-        <module>sfsctech-service-hibernate</module>
         <module>sfsctech-service-mybatis</module>
         <module>sfsctech-static-global</module>
         <module>sfsctech-website-api</module>
         <module>sfsctech-website-app</module>
         <module>sfsctech-website-jsp</module>
-        <module>sfsctech-website-thymeleaf</module>
         <module>sfsctech-website-weichat</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,9 +23,10 @@ public class HelloController {
 
 
     @GetMapping("/helloJsp")
-    public String helloJsp(Map<String, Object> map) {
+    public String helloJsp(Map<String, Object> model) {
         System.out.println("HelloController.helloJsp().hello=" + hello);
-        map.put("hello", hello);
-        return "helloJsp";
+        model.put("time", new Date());
+        model.put("message", this.hello);
+        return "welcome";
     }
 }
