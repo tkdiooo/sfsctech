@@ -1,7 +1,8 @@
-package com.sfsctech.common.util;
+package com.sfsctech.common.rpc.util;
 
 import com.sfsctech.common.constants.RpcConstants;
 import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.common.util.ListUtil;
 
 /**
  * Class RpcUtil

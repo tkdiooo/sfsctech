@@ -1,9 +1,5 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.constants.I18NConstants.Tips;
-import com.sfsctech.common.base.exception.BaseException;
-import com.sfsctech.common.base.exception.BizException;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -15,26 +11,6 @@ import java.lang.reflect.InvocationTargetException;
  * @version Description：
  */
 public class ThrowableUtil {
-
-    /**
-     * 抛出业务异常
-     *
-     * @param tips   Tips
-     * @param params params
-     */
-    public static void throwBizException(Tips tips, String... params) {
-        throw new BizException(tips, params);
-    }
-
-    /**
-     * 抛出业务异常
-     *
-     * @param message message
-     * @param params  String[] params
-     */
-    public static void throwBizException(String message, String... params) {
-        throw new BizException(message, params);
-    }
 
     /**
      * 抛出运行时异常
@@ -134,14 +110,6 @@ public class ThrowableUtil {
             return defaults;
         }
         String msg = t.getLocalizedMessage();
-        if (e instanceof BaseException) {
-            BaseException ext = (BaseException) e;
-            if (null != ext.getTips()) {
-                msg = ResourceUtil.getMessage(ext.getTips(), ext.getParams());
-            } else {
-                msg = ext.getMessage();
-            }
-        }
         return StringUtil.isEmpty(msg) ? defaults : msg;
     }
 }

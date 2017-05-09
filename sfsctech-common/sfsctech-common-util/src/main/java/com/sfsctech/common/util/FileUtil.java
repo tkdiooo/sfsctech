@@ -3,9 +3,6 @@ package com.sfsctech.common.util;
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.tool.Assert;
 import org.apache.commons.io.FileUtils;
-import org.dom4j.Document;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -104,33 +101,6 @@ public class FileUtil extends FileUtils {
                 close(bis, fos);
             }
         }
-    }
-
-
-    /**
-     * xml文档写入
-     *
-     * @param document xml文档
-     * @param filePath 文件路径
-     * @return File
-     */
-    public static File writeDom4jToFile(Document document, String filePath) throws IOException {
-        Assert.isNotBlank(filePath, "文件路径为空");
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        format.setEncoding("utf-8");
-        FileOutputStream fos = null;
-        XMLWriter xmlWriter = null;
-        try {
-            fos = new FileOutputStream(filePath);
-            xmlWriter = new XMLWriter(fos, format);
-            xmlWriter.write(document);
-            xmlWriter.flush();
-        } finally {
-            if (null != xmlWriter)
-                xmlWriter.close();
-            close(fos);
-        }
-        return new File(filePath);
     }
 
     /**

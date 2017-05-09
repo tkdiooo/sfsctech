@@ -1,8 +1,12 @@
-package com.sfsctech.common.util;
+package com.sfsctech.common.xml.util;
 
-import com.sfsctech.common.base.model.XmlModel;
+import com.sfsctech.common.util.FileUtil;
+import com.sfsctech.common.xml.model.XmlModel;
 import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.util.ClassUtil;
+import com.sfsctech.common.util.StringUtil;
 import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.xml.sax.SAXException;
@@ -174,4 +178,29 @@ public class Dom4jUtil {
         if (document != null) document.clearContent();
     }
 
+    /**
+     * xml文档写入
+     *
+     * @param document xml文档
+     * @param filePath 文件路径
+     * @return File
+     */
+    public static File writeDom4jToFile(Document document, String filePath) throws IOException {
+        Assert.isNotBlank(filePath, "文件路径为空");
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setEncoding("utf-8");
+        FileOutputStream fos = null;
+        XMLWriter xmlWriter = null;
+        try {
+            fos = new FileOutputStream(filePath);
+            xmlWriter = new XMLWriter(fos, format);
+            xmlWriter.write(document);
+            xmlWriter.flush();
+        } finally {
+            if (null != xmlWriter)
+                xmlWriter.close();
+            FileUtil.close(fos);
+        }
+        return new File(filePath);
+    }
 }

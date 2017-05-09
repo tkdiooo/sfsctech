@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResponseUtil;
-import com.sfsctech.common.util.ThrowableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,6 +28,7 @@ public abstract class BaseExceptionHandler {
     protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status, Exception ex) {
         // 记录异常日志
         System.out.println(JSON.toJSONString(json));
+        logger.debug("异常信息：" + JSON.toJSONString(json));
 //        String extMessage = ThrowableUtil.getRootMessage(ex);
 //        String stackTrace = ThrowableUtil.getStackTraceAsString(ex);
         if (HttpUtil.isAjaxRequest(request)) {

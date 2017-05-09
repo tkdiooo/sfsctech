@@ -1,6 +1,8 @@
-package com.sfsctech.common.util;
+package com.sfsctech.common.rpc.util;
+
 
 import com.sfsctech.common.base.result.ValidatorResult;
+import com.sfsctech.common.util.SpringContextUtil;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;

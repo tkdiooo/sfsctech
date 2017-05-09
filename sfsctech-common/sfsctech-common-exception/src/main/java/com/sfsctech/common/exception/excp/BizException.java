@@ -1,5 +1,6 @@
-package com.sfsctech.common.base.exception;
+package com.sfsctech.common.exception.excp;
 
+import com.sfsctech.common.base.exception.BaseException;
 import com.sfsctech.common.constants.I18NConstants.Tips;
 
 /**

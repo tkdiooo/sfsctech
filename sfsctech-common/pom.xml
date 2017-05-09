@@ -13,7 +13,10 @@
         <module>sfsctech-common-util</module>
         <module>sfsctech-common-constants</module>
         <module>sfsctech-common-base</module>
-        <module>sfsctech-common-excel</module>
+        <module>sfsctech-common-tools</module>
+        <module>sfsctech-common-spring</module>
+        <module>sfsctech-common-exception</module>
+        <module>sfsctech-common-rpc</module>
     </modules>
 
     <properties>
@@ -39,6 +42,11 @@
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-util</artifactId>
+                <version>${sfsctech.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sfsctech.common</groupId>
+                <artifactId>sfsctech-common-spring</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
             <!-- apache commons -->
@@ -80,6 +88,29 @@
                 <artifactId>spring-context</artifactId>
                 <optional>true</optional>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <optional>true</optional>
+                <version>${spring.version}</version>
+            </dependency>
+            <!-- Spring Boot -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <optional>true</optional>
+                <version>1.5.3.RELEASE</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!--Servlet-->
             <dependency>

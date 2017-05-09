@@ -9,31 +9,31 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sfsctech-common-excel</artifactId>
+    <artifactId>sfsctech-common-rpc</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <!-- sfsctech commons -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-constants</artifactId>
+            <artifactId>sfsctech-common-base</artifactId>
         </dependency>
+        <!-- sfsctech commons -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-util</artifactId>
         </dependency>
-        <!--poi-->
+        <!-- spring -->
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <optional>true</optional>
         </dependency>
-        <!-- test -->
+        <!--hibernate-validator-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
-
 </project>
