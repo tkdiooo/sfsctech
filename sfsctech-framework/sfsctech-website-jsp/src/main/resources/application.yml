@@ -4,6 +4,8 @@ spring:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
+  # 指定静态资源处理路径，如果是默认/**，404请求不会抛出NoHandlerFoundException
+    static-path-pattern: /static/**
 #jsp development setting
 server:
   jsp-servlet:

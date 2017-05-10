@@ -30,7 +30,7 @@ import javax.servlet.MultipartConfigElement;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackages = "com.sfsctech.common")
+@ComponentScan(basePackageClasses = Application.class)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource
@@ -68,23 +68,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public Validator getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setProviderClass(HibernateValidator.class);
-        validator.setValidationMessageSource(messageSource);
-        return validator;
-    }
-
-    /**
-     * 添加自定义验证工厂类
-     *
-     * @return LocalValidatorFactoryBean
-     */
-    @Bean
-    public LocalValidatorFactoryBean initLocalValidatorFactoryBean() {
-        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);
-        localValidatorFactoryBean.setValidationMessageSource(messageSource);
-        return localValidatorFactoryBean;
+        LocalValidatorFactoryBean mvcValidator = new LocalValidatorFactoryBean();
+        mvcValidator.setProviderClass(HibernateValidator.class);
+        mvcValidator.setValidationMessageSource(messageSource);
+        return mvcValidator;
     }
 
     /**
