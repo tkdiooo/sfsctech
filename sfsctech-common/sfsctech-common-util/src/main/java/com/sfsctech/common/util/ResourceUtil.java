@@ -65,12 +65,12 @@ public class ResourceUtil {
     /**
      * 根据枚举接口获取messages
      *
-     * @param optionEnum
+     * @param iEnum
      * @param params
      * @param <K>
      * @return
      */
-    public static <K> String getMessage(IEnum<K, String> optionEnum, String... params) {
-        return getMessage(optionEnum.getValue(), params);
+    public static <K> String getMessage(IEnum<K, String> iEnum, String... params) {
+        return getMessage(iEnum.getValue(), params);
     }
 }

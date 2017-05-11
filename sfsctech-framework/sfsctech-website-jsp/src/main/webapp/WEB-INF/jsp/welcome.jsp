@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<html lang="en">
-
+<html>
+<%@include file="/WEB-INF/jsp/common/head.jsp"%>
 <body>
 	<c:url value="/resources/text.txt" var="url"/>
 	<spring:url value="/resources/text.txt" htmlEscape="true" var="springUrl" />
@@ -13,6 +8,7 @@
 	JSTL URL: ${url}
 	<br>
 	Message: ${message}
+	<spring:message code='tips.exception.sys'/>
 </body>
 
 </html>

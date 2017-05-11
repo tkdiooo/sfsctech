@@ -1,5 +1,7 @@
 package com.sfsctech.website.jsp.controller;
 
+import com.sfsctech.common.spring.properties.Application;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class HelloController {
     private String hello;
 
 
-    @GetMapping("/helloJsp")
+    @GetMapping("/helloJsp.html")
     public String helloJsp(Map<String, Object> model) {
         System.out.println("HelloController.helloJsp().hello=" + hello);
         model.put("time", new Date());

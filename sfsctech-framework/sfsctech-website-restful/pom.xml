@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sfsctech-website-api</artifactId>
+    <artifactId>sfsctech-website-restful</artifactId>
 
 
 </project>

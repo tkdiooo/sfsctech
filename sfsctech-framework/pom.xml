@@ -11,11 +11,11 @@
     <modules>
         <module>sfsctech-service-config</module>
         <module>sfsctech-service-mybatis</module>
-        <module>sfsctech-static-global</module>
-        <module>sfsctech-website-api</module>
-        <module>sfsctech-website-app</module>
         <module>sfsctech-website-jsp</module>
         <module>sfsctech-website-weichat</module>
+        <module>sfsctech-website-restful</module>
+        <module>sfsctech-thymeleaf</module>
+        <module>sfsctech-static-resources</module>
     </modules>
 
     <properties>

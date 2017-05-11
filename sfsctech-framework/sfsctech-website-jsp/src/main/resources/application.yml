@@ -8,6 +8,15 @@ spring:
     static-path-pattern: /static/**
 #jsp development setting
 server:
+  port: 8081
+  address: localhost
+  contextPath: /jspdemo
+  tomcat:
+    uri-encoding: utf-8
   jsp-servlet:
     init-parameters:
       development: true
+#common setting
+website:
+  static:
+    resources: http://localhost:8080/static-global

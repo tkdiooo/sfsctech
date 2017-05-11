@@ -2,6 +2,7 @@ package com.sfsctech.common.spring.configurer;
 
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
+import com.sfsctech.common.spring.util.SpringUtil;
 import com.sfsctech.common.util.ByteSizeUtil;
 import com.sfsctech.common.spring.properties.Application;
 import org.hibernate.validator.HibernateValidator;
@@ -11,6 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.validation.Validator;
@@ -37,7 +39,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     private MessageSource messageSource;
 
     @Autowired
-    private Application application;
+    private SpringUtil springUtil;
 
     /**
      * 默认首页
@@ -82,13 +84,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {
-        // 404请求抛出NoHandlerFoundException
-        servlet.setThrowExceptionIfNoHandlerFound(true);
-        ServletRegistrationBean registration = new ServletRegistrationBean(servlet);
-        // 上传文件配置
-        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(application.getLocation(), ByteSizeUtil.parseBytesSize(application.getMaxFileSize()), ByteSizeUtil.parseBytesSize(application.getMaxRequestSize()), application.getFileSizeThreshold());
-        registration.setMultipartConfig(multipartConfigElement);
-        return registration;
+        return springUtil.getServletRegistrationBean(servlet);
     }
 
     /**
