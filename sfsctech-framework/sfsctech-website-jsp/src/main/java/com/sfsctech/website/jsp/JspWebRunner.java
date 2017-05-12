@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +27,16 @@ public class JspWebRunner extends SpringBootServletInitializer {
         ServletRegistrationBean registration = springUtil.getServletRegistrationBean(servlet);
         registration.getUrlMappings().clear();
         registration.addUrlMappings("*.html");
-        registration.addUrlMappings("*.do");
+        registration.addUrlMappings("*.ajax");
         return registration;
+    }
+
+    @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
+        TomcatContextCustomizer contextCustomizer = context -> context.addWelcomeFile("/index.html");
+        factory.addContextCustomizers(contextCustomizer);
+        return factory;
     }
 
     @Override

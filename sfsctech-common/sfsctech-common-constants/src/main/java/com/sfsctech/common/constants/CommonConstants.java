@@ -8,6 +8,8 @@ package com.sfsctech.common.constants;
  */
 public class CommonConstants {
 
+    // Web
+    //-------------------------------------------------------------------------------------------
     /**
      * Ajax请求表头
      */

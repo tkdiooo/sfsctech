@@ -19,4 +19,4 @@ server:
 #common setting
 website:
   static:
-    resources: http://localhost:8080/static-global
+    resources: http://localhost:8080/static-resources
