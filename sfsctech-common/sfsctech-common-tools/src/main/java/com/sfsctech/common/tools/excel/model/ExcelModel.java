@@ -1,7 +1,7 @@
-package com.sfsctech.common.excel.model;
+package com.sfsctech.common.tools.excel.model;
 
 
-import com.sfsctech.common.excel.constants.ExcelConstants;
+import com.sfsctech.common.tools.excel.constants.ExcelConstants;
 
 import java.util.Map;
 import java.util.TreeMap;

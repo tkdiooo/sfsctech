@@ -1,6 +1,6 @@
 package com.sfsctech.website.jsp;
 
-import com.sfsctech.common.spring.util.SpringUtil;
+import com.sfsctech.common.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class JspWebRunner extends SpringBootServletInitializer {
 
     @Autowired
-    private SpringUtil springUtil;
+    private JavaConfigUtil springUtil;
 
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {

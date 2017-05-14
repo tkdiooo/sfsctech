@@ -1,4 +1,4 @@
-package com.sfsctech.common.excel.annotation;
+package com.sfsctech.common.tools.excel.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,15 +6,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Class ExcelHeader
+ * Class ExcelSheet
  *
  * @author 张麒 2016/5/5.
  * @version Description:
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelHeader {
+public @interface ExcelSheet {
 
-    String value();
+    String name();
 
+    int rower() default 0;
 }

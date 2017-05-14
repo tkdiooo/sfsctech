@@ -6,8 +6,9 @@ import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.I18NConstants;
 import com.sfsctech.common.exception.excp.BizException;
 import com.sfsctech.common.exception.excp.VerifyException;
-import com.sfsctech.common.exception.util.BizExcpUtil;
-import com.sfsctech.common.spring.properties.Application;
+import com.sfsctech.common.exception.util.BaseExceptionUtil;
+import com.sfsctech.common.spring.properties.AppInformation;
+import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResourceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     @Autowired
-    private Application application;
+    private AppInformation application;
 
     /**
      * 404异常捕获
@@ -41,7 +42,11 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView handle404Error(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BizExcpUtil.getRootMessage(ex));
+        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(ex));
+        // Ajax请求
+        if (HttpUtil.isAjaxRequest(request)) {
+//            return handleAjaxError(response, json, status);
+        }
         return handleError(request, response, json, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND, ex);
     }
 
@@ -74,7 +79,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException ex) throws Exception {
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BizExcpUtil.getRootMessage(ex));
+        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(ex));
         json.put(CommonConstants.MESSAGES_DETAILS, ex.getResult());
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
@@ -86,7 +91,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RuntimeException ex) throws Exception {
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BizExcpUtil.getRootMessage(ex));
+        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(ex));
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
 
@@ -97,7 +102,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BizExcpUtil.getRootMessage(ex));
+        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(ex));
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
 }

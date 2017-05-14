@@ -1,7 +1,7 @@
-package com.sfsctech.common.excel;
+package com.sfsctech.common.tools.excel;
 
-import com.sfsctech.common.excel.annotation.ExcelHeader;
-import com.sfsctech.common.excel.annotation.ExcelSheet;
+import com.sfsctech.common.tools.excel.annotation.ExcelHeader;
+import com.sfsctech.common.tools.excel.annotation.ExcelSheet;
 
 /**
  * Class testModel

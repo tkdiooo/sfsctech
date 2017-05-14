@@ -1,6 +1,6 @@
 package com.sfsctech.common.spring.util;
 
-import com.sfsctech.common.spring.properties.Application;
+import com.sfsctech.common.spring.properties.AppInformation;
 import com.sfsctech.common.util.ByteSizeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -16,10 +16,10 @@ import javax.servlet.MultipartConfigElement;
  * @version Description:
  */
 @Component
-public class SpringUtil {
+public class JavaConfigUtil {
 
     @Autowired
-    private Application application;
+    private AppInformation application;
 
     public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet){
         // 404请求抛出NoHandlerFoundException

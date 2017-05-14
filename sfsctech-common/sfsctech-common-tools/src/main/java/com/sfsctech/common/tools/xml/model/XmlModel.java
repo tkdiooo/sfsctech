@@ -1,4 +1,4 @@
-package com.sfsctech.common.xml.model;
+package com.sfsctech.common.tools.xml.model;
 
 import java.util.List;
 import java.util.Map;

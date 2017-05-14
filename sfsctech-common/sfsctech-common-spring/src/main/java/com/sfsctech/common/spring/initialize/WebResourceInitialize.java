@@ -1,7 +1,7 @@
 package com.sfsctech.common.spring.initialize;
 
 import com.sfsctech.common.constants.CommonConstants;
-import com.sfsctech.common.spring.properties.Application;
+import com.sfsctech.common.spring.properties.AppInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import javax.servlet.ServletContext;
 public class WebResourceInitialize extends WebApplicationObjectSupport implements CommandLineRunner {
 
     @Autowired
-    private Application application;
+    private AppInformation application;
 
     /**
      * 设置网页资源地址至ServletContext

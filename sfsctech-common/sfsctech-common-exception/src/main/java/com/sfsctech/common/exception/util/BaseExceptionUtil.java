@@ -13,7 +13,7 @@ import com.sfsctech.common.util.ThrowableUtil;
  * @author 张麒 2017/5/9.
  * @version Description:
  */
-public class BizExcpUtil {
+public class BaseExceptionUtil {
 
     /**
      * 抛出业务异常

@@ -13,7 +13,8 @@ public class CommonConstants {
     /**
      * Ajax请求表头
      */
-    public static final String AJAX_ACCEPT_CONTENT_TYPE = "text/html;type=ajax";
+    public static final String AJAX_ACCEPT_CONTENT_TYPE[] = {"Accept", "text/html;type=ajax"};
+    public static final String AJAX_HEADER_CONTENT_TYPE[] = {"x-requested-with", "XMLHttpRequest"};
     /**
      * Ajax请求时间戳
      */

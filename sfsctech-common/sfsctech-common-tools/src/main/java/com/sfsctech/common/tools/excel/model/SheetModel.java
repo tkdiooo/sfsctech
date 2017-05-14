@@ -1,4 +1,4 @@
-package com.sfsctech.common.excel.model;
+package com.sfsctech.common.tools.excel.model;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -20,9 +20,10 @@ public class HttpUtil {
     }
 
     public static boolean isAjaxRequest(HttpServletRequest request) {
-        String acceptHeader = request.getHeader("Accept");
         String ajaxParam = request.getParameter(CommonConstants.AJAX_TIME_FRESH);
-        return CommonConstants.AJAX_ACCEPT_CONTENT_TYPE.equals(acceptHeader) || StringUtils.hasText(ajaxParam);
+        String ajaxAccept = request.getHeader(CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[0]);
+        String ajaxHeader = request.getHeader(CommonConstants.AJAX_HEADER_CONTENT_TYPE[0]);
+        return StringUtils.hasText(ajaxParam) || CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[1].equalsIgnoreCase(ajaxAccept) || (StringUtil.isNotBlank(ajaxHeader) && CommonConstants.AJAX_HEADER_CONTENT_TYPE[1].equalsIgnoreCase(ajaxHeader));
     }
 
     /**

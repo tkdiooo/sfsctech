@@ -2,9 +2,8 @@ package com.sfsctech.common.spring.configurer;
 
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
-import com.sfsctech.common.spring.util.SpringUtil;
-import com.sfsctech.common.util.ByteSizeUtil;
-import com.sfsctech.common.spring.properties.Application;
+import com.sfsctech.common.spring.util.JavaConfigUtil;
+import com.sfsctech.common.spring.properties.AppInformation;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -12,7 +11,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.validation.Validator;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.annotation.Resource;
-import javax.servlet.MultipartConfigElement;
 
 /**
  * Class WebMvcConfigurer
@@ -32,14 +29,14 @@ import javax.servlet.MultipartConfigElement;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = Application.class)
+@ComponentScan(basePackageClasses = AppInformation.class)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource
     private MessageSource messageSource;
 
     @Autowired
-    private SpringUtil springUtil;
+    private JavaConfigUtil javaConfigUtil;
 
     /**
      * 默认首页
@@ -84,7 +81,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {
-        return springUtil.getServletRegistrationBean(servlet);
+        return javaConfigUtil.getServletRegistrationBean(servlet);
     }
 
     /**
