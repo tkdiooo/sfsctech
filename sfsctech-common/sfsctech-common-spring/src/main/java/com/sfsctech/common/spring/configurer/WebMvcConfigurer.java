@@ -3,7 +3,7 @@ package com.sfsctech.common.spring.configurer;
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
-import com.sfsctech.common.spring.properties.AppInformation;
+import com.sfsctech.common.spring.properties.Application;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -29,7 +29,7 @@ import javax.annotation.Resource;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = AppInformation.class)
+@ComponentScan(basePackageClasses = Application.class)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource

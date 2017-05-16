@@ -7,7 +7,7 @@ import com.sfsctech.common.constants.I18NConstants;
 import com.sfsctech.common.exception.excp.BizException;
 import com.sfsctech.common.exception.excp.VerifyException;
 import com.sfsctech.common.exception.util.BaseExceptionUtil;
-import com.sfsctech.common.spring.properties.AppInformation;
+import com.sfsctech.common.spring.properties.Application;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResourceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     @Autowired
-    private AppInformation application;
+    private Application application;
 
     /**
      * 404异常捕获

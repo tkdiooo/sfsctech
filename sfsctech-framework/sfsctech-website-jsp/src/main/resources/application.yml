@@ -20,3 +20,9 @@ server:
 website:
   static:
     resources: http://localhost:8080/static-resources
+
+#spring.cloud.config
+#--spring.cloud.config.name=jsp
+#--spring.cloud.config.profile=deve
+#--spring.cloud.config.label=config
+#--spring.cloud.config.uri=http://localhost:8888

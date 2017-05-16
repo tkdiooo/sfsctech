@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @version Description:
  */
 @Component
-public class AppInformation {
+public class Application {
 
     @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.MULTIPART_LOCATION + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String location;

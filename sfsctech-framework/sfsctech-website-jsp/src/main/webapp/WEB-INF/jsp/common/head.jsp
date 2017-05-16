@@ -3,13 +3,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.sfsctech.common.util.SpringContextUtil" %>
-<%@ page import="com.sfsctech.common.spring.properties.AppInformation" %>
+<%@ page import="com.sfsctech.common.spring.properties.Application" %>
 <%
     // 系统配置信息
-    AppInformation appConfig = (AppInformation)SpringContextUtil.getBean("application");
+    Application property = (Application)SpringContextUtil.getBean("application");
 %>
 <%-- 静态资源服务路径 --%>
-<c:set var="static_resource" scope="application" value="<%= appConfig.getStaticResources() %>"/>
+<c:set var="static_resource" scope="application" value="<%= property.getStaticResources() %>"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
