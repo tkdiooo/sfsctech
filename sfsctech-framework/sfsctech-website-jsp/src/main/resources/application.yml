@@ -4,15 +4,15 @@ spring:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
-  # 指定静态资源处理路径，如果是默认/**，404请求不会抛出NoHandlerFoundException
+  # 指定静态资源处理路径
     static-path-pattern: /static/**
-#jsp development setting
 server:
   port: 8081
   address: localhost
   contextPath: /jspdemo
   tomcat:
     uri-encoding: utf-8
+#jsp development setting
   jsp-servlet:
     init-parameters:
       development: true

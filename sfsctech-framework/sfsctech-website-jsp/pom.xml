@@ -22,12 +22,12 @@
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-rpc</artifactId>
         </dependency>
-        <!--&lt;!&ndash; spring-cloud-config-client &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-config-client</artifactId>-->
-            <!--<version>1.2.2.RELEASE</version>-->
-        <!--</dependency>-->
+        <!-- spring-cloud-config-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+            <version>1.2.2.RELEASE</version>
+        </dependency>
         <!-- jstl support -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -37,18 +37,18 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <!--<scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <!-- tomcat support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--<scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <!--<scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>org.apache.zookeeper</groupId>-->

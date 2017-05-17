@@ -22,7 +22,7 @@ public class HelloController {
     private String hello;
 
 
-    @GetMapping("/helloJsp")
+    @GetMapping("/helloJsp.html")
     public String helloJsp(Map<String, Object> model) {
         System.out.println("HelloController.helloJsp().hello=" + hello);
         model.put("time", new Date());
