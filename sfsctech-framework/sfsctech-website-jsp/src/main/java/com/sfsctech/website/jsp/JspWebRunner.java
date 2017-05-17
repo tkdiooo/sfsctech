@@ -1,7 +1,6 @@
 package com.sfsctech.website.jsp;
 
 import com.sfsctech.common.spring.util.JavaConfigUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,12 +13,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.annotation.Resource;
+
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.sfsctech.website.jsp", "com.sfsctech.common"})
 public class JspWebRunner extends SpringBootServletInitializer {
 
-    @Autowired
+    @Resource
     private JavaConfigUtil springUtil;
 
     @Bean

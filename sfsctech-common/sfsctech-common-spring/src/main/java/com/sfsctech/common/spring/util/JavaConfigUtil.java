@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.annotation.Resource;
 import javax.servlet.MultipartConfigElement;
 
 /**
@@ -18,7 +19,7 @@ import javax.servlet.MultipartConfigElement;
 @Component
 public class JavaConfigUtil {
 
-    @Autowired
+    @Resource
     private Application application;
 
     public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet){

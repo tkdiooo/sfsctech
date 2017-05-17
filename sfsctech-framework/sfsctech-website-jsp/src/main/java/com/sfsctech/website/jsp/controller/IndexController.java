@@ -14,6 +14,7 @@ public class IndexController {
 
     @GetMapping("index.html")
     public String index() {
+        System.out.println("IndexController.index()");
         return "index";
     }
 }

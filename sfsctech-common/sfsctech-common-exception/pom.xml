@@ -13,11 +13,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech commons -->
+        <!-- sfsctech-common-base -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-base</artifactId>
         </dependency>
+        <!-- sfsctech-common-spring -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-spring</artifactId>

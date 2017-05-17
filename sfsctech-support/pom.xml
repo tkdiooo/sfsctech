@@ -4,16 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sfsctech.framework</groupId>
-    <artifactId>sfsctech-framework</artifactId>
+    <groupId>com.sfsctech.support</groupId>
+    <artifactId>sfsctech-support</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>sfsctech-service-mybatis</module>
-        <module>sfsctech-website-jsp</module>
-        <module>sfsctech-website-weichat</module>
-        <module>sfsctech-website-restful</module>
-        <module>sfsctech-thymeleaf</module>
+        <module>sfsctech-config-service</module>
+        <module>sfsctech-static-resources</module>
     </modules>
 
     <properties>
@@ -112,5 +109,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

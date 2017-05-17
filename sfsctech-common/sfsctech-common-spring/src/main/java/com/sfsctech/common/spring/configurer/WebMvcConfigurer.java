@@ -29,13 +29,12 @@ import javax.annotation.Resource;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = Application.class)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource
     private MessageSource messageSource;
 
-    @Autowired
+    @Resource
     private JavaConfigUtil javaConfigUtil;
 
     /**
