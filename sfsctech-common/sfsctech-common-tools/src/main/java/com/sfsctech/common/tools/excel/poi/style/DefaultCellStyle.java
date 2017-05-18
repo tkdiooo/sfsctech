@@ -14,18 +14,14 @@ import java.util.Map;
  */
 public class DefaultCellStyle implements CellStyles {
 
-    private Workbook wb;
-
     private Map<ExcelConstants.CellStyle, CellStyle> styles;
 
-
-    public DefaultCellStyle(Workbook wb) {
+    public DefaultCellStyle() {
         styles = new HashMap<>();
-        this.wb = wb;
-        defaultStyle();
     }
 
-    private void defaultStyle() {
+    @Override
+    public void initStyle(Workbook wb) {
         DataFormat df = wb.createDataFormat();
 
         // --字体设定 --//
@@ -110,6 +106,7 @@ public class DefaultCellStyle implements CellStyles {
         styles.put(ExcelConstants.CellStyle.FormulaCell, boolStyle);
     }
 
+    @Override
     public void setBorder(CellStyle style) {
         //设置边框
         style.setBorderRight(CellStyle.BORDER_THIN);

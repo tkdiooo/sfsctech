@@ -18,12 +18,6 @@
             <groupId>com.foxinmy</groupId>
             <artifactId>weixin4j-mp</artifactId>
             <version>1.7.4</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- 微信被动消息(回调模式) -->
         <dependency>

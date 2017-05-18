@@ -30,7 +30,7 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
     @Override
     public void run(String... args) throws Exception {
         ServletContext servletContext = super.getWebApplicationContext().getServletContext();
-        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, application.getStaticResources());
+        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, application.STATIC_RESOURCES);
         servletContext.setAttribute(CommonConstants.CONTEXT_PATH, servletContext.getContextPath());
     }
 }

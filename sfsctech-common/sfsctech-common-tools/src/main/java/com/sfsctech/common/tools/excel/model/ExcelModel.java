@@ -2,6 +2,8 @@ package com.sfsctech.common.tools.excel.model;
 
 
 import com.sfsctech.common.tools.excel.constants.ExcelConstants;
+import com.sfsctech.common.tools.excel.poi.style.CellStyles;
+import com.sfsctech.common.tools.excel.poi.style.DefaultCellStyle;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -19,6 +21,8 @@ public class ExcelModel {
     private String filePath;
 
     private Map<String, SheetModel> sheets;
+
+    private CellStyles style = new DefaultCellStyle();
 
     public ExcelModel(ExcelConstants.ExcelVersion version, String filePath) {
         this.version = version;
@@ -52,4 +56,11 @@ public class ExcelModel {
         this.sheets = sheets;
     }
 
+    public CellStyles getStyle() {
+        return style;
+    }
+
+    public void setStyle(CellStyles style) {
+        this.style = style;
+    }
 }

@@ -22,12 +22,12 @@ public class JavaConfigUtil {
     @Resource
     private Application application;
 
-    public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet){
+    public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet) {
         // 404请求抛出NoHandlerFoundException
         servlet.setThrowExceptionIfNoHandlerFound(true);
         ServletRegistrationBean registration = new ServletRegistrationBean(servlet);
         // 上传文件配置
-        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(application.getLocation(), ByteSizeUtil.parseBytesSize(application.getMaxFileSize()), ByteSizeUtil.parseBytesSize(application.getMaxRequestSize()), application.getFileSizeThreshold());
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(application.MULTIPART_LOCATION, ByteSizeUtil.parseBytesSize(application.MULTIPART_MAX_FILE_SIZE), ByteSizeUtil.parseBytesSize(application.MULTIPART_MAX_REQUEST_SIZE), application.MULTIPART_FILE_SIZE_THRESHOLD);
         registration.setMultipartConfig(multipartConfigElement);
         return registration;
     }

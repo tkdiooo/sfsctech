@@ -13,15 +13,21 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- sfsctech commons -->
+        <!-- sfsctech exception support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-exception</artifactId>
         </dependency>
+        <!-- sfsctech rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-rpc</artifactId>
         </dependency>
+        <!-- sfsctech dubbox support-->
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>sfsctech-common-dubbox</artifactId>-->
+        <!--</dependency>-->
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -37,50 +43,19 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <!-- tomcat support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.zookeeper</groupId>-->
-            <!--<artifactId>zookeeper</artifactId>-->
-            <!--<version>3.4.9</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>log4j</groupId>-->
-                    <!--<artifactId>log4j</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.101tec</groupId>-->
-            <!--<artifactId>zkclient</artifactId>-->
-            <!--<version>0.10</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba</groupId>-->
-            <!--<artifactId>dubbo</artifactId>-->
-            <!--<version>2.8.4</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.springframework</groupId>-->
-                    <!--<artifactId>spring</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>log4j</groupId>-->
-                    <!--<artifactId>log4j</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>

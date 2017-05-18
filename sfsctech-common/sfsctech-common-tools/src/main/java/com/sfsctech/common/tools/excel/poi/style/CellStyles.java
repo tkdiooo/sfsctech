@@ -2,6 +2,7 @@ package com.sfsctech.common.tools.excel.poi.style;
 
 import com.sfsctech.common.tools.excel.constants.ExcelConstants;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Class CellStyles
@@ -25,4 +26,11 @@ public interface CellStyles {
      * @return CellStyle
      */
     CellStyle getCellStyle(ExcelConstants.CellStyle cellStyle);
+
+    /**
+     * 初始化样式
+     *
+     * @param wb Workbook
+     */
+    void initStyle(Workbook wb);
 }

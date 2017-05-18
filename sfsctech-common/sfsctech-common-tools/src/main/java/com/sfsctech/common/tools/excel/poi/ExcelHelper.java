@@ -1,16 +1,16 @@
 package com.sfsctech.common.tools.excel.poi;
 
-import com.sfsctech.common.constants.I18NConstants.Tips;
+import com.sfsctech.common.tool.Assert;
 import com.sfsctech.common.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.common.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.common.tools.excel.constants.ExcelConstants;
 import com.sfsctech.common.tools.excel.model.ExcelModel;
 import com.sfsctech.common.tools.excel.model.SheetModel;
-import com.sfsctech.common.tool.Assert;
 import com.sfsctech.common.util.*;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -32,7 +32,6 @@ public abstract class ExcelHelper {
 
     public abstract ExcelModel getModel();
 
-
     /**
      * 读取标题
      *
@@ -40,7 +39,7 @@ public abstract class ExcelHelper {
      * @return List
      */
     protected List<String> readHeader(Row row) {
-        Assert.notNull(row, ResourceUtil.getMessage(Tips.EmptyObject, "row"));
+        Assert.notNull(row, "row 对象为空");
         List<String> header = new ArrayList<>();
         for (int i = 0; i < row.getLastCellNum(); i++) {
             header.add(getCellValue(row.getCell(i)));
@@ -53,7 +52,7 @@ public abstract class ExcelHelper {
      */
     protected void validSheet() {
         Map<String, SheetModel> sheets = getModel().getSheets();
-        Assert.notNull(sheets, ResourceUtil.getMessage(Tips.EmptyCollection, "ExcelModel内sheets"));
+        Assert.notEmpty(sheets, "ExcelModel内sheets 集合为空");
         Workbook workbook = getWorkbook();
         if (workbook.getNumberOfSheets() != sheets.size()) {
             ThrowableUtil.throwRuntimeException("ExcelModel内sheets对象size与Model配置的sheet size不符，请调整后再次操作。");
@@ -79,9 +78,7 @@ public abstract class ExcelHelper {
         List<String> header = readHeader(sheet.getRow(sheetModel.getHeaderIndex()));
         // 获取验证标题：{key : 实体属性名称,value : 标题显示中文名称}
         Map<String, Object> verify = rows.get(sheetModel.getHeaderIndex());
-        if (null == verify) {
-            ThrowableUtil.throwRuntimeException("sheetModel中rows标题行为空");
-        }
+        Assert.notEmpty(verify, "sheetModel中rows标题行为空");
         // 验证长度是否匹配
         if (header.size() != verify.size()) {
             ThrowableUtil.throwRuntimeException("[" + sheet.getSheetName() + "] Sheet的标题数与Model配置的标题数量不符");
@@ -92,33 +89,19 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 验证当前Excel文件是否是2003版本
-     *
-     * @param is InputStream
-     * @return Boolean
-     */
-    public static boolean isExcel2003(InputStream is) {
-        try {
-            new HSSFWorkbook(is);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 获取不包含文件流的Workbook对象，根据枚举ExcelVersion生成对应版本
+     * <p>
+     * //     * @param ev ExcelVersion
      *
-     * @param ev ExcelVersion
      * @return Workbook
      * @throws IOException
      */
     public static Workbook createWorkbook(ExcelConstants.ExcelVersion ev) throws IOException {
-        if (ExcelConstants.ExcelVersion.xls.equals(ev)) {
+        if (ExcelConstants.ExcelVersion.xls.equals(ev))
             return new HSSFWorkbook();
-        } else {
+        else
             return new XSSFWorkbook();
-        }
+
     }
 
     /**
@@ -128,15 +111,15 @@ public abstract class ExcelHelper {
      * @return Workbook
      * @throws IOException
      */
-    public static Workbook createWorkbook(String path) throws IOException {
-        Assert.isNotBlank(path, ResourceUtil.getMessage(Tips.EmptyObject, "path"));
+    public static Workbook createWorkbook(String path) throws IOException, InvalidFormatException {
+        Assert.isNotBlank(path, "path 对象为空");
         File file = new File(path);
         Assert.isFile(file, "path文件对象不存在");
-        if (isExcel2003(new FileInputStream(file))) {
-            return new HSSFWorkbook(new FileInputStream(file));
-        } else {
-            return new XSSFWorkbook(new FileInputStream(file));
-        }
+//        if (isExcel2003(new FileInputStream(file))) {
+        return WorkbookFactory.create(new FileInputStream(file));
+//        } else {
+//            return new XSSFWorkbook(new FileInputStream(file));
+//        }
     }
 
     /**
@@ -148,14 +131,12 @@ public abstract class ExcelHelper {
      * @param rower      标题行标
      */
     public static void setSheetHeader(ExcelModel excelModel, Map<String, Object> header, String sheetName, int rower) {
-        Assert.notNull(excelModel, ResourceUtil.getMessage(Tips.EmptyObject, "excelModel"));
-        Assert.notNull(header, ResourceUtil.getMessage(Tips.EmptyObject, "header"));
-        Assert.notNull(sheetName, ResourceUtil.getMessage(Tips.EmptyObject, "sheetName"));
+        Assert.notNull(excelModel, "excelModel 对象为空");
+        Assert.notNull(header, "header 对象为空");
+        Assert.notNull(sheetName, "sheetName 对象为空");
         // 创建SheetModel
         SheetModel sheetModel = new SheetModel(rower, new HashMap<>());
-
         sheetModel.getRows().put(sheetModel.getHeaderIndex(), header);
-
         excelModel.getSheets().put(sheetName, sheetModel);
     }
 
@@ -167,12 +148,11 @@ public abstract class ExcelHelper {
      * @param <T>        范型类
      */
     public static <T> void setSheetHeader(ExcelModel excelModel, Class<T> cls) {
-        Assert.notNull(excelModel, ResourceUtil.getMessage(Tips.EmptyObject, "excelModel"));
-        Assert.notNull(cls, ResourceUtil.getMessage(Tips.EmptyObject, "Class<T>"));
+        Assert.notNull(excelModel, "excelModel 对象为空");
+        Assert.notNull(cls, "Class<T> 对象为空");
         ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
         Assert.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
         Assert.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
-
         setSheetHeader(excelModel, getHeader(cls), excelSheet.name(), excelSheet.rower());
     }
 
@@ -185,11 +165,10 @@ public abstract class ExcelHelper {
      * @param <T>        范型类
      */
     public static <T> void setSheetRows(ExcelModel excelModel, List<T> dataRows, Class<T> cls) {
-        Assert.notNull(excelModel, ResourceUtil.getMessage(Tips.EmptyObject, "excelModel"));
+        Assert.notNull(excelModel, "excelModel 对象为空");
         ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
         Assert.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
         Assert.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
-
         // 获取sheetModel
         SheetModel sheetModel = getSheetModelByList(dataRows, cls);
         excelModel.getSheets().put(excelSheet.name(), sheetModel);
@@ -203,13 +182,10 @@ public abstract class ExcelHelper {
      * @param <T>      范型类
      */
     public static <T> SheetModel getSheetModelByList(List<T> dataRows, Class<T> cls) {
-        Assert.notNull(cls, ResourceUtil.getMessage(Tips.EmptyObject, "Class<T>"));
-        if (ListUtil.isEmpty(dataRows))
-            ThrowableUtil.throwRuntimeException(ResourceUtil.getMessage(Tips.EmptyCollection, "dataRows"));
-
+        Assert.notNull(cls, "Class<T> 对象为空");
+        Assert.notEmpty(dataRows, "dataRows 集合为空");
         ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
         Assert.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
-
         SheetModel sheetModel = new SheetModel(excelSheet.rower(), new HashMap<>());
         Integer rower = 0;
         // 设置标题
@@ -243,9 +219,9 @@ public abstract class ExcelHelper {
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
-        Assert.notNull(sheetModel, ResourceUtil.getMessage(Tips.EmptyObject, "sheetModel"));
-        Assert.notNull(sheetModel.getRows(), ResourceUtil.getMessage(Tips.EmptyCollection, "sheetModel内rows"));
-        Assert.notNull(cls, ResourceUtil.getMessage(Tips.EmptyObject, "Class<T>"));
+        Assert.notNull(sheetModel, "sheetModel 对象为空");
+        Assert.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");
+        Assert.notNull(cls, "Class<T> 对象为空");
         List<T> list = new ArrayList<>();
         sheetModel.getRows().forEach((key, value) -> {
             // 不读取标题
@@ -281,9 +257,7 @@ public abstract class ExcelHelper {
                 header.put(field.getName(), excelHeader.value());
             }
         }
-        if (header.size() == 0) {
-            ThrowableUtil.throwRuntimeException("Class [" + cls.getSimpleName() + "]没有配置注解[ExcelHeader]");
-        }
+        Assert.notEmpty(header, "Class [" + cls.getSimpleName() + "]没有配置注解[ExcelHeader]");
         return header;
     }
 
@@ -303,8 +277,8 @@ public abstract class ExcelHelper {
      * @throws IOException
      */
     public void writeExcel(Workbook workbook, String path) throws IOException {
-        Assert.notNull(workbook, ResourceUtil.getMessage(Tips.EmptyObject, "workbook"));
-        Assert.isNotBlank(path, ResourceUtil.getMessage(Tips.EmptyObject, "path"));
+        Assert.notNull(workbook, "workbook 对象为空");
+        Assert.isNotBlank(path, "path 对象为空");
         OutputStream os = null;
         try {
             os = new FileOutputStream(path);
@@ -321,7 +295,7 @@ public abstract class ExcelHelper {
      * @param value Value
      */
     public void setCellValue(Cell cell, Object value) {
-        Assert.notNull(cell, ResourceUtil.getMessage(Tips.EmptyObject, "cell"));
+        Assert.notNull(cell, "cell 对象为空");
         if (null == value) {
             cell.setCellValue("");
         } else if (value instanceof String) {
@@ -354,7 +328,7 @@ public abstract class ExcelHelper {
      * @return Cell Value
      */
     public String getCellValue(Cell cell) {
-        Assert.notNull(cell, ResourceUtil.getMessage(Tips.EmptyObject, "cell"));
+        Assert.notNull(cell, "cell 对象为空");
         String result;
         switch (cell.getCellType()) {
             // 数字类型

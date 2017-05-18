@@ -1,6 +1,8 @@
 package com.sfsctech.common.security.des3;
 
 import com.sfsctech.common.util.HexUtil;
+import com.sun.crypto.provider.SunJCE;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -31,8 +33,8 @@ public class Des3Manager {
         if (instance == null) {
             synchronized (SecurityManager.class) {
                 if (instance == null) {
-                    Security.addProvider(new com.sun.crypto.provider.SunJCE());
-                    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());// 添加PKCS7Padding支持
+                    Security.addProvider(new SunJCE());
+                    Security.addProvider(new BouncyCastleProvider());// 添加PKCS7Padding支持
                     instance = new Des3Manager();
                 }
             }

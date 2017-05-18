@@ -1,6 +1,5 @@
 package com.sfsctech.common.tools.excel.poi.exports;
 
-import com.sfsctech.common.constants.I18NConstants.Tips;
 import com.sfsctech.common.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.common.tools.excel.constants.ExcelConstants;
 import com.sfsctech.common.tools.excel.model.ExcelModel;
@@ -11,6 +10,7 @@ import com.sfsctech.common.tools.excel.poi.style.CellStyles;
 import com.sfsctech.common.tools.excel.poi.style.DefaultCellStyle;
 import com.sfsctech.common.tool.Assert;
 import com.sfsctech.common.util.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.IOException;
@@ -33,9 +33,9 @@ public class ExcelExportHelper extends ExcelHelper {
 
     private CellStyles style;
 
-    public ExcelExportHelper(ExcelModel model) throws IOException {
-        Assert.notNull(model, ResourceUtil.getMessage(Tips.EmptyObject, "model"));
-        Assert.notNull(model.getVersion(), ResourceUtil.getMessage(Tips.EmptyObject, "model内[version]"));
+    public ExcelExportHelper(ExcelModel model) throws IOException, InvalidFormatException {
+        Assert.notNull(model, "model 对象为空");
+        Assert.notNull(model.getVersion(), "model内[version] 对象为空");
 
         this.setModel(model);
         Workbook workbook;
@@ -45,7 +45,8 @@ public class ExcelExportHelper extends ExcelHelper {
         } else {
             workbook = createWorkbook(getModel().getVersion());
         }
-        this.style = new DefaultCellStyle(workbook);
+        this.style = model.getStyle();
+        this.style.initStyle(workbook);
         super.setWorkbook(workbook);
     }
 
@@ -64,8 +65,8 @@ public class ExcelExportHelper extends ExcelHelper {
      * @throws IOException
      */
     public void exportExcel() throws IOException {
-        Assert.notNull(getModel().getSheets(), ResourceUtil.getMessage(Tips.EmptyObject, "model内[sheets]"));
-        Assert.isNotBlank(getModel().getFilePath(), ResourceUtil.getMessage(Tips.EmptyObject, "model内[filePath]"));
+        Assert.notNull(getModel().getSheets(), "model内[sheets] 对象为空");
+        Assert.isNotBlank(getModel().getFilePath(), "model内[filePath] 对象为空");
         String suffix = FileUtil.getFileSuffixName(getModel().getFilePath());
         if (!suffix.equals(getModel().getVersion().name())) {
             ThrowableUtil.throwRuntimeException("文件后缀与声明的Excel版本不匹配");
@@ -83,8 +84,8 @@ public class ExcelExportHelper extends ExcelHelper {
      * @param source ExcelModel
      * @throws IOException
      */
-    public void appendExcel(ExcelModel source) throws IOException {
-        Assert.notNull(source, ResourceUtil.getMessage(Tips.EmptyObject, "source"));
+    public void appendExcel(ExcelModel source) throws IOException, InvalidFormatException {
+        Assert.notNull(source, "source 对象为空");
         // 读取需要追加的Excel信息
         ExcelImportHelper helper = new ExcelImportHelper(source);
         helper.importExcel();
@@ -101,9 +102,8 @@ public class ExcelExportHelper extends ExcelHelper {
      * @throws IOException
      */
     public <T> void appendExcel(List<T> dataRows, Class<T> cls) throws IOException {
-        Assert.notNull(cls, ResourceUtil.getMessage(Tips.EmptyObject, "cls"));
-        if (ListUtil.isEmpty(dataRows))
-            ThrowableUtil.throwRuntimeException(ResourceUtil.getMessage(Tips.EmptyCollection, "dataRows"));
+        Assert.notNull(cls, "cls 对象为空");
+        Assert.notEmpty(dataRows, "dataRows 集合为空");
         SheetModel sheetModel = ExcelHelper.getSheetModelByList(dataRows, cls);
         ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
         getModel().getSheets().put(excelSheet.name(), sheetModel);
@@ -148,9 +148,9 @@ public class ExcelExportHelper extends ExcelHelper {
      * @param model     SheetModel
      */
     public void createSheet(Workbook wb, String sheetName, SheetModel model) {
-        Assert.notNull(wb, ResourceUtil.getMessage(Tips.EmptyObject, "wb"));
-        Assert.isNotBlank(sheetName, ResourceUtil.getMessage(Tips.EmptyObject, "sheetName"));
-        Assert.notNull(model, ResourceUtil.getMessage(Tips.EmptyObject, "model"));
+        Assert.notNull(wb, "wb 对象为空");
+        Assert.isNotBlank(sheetName, "sheetName 对象为空");
+        Assert.notNull(model, "model 对象为空");
         super.setWorkbook(wb);
         Sheet sheet = super.getWorkbook().getSheet(sheetName);
         if (null == sheet) {
@@ -172,9 +172,8 @@ public class ExcelExportHelper extends ExcelHelper {
      * @param dataRows 数据集
      */
     public void createHeader(Sheet sheet, int rower, Map<Integer, Map<String, Object>> dataRows) {
-        Assert.notNull(sheet, ResourceUtil.getMessage(Tips.EmptyObject, "sheet"));
-        if (MapUtil.isEmpty(dataRows))
-            ThrowableUtil.throwRuntimeException(ResourceUtil.getMessage(Tips.EmptyCollection, "dataRows"));
+        Assert.notNull(sheet, "sheet 对象为空");
+        Assert.notEmpty(dataRows, "dataRows 集合为空");
         Row row = sheet.createRow(rower);
         if (MapUtil.isNotEmpty(dataRows)) {
             // 获取标题集合
@@ -201,9 +200,8 @@ public class ExcelExportHelper extends ExcelHelper {
      * @param dataRows 数据集
      */
     public void createRow(Sheet sheet, Integer rower, Map<Integer, Map<String, Object>> dataRows) {
-        Assert.notNull(sheet, ResourceUtil.getMessage(Tips.EmptyObject, "sheet"));
-        if (MapUtil.isEmpty(dataRows))
-            ThrowableUtil.throwRuntimeException(ResourceUtil.getMessage(Tips.EmptyCollection, "dataRows"));
+        Assert.notNull(sheet, "sheet 对象为空");
+        Assert.notEmpty(dataRows, "dataRows 集合为空");
 
         Set<String> keys = null;
         if (null != rower) {

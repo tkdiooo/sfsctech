@@ -1,12 +1,12 @@
 package com.sfsctech.common.tools.excel.poi.imports;
 
-import com.sfsctech.common.constants.I18NConstants.Tips;
 import com.sfsctech.common.tools.excel.model.ExcelModel;
 import com.sfsctech.common.tools.excel.model.SheetModel;
 import com.sfsctech.common.tools.excel.poi.ExcelHelper;
 import com.sfsctech.common.tool.Assert;
 import com.sfsctech.common.util.MapUtil;
 import com.sfsctech.common.util.ResourceUtil;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,8 +27,8 @@ public class ExcelImportHelper extends ExcelHelper {
 
     private ExcelModel model;
 
-    public ExcelImportHelper(ExcelModel model) throws IOException {
-        Assert.notNull(model, ResourceUtil.getMessage(Tips.EmptyObject, "model"));
+    public ExcelImportHelper(ExcelModel model) throws IOException, InvalidFormatException {
+        Assert.notNull(model, "model 对象为空");
         Assert.isNotBlank(model.getFilePath(), "文件路径为空");
         Workbook workbook = createWorkbook(model.getFilePath());
         super.setWorkbook(workbook);
@@ -57,8 +57,8 @@ public class ExcelImportHelper extends ExcelHelper {
      * @param sheetModel SheetModel
      */
     public void readSheet(Sheet sheet, SheetModel sheetModel) {
-        Assert.notNull(sheet, ResourceUtil.getMessage(Tips.EmptyObject, "sheet"));
-        Assert.notNull(sheetModel, ResourceUtil.getMessage(Tips.EmptyCollection, "sheetModel"));
+        Assert.notNull(sheet, "sheet 对象为空");
+        Assert.notNull(sheetModel, "sheetModel 对象为空");
         Map<Integer, Map<String, Object>> rows = sheetModel.getRows();
         // 有标题读取
         if (null != sheetModel.getHeaderIndex()) {
@@ -98,8 +98,8 @@ public class ExcelImportHelper extends ExcelHelper {
      * @return Map
      */
     public Map<String, Object> readRow(Row row, List<String> header) {
-        Assert.notNull(row, ResourceUtil.getMessage(Tips.EmptyObject, "row"));
-        Assert.notNull(header, ResourceUtil.getMessage(Tips.EmptyCollection, "header"));
+        Assert.notNull(row, "row 对象为空");
+        Assert.notEmpty(header, "header 集合为空");
         Map<String, Object> data = new HashMap<>();
         for (int i = 0; i < row.getLastCellNum(); i++) {
             data.put(header.get(i), getCellValue(row.getCell(i)));
@@ -114,7 +114,7 @@ public class ExcelImportHelper extends ExcelHelper {
      * @return List
      */
     public List<Object> readRow(Row row) {
-        Assert.notNull(row, ResourceUtil.getMessage(Tips.EmptyObject, "row"));
+        Assert.notNull(row, "row 对象为空");
         List<Object> data = new ArrayList<>();
         for (int i = 0; i < row.getLastCellNum(); i++) {
             data.add(getCellValue(row.getCell(i)));
