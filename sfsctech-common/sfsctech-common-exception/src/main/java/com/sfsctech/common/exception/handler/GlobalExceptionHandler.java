@@ -57,7 +57,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException ex) throws Exception {
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, application.getMaxFileSize()));
+        json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, application.MULTIPART_MAX_FILE_SIZE));
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR, ex);
     }
 
