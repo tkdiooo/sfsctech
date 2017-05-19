@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -29,6 +30,7 @@ import javax.annotation.Resource;
  * @version Description:
  */
 @Configuration
+@Order(1)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource
@@ -37,6 +39,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Resource
     private JavaConfigUtil javaConfigUtil;
 
+    @Resource
+    private Application application;
     /**
      * 默认首页
      *
@@ -44,6 +48,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        System.out.println(application);
         registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.annotation.Resource;
 
-
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.sfsctech.website.jsp", "com.sfsctech.common"})
 public class JspWebRunner extends SpringBootServletInitializer {

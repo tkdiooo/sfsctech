@@ -13,7 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech spring support -->
+        <!-- sfsctech common support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-rpc</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-spring</artifactId>

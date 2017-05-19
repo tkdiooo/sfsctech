@@ -14,10 +14,12 @@
         <module>sfsctech-website-weichat</module>
         <module>sfsctech-website-restful</module>
         <module>sfsctech-thymeleaf</module>
+        <module>sfsctech-interface</module>
     </modules>
 
     <properties>
         <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
+        <sfsctech.starter.version>1.0.0-SNAPSHOT</sfsctech.starter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
@@ -72,21 +74,11 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- sfsctech commons support -->
+            <!-- sfsctech starter dubbox support -->
             <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-exception</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-rpc</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-dubbox</artifactId>
-                <version>${sfsctech.common.version}</version>
+                <groupId>com.sfsctech.starter</groupId>
+                <artifactId>sfsctech-starter-dubbox</artifactId>
+                <version>${sfsctech.starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>

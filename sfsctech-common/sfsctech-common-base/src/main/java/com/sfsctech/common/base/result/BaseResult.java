@@ -19,11 +19,11 @@ public abstract class BaseResult implements Serializable {
     /**
      * 响应状态
      */
-    protected boolean success = false;
+    protected boolean success = true;
     /**
      * 响应代码
      */
-    protected ResponseCode ResponseCode;
+    protected ResponseCode responseCode = ResponseCode.SC_OK;
     /**
      * 响应消息列表
      */
@@ -38,11 +38,11 @@ public abstract class BaseResult implements Serializable {
     }
 
     public ResponseCode getResponseCode() {
-        return ResponseCode;
+        return responseCode;
     }
 
     public void setResponseCode(ResponseCode ResponseCode) {
-        this.ResponseCode = ResponseCode;
+        this.responseCode = ResponseCode;
     }
 
     public List<String> getMessages() {

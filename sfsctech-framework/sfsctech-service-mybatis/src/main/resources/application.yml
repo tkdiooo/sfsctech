@@ -1,25 +1,9 @@
-#spring mvc setting
-spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
-  # 指定静态资源处理路径
-    static-path-pattern: /static/**
 server:
-  port: 8081
+  port: 8082
   address: localhost
-  contextPath: /jspdemo
+  contextPath: /mybatis
   tomcat:
     uri-encoding: utf-8
-#jsp development setting
-  jsp-servlet:
-    init-parameters:
-      development: true
-#common setting
-website:
-  static:
-    resources: http://localhost:8080/static-resources
 #dubbo setting
 dubbo:
   annotation:
@@ -27,7 +11,7 @@ dubbo:
     package:
   application:
     #服务注册名称信息
-    name: dubbo_consumer
+    name: dubbo_provider
     #日志适配
     logger: slf4j
   registry:
@@ -38,7 +22,7 @@ dubbo:
     #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
     register: true
     #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
-    subscribe: true
+    subscribe: false
     #注册中心请求超时时间(毫秒)
     timeout: 2000
   protocol:
