@@ -18,10 +18,10 @@
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-rpc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-spring</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>sfsctech-common-spring</artifactId>-->
+        <!--</dependency>-->
         <!-- zookeeper -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>

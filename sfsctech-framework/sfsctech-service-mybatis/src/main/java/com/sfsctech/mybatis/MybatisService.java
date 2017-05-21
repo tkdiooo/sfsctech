@@ -1,7 +1,9 @@
 package com.sfsctech.mybatis;
 
+import com.sfsctech.common.dubbox.properties.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
 /**

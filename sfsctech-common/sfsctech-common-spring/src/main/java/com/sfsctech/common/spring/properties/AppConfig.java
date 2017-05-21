@@ -2,10 +2,7 @@ package com.sfsctech.common.spring.properties;
 
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.constants.PropertiesConstants;
-import com.sfsctech.common.inf.IEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @version Description:
  */
 @Component
-public class Application {
+public class AppConfig {
 
     // 文件上传属性
     //-------------------------------------------------------------------------------------------

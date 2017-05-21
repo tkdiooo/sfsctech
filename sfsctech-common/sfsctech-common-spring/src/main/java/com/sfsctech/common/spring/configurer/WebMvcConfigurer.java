@@ -3,13 +3,11 @@ package com.sfsctech.common.spring.configurer;
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
-import com.sfsctech.common.spring.properties.Application;
+import com.sfsctech.common.spring.properties.AppConfig;
 import org.hibernate.validator.HibernateValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
@@ -30,7 +28,6 @@ import javax.annotation.Resource;
  * @version Description:
  */
 @Configuration
-@Order(1)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource
@@ -40,7 +37,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     private JavaConfigUtil javaConfigUtil;
 
     @Resource
-    private Application application;
+    private AppConfig appConfig;
     /**
      * 默认首页
      *
@@ -48,7 +45,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        System.out.println(application);
         registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
