@@ -1,5 +1,6 @@
 package com.sfsctech.website.jsp;
 
+import com.sfsctech.common.dubbox.properties.DubboConfig;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,6 +46,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) throws Exception {
+        DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.controller");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

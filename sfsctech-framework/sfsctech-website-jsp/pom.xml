@@ -18,6 +18,11 @@
             <groupId>com.sfsctech.starter</groupId>
             <artifactId>sfsctech-starter-dubbox</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-interface</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

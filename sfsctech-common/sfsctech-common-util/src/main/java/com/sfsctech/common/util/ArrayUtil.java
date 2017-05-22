@@ -19,10 +19,10 @@ public class ArrayUtil extends ArrayUtils {
      *
      * @param array    -- 字符串数组
      * @param separate --分隔符
-     * @return
+     * @return String
      */
     public static String toString(String[] array, String separate) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         if (isNotEmpty(array)) {
             for (String s : array) {
                 if (buffer.length() > 0) {

@@ -36,8 +36,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Resource
     private JavaConfigUtil javaConfigUtil;
 
-    @Resource
-    private AppConfig appConfig;
     /**
      * 默认首页
      *
@@ -95,6 +93,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames(CommonConstants.RESOURCES_I18N_PATH);
         messageSource.setDefaultEncoding(LabelConstants.UTF8);
+        // 缓存时间(秒)
         messageSource.setCacheSeconds(600);
         return messageSource;
     }

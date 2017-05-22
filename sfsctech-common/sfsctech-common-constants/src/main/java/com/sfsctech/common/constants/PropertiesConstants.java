@@ -85,16 +85,8 @@ public class PropertiesConstants {
      */
     public final static String DUBBO_PROTOCOL_PORT = "dubbo.protocol.port";
     /**
-     * Properties：dubbo.protocol.serialization
+     * Properties：dubbo.protocol.kryo
      */
-    public final static String DUBBO_PROTOCOL_SERIALIZATION = "dubbo.protocol.serialization";
-    /**
-     * Properties：dubbo.protocol.optimizer
-     */
-    public final static String DUBBO_PROTOCOL_OPTIMIZER = "dubbo.protocol.optimizer";
-    /**
-     * Properties：dubbo.annotation.package
-     */
-    public final static String DUBBO_ANNOTATION_PACKAGE = "dubbo.annotation.package";
+    public final static String DUBBO_PROTOCOL_KRYO = "dubbo.protocol.kryo";
 
 }

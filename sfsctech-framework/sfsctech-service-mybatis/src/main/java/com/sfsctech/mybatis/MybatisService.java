@@ -3,7 +3,6 @@ package com.sfsctech.mybatis;
 import com.sfsctech.common.dubbox.properties.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -17,6 +16,8 @@ import org.springframework.context.annotation.ComponentScan;
 public class MybatisService {
 
     public static void main(String[] args) throws Exception {
+        DubboConfig.setAnnotationPackage("com.sfsctech.mybatis.service.provider");
+        DubboConfig.setKryoSerializePackage("com.sfsctech.common.http");
         SpringApplication.run(MybatisService.class, args);
     }
 

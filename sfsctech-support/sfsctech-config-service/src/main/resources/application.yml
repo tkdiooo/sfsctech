@@ -1,6 +1,7 @@
 server:
   port: 8888
 spring:
+  # config svn
   profiles:
     active: subversion
   cloud:
@@ -10,3 +11,7 @@ spring:
           uri: https://pc-20131011xrrb/svn/service-config/
           username: tkdiooo
           password: 4880300
+        # config git
+#        git:
+#          uri: https://github.com/tkdiooo/config.git
+#          search-paths: config

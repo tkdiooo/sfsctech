@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sfsctech-starter-dubbox</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- sfsctech dubbox support-->

@@ -1,8 +1,8 @@
-package com.sfsctech.mybatis.rpc.provider;
+package com.sfsctech.mybatis.service.provider;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.inf.dubbox.DubboxService;
 import com.sfsctech.common.base.result.RpcResult;
-import org.springframework.stereotype.Service;
 
 /**
  * Class DubboxServiceImpl

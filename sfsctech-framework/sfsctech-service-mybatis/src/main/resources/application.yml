@@ -6,11 +6,8 @@ server:
     uri-encoding: utf-8
 #dubbo setting
 dubbo:
-  annotation:
-    #服务类所在的包路径，多个包名可以使用英文逗号分隔
-    package:
   application:
-    #服务注册名称信息
+    #服务提供者名称信息
     name: dubbo_provider
     #日志适配
     logger: slf4j
@@ -30,10 +27,8 @@ dubbo:
     name: dubbo
     #协议端口，默认20880
     port: 20880
-    #序列化实现
-    serialization:  Kryo
-    #SerializationOptimizer接口实现，添加需要序列化的类
-    optimizer:
+    #是否使用kryo序列化
+    kryo: true
 
 
 #spring.cloud.config
