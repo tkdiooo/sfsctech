@@ -7,7 +7,6 @@ import com.sfsctech.common.util.ClassUtil;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class KryoSerializationOptimizer
@@ -17,12 +16,15 @@ import java.util.Set;
  */
 public class KryoSerializationOptimizer implements SerializationOptimizer {
 
+    private List<Class> classes;
+
+    public KryoSerializationOptimizer() {
+        classes = new LinkedList<>(ClassUtil.getClasses(DubboConfig.getKryoSerializePackage()));
+    }
+
     @Override
     public Collection<Class> getSerializableClasses() {
-        System.out.println(DubboConfig.getKryoSerializePackage());
-        Set<Class<?>> set = ClassUtil.getClasses(DubboConfig.getKryoSerializePackage());
-        System.out.println(set);
-        return new LinkedList<>(set);
+        return classes;
     }
 
 }

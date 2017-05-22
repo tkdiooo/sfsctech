@@ -6,10 +6,10 @@
 <%@ page import="com.sfsctech.common.spring.properties.AppConfig" %>
 <%
     // 系统配置信息
-    AppConfig property = (AppConfig)SpringContextUtil.getBean("application");
+    AppConfig property = SpringContextUtil.getBean(AppConfig.class);
 %>
 <%-- 静态资源服务路径 --%>
-<c:set var="static_resource" scope="application" value="<%= property.getStaticResources() %>"/>
+<c:set var="static_resource" scope="application" value="<%=property.MULTIPART_MAX_FILE_SIZE %>"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,7 +19,7 @@
     <meta name="copyright" content="外服信">
     <title>会议支持系统</title>
     <%-- jquery --%>
-    <script type="text/javascript" src="${static_resource}/webjars/jquery/3.2.1/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=property.MULTIPART_MAX_FILE_SIZE %>/webjars/jquery/3.2.1/dist/jquery.min.js"></script>
     <%-- bootstrap --%>
     <link rel="stylesheet" href="${static_resource}/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css">
     <script type="text/javascript" src="${static_resource}/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js"></script>
