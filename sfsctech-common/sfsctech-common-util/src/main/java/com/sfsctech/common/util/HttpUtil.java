@@ -32,7 +32,7 @@ public class HttpUtil {
      * @param request Request
      * @return Request IP Address
      */
-    public String getRequestIP(HttpServletRequest request) {
+    public static String getRequestIP(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if (org.apache.commons.lang3.StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个ip值，第一个ip才是真实ip

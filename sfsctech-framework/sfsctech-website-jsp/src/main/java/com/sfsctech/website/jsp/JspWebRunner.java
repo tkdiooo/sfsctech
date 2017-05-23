@@ -47,6 +47,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws Exception {
         DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.controller");
+        DubboConfig.setKryoSerializePackage("com.sfsctech.common.http");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

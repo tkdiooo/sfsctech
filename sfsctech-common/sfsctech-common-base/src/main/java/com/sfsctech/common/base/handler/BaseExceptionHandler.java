@@ -1,9 +1,9 @@
 package com.sfsctech.common.base.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResponseUtil;
+import com.sfsctech.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,26 +25,27 @@ public abstract class BaseExceptionHandler {
 
     public final Logger logger = LoggerFactory.getLogger("logger.debug");
 
-    protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status, Exception ex) {
-        // 记录异常日志
-        System.out.println(JSON.toJSONString(json));
-        logger.debug("异常信息：" + JSON.toJSONString(json));
-//        String extMessage = ThrowableUtil.getRootMessage(ex);
-//        String stackTrace = ThrowableUtil.getStackTraceAsString(ex);
+    protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status) {
+        System.out.println(json.toJSONString());
         if (HttpUtil.isAjaxRequest(request)) {
             return handleAjaxError(response, json, status);
         }
-        return handleViewError(request.getRequestURL().toString(), json, viewName, status);
+        String ret_url = request.getHeader("Referer");
+        // 如果上一次请求路径为空，跳转首页。(首页需要配置)
+        if (StringUtil.isBlank(ret_url)) {
+            ret_url = "http://localhost:8081/jspdemo/";
+        }
+        return handleViewError(ret_url, json, viewName, status);
     }
 
-    protected ModelAndView handleViewError(String url, Map<String, Object> model, String viewName, HttpStatus status) {
+    private ModelAndView handleViewError(String url, Map<String, Object> model, String viewName, HttpStatus status) {
         ModelAndView mav = new ModelAndView(viewName, model, status);
         mav.addObject("url", url);
         mav.addObject("timestamp", new Date());
         return mav;
     }
 
-    protected ModelAndView handleAjaxError(HttpServletResponse response, JSONObject json, HttpStatus status) {
+    private ModelAndView handleAjaxError(HttpServletResponse response, JSONObject json, HttpStatus status) {
         response.setStatus(status.value());
         try {
             ResponseUtil.writeJson(json, response);

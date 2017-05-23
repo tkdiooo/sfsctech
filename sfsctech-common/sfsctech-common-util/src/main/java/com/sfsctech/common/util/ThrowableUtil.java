@@ -1,5 +1,8 @@
 package com.sfsctech.common.util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sfsctech.common.constants.CommonConstants;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -109,7 +112,27 @@ public class ThrowableUtil {
         if (t == null) {
             return defaults;
         }
-        String msg = t.getLocalizedMessage();
+        String msg = t.toString();
         return StringUtil.isEmpty(msg) ? defaults : msg;
+    }
+
+    /**
+     * 获取异常抛出的具体位置
+     *
+     * @param e Exception
+     * @return Exception Message
+     */
+    public static String getStackTraceMessage(Exception e) {
+        StackTraceElement[] trace = e.getStackTrace();
+        for (StackTraceElement traceElement : trace) {
+            if (traceElement.getClassName().startsWith("com.sfsctech")) {
+                JSONObject stack = (JSONObject) JSONObject.toJSON(traceElement);
+                stack.remove("fileName");
+                stack.remove("nativeMethod");
+                stack.put(CommonConstants.MESSAGES, ThrowableUtil.getRootMessage(e));
+                return stack.toJSONString();
+            }
+        }
+        return e.getMessage();
     }
 }

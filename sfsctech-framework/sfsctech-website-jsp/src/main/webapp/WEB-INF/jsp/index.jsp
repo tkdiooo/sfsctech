@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <%@include file="/WEB-INF/jsp/common/head.jsp"%>
-
-    <link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/font-awesome/css/font-awesome.min.css" />
-    <link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox.css" rel="stylesheet" />
-    <link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
-    <link href="${static_resource}/static/theme/ninestars/css/animate.css" rel="stylesheet" />
-    <link href="${static_resource}/static/theme/ninestars/css/style.css" rel="stylesheet">
-    <link href="${static_resource}/static/theme/ninestars/css/default.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/font-awesome/css/font-awesome.min.css" />
+<link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox.css" rel="stylesheet" />
+<link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+<link href="${static_resource}/static/theme/ninestars/css/animate.css" rel="stylesheet" />
+<link href="${static_resource}/static/theme/ninestars/css/style.css" rel="stylesheet">
+<link href="${static_resource}/static/theme/ninestars/css/default.css" rel="stylesheet">
 <%--</head>--%>
 <body data-spy="scroll">
 

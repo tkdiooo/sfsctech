@@ -14,12 +14,17 @@ public class I18NConstants {
     public enum Tips implements IEnum<String, String> {
 
         /**
-         * 系统异常，请稍后再尝试
+         * 系统错误，请稍后再尝试
          */
         ExceptionSys("tips.exception.sys"),
 
         /**
-         * 网络异常，请稍后再尝试
+         * 服务器错误，请稍后再尝试
+         */
+        ExceptionService("tips.exception.service"),
+
+        /**
+         * 网络连接错误，请稍后再尝试
          */
         ExceptionNetwork("tips.exception.network"),
 
@@ -27,6 +32,11 @@ public class I18NConstants {
          * 上传文件过大，文件最大支持{0}
          */
         ExceptionUpload("tips.exception.upload"),
+
+        /**
+         * 请求的页面不存在
+         */
+        Exception404("tips.exception.404"),
 
         /**
          * 操作成功
