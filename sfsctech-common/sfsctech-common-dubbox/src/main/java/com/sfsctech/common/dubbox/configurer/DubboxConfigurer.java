@@ -2,6 +2,7 @@ package com.sfsctech.common.dubbox.configurer;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
 import com.sfsctech.common.dubbox.properties.DubboConfig;
@@ -67,6 +68,13 @@ public class DubboxConfigurer {
             config.setSerialization("kryo");
             config.setOptimizer("com.sfsctech.common.dubbox.serialize.KryoSerializationOptimizer");
         }
+        return config;
+    }
+
+    @Bean
+    public ProviderConfig providerConfig() {
+        ProviderConfig config = new ProviderConfig();
+        config.setFilter("-exception, ExceptionHandler");
         return config;
     }
 
