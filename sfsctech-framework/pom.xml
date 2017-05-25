@@ -74,11 +74,10 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- sfsctech starter dubbox support -->
             <dependency>
-                <groupId>com.sfsctech.starter</groupId>
-                <artifactId>sfsctech-starter-dubbox</artifactId>
-                <version>${sfsctech.starter.version}</version>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>5.0.3</version>
             </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>

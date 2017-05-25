@@ -8,7 +8,7 @@ package com.sfsctech.mybatis.service.read;
  */
 public interface AccountReadService {
 
-    void find();
-
-    void findByAccount(String account);
+//    List<TSysAccount> find();
+//
+//    List<TSysAccount> findByAccount(String account);
 }

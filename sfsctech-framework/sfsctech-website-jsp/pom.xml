@@ -13,15 +13,23 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- sfsctech starter dubbox support -->
-        <dependency>
-            <groupId>com.sfsctech.starter</groupId>
-            <artifactId>sfsctech-starter-dubbox</artifactId>
-        </dependency>
+        <!-- business -->
         <dependency>
             <groupId>com.sfsctech.framework</groupId>
             <artifactId>sfsctech-interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- sfsctech dubbox support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- sfsctech exception support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>

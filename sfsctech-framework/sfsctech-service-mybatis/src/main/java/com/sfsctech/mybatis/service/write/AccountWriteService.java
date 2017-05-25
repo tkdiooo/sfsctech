@@ -1,7 +1,5 @@
 package com.sfsctech.mybatis.service.write;
 
-import com.sfsctech.mybatis.domain.TSysAccount;
-
 /**
  * Class AccountWriteService
  *
@@ -10,5 +8,5 @@ import com.sfsctech.mybatis.domain.TSysAccount;
  */
 public interface AccountWriteService {
 
-    Long save(TSysAccount account);
+//    Long save(TSysAccount account);
 }

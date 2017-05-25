@@ -12,18 +12,18 @@
     <artifactId>sfsctech-starter-dubbox</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-        <!-- sfsctech dubbox support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-dubbox</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- sfsctech exception support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-exception</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-    </dependencies>
+    <!--<dependencies>-->
+        <!--&lt;!&ndash; sfsctech dubbox support&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>sfsctech-common-dubbox</artifactId>-->
+            <!--<version>${sfsctech.common.version}</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; sfsctech exception support&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>sfsctech-common-exception</artifactId>-->
+            <!--<version>${sfsctech.common.version}</version>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
 </project>
