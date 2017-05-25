@@ -74,7 +74,7 @@ public class DubboxConfigurer {
     @Bean
     public ProviderConfig providerConfig() {
         ProviderConfig config = new ProviderConfig();
-        config.setFilter("-exception, ExceptionHandler");
+        config.setFilter(DubboConfig.getFILTERS());
         return config;
     }
 

@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- jquery -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
@@ -42,6 +47,12 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery.maskedinput</artifactId>
             <version>1.4.1</version>
+        </dependency>
+        <!-- blueimp-file-upload -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>blueimp-file-upload</artifactId>
+            <version>9.16.0</version>
         </dependency>
         <!-- bootstrap -->
         <dependency>
@@ -88,7 +99,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.sfsctech.resources.StaticResourcesService</mainClass>
+                    <mainClass>com.sfsctech.resources.StaticResources</mainClass>
                 </configuration>
                 <executions>
                     <execution>

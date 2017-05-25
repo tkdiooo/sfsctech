@@ -55,6 +55,16 @@ public class DubboConfig {
         KRYO_SERIALIZE_PACKAGE = kryoSerializePackage;
     }
 
+    private static String[] FILTERS = {"-exception", "ExceptionHandler"};
+
+    public static String getFILTERS() {
+        return ArrayUtil.toString(FILTERS, LabelConstants.COMMA);
+    }
+
+    public static void setFILTERS(String[] FILTERS) {
+        DubboConfig.FILTERS = FILTERS;
+    }
+
     /**
      * dubbo - 提供方应用名称信息
      */

@@ -73,10 +73,6 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         json.clear();
         json.put(CommonConstants.SUCCESS, false);
         json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.Exception404));
-        // Ajax请求
-        if (HttpUtil.isAjaxRequest(request)) {
-//            return handleAjaxError(response, json, status);
-        }
         return handleError(request, response, json, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND);
     }
 

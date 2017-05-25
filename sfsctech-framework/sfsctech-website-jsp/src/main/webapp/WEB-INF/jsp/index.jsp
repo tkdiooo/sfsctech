@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <%@include file="/WEB-INF/jsp/common/head.jsp"%>
 <link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${static_resource}/static/theme/ninestars/font-awesome/css/font-awesome.min.css" />
@@ -367,10 +367,11 @@
 
     </div>
 </section>
+<%@include file="/WEB-INF/jsp/common/script.jsp"%>
+
 <!-- /Section: contact -->
 
 <!-- Core JavaScript Files -->
-<script src="${static_resource}/static/theme/ninestars/js/jquery.min.js"></script>
 <script src="${static_resource}/static/theme/ninestars/js/jquery.easing.min.js"></script>
 <script src="${static_resource}/static/theme/ninestars/js/classie.js"></script>
 <script src="${static_resource}/static/theme/ninestars/js/gnmenu.js"></script>
@@ -380,6 +381,10 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="${static_resource}/static/theme/ninestars/js/custom.js"></script>
+<script>
+    $(function () {
 
+    });
+</script>
 </body>
 </html>

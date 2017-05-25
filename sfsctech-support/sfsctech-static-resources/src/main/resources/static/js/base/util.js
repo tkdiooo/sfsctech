@@ -87,20 +87,7 @@ function domain() {
     document.domain = _surl;
 }
 
-/**
- * 执行方法
- */
-function invoke(callback, data) {
-    if (callback !== null) {
-        if (typeof callback === "function") {
-            callback(data);
-        } else {
-            var func = eval(callback);
-            new func(data);
-        }
-    }
-}
-
+/*-------------------------------------------------Date对象自定义方法-------------------------------------------------*/
 /**
  * Date对象添加Format方法
  * @param fmt
@@ -108,7 +95,6 @@ function invoke(callback, data) {
  * @constructor
  */
 Date.prototype.Format = function (fmt) {
-    //author: meizz
     var o =
         {
             "M+": this.getMonth() + 1, //月份
@@ -126,3 +112,97 @@ Date.prototype.Format = function (fmt) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 };
+Date.prototype.addDays = function (d) {
+    this.setDate(this.getDate() + d);
+};
+Date.prototype.addWeeks = function (w) {
+    this.addDays(w * 7);
+};
+Date.prototype.addMonths = function (m) {
+    var d = this.getDate();
+    this.setMonth(this.getMonth() + m);
+
+    if (this.getDate() < d)
+        this.setDate(0);
+};
+Date.prototype.addYears = function (y) {
+    var m = this.getMonth();
+    this.setFullYear(this.getFullYear() + y);
+
+    if (m < this.getMonth()) {
+        this.setDate(0);
+    }
+};
+/*-------------------------------------------------Date对象自定义方法-------------------------------------------------*/
+/*------------------------------------------------Number对象自定义方法------------------------------------------------*/
+Number.prototype.add = function (arg) {
+    var r1, r2, m;
+    try {
+        r1 = arg.toString().split(".")[1].length;
+    } catch (e) {
+        r1 = 0;
+    }
+    try {
+        r2 = this.toString().split(".")[1].length;
+    } catch (e) {
+        r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    return (arg * m + this * m) / m;
+};
+Number.prototype.sub = function (arg) {
+    var r1, r2, m, n;
+    try {
+        r1 = arg.toString().split(".")[1].length;
+    } catch (e) {
+        r1 = 0;
+    }
+    try {
+        r2 = this.toString().split(".")[1].length;
+    } catch (e) {
+        r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = (r1 >= r2) ? r1 : r2;
+    return ((arg * m - this * m) / m).toFixed(n);
+};
+Number.prototype.mul = function (arg) {
+    var m = 0, s1 = arg.toString(), s2 = this.toString();
+    try {
+        m += s1.split(".")[1].length;
+    } catch (e) {
+    }
+    try {
+        m += s2.split(".")[1].length;
+    } catch (e) {
+    }
+    return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+};
+Number.prototype.div = function (arg) {
+    var t1 = 0, t2 = 0, r1, r2;
+    try {
+        t1 = this.toString().split(".")[1].length;
+    } catch (e) {
+    }
+    try {
+        t2 = arg.toString().split(".")[1].length;
+    } catch (e) {
+    }
+    with (Math) {
+        r1 = Number(this.toString().replace(".", ""));
+        r2 = Number(arg.toString().replace(".", ""));
+        return (r1 / r2) * pow(10, t2 - t1);
+    }
+};
+/*------------------------------------------------Number对象自定义方法------------------------------------------------*/
+
+/**
+ * 处理数字
+ * @param num 要四舍五入的数
+ * @param v 表示要保留的小数位数
+ * @returns {number}
+ */
+function decimal(num, v) {
+    var vv = Math.pow(10, v);
+    return Math.round(num * vv) / vv;
+}

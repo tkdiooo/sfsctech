@@ -18,6 +18,7 @@
         <module>sfsctech-common-exception</module>
         <module>sfsctech-common-rpc</module>
         <module>sfsctech-common-dubbox</module>
+        <module>sfsctech-common-mybatis</module>
     </modules>
 
     <properties>

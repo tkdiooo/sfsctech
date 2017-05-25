@@ -27,13 +27,14 @@ public abstract class BaseExceptionHandler {
 
     protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status) {
         System.out.println(json.toJSONString());
-        if (HttpUtil.isAjaxRequest(request)) {
-            return handleAjaxError(response, json, status);
-        }
         String ret_url = request.getHeader("Referer");
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
         if (StringUtil.isBlank(ret_url)) {
             ret_url = "http://localhost:8081/jspdemo/";
+        }
+        if (HttpUtil.isAjaxRequest(request)) {
+            json.put("url", ret_url);
+            return handleAjaxError(response, json, status);
         }
         return handleViewError(ret_url, json, viewName, status);
     }
