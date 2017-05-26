@@ -1,8 +1,10 @@
 package com.sfsctech.common.dubbox.properties;
 
+import com.sfsctech.common.constants.DubboConstants;
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.constants.PropertiesConstants;
 import com.sfsctech.common.util.ArrayUtil;
+import com.sfsctech.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @version Description:
  */
 @Component
-public class DubboConfig {
+public class DubboConfig extends DubboConstants {
 
     // dubbo 属性
     //-------------------------------------------------------------------------------------------
@@ -39,22 +41,13 @@ public class DubboConfig {
     /**
      * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
      */
-    private static String[] KRYO_SERIALIZE_PACKAGE;
-
-    /**
-     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
-     */
     public static String getKryoSerializePackage() {
-        return ArrayUtil.toString(KRYO_SERIALIZE_PACKAGE, LabelConstants.COMMA);
+        return ListUtil.toString(KRYO_SERIALIZE_PACKAGE, LabelConstants.COMMA);
     }
 
     /**
-     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
+     * dubbo - filter设置
      */
-    public static void setKryoSerializePackage(String... kryoSerializePackage) {
-        KRYO_SERIALIZE_PACKAGE = kryoSerializePackage;
-    }
-
     private static String[] FILTERS = {"-exception", "ExceptionHandler"};
 
     public static String getFILTERS() {

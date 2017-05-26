@@ -1,11 +1,9 @@
 package com.sfsctech.common.util;
 
+import com.sfsctech.common.tool.Assert;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class ArrayListUtil
@@ -14,6 +12,29 @@ import java.util.Map;
  * @version Description：
  */
 public class ListUtil extends CollectionUtils {
+
+    /**
+     * 将字符串Set转换成String
+     *
+     * @param set      --字符串Set
+     * @param separate --分隔符
+     * @return String
+     */
+    public static String toString(Set<String> set, String separate) {
+        StringBuilder buffer = new StringBuilder();
+        if (!isEmpty(set)) {
+            set.forEach(s -> {
+                if (buffer.length() > 0) {
+                    buffer.append(separate);
+                    buffer.append(s);
+                } else {
+                    buffer.append(s);
+                }
+            });
+        }
+        return buffer.toString();
+    }
+
 
     @SafeVarargs
     public static <T> List<T> toList(T... a) {
@@ -39,7 +60,7 @@ public class ListUtil extends CollectionUtils {
     /**
      * 复制转换List
      *
-     * @param cls Class
+     * @param cls     Class
      * @param dataSet DataSet
      * @return List<code><</code>T<code>></code>
      */

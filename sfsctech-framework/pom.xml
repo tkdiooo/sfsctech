@@ -9,17 +9,19 @@
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>sfsctech-service-mybatis</module>
         <module>sfsctech-website-jsp</module>
         <module>sfsctech-website-weichat</module>
         <module>sfsctech-website-restful</module>
         <module>sfsctech-thymeleaf</module>
-        <module>sfsctech-interface</module>
+        <module>sfsctech-framework-dao</module>
+        <module>sfsctech-framework-model</module>
+        <module>sfsctech-framework-interface</module>
+        <module>sfsctech-framework-facade</module>
+        <module>sfsctech-framework-service</module>
     </modules>
 
     <properties>
         <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
-        <sfsctech.starter.version>1.0.0-SNAPSHOT</sfsctech.starter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>

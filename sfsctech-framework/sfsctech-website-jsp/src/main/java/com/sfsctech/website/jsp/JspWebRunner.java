@@ -17,7 +17,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.annotation.Resource;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sfsctech.website.jsp", "com.sfsctech.common"})
+@ComponentScan(basePackages = {"com.sfsctech.website.jsp", "com.sfsctech"})
 public class JspWebRunner extends SpringBootServletInitializer {
 
     @Resource
@@ -47,7 +47,6 @@ public class JspWebRunner extends SpringBootServletInitializer {
 
     public static void main(String[] args) throws Exception {
         DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.controller");
-        DubboConfig.setKryoSerializePackage("com.sfsctech.common.http");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

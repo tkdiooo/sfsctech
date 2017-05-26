@@ -1,8 +1,8 @@
 package com.sfsctech.website.jsp.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.inf.dubbox.DubboxService;
 import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.framework.inf.DubboxService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    @Reference
+    @Reference(version = "1.0.0")
     private DubboxService service;
 
     @GetMapping("index.html")
