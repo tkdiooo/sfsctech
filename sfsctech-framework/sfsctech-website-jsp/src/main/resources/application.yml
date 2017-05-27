@@ -33,15 +33,15 @@ dubbo:
     logger: slf4j
   registry:
     #zookeeper注册中心服务地址
-    address: zookeeper://192.168.37.128:2181
+    address: zookeeper://192.168.37.129:2181
     #注册中心不存在时，是否报错
-    check: true
+    check: false
     #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
     register: true
     #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
     subscribe: true
     #注册中心请求超时时间(毫秒)
-#    timeout: 2000
+    timeout: 2000
 
 
 #spring.cloud.config

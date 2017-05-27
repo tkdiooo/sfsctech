@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class ServiceRunner {
 
     public static void main(String[] args) throws Exception {
-        DubboConfig.setAnnotationPackage("com.sfsctech.framework.service.provider");
+        DubboConfig.setAnnotationPackage("com.sfsctech.framework.rpc.provider");
         SpringApplication.run(ServiceRunner.class, args);
     }
 }

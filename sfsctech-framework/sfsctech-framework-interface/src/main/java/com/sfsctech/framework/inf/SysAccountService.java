@@ -1,5 +1,6 @@
 package com.sfsctech.framework.inf;
 
+import com.sfsctech.common.base.result.RpcResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
 import java.util.List;
@@ -10,11 +11,11 @@ import java.util.List;
  * @author 张麒 2017/5/26.
  * @version Description:
  */
-public interface SysAccountService<T extends SysAccountDto> {
+public interface SysAccountService {
 
-    Long save();
+    RpcResult<SysAccountDto> save();
 
-    List<T> find();
+    RpcResult<SysAccountDto> find();
 
-    List<T> findByAccount(String account);
+    RpcResult<SysAccountDto> findByAccount(String account);
 }
