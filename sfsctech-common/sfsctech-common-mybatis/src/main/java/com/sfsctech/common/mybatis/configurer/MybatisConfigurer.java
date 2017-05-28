@@ -22,7 +22,7 @@ import java.util.Properties;
  * @version Description:
  */
 @Configuration
-@MapperScan("com.*.*.mapper")
+@MapperScan("com.sfsctech.*.mapper")
 public class MybatisConfigurer {
 
     @Bean
