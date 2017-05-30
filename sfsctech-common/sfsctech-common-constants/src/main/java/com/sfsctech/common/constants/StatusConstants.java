@@ -52,28 +52,28 @@ public class StatusConstants {
      * @author 张麒 2016年3月28日
      * @version Description：状态枚举
      */
-    public enum Status implements IEnum<Boolean, String> {
+    public enum Status implements IEnum<Integer, String> {
 
         /**
          * 有效
          */
-        VALID(true, "有效"),
+        VALID(1, "有效"),
 
         /**
          * 失效
          */
-        INVALID(false, "失效");
+        INVALID(0, "失效");
 
-        Status(Boolean key, String value) {
+        Status(int key, String value) {
             this.key = key;
             this.value = value;
         }
 
-        private Boolean key;
+        private int key;
         private String value;
 
         @Override
-        public Boolean getKey() {
+        public Integer getKey() {
             return key;
         }
 
@@ -82,17 +82,17 @@ public class StatusConstants {
             return value;
         }
 
-        public static String getValueByKey(Boolean key) {
+        public static String getValueByKey(Integer key) {
             return IEnum.findValue(values(), key);
         }
 
-        public static Boolean getKeyByValue(String value) {
+        public static Integer getKeyByValue(String value) {
             return IEnum.findKey(values(), value);
         }
 
-        private static List<IEnum<Boolean, String>> options = new ArrayList<>(Arrays.asList(values()));
+        private static List<IEnum<Integer, String>> options = new ArrayList<>(Arrays.asList(values()));
 
-        public static List<IEnum<Boolean, String>> getOptions() {
+        public static List<IEnum<Integer, String>> getOptions() {
             return options;
         }
     }

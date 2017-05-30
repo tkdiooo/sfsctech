@@ -1,5 +1,6 @@
 package com.sfsctech.common.base.result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,9 @@ public class RpcResult<T> extends BaseResult {
     private T result;
 
     public List<T> getDataSet() {
+        if (null == dataSet) {
+            dataSet = new ArrayList<>();
+        }
         return dataSet;
     }
 

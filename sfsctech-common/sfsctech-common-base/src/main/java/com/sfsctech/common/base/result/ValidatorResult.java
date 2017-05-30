@@ -15,7 +15,7 @@ public class ValidatorResult {
 
     private Map<String, String> messages = new HashMap<>();
 
-    public boolean isHasErrors() {
+    public boolean hasErrors() {
         return hasErrors;
     }
 

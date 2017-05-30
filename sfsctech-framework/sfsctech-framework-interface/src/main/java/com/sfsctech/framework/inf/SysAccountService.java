@@ -13,9 +13,11 @@ import java.util.List;
  */
 public interface SysAccountService {
 
-    RpcResult<SysAccountDto> save();
+    RpcResult<Long> save(List<SysAccountDto> dataSet);
 
     RpcResult<SysAccountDto> find();
 
     RpcResult<SysAccountDto> findByAccount(String account);
+
+    RpcResult<SysAccountDto> findByPage(int pageNum, int pageSize);
 }

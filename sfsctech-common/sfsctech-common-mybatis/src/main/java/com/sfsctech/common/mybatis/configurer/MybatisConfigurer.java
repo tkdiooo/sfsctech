@@ -25,6 +25,15 @@ import java.util.Properties;
 @MapperScan("com.sfsctech.*.mapper")
 public class MybatisConfigurer {
 
+    /**
+     * mybatis分页拦截器方言属性键
+     */
+    private static final String DIALECT_KEY = "dialect";
+    /**
+     * mybatis分页拦截器方言属性值
+     */
+    private static final String DIALECT_VALUE = "com.github.pagehelper.PageHelper";
+
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource datasource() throws Exception {
@@ -35,9 +44,10 @@ public class MybatisConfigurer {
     public PageInterceptor pageInterceptor() {
         PageInterceptor page = new PageInterceptor();
         Properties props = new Properties();
-        props.setProperty("offsetAsPageNum", "true");
-        props.setProperty("rowBoundsWithCount", "true");
-        props.setProperty("reasonable", "true");
+        props.setProperty(DIALECT_KEY, DIALECT_VALUE);
+//        props.setProperty("offsetAsPageNum", "true");
+//        props.setProperty("rowBoundsWithCount", "true");
+//        props.setProperty("reasonable", "true");
         page.setProperties(props);
         return page;
     }

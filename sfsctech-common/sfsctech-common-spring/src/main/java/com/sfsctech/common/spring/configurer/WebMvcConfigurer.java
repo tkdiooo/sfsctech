@@ -5,6 +5,7 @@ import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
 import com.sfsctech.common.spring.properties.AppConfig;
 import org.hibernate.validator.HibernateValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +31,10 @@ import javax.annotation.Resource;
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
-    @Resource
+    @Autowired
     private MessageSource messageSource;
 
-    @Resource
+    @Autowired
     private JavaConfigUtil javaConfigUtil;
 
     /**

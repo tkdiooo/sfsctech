@@ -2,6 +2,7 @@ package com.sfsctech.common.spring.util;
 
 import com.sfsctech.common.spring.properties.AppConfig;
 import com.sfsctech.common.util.ByteSizeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -18,7 +19,7 @@ import javax.servlet.MultipartConfigElement;
 @Component
 public class JavaConfigUtil {
 
-    @Resource
+    @Autowired
     private AppConfig appConfig;
 
     public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet) {

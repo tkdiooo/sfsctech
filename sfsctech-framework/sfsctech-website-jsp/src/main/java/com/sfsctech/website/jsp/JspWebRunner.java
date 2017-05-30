@@ -2,6 +2,7 @@ package com.sfsctech.website.jsp;
 
 import com.sfsctech.common.dubbox.properties.DubboConfig;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,13 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.annotation.Resource;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.website.jsp", "com.sfsctech.common"})
 public class JspWebRunner extends SpringBootServletInitializer {
 
-    @Resource
+    @Autowired
     private JavaConfigUtil springUtil;
 
     @Bean
@@ -46,7 +46,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) throws Exception {
-        DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.controller");
+        DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.service");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

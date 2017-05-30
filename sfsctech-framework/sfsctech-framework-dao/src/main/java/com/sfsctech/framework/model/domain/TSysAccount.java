@@ -55,7 +55,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    private Short sort;
+    private Integer sort;
 
     /**
      *
@@ -64,7 +64,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    private Short enabled;
+    private Integer enabled;
 
     /**
      *
@@ -73,7 +73,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    private Short locked;
+    private Integer locked;
 
     /**
      *
@@ -91,7 +91,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    private Short status;
+    private Integer status;
 
     /**
      *
@@ -257,7 +257,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public Short getSort() {
+    public Integer getSort() {
         return sort;
     }
 
@@ -269,7 +269,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public void setSort(Short sort) {
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
 
@@ -281,7 +281,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public Short getEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
@@ -293,7 +293,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public void setEnabled(Short enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 
@@ -305,7 +305,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public Short getLocked() {
+    public Integer getLocked() {
         return locked;
     }
 
@@ -317,7 +317,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public void setLocked(Short locked) {
+    public void setLocked(Integer locked) {
         this.locked = locked;
     }
 
@@ -353,7 +353,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public Short getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
@@ -365,7 +365,7 @@ public class TSysAccount {
      *
      * @mbg.generated
      */
-    public void setStatus(Short status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

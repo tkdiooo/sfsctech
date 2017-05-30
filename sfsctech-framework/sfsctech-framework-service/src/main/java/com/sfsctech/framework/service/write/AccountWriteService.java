@@ -1,5 +1,7 @@
 package com.sfsctech.framework.service.write;
 
+import com.sfsctech.framework.model.domain.TSysAccount;
+
 /**
  * Class AccountWriteService
  *
@@ -8,5 +10,5 @@ package com.sfsctech.framework.service.write;
  */
 public interface AccountWriteService {
 
-//    Long save(TSysAccount account);
+    Long save(TSysAccount account);
 }

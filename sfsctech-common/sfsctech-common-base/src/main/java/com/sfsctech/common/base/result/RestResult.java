@@ -1,5 +1,6 @@
 package com.sfsctech.common.base.result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,9 @@ public class RestResult<T> extends BaseResult {
     private T result;
 
     public List<T> getDataSet() {
+        if (null == dataSet) {
+            dataSet = new ArrayList<>();
+        }
         return dataSet;
     }
 

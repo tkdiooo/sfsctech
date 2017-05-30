@@ -14,7 +14,7 @@ public class RpcUtil {
 
     public static <T> RpcResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
         RpcResult<T> ar = new RpcResult<>();
-        ar.setSuccess(success);
+        ar.setHasErrors(success);
         ar.setResponseCode(responseCode);
         ar.setMessages(ListUtil.toList(messages));
         return ar;
@@ -22,7 +22,7 @@ public class RpcUtil {
 
     public static <T> RpcResult<T> getRpcResult(RpcResult<T> ar) {
         // 接口返回错误，处理错误信息
-        if (!ar.getSuccess()) {
+        if (ar.hasErrors()) {
             System.out.println(ar.getMessages());
         }
         return ar;

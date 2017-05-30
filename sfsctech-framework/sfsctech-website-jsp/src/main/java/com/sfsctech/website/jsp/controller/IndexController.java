@@ -1,11 +1,12 @@
 package com.sfsctech.website.jsp.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.sfsctech.common.base.result.RpcResult;
-import com.sfsctech.framework.inf.DubboxService;
-import com.sfsctech.framework.inf.SysAccountService;
+import com.sfsctech.framework.model.dto.SysAccountDto;
+import com.sfsctech.website.jsp.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 /**
  * Class IndexController
@@ -16,16 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-//    @Reference
-//    private DubboxService service;
-
-    @Reference
-    private SysAccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("index.html")
     public String index() {
-//        RpcResult result = service.DubboxTestMethod("adasd", "sdadad");
-//        System.out.println(result);
+        List<SysAccountDto> list = accountService.findByPage(1, 10);
+        list.forEach(System.out::println);
         System.out.println("IndexController.index()");
         return "index";
     }
