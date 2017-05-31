@@ -19,7 +19,7 @@ public abstract class BaseResult implements Serializable {
     /**
      * 响应状态
      */
-    private boolean hasErrors = false;
+    private boolean success = true;
     /**
      * 响应代码
      */
@@ -29,12 +29,12 @@ public abstract class BaseResult implements Serializable {
      */
     protected List<String> messages = new ArrayList<>();
 
-    public boolean hasErrors() {
-        return hasErrors;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setHasErrors(boolean hasErrors) {
-        this.hasErrors = hasErrors;
+    public void setSuccess(boolean hasErrors) {
+        this.success = hasErrors;
     }
 
     public ResponseCode getResponseCode() {

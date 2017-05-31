@@ -24,6 +24,18 @@ public class RpcResult<T> extends BaseResult {
 
     private T result;
 
+    public RpcResult() {
+
+    }
+
+    public RpcResult(T result) {
+        this.result = result;
+    }
+
+    public RpcResult(List<T> dataSet) {
+        this.dataSet = dataSet;
+    }
+
     public List<T> getDataSet() {
         if (null == dataSet) {
             dataSet = new ArrayList<>();

@@ -23,4 +23,11 @@ public class DubboConstants {
     public static void addKryoSerializePackage(String... kryoSerializePackage) {
         KRYO_SERIALIZE_PACKAGE.addAll(Arrays.asList(kryoSerializePackage));
     }
+
+    /**
+     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
+     */
+    public static Set<String> getKryoSerializePackage() {
+        return KRYO_SERIALIZE_PACKAGE;
+    }
 }

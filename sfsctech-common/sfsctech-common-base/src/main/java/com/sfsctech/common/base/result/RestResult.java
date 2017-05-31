@@ -22,6 +22,18 @@ public class RestResult<T> extends BaseResult {
 
     private T result;
 
+    public RestResult() {
+
+    }
+
+    public RestResult(T result) {
+        this.result = result;
+    }
+
+    public RestResult(List<T> dataSet) {
+        this.dataSet = dataSet;
+    }
+
     public List<T> getDataSet() {
         if (null == dataSet) {
             dataSet = new ArrayList<>();

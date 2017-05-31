@@ -41,7 +41,7 @@ public class DubboConfig extends DubboConstants {
     /**
      * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
      */
-    public static String getKryoSerializePackage() {
+    public static String getKryoSerializePackagePath() {
         return ListUtil.toString(KRYO_SERIALIZE_PACKAGE, LabelConstants.COMMA);
     }
 

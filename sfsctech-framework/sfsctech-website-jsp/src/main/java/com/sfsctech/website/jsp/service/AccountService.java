@@ -1,6 +1,7 @@
 package com.sfsctech.website.jsp.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.common.base.result.RpcResult;
 import com.sfsctech.common.constants.StatusConstants;
 import com.sfsctech.common.util.RandomUtil;
@@ -24,7 +25,6 @@ public class AccountService {
     @Reference
     private SysAccountService accountService;
 
-
     public void batchSave() {
         List<SysAccountDto> dataSet = new ArrayList<>();
         SysAccountDto dto;
@@ -43,8 +43,8 @@ public class AccountService {
         result.getDataSet().forEach(System.out::println);
     }
 
-    public List<SysAccountDto> findByPage(int pageNum, int pageSize) {
-        RpcResult<SysAccountDto> result = accountService.findByPage(pageNum, pageSize);
-        return result.getDataSet();
+    public PagingInfo<SysAccountDto> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        RpcResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
+        return result.getResult();
     }
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +26,6 @@ import java.util.Properties;
 @MapperScan("com.sfsctech.*.mapper")
 public class MybatisConfigurer {
 
-    /**
-     * mybatis分页拦截器方言属性键
-     */
-    private static final String DIALECT_KEY = "dialect";
-    /**
-     * mybatis分页拦截器方言属性值
-     */
-    private static final String DIALECT_VALUE = "com.github.pagehelper.PageHelper";
-
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource datasource() throws Exception {
@@ -41,24 +33,10 @@ public class MybatisConfigurer {
     }
 
     @Bean
-    public PageInterceptor pageInterceptor() {
-        PageInterceptor page = new PageInterceptor();
-        Properties props = new Properties();
-        props.setProperty(DIALECT_KEY, DIALECT_VALUE);
-//        props.setProperty("offsetAsPageNum", "true");
-//        props.setProperty("rowBoundsWithCount", "true");
-//        props.setProperty("reasonable", "true");
-        page.setProperties(props);
-        return page;
-    }
-
-    @Bean
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(datasource());
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));//指定xml文件位置
-        factoryBean.setPlugins(new PageInterceptor[]{pageInterceptor()});
         return factoryBean.getObject();
     }
-
 }

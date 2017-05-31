@@ -1,6 +1,9 @@
 package com.sfsctech.framework.service.read;
 
+import com.github.pagehelper.PageInfo;
+import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.framework.model.domain.TSysAccount;
+import com.sfsctech.framework.model.dto.SysAccountDto;
 
 import java.util.List;
 
@@ -16,5 +19,5 @@ public interface AccountReadService {
 
     List<TSysAccount> findByAccount(String account);
 
-    List<TSysAccount> findByPage(int pageNum, int pageSize);
+    PageInfo<TSysAccount> findByPage(PagingInfo<SysAccountDto> pagingInfo);
 }

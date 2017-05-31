@@ -79,7 +79,7 @@ public class ClassUtil extends ClassUtils {
             return classes;
         }
         for (String packageName : basePackage.split(LabelConstants.COMMA)) {
-            String packageDirName = basePackage.replace(LabelConstants.PERIOD.charAt(0), LabelConstants.FORWARD_SLASH.charAt(0));
+            String packageDirName = packageName.trim().replace(LabelConstants.PERIOD.charAt(0), LabelConstants.FORWARD_SLASH.charAt(0));
             // 定义一个枚举的集合 并进行循环来处理这个目录下的things
             Enumeration<URL> dirs;
             try {

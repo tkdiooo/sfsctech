@@ -1,5 +1,6 @@
 package com.sfsctech.website.jsp.controller;
 
+import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.jsp.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,11 @@ public class IndexController {
 
     @GetMapping("index.html")
     public String index() {
-        List<SysAccountDto> list = accountService.findByPage(1, 10);
-        list.forEach(System.out::println);
+        PagingInfo<SysAccountDto> pagingInfo = new PagingInfo<>();
+        pagingInfo.setStart(1);
+        pagingInfo = accountService.findByPage(pagingInfo);
+        System.out.println(pagingInfo);
+        pagingInfo.getData().forEach(System.out::println);
         System.out.println("IndexController.index()");
         return "index";
     }

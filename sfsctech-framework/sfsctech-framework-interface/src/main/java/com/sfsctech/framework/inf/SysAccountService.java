@@ -1,5 +1,6 @@
 package com.sfsctech.framework.inf;
 
+import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.common.base.result.RpcResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
@@ -19,5 +20,5 @@ public interface SysAccountService {
 
     RpcResult<SysAccountDto> findByAccount(String account);
 
-    RpcResult<SysAccountDto> findByPage(int pageNum, int pageSize);
+    RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo);
 }
