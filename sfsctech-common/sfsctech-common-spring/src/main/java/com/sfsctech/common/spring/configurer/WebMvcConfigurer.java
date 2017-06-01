@@ -3,7 +3,6 @@ package com.sfsctech.common.spring.configurer;
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
-import com.sfsctech.common.spring.properties.AppConfig;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -12,15 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import javax.annotation.Resource;
 
 /**
  * Class WebMvcConfigurer

@@ -13,12 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech base support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-rpc</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.sfsctech.framework</groupId>
             <artifactId>sfsctech-framework-model</artifactId>

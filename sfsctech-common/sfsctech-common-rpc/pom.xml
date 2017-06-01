@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech base support -->
+        <!-- sfsctech-common-base support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-base</artifactId>
@@ -22,13 +22,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <optional>true</optional>
         </dependency>
         <!--hibernate-validator-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

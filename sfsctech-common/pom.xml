@@ -58,39 +58,44 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <!-- sfsctech commons -->
+            <!-- sfsctech-common-base support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-base</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
+            <!-- sfsctech-common-constants support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-constants</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
+            <!-- sfsctech-common-util support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-util</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
+            <!-- sfsctech-common-spring support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-spring</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
+            <!-- sfsctech-common-rpc support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-rpc</artifactId>
                 <version>${sfsctech.common.version}</version>
             </dependency>
+            <!-- sfsctech-common-exception support -->
             <dependency>
                 <groupId>com.sfsctech.common</groupId>
                 <artifactId>sfsctech-common-exception</artifactId>

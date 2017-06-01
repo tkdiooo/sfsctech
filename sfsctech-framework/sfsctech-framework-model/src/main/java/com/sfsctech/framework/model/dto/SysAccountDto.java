@@ -1,6 +1,9 @@
 package com.sfsctech.framework.model.dto;
 
 import com.sfsctech.common.base.model.BaseDto;
+import com.sfsctech.common.constants.VerifyConstants;
+import org.hibernate.validator.constraints.Length;
+import com.sun.istack.internal.NotNull;
 
 import java.util.Date;
 
@@ -16,10 +19,16 @@ public class SysAccountDto extends BaseDto {
 
     private Long userguid;
 
+    @NotNull
+    @Length(min = 5, max = 20, message = VerifyConstants.Length)
     private String account;
 
+    @NotNull
+    @Length(min = 8, max = 20, message = VerifyConstants.Length)
     private String password;
 
+    @NotNull
+    @Length(min = 8, max = 20, message = VerifyConstants.Length)
     private String initpassword;
 
     private Integer sort;
