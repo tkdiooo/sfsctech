@@ -1,5 +1,6 @@
 package com.sfsctech.common.base.result;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import java.util.Map;
  * @author 张麒 2017/3/21.
  * @version Description:
  */
-public class ValidatorResult {
+public class ValidatorResult implements Serializable {
+
+    private static final long serialVersionUID = -3190566582800325443L;
 
     private boolean hasErrors = false;
 

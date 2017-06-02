@@ -3,7 +3,9 @@ package com.sfsctech.website.jsp.service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.common.base.result.ValidatorResult;
 import com.sfsctech.common.constants.StatusConstants;
+import com.sfsctech.common.rpc.util.ValidatorUtil;
 import com.sfsctech.common.util.RandomUtil;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.dto.SysAccountDto;
@@ -44,6 +46,11 @@ public class AccountService {
     }
 
     public PagingInfo<SysAccountDto> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        SysAccountDto dto = new SysAccountDto();
+        dto.setAccount("ssssss");
+        dto.setPassword("ssssssss");
+        dto.setInitpassword("ssssssss");
+        pagingInfo.setCondition(dto);
         RpcResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
         return result.getResult();
     }

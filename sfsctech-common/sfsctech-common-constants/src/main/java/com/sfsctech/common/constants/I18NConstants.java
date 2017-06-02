@@ -39,6 +39,11 @@ public class I18NConstants {
         Exception404("tips.exception.404"),
 
         /**
+         * 数据校验错误
+         */
+        ExceptionValidator("tips.exception.validator"),
+
+        /**
          * 操作成功
          */
         OperateSuccess("tips.operate.success"),

@@ -3,8 +3,9 @@ package com.sfsctech.framework.model.dto;
 import com.sfsctech.common.base.model.BaseDto;
 import com.sfsctech.common.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
-import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Date;
  * @version Description:
  */
 public class SysAccountDto extends BaseDto {
+
+    private static final long serialVersionUID = 2595005491690406590L;
 
     private Long guid;
 

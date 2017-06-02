@@ -1,8 +1,7 @@
-package com.sfsctech.common.exception.excp;
+package com.sfsctech.common.base.exception;
 
-import com.sfsctech.common.base.exception.BaseException;
-import com.sfsctech.common.constants.I18NConstants.Tips;
 import com.sfsctech.common.base.result.ValidatorResult;
+import com.sfsctech.common.constants.I18NConstants.Tips;
 
 /**
  * Class ValidatorException
@@ -15,6 +14,10 @@ public class VerifyException extends BaseException {
     private static final long serialVersionUID = -3534275511138703794L;
 
     private ValidatorResult result;
+
+    public VerifyException() {
+
+    }
 
     public VerifyException(Tips tips, String... params) {
         super(tips, params);

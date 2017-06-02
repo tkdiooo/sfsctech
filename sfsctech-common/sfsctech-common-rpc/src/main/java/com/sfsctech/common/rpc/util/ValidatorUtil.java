@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class ValidatorUtil {
 
-    public static Validator validator = SpringContextUtil.getBean(Validator.class);
+    public static Validator validator = (Validator) SpringContextUtil.getBean("validator");
 
     public static <T> ValidatorResult validate(T t) {
         ValidatorResult result = new ValidatorResult();

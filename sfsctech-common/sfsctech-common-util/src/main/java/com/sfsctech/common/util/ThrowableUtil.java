@@ -1,7 +1,12 @@
 package com.sfsctech.common.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sfsctech.common.base.exception.BaseException;
+import com.sfsctech.common.base.exception.BizException;
+import com.sfsctech.common.base.exception.VerifyException;
+import com.sfsctech.common.base.result.ValidatorResult;
 import com.sfsctech.common.constants.CommonConstants;
+import com.sfsctech.common.constants.I18NConstants;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,6 +19,68 @@ import java.lang.reflect.InvocationTargetException;
  * @version Description：
  */
 public class ThrowableUtil {
+
+    /**
+     * 抛出数据校验异常
+     *
+     * @param tips   Tips
+     * @param params params
+     */
+    public static void throwVerifyException(I18NConstants.Tips tips, String... params) {
+        throw new VerifyException(tips, params);
+    }
+
+    /**
+     * 抛出数据校验异常
+     *
+     * @param message message
+     * @param params  params
+     */
+    public static void throwVerifyException(String message, String... params) {
+        throw new VerifyException(message, params);
+    }
+
+    /**
+     * 抛出数据校验异常
+     *
+     * @param tips   Tips
+     * @param result ValidatorResult
+     * @param params params
+     */
+    public static void throwVerifyException(I18NConstants.Tips tips, ValidatorResult result, String... params) {
+        throw new VerifyException(tips, result, params);
+    }
+
+    /**
+     * 抛出数据校验异常
+     *
+     * @param message message
+     * @param result  ValidatorResult
+     * @param params  params
+     */
+    public static void throwVerifyException(String message, ValidatorResult result, String... params) {
+        throw new VerifyException(message, result, params);
+    }
+
+    /**
+     * 抛出业务异常
+     *
+     * @param tips   Tips
+     * @param params params
+     */
+    public static void throwBizException(I18NConstants.Tips tips, String... params) {
+        throw new BizException(tips, params);
+    }
+
+    /**
+     * 抛出业务异常
+     *
+     * @param message message
+     * @param params  params
+     */
+    public static void throwBizException(String message, String... params) {
+        throw new BizException(message, params);
+    }
 
     /**
      * 抛出运行时异常
@@ -108,11 +175,21 @@ public class ThrowableUtil {
      * @return Root Message
      */
     public static String getRootMessage(Throwable e, String defaults) {
-        Throwable t = getRootCause(e);
-        if (t == null) {
-            return defaults;
+        String msg;
+        if (e instanceof BaseException) {
+            BaseException ext = (BaseException) e;
+            if (null != ext.getTips()) {
+                msg = ResourceUtil.getMessage(ext.getTips(), ext.getParams());
+            } else {
+                msg = ext.getMessage();
+            }
+        } else {
+            Throwable t = getRootCause(e);
+            if (t == null) {
+                return defaults;
+            }
+            msg = t.toString();
         }
-        String msg = t.toString();
         return StringUtil.isEmpty(msg) ? defaults : msg;
     }
 

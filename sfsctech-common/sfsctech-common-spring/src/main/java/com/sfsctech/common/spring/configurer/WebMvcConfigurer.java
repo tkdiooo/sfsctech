@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.validation.Validator;
@@ -62,10 +63,15 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public Validator getValidator() {
-        LocalValidatorFactoryBean mvcValidator = new LocalValidatorFactoryBean();
-        mvcValidator.setProviderClass(HibernateValidator.class);
-        mvcValidator.setValidationMessageSource(messageSource);
-        return mvcValidator;
+        return validator();
+    }
+
+    @Bean
+    public Validator validator() {
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setProviderClass(HibernateValidator.class);
+        validator.setValidationMessageSource(messageSource);
+        return validator;
     }
 
     /**

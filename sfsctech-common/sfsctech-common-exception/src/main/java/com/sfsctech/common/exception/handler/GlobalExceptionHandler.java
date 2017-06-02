@@ -1,12 +1,10 @@
 package com.sfsctech.common.exception.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sfsctech.common.base.handler.BaseExceptionHandler;
+import com.sfsctech.common.base.exception.BizException;
+import com.sfsctech.common.base.exception.VerifyException;
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.I18NConstants;
-import com.sfsctech.common.exception.excp.BizException;
-import com.sfsctech.common.exception.excp.VerifyException;
-import com.sfsctech.common.exception.util.BaseExceptionUtil;
 import com.sfsctech.common.spring.properties.AppConfig;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResourceUtil;
@@ -40,10 +38,10 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) throws Exception {
-        logger.info("业务异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(e));
+        json.put(CommonConstants.MESSAGES, ThrowableUtil.getRootMessage(e));
+        logger.info("业务异常捕获：" + json.getString(CommonConstants.MESSAGES));
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -52,11 +50,11 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(VerifyException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) throws Exception {
-        logger.warn("校验异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
         JSONObject json = new JSONObject();
         json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, BaseExceptionUtil.getRootMessage(e));
+        json.put(CommonConstants.MESSAGES, ThrowableUtil.getRootMessage(e));
         json.put(CommonConstants.MESSAGES_DETAILS, e.getResult());
+        logger.warn("校验异常捕获：" + json.getString(CommonConstants.MESSAGES));
         return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

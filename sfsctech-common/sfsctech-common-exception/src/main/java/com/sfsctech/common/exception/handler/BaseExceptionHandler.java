@@ -1,4 +1,4 @@
-package com.sfsctech.common.base.handler;
+package com.sfsctech.common.exception.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.common.util.HttpUtil;

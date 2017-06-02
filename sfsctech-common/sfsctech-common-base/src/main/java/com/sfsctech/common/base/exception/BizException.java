@@ -1,4 +1,4 @@
-package com.sfsctech.common.exception.excp;
+package com.sfsctech.common.base.exception;
 
 import com.sfsctech.common.base.exception.BaseException;
 import com.sfsctech.common.constants.I18NConstants.Tips;
@@ -12,6 +12,10 @@ import com.sfsctech.common.constants.I18NConstants.Tips;
 public class BizException extends BaseException {
 
     private static final long serialVersionUID = -2598217010733719435L;
+
+    public BizException(){
+
+    }
 
     public BizException(Tips tips, String... params) {
         super(tips, params);

@@ -18,6 +18,11 @@
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-constants</artifactId>
         </dependency>
+        <!-- sfsctech-common-base support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-base</artifactId>
+        </dependency>
         <!-- apache commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
