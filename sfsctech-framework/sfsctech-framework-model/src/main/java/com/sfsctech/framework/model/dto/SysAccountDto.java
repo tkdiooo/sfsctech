@@ -3,7 +3,6 @@ package com.sfsctech.framework.model.dto;
 import com.sfsctech.common.base.model.BaseDto;
 import com.sfsctech.common.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
