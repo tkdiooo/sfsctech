@@ -54,7 +54,6 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
-        ThrowableUtil.throwBizException(I18NConstants.Tips.ExceptionNetwork);
         PageInfo<TSysAccount> page = accountReadService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
         page.getList().forEach(account -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(SysAccountDto.class, account)));
