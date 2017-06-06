@@ -16,77 +16,72 @@ import org.tmatesoft.svn.core.wc.*;
 import java.io.File;
 
 /**
- * Class SVNUtil
+ * Class SvnHelper
  *
- * @author 张麒 2017/6/5.
+ * @author 张麒 2017/6/6.
  * @version Description:
  */
-public class SVNUtil {
+public class SvnHelper {
 
-    public static final Logger logger = LoggerFactory.getLogger(SVNUtil.class);
+    private final Logger logger = LoggerFactory.getLogger(SvnHelper.class);
 
     private String uri;
     private String username;
     private String password;
 
-    /**
-     * 验证登录svn
-     */
-    public SVNClientManager initSVNClientManager() {
-        // 初始化版本库
-        setupLibrary();
+    private SVNClientManager clientManager;
+    private ISVNAuthenticationManager authManager;
+    private SVNRepository repository;
 
-        // 创建库连接
-        SVNRepository repository;
-        try {
-            repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(uri));
-        } catch (SVNException e) {
-            logger.error(ThrowableUtil.getRootMessage(e), e);
-            return null;
-        }
-
-        // 身份验证
-        ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(username, password.toCharArray());
-
-        // 创建身份验证管理器
-        repository.setAuthenticationManager(authManager);
-
-        DefaultSVNOptions options = SVNWCUtil.createDefaultOptions(true);
-        return SVNClientManager.newInstance(options, authManager);
+    public SvnHelper(String uri, String username, String password) throws SVNException {
+        this.uri = uri;
+        this.username = username;
+        this.password = password;
+        this.initLibrary();
+        this.initISVNAuthenticationManager();
+        this.initSVNRepository();
+        this.initSVNClientManager();
     }
 
     /**
      * 通过不同的协议初始化版本库
      */
-    public static void setupLibrary() {
+    private void initLibrary() {
         DAVRepositoryFactory.setup();
         SVNRepositoryFactoryImpl.setup();
         FSRepositoryFactory.setup();
     }
 
     /**
-     * Make directory in svn repository
+     * 初始化SVN鉴权
+     */
+    private void initISVNAuthenticationManager() {
+        this.authManager = SVNWCUtil.createDefaultAuthenticationManager(username, password.toCharArray());
+    }
+
+    /**
+     * 初始化SVN版本库
      *
-     * @param clientManager
-     * @param url           eg: http://svn.ambow.com/wlpt/bsp/trunk
-     * @param commitMessage
-     * @return
      * @throws SVNException
      */
-    public static SVNCommitInfo makeDirectory(SVNClientManager clientManager, SVNURL url, String commitMessage) {
-        try {
-            return clientManager.getCommitClient().doMkDir(new SVNURL[]{url}, commitMessage);
-        } catch (SVNException e) {
-            logger.error(ThrowableUtil.getRootMessage(e), e);
-        }
-        return null;
+    private void initSVNRepository() throws SVNException {
+        this.repository = SVNRepositoryFactory.create(SVNURL.parseURIEncoded(uri));
+        this.repository.setAuthenticationManager(this.authManager);
     }
+
+    /**
+     * 初始化SVNClientManager
+     */
+    private void initSVNClientManager() {
+        DefaultSVNOptions options = SVNWCUtil.createDefaultOptions(true);
+        this.clientManager = SVNClientManager.newInstance(options, authManager);
+    }
+
 
     /**
      * Imports an unversioned directory into a repository location denoted by a
      * destination URL
      *
-     * @param clientManager
      * @param localPath     a local unversioned directory or singal file that will be imported into a
      *                      repository;
      * @param dstURL        a repository location where the local unversioned directory/file will be
@@ -95,7 +90,7 @@ public class SVNUtil {
      * @param isRecursive   递归
      * @return
      */
-    public static SVNCommitInfo importDirectory(SVNClientManager clientManager, File localPath, SVNURL dstURL, String commitMessage, boolean isRecursive) {
+    public SVNCommitInfo importDirectory(File localPath, SVNURL dstURL, String commitMessage, boolean isRecursive) {
         try {
             return clientManager.getCommitClient().doImport(localPath, dstURL, commitMessage, null, true, true, SVNDepth.fromRecurse(isRecursive));
         } catch (SVNException e) {
@@ -107,10 +102,9 @@ public class SVNUtil {
     /**
      * Puts directories and files under version control
      *
-     * @param clientManager SVNClientManager
-     * @param wcPath        work copy path
+     * @param wcPath work copy path
      */
-    public static void addEntry(SVNClientManager clientManager, File wcPath) {
+    public void addEntry(File wcPath) {
         try {
             clientManager.getWCClient().doAdd(new File[]{wcPath}, true, false, false, SVNDepth.INFINITY, false, false, true);
         } catch (SVNException e) {
@@ -121,35 +115,32 @@ public class SVNUtil {
     /**
      * Collects status information on a single Working Copy item
      *
-     * @param clientManager
-     * @param wcPath        local item's path
-     * @param remote        true to check up the status of the item in the repository,
-     *                      that will tell if the local item is out-of-date (like '-u' option in the SVN client's
-     *                      'svn status' command), otherwise false
+     * @param wcPath local item's path
+     * @param remote true to check up the status of the item in the repository,
+     *               that will tell if the local item is out-of-date (like '-u' option in the SVN client's
+     *               'svn status' command), otherwise false
      * @return
      * @throws SVNException
      */
-    public static SVNStatus showStatus(SVNClientManager clientManager, File wcPath, boolean remote) {
-        SVNStatus status = null;
+    public SVNStatus showStatus(File wcPath, boolean remote) {
         try {
-            status = clientManager.getStatusClient().doStatus(wcPath, remote);
+            return clientManager.getStatusClient().doStatus(wcPath, remote);
         } catch (SVNException e) {
             logger.error(ThrowableUtil.getRootMessage(e), e);
         }
-        return status;
+        return null;
     }
 
     /**
      * Commit work copy's change to svn
      *
-     * @param clientManager
      * @param wcPath        working copy paths which changes are to be committed
      * @param keepLocks     whether to unlock or not files in the repository
      * @param commitMessage commit log message
      * @return
      * @throws SVNException
      */
-    public static SVNCommitInfo commit(SVNClientManager clientManager, File wcPath, boolean keepLocks, String commitMessage) {
+    public SVNCommitInfo commit(File wcPath, boolean keepLocks, String commitMessage) {
         try {
             return clientManager.getCommitClient().doCommit(new File[]{wcPath}, keepLocks, commitMessage, null, null, false, false, SVNDepth.INFINITY);
         } catch (SVNException e) {
@@ -161,14 +152,13 @@ public class SVNUtil {
     /**
      * Updates a working copy (brings changes from the repository into the working copy).
      *
-     * @param clientManager
      * @param wcPath           working copy path
      * @param updateToRevision revision to update to
      * @param depth            update的深度：目录、子目录、文件
      * @return
      * @throws SVNException
      */
-    public static long update(SVNClientManager clientManager, File wcPath, SVNRevision updateToRevision, SVNDepth depth) {
+    public long update(File wcPath, SVNRevision updateToRevision, SVNDepth depth) {
         SVNUpdateClient updateClient = clientManager.getUpdateClient();
 
         /*
@@ -190,16 +180,14 @@ public class SVNUtil {
     /**
      * recursively checks out a working copy from url into wcDir
      *
-     * @param clientManager
-     * @param url           a repository location from where a Working Copy will be checked out
-     * @param revision      the desired revision of the Working Copy to be checked out
-     * @param destPath      the local path where the Working Copy will be placed
-     * @param depth         checkout的深度，目录、子目录、文件
+     * @param url      a repository location from where a Working Copy will be checked out
+     * @param revision the desired revision of the Working Copy to be checked out
+     * @param destPath the local path where the Working Copy will be placed
+     * @param depth    checkout的深度，目录、子目录、文件
      * @return
      * @throws SVNException
      */
-    public static long checkout(SVNClientManager clientManager, SVNURL url, SVNRevision revision, File destPath, SVNDepth depth) {
-
+    public long checkout(SVNURL url, SVNRevision revision, File destPath, SVNDepth depth) {
         SVNUpdateClient updateClient = clientManager.getUpdateClient();
         /*
          * sets externals not to be ignored during the checkout
@@ -216,13 +204,28 @@ public class SVNUtil {
         return 0;
     }
 
+    public long doExport(SVNURL url, File destPath, SVNRevision pegRevision, SVNRevision revision, String eolStyle, boolean overwrite, SVNDepth depth) {
+        SVNUpdateClient updateClient = clientManager.getUpdateClient();
+        /*
+         * sets externals not to be ignored during the checkout
+         */
+        updateClient.setIgnoreExternals(false);
+
+        try {
+            return updateClient.doExport(url, destPath, pegRevision, revision, eolStyle, overwrite, depth);
+        } catch (SVNException e) {
+            logger.error(ThrowableUtil.getRootMessage(e), e);
+        }
+        return 0;
+    }
+
     /**
      * 确定path是否是一个工作空间
      *
      * @param path
      * @return
      */
-    public static boolean isWorkingCopy(File path) {
+    public boolean isWorkingCopy(File path) {
         if (!path.exists()) {
             logger.warn("'" + path + "' not exist!");
             return false;
@@ -243,10 +246,10 @@ public class SVNUtil {
      * @param url
      * @return
      */
-    public static boolean isURLExist(SVNURL url, String username, String password) {
+    public boolean isURLExist(SVNURL url) {
         try {
             SVNRepository svnRepository = SVNRepositoryFactory.create(url);
-            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(username, password.toCharArray());
+            ISVNAuthenticationManager authManager = SVNWCUtil.createDefaultAuthenticationManager(this.username, this.password.toCharArray());
             svnRepository.setAuthenticationManager(authManager);
             SVNNodeKind nodeKind = svnRepository.checkPath("", -1);
             return nodeKind != SVNNodeKind.NONE;
@@ -255,4 +258,29 @@ public class SVNUtil {
         }
         return false;
     }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public SVNClientManager getClientManager() {
+        return clientManager;
+    }
+
+    public ISVNAuthenticationManager getAuthManager() {
+        return authManager;
+    }
+
+    public SVNRepository getRepository() {
+        return repository;
+    }
+
 }

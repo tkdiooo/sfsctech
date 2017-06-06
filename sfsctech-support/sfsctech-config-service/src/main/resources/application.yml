@@ -15,3 +15,7 @@ spring:
 #        git:
 #          uri: https://github.com/tkdiooo/config.git
 #          search-paths: config
+
+logback:
+  file:
+    space: D:\logback

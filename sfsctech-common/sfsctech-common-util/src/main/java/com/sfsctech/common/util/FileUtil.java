@@ -10,8 +10,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -300,6 +303,15 @@ public class FileUtil extends FileUtils {
         }
     }
 
+    /**
+     * 图片压缩
+     *
+     * @param origPath
+     * @param newPath
+     * @param width
+     * @param height
+     * @throws IOException
+     */
     public static void imageResize(String origPath, String newPath, int width, int height) throws IOException {
         File origFile = new File(origPath);
         Assert.isFile(origFile, "原文件不是标准文件");
@@ -321,5 +333,34 @@ public class FileUtil extends FileUtils {
         // 缩略图文件
         File newFile = new File(newPath);
         ImageIO.write((BufferedImage) image, suffix, newFile);
+    }
+
+    /**
+     * 获取文件MD5信息
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
+    public static String getFileMD5(File file) throws IOException, NoSuchAlgorithmException {
+        if (!file.isFile()) {
+            return null;
+        }
+        MessageDigest digest;
+        FileInputStream in = null;
+        byte buffer[] = new byte[8192];
+        int len;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            in = new FileInputStream(file);
+            while ((len = in.read(buffer)) != -1) {
+                digest.update(buffer, 0, len);
+            }
+            BigInteger bigInt = new BigInteger(1, digest.digest());
+            return bigInt.toString(16);
+        } finally {
+            close(in);
+        }
     }
 }

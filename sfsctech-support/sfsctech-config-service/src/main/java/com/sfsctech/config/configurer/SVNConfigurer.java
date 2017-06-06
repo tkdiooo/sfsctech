@@ -1,10 +1,9 @@
 package com.sfsctech.config.configurer;
 
-import com.sfsctech.config.util.SVNUtil;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.sfsctech.config.util.SvnHelper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.tmatesoft.svn.core.wc.SVNClientManager;
 
 /**
  * Class SVNConfigurer
@@ -15,10 +14,15 @@ import org.tmatesoft.svn.core.wc.SVNClientManager;
 @Configuration
 public class SVNConfigurer {
 
+    @Value("${spring.cloud.config.server.svn.uri}")
+    private String uri;
+    @Value("${spring.cloud.config.server.svn.username}")
+    private String username;
+    @Value("${spring.cloud.config.server.svn.password}")
+    private String password;
+
     @Bean
-    @ConfigurationProperties(prefix = "spring.cloud.config.server.svn")
-    public SVNClientManager svnClientManager() throws Exception {
-        SVNUtil svn = new SVNUtil();
-        return svn.initSVNClientManager();
+    public SvnHelper svnHelper() throws Exception {
+        return new SvnHelper(uri, username, password);
     }
 }
