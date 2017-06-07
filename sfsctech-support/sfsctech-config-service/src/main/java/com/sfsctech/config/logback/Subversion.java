@@ -4,9 +4,14 @@ import com.sfsctech.common.constants.LabelConstants;
 import com.sfsctech.common.util.FileUtil;
 import com.sfsctech.config.util.SvnHelper;
 import com.sfsctech.config.util.SvnUtil;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +24,7 @@ import org.tmatesoft.svn.core.wc.SVNUpdateClient;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Class Subversion
@@ -35,56 +41,15 @@ public class Subversion {
     private SvnUtil svnUtil;
 
     @GetMapping("/{label}/{name}/{profile}")
-    public String index(@PathVariable("name") String name, @PathVariable("profile") String profile, @PathVariable("label") String label) {
-        System.out.println(svnUtil.download(name, profile, label));
-        return "";
+    public ResponseEntity<byte[]> index(@PathVariable("name") String name, @PathVariable("profile") String profile, @PathVariable("label") String label) throws IOException {
+        logger.info("请求文件信息：{label:" + label + ",name:" + name + ",profile:" + profile + "}");
+        File file = svnUtil.getLogbackFile(name, profile, label);
+        if (null != file) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", file.getName());
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
+        }
+        return null;
     }
-//
-//    public void download() {
-//        try {
-//            File wc_project = new File("d:/logback-deve.xml");
-//
-//            SVNUpdateClient updateClient = svnHelper.getClientManager().getUpdateClient();
-//            updateClient.setIgnoreExternals(false);
-//            SVNURL repositoryURL = SVNURL.parseURIEncoded(svnHelper.getUri()).appendPath("framework", false).appendPath("logback-deve.xml", false);
-//            updateClient.doExport(repositoryURL, wc_project, SVNRevision.HEAD, SVNRevision.HEAD, "downloadModel", true, SVNDepth.INFINITY);
-//        } catch (SVNException e) {
-//            e.printStackTrace();
-//            logger.error(e.getMessage(), e);
-//        }
-//    }
-
-//    public boolean updateProjectFromSvn(Project project) {
-//        if(null == project || null == rb.getString("svn.url")){
-//            return false;
-//        }
-//        project.setSvnUrl(rb.getString("svn.url"));
-//
-//        SVNClientManager clientManager = SVNUtil.authSvn(project.getSvnUrl(), username, password);
-//        if (null == clientManager) {
-//            logger.error("SVN login error! >>> url:" + project.getSvnUrl()
-//                    + " username:" + username + " password:" + password);
-//            return false;
-//        }
-//
-//        // 注册一个更新事件处理器
-//        clientManager.getCommitClient().setEventHandler(new UpdateEventHandler());
-//
-//        SVNURL repositoryURL = null;
-//        try {
-//            // eg: http://svn.ambow.com/wlpt/bsp
-//            repositoryURL = SVNURL.parseURIEncoded(project.getSvnUrl()).appendPath("trunk/"+project.getName(), false);
-//        } catch (SVNException e) {
-//            logger.error(e.getMessage(),e);
-//            return false;
-//        }
-//
-//        File ws = new File(new File(workspace), project.getName());
-//        if(!SVNWCUtil.isVersionedDirectory(ws)){
-//            SVNUtil.checkout(clientManager, repositoryURL, SVNRevision.HEAD, new File(workspace), SVNDepth.INFINITY);
-//        }else{
-//            SVNUtil.update(clientManager, ws, SVNRevision.HEAD, SVNDepth.INFINITY);
-//        }
-//        return true;
-//    }
 }

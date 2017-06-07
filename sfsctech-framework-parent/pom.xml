@@ -74,6 +74,12 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- spring-cloud-config-client -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-config-client</artifactId>
+                <version>1.2.2.RELEASE</version>
+            </dependency>
             <!-- Test -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

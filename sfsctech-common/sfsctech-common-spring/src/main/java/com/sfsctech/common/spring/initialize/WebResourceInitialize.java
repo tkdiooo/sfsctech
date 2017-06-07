@@ -19,7 +19,7 @@ import javax.servlet.ServletContext;
 public class WebResourceInitialize extends WebApplicationObjectSupport implements CommandLineRunner {
 
     @Autowired
-    private AppConfig application;
+    private AppConfig appConfig;
 
     /**
      * 设置网页资源地址至ServletContext
@@ -30,7 +30,9 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
     @Override
     public void run(String... args) throws Exception {
         ServletContext servletContext = super.getWebApplicationContext().getServletContext();
-        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, application.STATIC_RESOURCES);
+        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, appConfig.STATIC_RESOURCES);
+        servletContext.setAttribute(CommonConstants.CONTEXT_PATH, servletContext.getContextPath());
+        servletContext.setAttribute(CommonConstants.LOGBACK_CONFIG_FILE_LOCATION_PARAM, appConfig.LOGBACK_CONFIG_URL);
         servletContext.setAttribute(CommonConstants.CONTEXT_PATH, servletContext.getContextPath());
     }
 }

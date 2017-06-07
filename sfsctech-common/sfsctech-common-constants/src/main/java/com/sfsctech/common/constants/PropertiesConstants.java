@@ -26,7 +26,6 @@ public class PropertiesConstants {
      * Properties：sso.logout.url
      */
     public final static String SSO_LOGOUT_URL = "sso.logout.url";
-
     // spring.http.multipart Attribute
     //-------------------------------------------------------------------------------------------
     /**
@@ -89,4 +88,22 @@ public class PropertiesConstants {
      */
     public final static String DUBBO_PROTOCOL_KRYO = "dubbo.protocol.kryo";
 
+    // spring.cloud.config/logback Attribute
+    //-------------------------------------------------------------------------------------------
+    /**
+     * Properties：spring.cloud.config.uri
+     */
+    public final static String LOGBACK_URI = "spring.cloud.config.uri";
+    /**
+     * Properties：spring.cloud.logback.name
+     */
+    public final static String LOGBACK_NAME = "spring.cloud.logback.name";
+    /**
+     * Properties：spring.cloud.logback.profile
+     */
+    public final static String LOGBACK_PROFILE = "spring.cloud.logback.profile";
+    /**
+     * Properties：spring.cloud.logback.label
+     */
+    public final static String LOGBACK_LABEL = "spring.cloud.logback.label";
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.SVNDepth;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNURL;
-import org.tmatesoft.svn.core.wc.SVNInfo;
 import org.tmatesoft.svn.core.wc.SVNRevision;
+import org.tmatesoft.svn.core.wc.SVNStatus;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 import java.io.File;
@@ -26,7 +26,7 @@ import java.io.File;
 @Component
 public class SvnUtil {
 
-    public final Logger logger = LoggerFactory.getLogger(SvnUtil.class);
+    private final Logger logger = LoggerFactory.getLogger(SvnUtil.class);
 
     @Autowired
     private SvnHelper svnHelper;
@@ -34,45 +34,43 @@ public class SvnUtil {
     @Value("${logback.file.space}")
     private String filespace;
 
+    public String logbackLabel = "logback";
 
-    public boolean update(String label) {
+
+    public void update(String label) {
+        Long version = 0L;
         try {
             File workspace = new File(filespace);
-            SVNURL repositoryURL = SVNURL.parseURIEncoded(svnHelper.getUri()).appendPath(label, false);
             if (!SVNWCUtil.isVersionedDirectory(workspace)) {
-                svnHelper.checkout(repositoryURL, SVNRevision.HEAD, workspace, SVNDepth.INFINITY);
+                SVNURL repositoryURL = SVNURL.parseURIEncoded(svnHelper.getUri()).appendPath(label, false);
+                version = svnHelper.checkout(repositoryURL, SVNRevision.HEAD, workspace, SVNDepth.INFINITY);
             } else {
-                svnHelper.update(workspace, SVNRevision.HEAD, SVNDepth.INFINITY);
+                version = svnHelper.update(workspace, SVNRevision.HEAD, SVNDepth.INFINITY);
             }
         } catch (SVNException e) {
             logger.error(ThrowableUtil.getRootMessage(e), e);
-            return false;
         }
-        return true;
+        logger.info("更新工作空间文件：" + filespace + "，version：" + version);
     }
 
-    public String download(String name, String profile, String label) {
+    public File getLogbackFile(String name, String profile, String label) {
         String fileName = name + LabelConstants.DASH + profile + ".xml";
-        File filePath = new File(filespace + LabelConstants.FORWARD_SLASH + fileName);
+        // 工作空间不存在，checkout工作空间
         if (!FileUtil.isExists(filespace)) {
             update(label);
-        } else {
-
         }
         try {
-            SVNURL repositoryURL = SVNURL.parseURIEncoded(svnHelper.getUri()).appendPath(label, false).appendPath(fileName, false);
-            SVNInfo info = svnHelper.getClientManager().getWCClient().doInfo(repositoryURL, SVNRevision.HEAD, SVNRevision.HEAD);
-            SVNInfo info2 = svnHelper.getClientManager().getWCClient().doInfo(filePath, SVNRevision.HEAD);
-            System.out.println(FileUtil.getFileMD5(filePath));
-            System.out.println(FileUtil.getFileMD5(info.getFile()));
-
-//            info.getCommittedRevision().getNumber();
-//            FileUtil
-//            result = info.getCommittedRevision().getNumber();
-            svnHelper.doExport(repositoryURL, filePath, SVNRevision.HEAD, SVNRevision.HEAD, "downloadFile", true, SVNDepth.INFINITY);
+            File file = new File(filespace + LabelConstants.FORWARD_SLASH + fileName);
+            SVNStatus status = svnHelper.showStatus(file, true);
+            // 文件不存在 || 文件需要更新版本
+            if (!file.exists() || -1 != status.getRemoteRevision().getNumber()) {
+                Long version = svnHelper.update(file, SVNRevision.HEAD, SVNDepth.INFINITY);
+                logger.info("更新文件：" + fileName + "，version：" + version + "，至工作空间：" + filespace + "");
+            }
+            return file;
         } catch (Exception e) {
             logger.error(ThrowableUtil.getRootMessage(e), e);
         }
-        return filePath.getPath();
+        return null;
     }
 }

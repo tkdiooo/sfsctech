@@ -49,4 +49,15 @@ public class CommonConstants {
      */
     public final static String CONTEXT_PATH = "context_path";
 
+    // Logback Setting Attribute
+    //-------------------------------------------------------------------------------------------
+    /**
+     * 配置文件地址
+     */
+    public static final String LOGBACK_CONFIG_FILE_LOCATION_PARAM = "logbackConfigLocation";
+
+    /**
+     * 是否显示WebAppRoot
+     */
+    public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logbackExposeWebAppRoot";
 }
