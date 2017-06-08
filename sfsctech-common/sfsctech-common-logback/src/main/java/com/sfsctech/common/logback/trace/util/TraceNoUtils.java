@@ -1,8 +1,11 @@
 package com.sfsctech.common.logback.trace.util;
 
+import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
+
+import java.util.UUID;
 
 /**
  * Class TraceNoUtils
@@ -12,12 +15,12 @@ import org.slf4j.MDC;
  */
 public class TraceNoUtils {
 
-
     /**
      * 产生新的traceNo,并放到MDC中
      */
     public static void newTraceNo() {
-        MDC.put("traceNo", RandomStringUtils.randomAlphanumeric(12));
+        TraceIdUtil.setTraceId(RandomStringUtils.randomAlphanumeric(12));
+//        MDC.put("traceNo", RandomStringUtils.randomAlphanumeric(12));
     }
 
     /**
@@ -38,13 +41,14 @@ public class TraceNoUtils {
      * @return
      */
     public static String getTraceNo() {
-        return MDC.get("traceNo");
+        return TraceIdUtil.getTraceId();
+//        MDC.get("traceNo");
     }
 
     /**
      * 清除MDC中的traceNo
      */
     public static void clearTraceNo() {
-        MDC.remove("traceNo");
+//        MDC.remove("traceNo");
     }
 }

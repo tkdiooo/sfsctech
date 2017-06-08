@@ -21,9 +21,8 @@
 			<!-- 小于level级别的日志会被过滤掉 -->
 			<level>INFO</level>
 		</filter>
-		<encoder class="com.sfsctech.common.logback.trace.encoder.TraceNoPatternLayoutEncoder">
+		<encoder>
 			<pattern>${default_pattern}</pattern>
-			<synchToMDC>false</synchToMDC>
 		</encoder>
 	</appender>
 

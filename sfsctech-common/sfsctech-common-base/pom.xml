@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-constants</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -24,10 +29,6 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-constants</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

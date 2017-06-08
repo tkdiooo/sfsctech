@@ -4,7 +4,6 @@ import com.alibaba.dubbo.common.utils.ReflectUtils;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.alibaba.dubbo.rpc.*;
 import com.sfsctech.common.base.exception.BaseException;
-import com.sfsctech.common.base.exception.BizException;
 import com.sfsctech.common.base.exception.VerifyException;
 import com.sfsctech.common.base.model.BaseDto;
 import com.sfsctech.common.base.model.PagingInfo;

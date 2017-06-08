@@ -17,6 +17,7 @@ public class TraceNoPatternLayout extends PatternLayout {
     @Override
     public String doLayout(ILoggingEvent event) {
         String msg = super.doLayout(event);
+        System.out.println(TraceNoUtils.getTraceNo());
         if (msg != null && event.getThrowableProxy() != null && TraceNoUtils.getTraceNo() != null) {
             // 有异常信息的，每行都打印跟踪号
             if (msg.endsWith(LabelConstants.NEW_LINE)) {

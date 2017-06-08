@@ -17,6 +17,7 @@
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-spring</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- spring -->
         <dependency>

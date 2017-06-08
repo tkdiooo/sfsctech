@@ -66,42 +66,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- sfsctech-common-base support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-base</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <!-- sfsctech-common-constants support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-constants</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <!-- sfsctech-common-util support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-util</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <!-- sfsctech-common-spring support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-spring</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <!-- sfsctech-common-rpc support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-rpc</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
-            <!-- sfsctech-common-exception support -->
-            <dependency>
-                <groupId>com.sfsctech.common</groupId>
-                <artifactId>sfsctech-common-exception</artifactId>
-                <version>${sfsctech.common.version}</version>
-            </dependency>
             <!-- apache commons -->
             <dependency>
                 <groupId>org.apache.commons</groupId>

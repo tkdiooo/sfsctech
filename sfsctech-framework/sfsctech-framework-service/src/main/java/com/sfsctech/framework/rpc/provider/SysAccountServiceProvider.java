@@ -1,6 +1,7 @@
 package com.sfsctech.framework.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.common.base.result.RpcResult;
@@ -58,6 +59,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        System.out.println("gift provider traceId：" + TraceIdUtil.getTraceId());
         logger.info("日志消息");
         PageInfo<TSysAccount> page = accountReadService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());

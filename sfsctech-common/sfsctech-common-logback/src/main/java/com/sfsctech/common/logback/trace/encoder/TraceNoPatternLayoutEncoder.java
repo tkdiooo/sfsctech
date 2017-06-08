@@ -35,8 +35,8 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
     }
 
     public byte[] encode(ILoggingEvent event) {
+        String txt = layout.doLayout(event);
         if (synchToMDC) {
-            String txt = layout.doLayout(event);
             pushUtils.push(txt);
         }
         return super.encode(event);
