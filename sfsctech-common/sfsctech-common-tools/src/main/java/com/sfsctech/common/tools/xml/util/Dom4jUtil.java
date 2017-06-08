@@ -2,7 +2,7 @@ package com.sfsctech.common.tools.xml.util;
 
 import com.sfsctech.common.util.FileUtil;
 import com.sfsctech.common.tools.xml.model.XmlModel;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.ClassUtil;
 import com.sfsctech.common.util.StringUtil;
 import org.dom4j.*;

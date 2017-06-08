@@ -1,7 +1,7 @@
 package com.sfsctech.common.util;
 
 import com.sfsctech.common.constants.LabelConstants;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import org.apache.commons.io.FileUtils;
 
 import javax.imageio.ImageIO;

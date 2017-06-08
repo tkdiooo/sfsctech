@@ -12,6 +12,9 @@ server:
   contextPath: /jspdemo
   tomcat:
     uri-encoding: utf-8
+  context-parameters:
+    logback-config-location: http://localhost:8888/logback/framework/jsp
+    logback-expose-webapp-root: true
 #jsp development setting
   jsp-servlet:
     init-parameters:

@@ -1,4 +1,4 @@
-package com.sfsctech.common.logback.classic;
+package com.sfsctech.common.logback.rmt.http;
 
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;

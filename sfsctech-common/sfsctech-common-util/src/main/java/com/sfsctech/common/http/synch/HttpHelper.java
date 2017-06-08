@@ -1,7 +1,7 @@
 package com.sfsctech.common.http.synch;
 
 import com.sfsctech.common.http.ResponseContent;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.FileBody;

@@ -3,7 +3,7 @@
  */
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.beanutils.BeanUtils;

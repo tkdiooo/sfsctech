@@ -5,7 +5,7 @@ import com.sfsctech.common.base.exception.BizException;
 import com.sfsctech.common.base.exception.VerifyException;
 import com.sfsctech.common.base.model.PagingInfo;
 import com.sfsctech.common.dubbox.properties.DubboConfig;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.ClassUtil;
 
 import java.util.Collection;

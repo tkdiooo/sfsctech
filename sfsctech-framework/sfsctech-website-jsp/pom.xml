@@ -42,6 +42,12 @@
             <artifactId>sfsctech-common-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-logback support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>sfsctech-common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -44,12 +44,17 @@ public class Subversion {
     public ResponseEntity<byte[]> index(@PathVariable("name") String name, @PathVariable("profile") String profile, @PathVariable("label") String label) throws IOException {
         logger.info("请求文件信息：{label:" + label + ",name:" + name + ",profile:" + profile + "}");
         File file = svnUtil.getLogbackFile(name, profile, label);
-        if (null != file) {
+        if (file == null) {
+            logger.error("SVN更新 [" + name + LabelConstants.DASH + profile + ".xml] 文件异常");
+            return null;
+        } else if (!file.exists()) {
+            logger.error("请求[" + name + LabelConstants.DASH + profile + ".xml]文件不存在");
+            return null;
+        } else {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDispositionFormData("attachment", file.getName());
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
         }
-        return null;
     }
 }

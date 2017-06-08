@@ -2,7 +2,7 @@ package com.sfsctech.common.security.des3;
 
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.security.base64.Base64;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.HexUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

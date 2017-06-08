@@ -1,4 +1,4 @@
-package com.sfsctech.common.tool;
+package com.sfsctech.common.tools;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;

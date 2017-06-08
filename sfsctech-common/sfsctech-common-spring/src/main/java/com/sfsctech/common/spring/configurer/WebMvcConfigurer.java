@@ -2,16 +2,13 @@ package com.sfsctech.common.spring.configurer;
 
 import com.sfsctech.common.constants.CommonConstants;
 import com.sfsctech.common.constants.LabelConstants;
-import com.sfsctech.common.logback.listener.LogbackConfigListener;
 import com.sfsctech.common.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.validation.Validator;
@@ -85,18 +82,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {
         return javaConfigUtil.getServletRegistrationBean(servlet);
-    }
-
-    /**
-     * 添加logback监听
-     *
-     * @return
-     */
-    @Bean
-    public ServletListenerRegistrationBean servletListenerRegistrationBean() {
-        ServletListenerRegistrationBean<LogbackConfigListener> registration = new ServletListenerRegistrationBean<>();
-        registration.setListener(new LogbackConfigListener());
-        return registration;
     }
 
     /**

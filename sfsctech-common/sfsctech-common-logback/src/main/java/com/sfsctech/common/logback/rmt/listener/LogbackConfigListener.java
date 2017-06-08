@@ -1,6 +1,6 @@
-package com.sfsctech.common.logback.listener;
+package com.sfsctech.common.logback.rmt.listener;
 
-import com.sfsctech.common.logback.util.WebLogbackConfigurer;
+import com.sfsctech.common.logback.rmt.tools.WebLogbackConfigurer;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

@@ -1,7 +1,7 @@
 package com.sfsctech.common.security.base64;
 
 import com.sfsctech.common.constants.LabelConstants;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 

@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.sfsctech.common.tool;
+package com.sfsctech.common.tools;
 
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.MapUtil;

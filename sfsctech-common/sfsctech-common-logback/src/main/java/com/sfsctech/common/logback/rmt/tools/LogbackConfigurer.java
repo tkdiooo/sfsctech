@@ -1,10 +1,10 @@
-package com.sfsctech.common.logback.util;
+package com.sfsctech.common.logback.rmt.tools;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.selector.ContextSelector;
 import ch.qos.logback.classic.util.ContextSelectorStaticBinder;
 import ch.qos.logback.core.joran.spi.JoranException;
-import com.sfsctech.common.logback.classic.HttpContextInitializer;
+import com.sfsctech.common.logback.rmt.http.HttpContextInitializer;
 import org.slf4j.impl.StaticLoggerBinder;
 import org.springframework.util.SystemPropertyUtils;
 

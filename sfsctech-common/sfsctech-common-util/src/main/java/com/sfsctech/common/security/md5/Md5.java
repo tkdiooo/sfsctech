@@ -1,6 +1,6 @@
 package com.sfsctech.common.security.md5;
 
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.NumberUtil;
 import com.sfsctech.common.util.StringUtil;
 

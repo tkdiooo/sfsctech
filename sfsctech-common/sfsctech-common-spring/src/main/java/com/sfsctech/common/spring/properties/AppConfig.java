@@ -60,23 +60,4 @@ public class AppConfig {
      */
     @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SSO_LOGOUT_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String SSO_LOGOUT_URL;
-
-    /**
-     * logback - 配置文件路径
-     */
-    public String LOGBACK_CONFIG_URL;
-
-    @Autowired
-    public void composite(
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.LOGBACK_URI + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
-                    String logback_uri,
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.LOGBACK_NAME + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
-                    String logback_name,
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.LOGBACK_PROFILE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
-                    String logback_profile,
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.LOGBACK_LABEL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
-                    String logback_label) {
-        LOGBACK_CONFIG_URL = logback_uri + LabelConstants.FORWARD_SLASH + logback_label + LabelConstants.FORWARD_SLASH + logback_name + LabelConstants.FORWARD_SLASH + logback_profile;
-    }
-
 }

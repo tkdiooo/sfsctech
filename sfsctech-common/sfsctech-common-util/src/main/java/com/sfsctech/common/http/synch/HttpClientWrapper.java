@@ -1,7 +1,7 @@
 package com.sfsctech.common.http.synch;
 
 import com.sfsctech.common.http.ResponseContent;
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;

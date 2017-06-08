@@ -1,6 +1,6 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.tool.Assert;
+import com.sfsctech.common.tools.Assert;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;

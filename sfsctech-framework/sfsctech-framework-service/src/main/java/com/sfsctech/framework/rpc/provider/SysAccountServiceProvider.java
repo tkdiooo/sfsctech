@@ -12,6 +12,8 @@ import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.framework.service.read.AccountReadService;
 import com.sfsctech.framework.service.write.AccountWriteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -24,6 +26,8 @@ import java.util.List;
  */
 @Service(retries = -1)
 public class SysAccountServiceProvider implements SysAccountService {
+
+    private final Logger logger = LoggerFactory.getLogger(SysAccountServiceProvider.class);
 
     @Autowired
     private AccountWriteService accountWriteService;
@@ -54,6 +58,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        logger.info("日志消息");
         PageInfo<TSysAccount> page = accountReadService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
         page.getList().forEach(account -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(SysAccountDto.class, account)));

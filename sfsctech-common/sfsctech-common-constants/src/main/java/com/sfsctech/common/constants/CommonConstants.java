@@ -54,10 +54,10 @@ public class CommonConstants {
     /**
      * 配置文件地址
      */
-    public static final String LOGBACK_CONFIG_FILE_LOCATION_PARAM = "logbackConfigLocation";
+    public static final String LOGBACK_CONFIG_FILE_LOCATION_PARAM = "logback-config-location";
 
     /**
      * 是否显示WebAppRoot
      */
-    public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logbackExposeWebAppRoot";
+    public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logback-expose-webapp-root";
 }
