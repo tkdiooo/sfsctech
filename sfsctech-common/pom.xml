@@ -233,7 +233,13 @@
                 <artifactId>poi-ooxml</artifactId>
                 <version>3.13</version>
             </dependency>
-            <!-- Spring Boot -->
+            <!-- spring-boot-starter -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <!-- spring-boot-starter-web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
