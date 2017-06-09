@@ -3,8 +3,8 @@
  */
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.constants.DateConstants;
-import com.sfsctech.common.constants.DateConstants.Weeks;
+import com.sfsctech.constants.DateConstants;
+import com.sfsctech.constants.DateConstants.Weeks;
 import com.sfsctech.common.tools.Assert;
 import org.apache.commons.lang3.time.DateUtils;
 

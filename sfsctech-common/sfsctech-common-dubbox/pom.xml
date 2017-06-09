@@ -13,11 +13,22 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- sfsctech-common-rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>sfsctech-common-rpc</artifactId>
             <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- logback-trace support -->
+        <dependency>
+            <groupId>com.sfsctech.logback</groupId>
+            <artifactId>logback-trace</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!-- kryo-serializers -->
         <dependency>

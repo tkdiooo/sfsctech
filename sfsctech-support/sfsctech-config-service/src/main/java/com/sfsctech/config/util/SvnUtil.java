@@ -1,6 +1,6 @@
 package com.sfsctech.config.util;
 
-import com.sfsctech.common.constants.LabelConstants;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.common.util.FileUtil;
 import com.sfsctech.common.util.ThrowableUtil;
 import org.slf4j.Logger;

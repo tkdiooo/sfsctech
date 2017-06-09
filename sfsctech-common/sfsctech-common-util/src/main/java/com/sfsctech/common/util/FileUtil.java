@@ -1,6 +1,6 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.constants.LabelConstants;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.common.tools.Assert;
 import org.apache.commons.io.FileUtils;
 

@@ -1,6 +1,6 @@
 package com.sfsctech.framework.model.configurer;
 
-import com.sfsctech.common.constants.DubboConstants;
+import com.sfsctech.constants.DubboConstants;
 import org.springframework.stereotype.Component;
 
 /**

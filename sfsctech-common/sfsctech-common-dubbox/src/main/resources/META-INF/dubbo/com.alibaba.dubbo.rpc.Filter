@@ -1,1 +1,1 @@
-ExceptionHandler=com.sfsctech.common.dubbox.filter.ExceptionFilter
+ExceptionHandler=com.sfsctech.dubbox.filter.ExceptionFilter

@@ -1,7 +1,7 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.constants.CommonConstants;
-import com.sfsctech.common.constants.LabelConstants;
+import com.sfsctech.constants.CommonConstants;
+import com.sfsctech.constants.LabelConstants;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

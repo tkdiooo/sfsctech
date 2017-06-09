@@ -1,7 +1,7 @@
 package com.sfsctech.framework.inf;
 
-import com.sfsctech.common.base.model.PagingInfo;
-import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.base.result.RpcResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
 import java.util.List;

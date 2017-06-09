@@ -1,6 +1,6 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.inf.IEnum;
+import com.sfsctech.constants.inf.IEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 

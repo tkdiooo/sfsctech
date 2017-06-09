@@ -1,7 +1,7 @@
 package com.sfsctech.framework.model.dto;
 
-import com.sfsctech.common.base.model.BaseDto;
-import com.sfsctech.common.constants.VerifyConstants;
+import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;

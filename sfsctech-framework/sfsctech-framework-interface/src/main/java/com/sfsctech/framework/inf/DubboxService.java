@@ -1,6 +1,6 @@
 package com.sfsctech.framework.inf;
 
-import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.base.result.RpcResult;
 
 /**
  * Class DubboxService

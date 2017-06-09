@@ -1,7 +1,7 @@
 package com.sfsctech.website.jsp;
 
-import com.sfsctech.common.dubbox.properties.DubboConfig;
-import com.sfsctech.common.spring.util.JavaConfigUtil;
+import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.website.jsp", "com.sfsctech.common"})
+@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.website.jsp", "com.sfsctech.configurer"})
 public class JspWebRunner extends SpringBootServletInitializer {
 
     @Autowired

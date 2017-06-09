@@ -1,8 +1,6 @@
 package com.sfsctech.config.logback;
 
-import com.sfsctech.common.constants.LabelConstants;
-import com.sfsctech.common.util.FileUtil;
-import com.sfsctech.config.util.SvnHelper;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.config.util.SvnUtil;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -15,13 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.tmatesoft.svn.core.SVNDepth;
-import org.tmatesoft.svn.core.SVNException;
-import org.tmatesoft.svn.core.SVNURL;
-import org.tmatesoft.svn.core.wc.SVNClientManager;
-import org.tmatesoft.svn.core.wc.SVNRevision;
-import org.tmatesoft.svn.core.wc.SVNUpdateClient;
-import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 import java.io.File;
 import java.io.IOException;

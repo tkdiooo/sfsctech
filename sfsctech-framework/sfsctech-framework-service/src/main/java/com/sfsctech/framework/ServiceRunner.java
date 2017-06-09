@@ -1,6 +1,6 @@
 package com.sfsctech.framework;
 
-import com.sfsctech.common.dubbox.properties.DubboConfig;
+import com.sfsctech.dubbox.properties.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @version Description:
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.common"})
+@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.configurer"})
 public class ServiceRunner {
 
     public static void main(String[] args) throws Exception {

@@ -1,7 +1,7 @@
 package com.sfsctech.framework.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.sfsctech.common.base.result.RpcResult;
+import com.sfsctech.base.result.RpcResult;
 import com.sfsctech.framework.inf.DubboxService;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.service.read.AccountReadService;

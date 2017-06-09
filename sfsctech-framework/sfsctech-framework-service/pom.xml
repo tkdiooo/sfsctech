@@ -49,9 +49,9 @@
         </dependency>
         <!-- sfsctech-common-logback support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-logback</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>com.sfsctech.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

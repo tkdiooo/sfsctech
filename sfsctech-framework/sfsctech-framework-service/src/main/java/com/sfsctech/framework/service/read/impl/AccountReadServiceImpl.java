@@ -2,7 +2,7 @@ package com.sfsctech.framework.service.read.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sfsctech.common.base.model.PagingInfo;
+import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.framework.mapper.TSysAccountMapper;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;

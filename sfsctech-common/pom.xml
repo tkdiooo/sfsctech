@@ -19,7 +19,6 @@
         <module>sfsctech-common-rpc</module>
         <module>sfsctech-common-dubbox</module>
         <module>sfsctech-common-mybatis</module>
-        <module>sfsctech-common-logback</module>
     </modules>
 
     <properties>

@@ -1,6 +1,6 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.common.constants.LabelConstants;
+import com.sfsctech.constants.LabelConstants;
 import org.apache.commons.lang3.ClassUtils;
 
 import java.io.File;
