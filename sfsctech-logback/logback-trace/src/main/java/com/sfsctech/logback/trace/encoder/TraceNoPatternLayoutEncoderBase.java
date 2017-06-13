@@ -23,9 +23,6 @@ public abstract class TraceNoPatternLayoutEncoderBase<ILoggingEvent> extends Pat
 
     @Override
     public byte[] encode(ILoggingEvent event) {
-        getPattern();
-        System.out.println(this.layout.doLayout(event));
-        System.out.println(new String(super.encode(event)));
         byte[] txt = this.convertToBytes(this.layout.doLayout(event));
         if (synchToMDC) {
             pushUtil.push(new String(txt));
