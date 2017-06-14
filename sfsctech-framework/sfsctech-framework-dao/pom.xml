@@ -22,7 +22,7 @@
         <!-- sfsctech-common-mybatis support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-mybatis</artifactId>
+            <artifactId>common-mybatis</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- mysql -->

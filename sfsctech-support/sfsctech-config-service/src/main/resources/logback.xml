@@ -2,7 +2,7 @@
 <configuration debug="false">
 
 	<property name="default_pattern" value="%d [%t - %X{traceNo}] %-5level %c{1} - %m%n" />
-	<property name="default_pattern" value="%d [%t] - [traceNo] %-5level [%C.%M] - %m%n"/>
+	<!--<property name="default_pattern" value="%d [%t] - [traceNo] %-5level [%C.%M] - %m%n"/>-->
 	<property name="filepath" value="D:/opt/logs/config-service" /><!-- 本地文件 -->
 
 	<!-- 控制台输出 -->

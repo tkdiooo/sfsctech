@@ -3,28 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sfsctech-framework</artifactId>
-        <groupId>com.sfsctech.framework</groupId>
+        <artifactId>sfsctech-common</artifactId>
+        <groupId>com.sfsctech.common</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sfsctech-framework-model</artifactId>
+    <artifactId>common-spring</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-constants support -->
+        <!-- sfsctech-common-util support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-constants</artifactId>
+            <artifactId>common-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-rpc support -->
+        <!-- Spring Boot -->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-rpc</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
-
 </project>

@@ -10,15 +10,16 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>sfsctech-common-util</module>
-        <module>sfsctech-common-constants</module>
-        <module>sfsctech-common-base</module>
-        <module>sfsctech-common-tools</module>
-        <module>sfsctech-common-spring</module>
-        <module>sfsctech-common-exception</module>
-        <module>sfsctech-common-rpc</module>
-        <module>sfsctech-common-dubbox</module>
-        <module>sfsctech-common-mybatis</module>
+        <module>common-base</module>
+        <module>common-constants</module>
+        <module>common-dubbox</module>
+        <module>common-exception</module>
+        <module>common-logback</module>
+        <module>common-mybatis</module>
+        <module>common-rpc</module>
+        <module>common-spring</module>
+        <module>common-tools</module>
+        <module>common-util</module>
     </modules>
 
     <properties>

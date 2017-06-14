@@ -33,20 +33,20 @@
         <!-- sfsctech-common-dubbox support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-dubbox</artifactId>
+            <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- sfsctech-common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>sfsctech-common-exception</artifactId>
+            <artifactId>common-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- sfsctech-common-logback support-->
         <dependency>
-            <groupId>com.sfsctech.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
