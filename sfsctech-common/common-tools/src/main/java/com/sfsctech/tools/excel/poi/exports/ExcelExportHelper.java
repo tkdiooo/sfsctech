@@ -1,5 +1,6 @@
 package com.sfsctech.tools.excel.poi.exports;
 
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.tools.excel.constants.ExcelConstants;
 import com.sfsctech.tools.excel.model.ExcelModel;
@@ -68,7 +69,7 @@ public class ExcelExportHelper extends ExcelHelper {
         Assert.isNotBlank(getModel().getFilePath(), "model内[filePath] 对象为空");
         String suffix = FileUtil.getFileSuffixName(getModel().getFilePath());
         if (!suffix.equals(getModel().getVersion().name())) {
-            ThrowableUtil.throwRuntimeException("文件后缀与声明的Excel版本不匹配");
+            throw new BizException("文件后缀与声明的Excel版本不匹配");
         }
 
         for (String sheetName : getModel().getSheets().keySet()) {
@@ -206,7 +207,7 @@ public class ExcelExportHelper extends ExcelHelper {
         if (null != rower) {
             // 数据集合量越界
             if (dataRows.size() > MAX_ROW)
-                ThrowableUtil.throwRuntimeException("数据行数超过[" + MAX_ROW + "]行，请调整后再次操作。");
+                throw new BizException("数据行数超过[" + MAX_ROW + "]行，请调整后再次操作。");
             // 获取标题集合
             Map<String, Object> header = dataRows.get(rower);
             // 标题不为空，以标题序列为准
@@ -286,7 +287,7 @@ public class ExcelExportHelper extends ExcelHelper {
         } else if (value instanceof RichTextString) {
             cell.setCellStyle(style.getCellStyle(ExcelConstants.CellStyle.StringCellNL));
         } else {
-            ThrowableUtil.throwRuntimeException("找不到匹配的数据类型");
+            throw new BizException("找不到匹配的数据类型");
         }
     }
 

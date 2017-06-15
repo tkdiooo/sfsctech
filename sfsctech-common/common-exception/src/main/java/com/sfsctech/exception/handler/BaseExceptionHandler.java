@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public abstract class BaseExceptionHandler {
 
-    protected final Logger logger = LoggerFactory.getLogger("logger.exception");
+    protected final Logger logger = LoggerFactory.getLogger(BaseExceptionHandler.class);
 
     protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status) {
         System.out.println(json.toJSONString());

@@ -1,5 +1,6 @@
 package com.sfsctech.common.util;
 
+import com.sfsctech.common.tools.Assert;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class MapUtil extends MapUtils {
      * @return Map<code><</code>String, V<code>></code>
      */
     public static <V> Map<String, V> toMap(List<V> list) {
-        if (ListUtil.isEmpty(list)) ThrowableUtil.throwRuntimeException("list is empty");
+        Assert.notEmpty(list, "list is empty");
         Map<String, V> map = new LinkedHashMap<>();
         for (int i = 0; i < list.size(); i++) {
             map.put(String.valueOf(i), list.get(i));
@@ -41,7 +42,7 @@ public class MapUtil extends MapUtils {
      * @return Map<code><</code>String, V<code>></code>
      */
     public static <V> Map<String, V> toMap(List<V> list, String kp) {
-        if (ListUtil.isEmpty(list)) ThrowableUtil.throwRuntimeException("list is empty");
+        Assert.notEmpty(list, "list is empty");
         Map<String, V> map = new LinkedHashMap<>();
         list.forEach(v -> {
             try {
@@ -87,7 +88,7 @@ public class MapUtil extends MapUtils {
      * @return TreeMap<code><</code>K, V<code>></code>
      */
     public static <K, V> Map<K, V> sortByKey(Map<K, V> map, final boolean order) {
-        if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
+        Assert.notEmpty(map, "map is empty");
 
         Map<K, V> sortMap = new TreeMap<>(new MapKeyComparator<>(order));
         sortMap.putAll(map);
@@ -104,7 +105,7 @@ public class MapUtil extends MapUtils {
      * @return LinkedHashMap<code><</code>K, V<code>></code>
      */
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map, final boolean order) {
-        if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
+        Assert.notEmpty(map, "map is empty");
 
         Map<K, V> sortedMap = new LinkedHashMap<>();
         List<Map.Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
@@ -144,14 +145,14 @@ public class MapUtil extends MapUtils {
 
     @SuppressWarnings("unchecked")
     public static <K> K getFirstKey(Map<K, ?> map) {
-        if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
+        Assert.notEmpty(map, "map is empty");
         Object[] keys = map.keySet().toArray();
         return (K) keys[0];
     }
 
     @SuppressWarnings("unchecked")
     public static <K> K getLastKey(Map<K, ?> map) {
-        if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
+        Assert.notEmpty(map, "map is empty");
         Object[] keys = map.keySet().toArray();
         return (K) keys[keys.length - 1];
     }

@@ -1,5 +1,6 @@
 package com.sfsctech.common.util;
 
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.common.tools.Assert;
 import org.apache.commons.io.FileUtils;
@@ -130,7 +131,7 @@ public class FileUtil extends FileUtils {
         try {
             if (null != url) path = URLDecoder.decode(url.getFile(), "utf-8").substring(1);
         } catch (UnsupportedEncodingException e) {
-            ThrowableUtil.throwRuntimeException(e);
+            throw new RuntimeException(e);
         }
         return path;
     }
@@ -218,7 +219,7 @@ public class FileUtil extends FileUtils {
         String folderPath = convertPath(path);
         File folder = new File(folderPath);
         if (!folder.exists()) {
-            ThrowableUtil.throwRuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
+            throw new RuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
         }
         File[] files = folder.listFiles(File::isDirectory);
         return Arrays.asList(files);
@@ -235,7 +236,7 @@ public class FileUtil extends FileUtils {
         String folderPath = convertPath(path);
         File folder = new File(folderPath);
         if (!folder.exists()) {
-            ThrowableUtil.throwRuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
+            throw new RuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
         }
         File[] files = folder.listFiles(pathname -> pathname.getName().toLowerCase().lastIndexOf("." + suffix.toLowerCase()) != -1);
         return Arrays.asList(files);

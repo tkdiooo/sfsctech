@@ -1,5 +1,6 @@
 package com.sfsctech.tools.excel.poi;
 
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.common.tools.Assert;
 import com.sfsctech.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.tools.excel.annotation.ExcelSheet;
@@ -55,12 +56,12 @@ public abstract class ExcelHelper {
         Assert.notEmpty(sheets, "ExcelModel内sheets 集合为空");
         Workbook workbook = getWorkbook();
         if (workbook.getNumberOfSheets() != sheets.size()) {
-            ThrowableUtil.throwRuntimeException("ExcelModel内sheets对象size与Model配置的sheet size不符，请调整后再次操作。");
+            throw new BizException("ExcelModel内sheets对象size与Model配置的sheet size不符，请调整后再次操作。");
         }
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
             Sheet sheet = workbook.getSheetAt(i);
             if (!sheets.containsKey(sheet.getSheetName().trim())) {
-                ThrowableUtil.throwRuntimeException("ExcelModel内sheets对象不包含sheet name [" + sheet.getSheetName() + "]");
+                throw new BizException("ExcelModel内sheets对象不包含sheet name [" + sheet.getSheetName() + "]");
             }
         }
     }
@@ -81,10 +82,10 @@ public abstract class ExcelHelper {
         Assert.notEmpty(verify, "sheetModel中rows标题行为空");
         // 验证长度是否匹配
         if (header.size() != verify.size()) {
-            ThrowableUtil.throwRuntimeException("[" + sheet.getSheetName() + "] Sheet的标题数与Model配置的标题数量不符");
+            throw new BizException("[" + sheet.getSheetName() + "] Sheet的标题数与Model配置的标题数量不符");
         }
         if (!ListUtil.equals(header, ListUtil.toList(verify))) {
-            ThrowableUtil.throwRuntimeException("[" + sheet.getSheetName() + "] Sheet的标题名称与Model配置的标题名称不符");
+            throw new BizException("[" + sheet.getSheetName() + "] Sheet的标题名称与Model配置的标题名称不符");
         }
     }
 
@@ -233,8 +234,7 @@ public abstract class ExcelHelper {
                     }
                     list.add((T) obj);
                 } catch (Exception e) {
-                    ThrowableUtil.throwRuntimeException("Class [" + cls.getSimpleName() + "] newInstance error :" +
-                            ThrowableUtil.getRootMessage(e));
+                    throw new RuntimeException(("Class [" + cls.getSimpleName() + "] newInstance error :" + ThrowableUtil.getRootMessage(e)));
                 }
             }
         });
@@ -317,7 +317,7 @@ public abstract class ExcelHelper {
         } else if (value instanceof BigDecimal) {
             cell.setCellValue(value.toString());
         } else {
-            ThrowableUtil.throwRuntimeException("找不到匹配的数据类型");
+            throw new BizException("找不到匹配的数据类型");
         }
     }
 

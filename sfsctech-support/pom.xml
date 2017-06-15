@@ -71,6 +71,18 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.24</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.janino/commons-compiler -->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>commons-compiler</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.janino/janino -->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.0.7</version>
+        </dependency>
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>

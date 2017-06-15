@@ -4,6 +4,8 @@ import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
@@ -28,6 +30,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @ComponentScan("com.sfsctech.spring")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+
+    private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
 
     @Autowired
     private MessageSource messageSource;

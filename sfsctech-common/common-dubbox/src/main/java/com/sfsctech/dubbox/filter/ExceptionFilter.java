@@ -24,16 +24,11 @@ import java.lang.reflect.Method;
  */
 public class ExceptionFilter implements Filter {
 
-    private final Logger logger = LoggerFactory.getLogger("logger.dubbo");
+    private final Logger logger = LoggerFactory.getLogger(ExceptionFilter.class);
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-//        HttpServletRequest request = (HttpServletRequest) RpcContext.getContext().getRequest();
-//        HttpServletResponse response = (HttpServletResponse) RpcContext.getContext().getResponse();
-        logger.info("RPC调用：{ " +
-                "请求IP：" + RpcContext.getContext().getRemoteHost() + ", " +
-                "service：" + invoker.getInterface().getName() + ", " +
-                "method：" + invocation.getMethodName() + "}");
+        logger.info("RPC调用：{请求IP：" + RpcContext.getContext().getRemoteHost() + ", service：" + invoker.getInterface().getName() + ", method：" + invocation.getMethodName() + "}");
         // 根据参数类型判断是否需要验证参数
         Class<?>[] parameterTypes = invocation.getParameterTypes();
         Object[] arguments = invocation.getArguments();

@@ -332,8 +332,7 @@ public class NumberUtil extends NumberUtils {
         } else if (pattern instanceof BigDecimal) {
             return (Pattern) new BigDecimal(number.toString());
         } else {
-            ThrowableUtil.throwRuntimeException("找不到匹配的数据类型");
-            return null;
+            throw new RuntimeException("找不到匹配的数据类型");
         }
     }
 }
