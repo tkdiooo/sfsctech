@@ -6,6 +6,15 @@ spring:
       suffix: .jsp
   # 指定静态资源处理路径
     static-path-pattern: /static/**
+  redis:
+      host-name: 172.16.225.98
+      port: 6379
+      password: redis123
+      pool:
+        max-total: 300
+        max-wait-millis: 10000
+        max-idle: 100
+        min-idle: 50
 server:
   port: 8081
   address: localhost
@@ -45,7 +54,6 @@ dubbo:
     subscribe: true
     #注册中心请求超时时间(毫秒)
     timeout: 2000
-
 
 #spring.cloud.config
 #--spring.cloud.config.name=jsp

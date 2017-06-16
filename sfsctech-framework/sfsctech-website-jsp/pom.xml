@@ -48,6 +48,12 @@
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-cache support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

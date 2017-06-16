@@ -1,7 +1,9 @@
 package com.sfsctech.website.jsp.controller;
 
 //import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
+
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.jsp.service.AccountService;
 import org.slf4j.Logger;
@@ -24,10 +26,14 @@ public class IndexController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private RedisProxy redis;
+
     @GetMapping("index.html")
     public String index() {
 //        TraceIdUtil.setTraceId(UUID.randomUUID().toString());
 //        System.out.println("gift consumer traceId：" + TraceIdUtil.getTraceId());
+        redis.put("test_key", IndexController.class);
         logger.info("日志消息");
         PagingInfo<SysAccountDto> pagingInfo = new PagingInfo<>();
         pagingInfo.setStart(1);

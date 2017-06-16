@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.common.util.ThrowableUtil;
 import com.sfsctech.framework.inf.SysAccountService;
@@ -36,6 +37,9 @@ public class SysAccountServiceProvider implements SysAccountService {
     @Autowired
     private AccountReadService accountReadService;
 
+    @Autowired
+    private RedisProxy redis;
+
     @Override
     public RpcResult<Long> save(List<SysAccountDto> dataSet) {
         RpcResult<Long> result = new RpcResult<>();
@@ -59,6 +63,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        System.out.println(redis.get("test_key"));
         logger.info("日志消息");
         PageInfo<TSysAccount> page = accountReadService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
