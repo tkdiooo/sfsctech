@@ -133,6 +133,36 @@ Date.prototype.addYears = function (y) {
         this.setDate(0);
     }
 };
+
+//毫秒转换成置顶日期格式
+var format = function (time, format) {
+    var t = new Date(time);
+    var tf = function (i) {
+        return (i < 10 ? '0' : '') + i
+    };
+    return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+        switch (a) {
+            case 'yyyy':
+                return tf(t.getFullYear());
+                break;
+            case 'MM':
+                return tf(t.getMonth() + 1);
+                break;
+            case 'mm':
+                return tf(t.getMinutes());
+                break;
+            case 'dd':
+                return tf(t.getDate());
+                break;
+            case 'HH':
+                return tf(t.getHours());
+                break;
+            case 'ss':
+                return tf(t.getSeconds());
+                break;
+        }
+    })
+}
 /*-------------------------------------------------Date对象自定义方法-------------------------------------------------*/
 /*------------------------------------------------Number对象自定义方法------------------------------------------------*/
 Number.prototype.add = function (arg) {
@@ -194,6 +224,7 @@ Number.prototype.div = function (arg) {
         return (r1 / r2) * pow(10, t2 - t1);
     }
 };
+
 /*------------------------------------------------Number对象自定义方法------------------------------------------------*/
 
 /**

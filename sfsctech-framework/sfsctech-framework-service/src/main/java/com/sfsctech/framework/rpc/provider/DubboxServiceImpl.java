@@ -1,7 +1,7 @@
 package com.sfsctech.framework.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.framework.inf.DubboxService;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.service.read.AccountReadService;
@@ -20,15 +20,15 @@ public class DubboxServiceImpl implements DubboxService {
     private AccountReadService readService;
 
     @Override
-    public RpcResult DubboxTestMethod(String... params) {
+    public ActionResult DubboxTestMethod(String... params) {
         readService.find();
         System.out.println("请求的参数长度" + params.length);
         for (String param : params) {
             System.out.println(param);
         }
-        RpcResult<TSysAccount> result = new RpcResult<>();
+        ActionResult<TSysAccount> result = new ActionResult<>();
         result.setDataSet(readService.find());
-        return new RpcResult();
+        return new ActionResult();
     }
 
 }

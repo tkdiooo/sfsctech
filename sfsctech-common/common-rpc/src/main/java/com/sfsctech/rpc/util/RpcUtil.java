@@ -1,7 +1,7 @@
 package com.sfsctech.rpc.util;
 
 import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.common.util.ListUtil;
 
 /**
@@ -12,15 +12,15 @@ import com.sfsctech.common.util.ListUtil;
  */
 public class RpcUtil {
 
-    public static <T> RpcResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
-        RpcResult<T> ar = new RpcResult<>();
+    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
+        ActionResult<T> ar = new ActionResult<>();
         ar.setSuccess(success);
         ar.setResponseCode(responseCode);
         ar.setMessages(ListUtil.toList(messages));
         return ar;
     }
 
-    public static <T> RpcResult<T> getRpcResult(RpcResult<T> ar) {
+    public static <T> ActionResult<T> getRpcResult(ActionResult<T> ar) {
         // 接口返回错误，处理错误信息
         if (ar.isSuccess()) {
             System.out.println(ar.getMessages());

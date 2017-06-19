@@ -2,7 +2,7 @@ package com.sfsctech.website.jsp.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.common.util.RandomUtil;
 import com.sfsctech.framework.inf.SysAccountService;
@@ -39,17 +39,11 @@ public class AccountService {
             dto.setPassword(RandomUtil.getRandom(RandomUtil.Strategy.Full, 10));
             dataSet.add(dto);
         }
-        RpcResult<Long> result = accountService.save(dataSet);
+        ActionResult<Long> result = accountService.save(dataSet);
         result.getDataSet().forEach(System.out::println);
     }
 
-    public PagingInfo<SysAccountDto> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
-        SysAccountDto dto = new SysAccountDto();
-        dto.setAccount("ssssss");
-        dto.setPassword("ssssssss");
-        dto.setInitpassword("ssssssss");
-        pagingInfo.setCondition(dto);
-        RpcResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
-        return result.getResult();
+    public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+        return accountService.findByPage(pagingInfo);
     }
 }

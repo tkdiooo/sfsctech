@@ -16,7 +16,7 @@
         <!-- business -->
         <dependency>
             <groupId>com.sfsctech.framework</groupId>
-            <artifactId>sfsctech-framework-interface</artifactId>
+            <artifactId>sfsctech-framework-model</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <!-- sfsctech-common-mybatis support-->

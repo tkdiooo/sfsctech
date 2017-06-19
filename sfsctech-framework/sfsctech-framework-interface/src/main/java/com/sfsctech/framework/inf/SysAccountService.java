@@ -1,7 +1,7 @@
 package com.sfsctech.framework.inf;
 
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface SysAccountService {
 
-    RpcResult<Long> save(List<SysAccountDto> dataSet);
+    ActionResult<Long> save(List<SysAccountDto> dataSet);
 
-    RpcResult<SysAccountDto> find();
+    ActionResult<SysAccountDto> find();
 
-    RpcResult<SysAccountDto> findByAccount(String account);
+    ActionResult<SysAccountDto> findByAccount(String account);
 
-    RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo);
+    ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo);
 }

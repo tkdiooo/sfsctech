@@ -1,8 +1,7 @@
 package com.sfsctech.website.jsp.controller;
 
-//import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
-
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.jsp.service.AccountService;
@@ -11,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Class IndexController
@@ -31,16 +32,20 @@ public class IndexController {
 
     @GetMapping("index.html")
     public String index() {
-//        TraceIdUtil.setTraceId(UUID.randomUUID().toString());
-//        System.out.println("gift consumer traceId：" + TraceIdUtil.getTraceId());
+        logger.info("IndexController.index()");
         redis.put("test_key", IndexController.class);
-        logger.info("日志消息");
-        PagingInfo<SysAccountDto> pagingInfo = new PagingInfo<>();
-        pagingInfo.setStart(1);
-        pagingInfo = accountService.findByPage(pagingInfo);
-        System.out.println(pagingInfo);
-        pagingInfo.getData().forEach(System.out::println);
-        System.out.println("IndexController.index()");
+
+        logger.info(String.valueOf(redis.get("test_key")));
         return "index";
+    }
+
+    @RequestMapping("getData.ajax")
+    @ResponseBody
+    public ActionResult<PagingInfo<SysAccountDto>> getData(PagingInfo<SysAccountDto> pagingInfo) {
+        System.out.println(pagingInfo);
+        ActionResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
+        System.out.println(result.getResult());
+        result.getResult().getData().forEach(System.out::println);
+        return result;
     }
 }

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sfsctech-static-resources</artifactId>
+    <artifactId>static-resources</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -1,8 +1,8 @@
 package com.sfsctech.base.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class PageInfo
@@ -10,7 +10,7 @@ import java.util.List;
  * @author 张麒 2017/5/31.
  * @version Description:
  */
-public class PagingInfo<T> implements Serializable {
+public class PagingInfo<T> extends BaseDto {
 
     private static final long serialVersionUID = 1882965792578587198L;
 
@@ -42,7 +42,7 @@ public class PagingInfo<T> implements Serializable {
     /**
      * datatables 参数 查询参数
      */
-    private Object condition;
+    private Map<String, ?> condition;
 
     /**
      * com.github.pagehelper.Pageinfo 参数 每页显示多少条
@@ -222,11 +222,11 @@ public class PagingInfo<T> implements Serializable {
         return (this.currentPage - 1) * this.pageSize;
     }
 
-    public Object getCondition() {
+    public Map<String, ?> getCondition() {
         return this.condition;
     }
 
-    public void setCondition(Object condition) {
+    public void setCondition(Map<String, ?> condition) {
         this.condition = condition;
     }
 }

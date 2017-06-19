@@ -16,7 +16,7 @@
         <module>sfsctech-website-jsp</module>
         <module>sfsctech-website-weichat</module>
         <module>sfsctech-website-restful</module>
-        <module>sfsctech-thymeleaf</module>
+        <module>sfsctech-website-thymeleaf</module>
         <module>sfsctech-framework-dao</module>
         <module>sfsctech-framework-model</module>
         <module>sfsctech-framework-interface</module>

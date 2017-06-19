@@ -1,6 +1,6 @@
 package com.sfsctech.framework.inf;
 
-import com.sfsctech.base.result.RpcResult;
+import com.sfsctech.base.result.ActionResult;
 
 /**
  * Class DubboxService
@@ -10,5 +10,5 @@ import com.sfsctech.base.result.RpcResult;
  */
 public interface DubboxService<T> {
 
-    RpcResult<T> DubboxTestMethod(String... params);
+    ActionResult<T> DubboxTestMethod(String... params);
 }
