@@ -7,6 +7,7 @@ import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.base.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.dto.SysAccountDto;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,14 +41,13 @@ public class SysAccountServiceProvider implements SysAccountService {
     private RedisProxy redis;
 
     @Override
-    public ActionResult<Long> save(List<SysAccountDto> dataSet) {
-        ActionResult<Long> result = new ActionResult<>();
-        dataSet.forEach(dto -> {
-            TSysAccount model = BeanUtil.copyPropertiesNotEmpty(TSysAccount.class, dto);
-            accountWriteService.save(model);
-            result.getDataSet().add(model.getGuid());
-        });
-        return result;
+    public ActionResult<SysAccountDto> save(SysAccountDto model) {
+        model.setEnabled(0);
+        model.setLocked(0);
+        model.setStatus(StatusConstants.Status.VALID.getKey());
+        TSysAccount entity = BeanUtil.copyPropertiesNotEmpty(TSysAccount.class, model);
+        model.setGuid(accountWriteService.save(entity));
+        return new ActionResult<>(model);
     }
 
     @Override

@@ -3,15 +3,13 @@ package com.sfsctech.website.jsp.service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.base.result.ActionResult;
-import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.common.util.RandomUtil;
+import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Class AccountService
@@ -26,7 +24,6 @@ public class AccountService {
     private SysAccountService accountService;
 
     public void batchSave() {
-        List<SysAccountDto> dataSet = new ArrayList<>();
         SysAccountDto dto;
         for (int i = 0; i < 50; i++) {
             dto = new SysAccountDto();
@@ -37,10 +34,14 @@ public class AccountService {
             dto.setStatus(StatusConstants.Status.VALID.getKey());
             dto.setAccount(RandomUtil.getRandom(RandomUtil.Strategy.Char, 15));
             dto.setPassword(RandomUtil.getRandom(RandomUtil.Strategy.Full, 10));
-            dataSet.add(dto);
+            System.out.println(accountService.save(dto));
         }
-        ActionResult<Long> result = accountService.save(dataSet);
-        result.getDataSet().forEach(System.out::println);
+    }
+
+    public ActionResult<SysAccountDto> save(SysAccountDto model) {
+        model.setCreatetime(new Date());
+        model.setCreator(1L);
+        return accountService.save(model);
     }
 
     public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {

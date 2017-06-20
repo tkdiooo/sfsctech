@@ -3,8 +3,8 @@ package com.sfsctech.framework.model.dto;
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -21,15 +21,15 @@ public class SysAccountDto extends BaseDto {
 
     private Long userguid;
 
-    @NotNull
+    @NotBlank
     @Length(min = 5, max = 20, message = VerifyConstants.Length)
     private String account;
 
-    @NotNull
+    @NotBlank
     @Length(min = 8, max = 20, message = VerifyConstants.Length)
     private String password;
 
-    @NotNull
+    @NotBlank
     @Length(min = 8, max = 20, message = VerifyConstants.Length)
     private String initpassword;
 

@@ -3,7 +3,30 @@
  *
  * @author 张麒
  */
+$.fn.serializeJson = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
 
+$.fn.serializeString = function () {
+    var serializeObj = "";
+    this.attr('name', function (index, text) {
+        if (index === 0) serializeObj += text;
+        else serializeObj += "," + text;
+    });
+    return serializeObj;
+};
 /**
  * 重写window.alert方法，用layer控件替换
  * @param msg
@@ -14,6 +37,7 @@ window.alert = function (msg, callback) {
         time: 0,
         shade: [0.8, '#393D49'],
         area: '300px',
+        btnAlign: 'c',
         btn: ['确认']
         , yes: function (index) {
             layer.close(index);
@@ -31,6 +55,7 @@ window.confirm = function (msg, callback) {
         time: 0,
         shade: [0.8, '#393D49'],
         area: '300px',
+        btnAlign: 'c',
         btn: ['确认', '取消']
         , yes: function (index) {
             invoke(callback);
@@ -53,7 +78,7 @@ window.open = function (opt) {
  */
 function invoke(callback, data) {
     if (callback !== null && callback !== undefined) {
-        if (typeof callback === "function") {
+        if (typeof callback === 'function') {
             callback(data);
         } else {
             var method = eval(callback);
@@ -175,29 +200,32 @@ $(function () {
  * @param url 请求路径
  * @param data 数据
  * @param opt 设置
- * @param callback 回调方法
  */
-function ajax_action(url, data, opt, callback) {
+function ajax_action(url, data, opt) {
     var defaults = {
-        contentType: "application/x-www-form-urlencoded",
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        dataType: 'json',
+        waiting: true,
+        cache: false,
         async: true,
-        waiting: true
+        handler: null
     };
-    if (url.indexOf("?") !== -1) {
-        url += "&ajaxTimeFresh=" + Math.random();
+    if (url.indexOf('?') !== -1) {
+        url += '&ajaxTimeFresh=' + Math.random();
     } else {
-        url += "?ajaxTimeFresh=" + Math.random();
+        url += '?ajaxTimeFresh=' + Math.random();
     }
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
         url: url,
-        method: "post",
-        cache: false,
-        dataType: "json",
-        contentType: plugin.settings.contentType,
-        async: plugin.settings.async,
         data: data,
+        type: plugin.settings.type,
+        dataType: plugin.settings.dataType,
+        contentType: plugin.settings.contentType,
+        cache: plugin.settings.cache,
+        async: plugin.settings.async,
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {
@@ -209,15 +237,25 @@ function ajax_action(url, data, opt, callback) {
             if (plugin.settings.waiting) {
                 layer.closeAll('loading');
             }
-            invoke(callback, data);
-        },
-        error: function (data) {
-            alert(data.statusText, function () {
-                layer.closeAll('loading');
-            });
-            if (typeof plugin.settings.errorHandle === "function") {
-                plugin.settings.errorHandle(data);
+            if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
+                invoke(plugin.settings.handler, data);
+            } else {
+                alert(data.messages[0]);
             }
+        },
+        error: function (XMLHttpRequest, ajaxOptions, thrownError) {
+            if (plugin.settings.waiting) {
+                layer.closeAll();
+            }
+            var json = JSON.parse(XMLHttpRequest.responseText);
+            if (json.messages_details) {
+                $.each(json.messages_details.messages, function (key, value) {
+                    layer.tips(value, '#' + key, {
+                        tipsMore: true, time: 10000
+                    });
+                })
+            }
+            alert(json.messages);
         }
     });
 }
@@ -234,23 +272,25 @@ function load_url(url, container, data, opt) {
         type: 'POST',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'html',
-        waiting: true
+        waiting: true,
+        cache: false,
+        async: true
     };
-    if (url.indexOf("?") !== -1) {
-        url += "&ajaxTimeFresh=" + Math.random();
+    if (url.indexOf('?') !== -1) {
+        url += '&ajaxTimeFresh=' + Math.random();
     } else {
-        url += "?ajaxTimeFresh=" + Math.random();
+        url += '?ajaxTimeFresh=' + Math.random();
     }
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
-        type: plugin.settings.type,
         url: url,
+        data: data,
+        type: plugin.settings.type,
         dataType: plugin.settings.dataType,
         contentType: plugin.settings.contentType,
-        data: data,
-        cache: false,
-        async: true,
+        cache: plugin.settings.cache,
+        async: plugin.settings.async,
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {
@@ -302,70 +342,51 @@ function matchTable(url, container, columns, params, destorys) {
             ordering: false,
             searching: false, //禁用原生搜索
             bLengthChange: true,
-            renderer: "bootstrap", //渲染样式：Bootstrap和jquery-ui
-            pagingType: "full_numbers", //分页样式：simple,simple_numbers,full,full_numbers
+            renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
+            pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
             language: {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "bPaginate": true,
-                "bFilter": true,
-                "sInfo": "显示第  _START_ 至  _END_ 项结果，共  _TOTAL_ 项，当前位置  第_PAGE_页",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由  _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
+                'sProcessing': '处理中...',
+                'sLengthMenu': '显示 _MENU_ 项结果',
+                'sZeroRecords': '没有匹配结果',
+                'bPaginate': true,
+                'bFilter': true,
+                'sInfo': '显示第  _START_ 至  _END_ 项结果，共  _TOTAL_ 项，当前位置  第_PAGE_页',
+                'sInfoEmpty': '显示第 0 至 0 项结果，共 0 项',
+                'sInfoFiltered': '(由  _MAX_ 项结果过滤)',
+                'sInfoPostFix': '',
+                'sSearch': '搜索:',
+                'sUrl': '',
+                'sEmptyTable': '表中数据为空',
+                'sLoadingRecords': '载入中...',
+                'sInfoThousands': ',',
+                'oPaginate': {
+                    'sFirst': '首页',
+                    'sPrevious': '上页',
+                    'sNext': '下页',
+                    'sLast': '末页'
                 }
             },
             bDeferRender: false,
             retrieve: true,
             processing: false,
             ajax: function (data, callback, settings) {
-                console.info(data)
-                //请求参数封装
+                // 请求参数封装
                 data.condition = params;
-                console.info(data);
-                //ajax请求数据
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    cache: false,  //禁用缓存
-                    data: data,  //传入组装的参数
-                    dataType: "json",
-                    beforeSend: function () {
-                        layer.load(2, {
-                            shade: [0.8, '#393D49']
-                        });
-                    },
-                    success: function (result) {
-                        layer.closeAll();
-                        // setTimeout仅为测试延迟效果
+                // 请求设置
+                var opt = {
+                    contentType: 'application/json; charset=utf-8',
+                    handler: function (result) {
                         setTimeout(function () {
                             //封装返回数据
                             result.result.draw = data.draw;
-                            console.info(result.result);
                             //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                             //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                             callback(result.result);
                         }, 200);
-                    },
-                    error: function (XMLHttpRequest, ajaxOptions, thrownError) {
-                        layer.closeAll();
-                        var json = JSON.parse(XMLHttpRequest.responseText);
-                        alert(json.messages, function () {
-                            to_url(json.url);
-                        });
                     }
-                });
+                };
+                //ajax请求数据
+                ajax_action(url, JSON.stringify(data), opt);
             },
             columns: columns
         });

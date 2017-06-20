@@ -42,7 +42,7 @@ public class PagingInfo<T> extends BaseDto {
     /**
      * datatables 参数 查询参数
      */
-    private Map<String, ?> condition;
+    private T condition;
 
     /**
      * com.github.pagehelper.Pageinfo 参数 每页显示多少条
@@ -222,11 +222,11 @@ public class PagingInfo<T> extends BaseDto {
         return (this.currentPage - 1) * this.pageSize;
     }
 
-    public Map<String, ?> getCondition() {
+    public T getCondition() {
         return this.condition;
     }
 
-    public void setCondition(Map<String, ?> condition) {
+    public void setCondition(T condition) {
         this.condition = condition;
     }
 }

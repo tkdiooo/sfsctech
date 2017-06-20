@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Class IndexController
@@ -39,13 +37,19 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("getData.ajax")
+    @PostMapping("getData.ajax")
     @ResponseBody
-    public ActionResult<PagingInfo<SysAccountDto>> getData(PagingInfo<SysAccountDto> pagingInfo) {
-        System.out.println(pagingInfo);
+    public ActionResult<PagingInfo<SysAccountDto>> getData(@RequestBody PagingInfo<SysAccountDto> pagingInfo) {
+        System.out.println(pagingInfo.getCondition());
         ActionResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
         System.out.println(result.getResult());
         result.getResult().getData().forEach(System.out::println);
         return result;
+    }
+
+    @PostMapping("saveData.ajax")
+    @ResponseBody
+    public ActionResult<SysAccountDto> save(SysAccountDto model) {
+        return accountService.save(model);
     }
 }

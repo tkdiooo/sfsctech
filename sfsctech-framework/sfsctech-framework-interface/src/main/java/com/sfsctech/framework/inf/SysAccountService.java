@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface SysAccountService {
 
-    ActionResult<Long> save(List<SysAccountDto> dataSet);
+    ActionResult<SysAccountDto> save(SysAccountDto model);
 
     ActionResult<SysAccountDto> find();
 

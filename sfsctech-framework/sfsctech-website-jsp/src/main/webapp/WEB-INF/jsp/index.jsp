@@ -6,8 +6,7 @@
 <link rel="stylesheet" type="text/css"
       href="${static_resource}/static/theme/ninestars/font-awesome/css/font-awesome.min.css"/>
 <link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox.css" rel="stylesheet"/>
-<link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox-theme/default/default.css" rel="stylesheet"
-      type="text/css"/>
+<link href="${static_resource}/static/theme/ninestars/css/nivo-lightbox-theme/default/default.css" rel="stylesheet"/>
 <link href="${static_resource}/static/theme/ninestars/css/animate.css" rel="stylesheet"/>
 <link href="${static_resource}/static/theme/ninestars/css/style.css" rel="stylesheet">
 <link href="${static_resource}/static/theme/ninestars/css/default.css" rel="stylesheet">
@@ -30,10 +29,7 @@
                             <a href="#about" class="gn-icon gn-icon-download">load page</a>
                         </li>
                         <li><a href="#service" class="gn-icon gn-icon-cog">datatable</a></li>
-                        <li><a href="#works" class="gn-icon gn-icon-help">Works</a></li>
-                        <li>
-                            <a href="#contact" class="gn-icon gn-icon-archive">Contact</a>
-                        </li>
+                        <li><a href="#contact" class="gn-icon gn-icon-help">edit</a></li>
                     </ul>
                 </div>
                 <!-- /gn-scroller -->
@@ -150,8 +146,11 @@
                             }<br/>
                             }];<br/>
                             var dataTables = function () {<br/>
-                            return matchTable('getData.ajax', '#datatable', columns);<br/>
-                            }<br/>
+                            return matchTable('getData.ajax', '#datatable', columns, {<br/>
+                            'account': 'sdssdsdd',<br/>
+                            'initpassword': 'sdssdsdd',<br/>
+                            'password': 'sdssdsdd'<br/>
+                            });<br/>
                         </div>
                     </div>
 
@@ -185,93 +184,15 @@
     ];
     var dataTables = function () {
         return matchTable('getData.ajax', '#datatable', columns, {
-            'account': 'sdsd',
-            'password': 'sdsd'
+            'account': 'sdssdsdd',
+            'initpassword': 'sdssdsdd',
+            'password': 'sdssdsdd'
         });
     }
 </script>
 
-<!-- Section: works -->
-<section id="works" class="home-section text-center bg-gray">
-    <div class="heading-works marginbot-50">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-
-                    <div class="section-heading">
-                        <h2>Recent Works</h2>
-                        <p>Lorem ipsum dolor sit amet, no nisl mentitum recusabo per, vim at blandit qualisque
-                            dissentiunt. Diam efficiantur conclusionemque ut has</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-
-                <div class="row gallery-item">
-                    <div class="col-md-3">
-                        <a href="images/works/1.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/1.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/2.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/2.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/3.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/3.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/4.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/4.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/5.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/5.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/6.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/6.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/7.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/7.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="images/works/8.jpg" title="This is an image title" data-lightbox-gallery="gallery1"
-                           data-lightbox-hidpi="images/works/1@2x.jpg">
-                            <img src="images/works/8.jpg" class="img-responsive" alt="img">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Section: works -->
-
 <!-- Section: contact -->
-<section id="contact" class="home-section text-center">
+<section id="contact" class="home-section text-center bg-gray">
     <div class="heading-contact marginbot-50">
         <div class="container">
             <div class="row">
@@ -295,44 +216,46 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">
-                                        Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter name"
-                                           required="required"/>
+                                    <label for="account">account</label>
+                                    <input type="text" class="form-control" id="account" name="account" placeholder="Enter account"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">
-                                        Email Address</label>
+                                    <label for="password">password</label>
+                                    <input type="text" class="form-control" id="password" name="password" placeholder="Enter password"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">initpassword</label>
+                                    <input type="email" class="form-control" id="initpassword" name="initpassword"
+                                           placeholder="Enter initpassword"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
                                     <div class="input-group">
-                                            <span class="input-group-addon"><span
-                                                    class="glyphicon glyphicon-envelope"></span>
-                                            </span>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email"
-                                               required="required"/>
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-envelope"></span></span>
+                                        <input type="email" class="form-control" id="email" placeholder="Enter email"/>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="subject">
-                                        Subject</label>
-                                    <select id="subject" name="subject" class="form-control" required="required">
+                                    <label for="subject">Subject</label>
+                                    <select id="subject" name="subject" class="form-control">
                                         <option value="na" selected="">Choose One:</option>
                                         <option value="service">General Customer Service</option>
                                         <option value="suggestions">Suggestions</option>
                                         <option value="product">Product Support</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">
-                                        Message</label>
+                                    <label for="message">Message</label>
                                     <textarea name="message" id="message" class="form-control" rows="9" cols="25"
-                                              required="required"
                                               placeholder="Message"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-skin pull-right" id="btnContactUs">
+                                <button type="button" class="btn btn-skin pull-right" id="btnContactUs"
+                                        onclick="editSubmit()">
                                     Send Message
                                 </button>
                             </div>
@@ -350,22 +273,36 @@
                             (123) 456-7890
                         </address>
                     </div>
-
                     <div class="col-lg-6">
                         <address>
                             <strong>Email</strong><br>
                             <a href="mailto:#">email.name@example.com</a><br/>
                             <a href="mailto:#">name.name@example.com</a>
                         </address>
-
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </section>
+<script>
+    var editSubmit = function () {
+        var formParams = $("#contact-form").serializeJson();
+        var opt = {
+            handler: function (result) {
+                if (!result.success) {
+                    alert(result.messages);
+                } else {
+                    alert(result.messages, function () {
+                        alert('页面跳转');
+                    });
+                }
+            }
+        };
+        ajax_action('saveData.ajax', formParams, opt);
+    }
+</script>
+
 <%@include file="/WEB-INF/jsp/common/script.jsp" %>
 <script type="text/javascript"
         src="${static_resource}/webjars/datatables/1.10.13/media/js/jquery.dataTables.js"></script>
