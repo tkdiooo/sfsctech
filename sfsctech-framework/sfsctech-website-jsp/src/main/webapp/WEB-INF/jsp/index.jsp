@@ -288,18 +288,18 @@
 <script>
     var editSubmit = function () {
         var formParams = $("#contact-form").serializeJson();
-        var opt = {
-            handler: function (result) {
-                if (!result.success) {
-                    alert(result.messages);
-                } else {
-                    alert(result.messages, function () {
-                        alert('页面跳转');
-                    });
-                }
-            }
-        };
-        ajax_action('saveData.ajax', formParams, opt);
+//        var opt = {
+//            handler: function (result) {
+//                if (!result.success) {
+//                    alert(result.messages);
+//                } else {
+//                    alert(result.messages, function () {
+//                        alert('页面跳转');
+//                    });
+//                }
+//            }
+//        };
+        ajax_action('saveData.ajax', formParams);
     }
 </script>
 

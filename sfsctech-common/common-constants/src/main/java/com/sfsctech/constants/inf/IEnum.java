@@ -36,5 +36,4 @@ public interface IEnum<K, V> {
         }
         return key;
     }
-
 }

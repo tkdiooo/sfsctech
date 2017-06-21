@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 //import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.base.result.ActionResult;
+import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.constants.StatusConstants;
@@ -16,9 +16,6 @@ import com.sfsctech.framework.service.write.AccountWriteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Class SysAccountServiceProvider

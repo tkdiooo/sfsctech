@@ -2,7 +2,7 @@ package com.sfsctech.website.jsp.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.base.result.ActionResult;
+import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.common.util.RandomUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.framework.inf.SysAccountService;

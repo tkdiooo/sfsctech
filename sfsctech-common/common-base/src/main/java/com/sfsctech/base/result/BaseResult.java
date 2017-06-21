@@ -1,6 +1,8 @@
 package com.sfsctech.base.result;
 
+import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.RpcConstants.ResponseCode;
+import com.sfsctech.constants.RpcConstants.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,11 +25,14 @@ public abstract class BaseResult implements Serializable {
     /**
      * 响应代码
      */
-    protected ResponseCode responseCode = ResponseCode.SC_OK;
+    protected Status status = RpcConstants.newStatus(ResponseCode.SC_OK);
     /**
      * 响应消息列表
      */
-    protected List<String> messages = new ArrayList<>();
+    private List<String> messages = new ArrayList<>();
+
+    public BaseResult() {
+    }
 
     public boolean isSuccess() {
         return success;
@@ -37,12 +42,12 @@ public abstract class BaseResult implements Serializable {
         this.success = hasErrors;
     }
 
-    public ResponseCode getResponseCode() {
-        return responseCode;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setResponseCode(ResponseCode ResponseCode) {
-        this.responseCode = ResponseCode;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public List<String> getMessages() {

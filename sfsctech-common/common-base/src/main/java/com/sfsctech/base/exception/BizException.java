@@ -12,8 +12,8 @@ public class BizException extends BaseException {
 
     private static final long serialVersionUID = -2598217010733719435L;
 
-    public BizException(){
-
+    public BizException() {
+        super();
     }
 
     public BizException(Tips tips, String... params) {

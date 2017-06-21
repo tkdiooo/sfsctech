@@ -18,7 +18,6 @@ public abstract class BaseException extends RuntimeException {
     private String[] params = new String[0];
 
     public BaseException() {
-
     }
 
     public BaseException(IEnum<String, String> tips, String... params) {

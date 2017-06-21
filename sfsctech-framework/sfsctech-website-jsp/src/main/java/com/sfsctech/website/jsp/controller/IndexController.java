@@ -1,7 +1,7 @@
 package com.sfsctech.website.jsp.controller;
 
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.base.result.ActionResult;
+import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.jsp.service.AccountService;

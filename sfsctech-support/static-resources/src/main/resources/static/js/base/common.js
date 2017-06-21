@@ -31,8 +31,9 @@ $.fn.serializeString = function () {
  * 重写window.alert方法，用layer控件替换
  * @param msg
  * @param callback
+ * @param data
  */
-window.alert = function (msg, callback) {
+window.alert = function (msg, callback, data) {
     layer.msg(msg, {
         time: 0,
         shade: [0.8, '#393D49'],
@@ -41,7 +42,7 @@ window.alert = function (msg, callback) {
         btn: ['确认']
         , yes: function (index) {
             layer.close(index);
-            invoke(callback);
+            invoke(callback, data);
         }
     });
 };
@@ -235,12 +236,12 @@ function ajax_action(url, data, opt) {
         },
         success: function (data) {
             if (plugin.settings.waiting) {
-                layer.closeAll('loading');
+                layer.closeAll();
             }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
-                invoke(plugin.settings.handler, data);
+                alert(data.messages.join('<br/>'), plugin.settings.handler, data);
             } else {
-                alert(data.messages[0]);
+                alert(data.messages.join('<br/>'));
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {

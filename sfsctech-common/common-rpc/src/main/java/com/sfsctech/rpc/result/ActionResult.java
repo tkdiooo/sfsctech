@@ -1,4 +1,8 @@
-package com.sfsctech.base.result;
+package com.sfsctech.rpc.result;
+
+import com.sfsctech.base.result.BaseResult;
+import com.sfsctech.common.util.ResourceUtil;
+import com.sfsctech.constants.I18NConstants.Tips;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +29,34 @@ public class ActionResult<T> extends BaseResult {
     private T result;
 
     public ActionResult() {
+        super();
+    }
 
+    public ActionResult(Tips tips, String... params) {
+        super();
+        super.addMessage(ResourceUtil.getMessage(tips, params));
+    }
+
+    public ActionResult(T result, Tips tips, String... params) {
+        super();
+        super.addMessage(ResourceUtil.getMessage(tips, params));
+        this.result = result;
+    }
+
+    public ActionResult(List<T> dataSet, Tips tips, String... params) {
+        super();
+        super.addMessage(ResourceUtil.getMessage(tips, params));
+        this.dataSet = dataSet;
     }
 
     public ActionResult(T result) {
+        super();
+        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
         this.result = result;
     }
 
     public ActionResult(List<T> dataSet) {
+        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
         this.dataSet = dataSet;
     }
 

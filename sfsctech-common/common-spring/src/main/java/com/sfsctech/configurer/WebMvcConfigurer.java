@@ -1,5 +1,8 @@
 package com.sfsctech.configurer;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.spring.util.JavaConfigUtil;
@@ -14,12 +17,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.List;
 
 /**
  * Class WebMvcConfigurer
@@ -59,6 +65,21 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(true);
+    }
+
+    /**
+     * 配置FastJson
+     *
+     * @param converters
+     */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.QuoteFieldNames);
+        fastConverter.setFastJsonConfig(fastJsonConfig);
+        converters.add(fastConverter);
     }
 
     /**

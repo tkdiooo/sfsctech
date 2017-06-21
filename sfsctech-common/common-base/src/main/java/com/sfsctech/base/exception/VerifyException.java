@@ -16,7 +16,7 @@ public class VerifyException extends BaseException {
     private ValidatorResult result;
 
     public VerifyException() {
-
+        super();
     }
 
     public VerifyException(Tips tips, String... params) {

@@ -1,8 +1,7 @@
 package com.sfsctech.rpc.util;
 
 import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.base.result.ActionResult;
-import com.sfsctech.common.util.ListUtil;
+import com.sfsctech.rpc.result.ActionResult;
 
 /**
  * Class RpcUtil
@@ -14,9 +13,9 @@ public class RpcUtil {
 
     public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
         ActionResult<T> ar = new ActionResult<>();
-        ar.setSuccess(success);
-        ar.setResponseCode(responseCode);
-        ar.setMessages(ListUtil.toList(messages));
+//        ar.setSuccess(success);
+//        ar.setResponseCode(responseCode);
+//        ar.setMessages(ListUtil.toList(messages));
         return ar;
     }
 
