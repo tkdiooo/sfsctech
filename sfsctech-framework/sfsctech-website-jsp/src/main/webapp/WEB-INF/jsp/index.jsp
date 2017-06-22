@@ -225,8 +225,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email">initpassword</label>
-                                    <input type="email" class="form-control" id="initpassword" name="initpassword"
-                                           placeholder="Enter initpassword"/>
+                                    <input type="email" class="form-control" id="initpassword1" name="array" placeholder="Enter initpassword"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">initpassword</label>
+                                    <input type="email" class="form-control" id="initpassword2" name="array" placeholder="Enter initpassword"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email Address</label>

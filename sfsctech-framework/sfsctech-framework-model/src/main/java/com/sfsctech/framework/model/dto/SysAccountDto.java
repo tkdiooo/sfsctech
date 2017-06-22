@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class SysAccountDto
@@ -50,6 +51,16 @@ public class SysAccountDto extends BaseDto {
     private Long updater;
 
     private Date updatetime;
+
+    public List<String> getArray() {
+        return array;
+    }
+
+    public void setArray(List<String> array) {
+        this.array = array;
+    }
+
+    List<String> array;
 
     public Long getGuid() {
         return guid;

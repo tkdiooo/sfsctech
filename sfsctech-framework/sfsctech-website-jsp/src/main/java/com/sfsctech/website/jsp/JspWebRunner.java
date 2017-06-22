@@ -1,6 +1,5 @@
 package com.sfsctech.website.jsp;
 
-import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 
 @SpringBootApplication

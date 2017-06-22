@@ -115,15 +115,15 @@ public class ExceptionFilter implements Filter {
 
     private Object getArgument(Object argument) {
         // 参数是pagingInfo类，校验包含的参数
-        if (PagingInfo.class == argument.getClass() && null != ((PagingInfo) argument).getCondition()) {
+        if (PagingInfo.class.equals(argument.getClass()) && null != ((PagingInfo) argument).getCondition()) {
             Object condition = ((PagingInfo) argument).getCondition();
             // 参数继承 com.sfsctech.common.base.model.BaseDto
-            if (BaseDto.class == condition.getClass().getSuperclass()) {
+            if (BaseDto.class.equals(condition.getClass().getSuperclass())) {
                 return condition;
             }
         }
         // 参数继承 com.sfsctech.common.base.model.BaseDto
-        else if (BaseDto.class == argument.getClass().getSuperclass()) {
+        else if (BaseDto.class.equals(argument.getClass().getSuperclass())) {
             return argument;
         }
         return null;
