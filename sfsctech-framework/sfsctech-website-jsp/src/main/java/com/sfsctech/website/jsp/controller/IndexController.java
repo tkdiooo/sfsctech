@@ -35,7 +35,9 @@ public class IndexController {
 
     @GetMapping("index.html")
     public String index() {
-        logger.info("IndexController.index()");
+        for (int i = 0; i < 100; i++) {
+            logger.info("IndexController.index()");
+        }
         redis.put("test_key", IndexController.class);
 
         logger.info(String.valueOf(redis.get("test_key")));

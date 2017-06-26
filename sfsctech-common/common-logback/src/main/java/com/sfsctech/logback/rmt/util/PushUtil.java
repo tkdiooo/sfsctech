@@ -1,5 +1,7 @@
 package com.sfsctech.logback.rmt.util;
 
+import com.sfsctech.logback.rmt.kafka.sender.KafkaSarsSender;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -19,11 +21,11 @@ public class PushUtil extends Thread {
         logQueue = linkedBlockingQueue;
     }
 
-    public static synchronized PushUtil getInstance(String serverUrl, String zfcode, String fileName) {
+    public static synchronized PushUtil getInstance(String serverUrl, String zfcode, String fileName, String topic) {
         if (push != null)
             return push;
         push = new PushUtil(new LinkedBlockingQueue<>());
-        push.kafka = new KafkaSarsSender(serverUrl, zfcode, fileName);
+        push.kafka = new KafkaSarsSender(serverUrl, zfcode, fileName, topic);
         push.start();
         return push;
     }

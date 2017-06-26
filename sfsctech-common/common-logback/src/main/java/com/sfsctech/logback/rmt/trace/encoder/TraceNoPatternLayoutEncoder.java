@@ -19,10 +19,11 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
     private String zfcode;
     private String brokerList;
     private String fileName;
+    private String topic;
 
     public void start() {
         if (pushUtil == null && synchToMDC) {
-            pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName);
+            pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName, topic);
         }
         PatternLayout patternLayout = new TraceNoPatternLayout();
         patternLayout.setContext(context);
@@ -40,6 +41,7 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
     public byte[] encode(ILoggingEvent event) {
         byte[] txt = this.convertToBytes(this.layout.doLayout(event));
         if (synchToMDC) {
+            System.out.println(new String(txt));
             pushUtil.push(new String(txt));
         }
         return txt;
@@ -61,4 +63,7 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
         this.fileName = fileName;
     }
 
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 }
