@@ -16,19 +16,17 @@ public class CustomPartitioner implements Partitioner {
 
     @Override
     public int partition(String topic, Object key, byte[] bytes, Object test, byte[] bytes1, Cluster cluster) {
-        System.out.println(new String(bytes));
-        System.out.println(new String(bytes1));
-        return 0;
+        key = key == null ? "" : key;
+        System.out.println("&&:" + Math.abs(key.toString().hashCode()) % cluster.partitionCountForTopic(topic));
+        return Math.abs(key.toString().hashCode());
     }
 
     @Override
     public void close() {
-        System.out.println(2222);
     }
 
     @Override
     public void configure(Map<String, ?> map) {
-        System.out.println(3333);
     }
 
 

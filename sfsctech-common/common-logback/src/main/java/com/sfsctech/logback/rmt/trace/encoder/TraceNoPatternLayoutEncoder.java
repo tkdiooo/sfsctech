@@ -33,15 +33,10 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
         super.start();
     }
 
-    private byte[] convertToBytes(String s) {
-        return super.getCharset() == null ? s.getBytes() : s.getBytes(this.getCharset());
-    }
-
     @Override
     public byte[] encode(ILoggingEvent event) {
-        byte[] txt = this.convertToBytes(this.layout.doLayout(event));
+        byte[] txt = super.encode(event);
         if (synchToMDC) {
-            System.out.println(new String(txt));
             pushUtil.push(new String(txt));
         }
         return txt;

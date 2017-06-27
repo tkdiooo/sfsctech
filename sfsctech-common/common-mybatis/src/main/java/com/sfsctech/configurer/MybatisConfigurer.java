@@ -5,6 +5,7 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -41,7 +42,7 @@ public class MybatisConfigurer {
     }
 
     /**
-     * 注册一个StatViewServlet
+     * druid注册一个StatViewServlet
      *
      * @return ServletRegistrationBean
      */

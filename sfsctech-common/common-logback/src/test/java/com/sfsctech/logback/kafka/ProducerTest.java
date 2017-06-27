@@ -29,7 +29,7 @@ public class ProducerTest {
         Producer<String, String> producer = new KafkaProducer<>(props);
 
         int i = 0;
-        while (true) {
+        while (i < 100) {
             ProducerRecord<String, String> r = new ProducerRecord<>("test1", "key-" + i++, "value-" + i);
             System.out.println(r);
             producer.send(r);
