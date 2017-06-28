@@ -3,10 +3,13 @@ package com.sfsctech.configurer;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.sfsctech.mybatis.datasource.ReadWriteAdvice;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
+import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -40,6 +43,50 @@ public class MybatisConfigurer {
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));
         return factoryBean.getObject();
     }
+
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate() throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactoryBean());
+    }
+
+    /**
+     * 定义前置通知
+     *
+     * @return ReadWriteAdvice
+     */
+    @Bean
+    public ReadWriteAdvice readWriteAdvice() {
+        return new ReadWriteAdvice();
+    }
+
+    /**
+     * 定义切面
+     *
+     * @return NameMatchMethodPointcutAdvisor
+     */
+    @Bean
+    public NameMatchMethodPointcutAdvisor readWriteAdvisor() {
+        NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
+        advisor.setAdvice(readWriteAdvice());
+        advisor.setMappedName("*");
+        return advisor;
+    }
+
+    /**
+     * 定义代理
+     *
+     * @return BeanNameAutoProxyCreator
+     */
+    @Bean
+    public BeanNameAutoProxyCreator beanNameAutoProxyCreator() {
+        BeanNameAutoProxyCreator autoProxyCreator = new BeanNameAutoProxyCreator();
+        autoProxyCreator.setProxyTargetClass(true);
+        // 需要增强的类
+        autoProxyCreator.setBeanNames("*ServiceImpl");
+        autoProxyCreator.setInterceptorNames("readWriteAdvisor");
+        return autoProxyCreator;
+    }
+
 
     /**
      * druid注册一个StatViewServlet

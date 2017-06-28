@@ -2,7 +2,6 @@ package com.sfsctech.common.util;
 
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +22,7 @@ public class HttpUtil {
         String ajaxParam = request.getParameter(CommonConstants.AJAX_TIME_FRESH);
         String ajaxAccept = request.getHeader(CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[0]);
         String ajaxHeader = request.getHeader(CommonConstants.AJAX_HEADER_CONTENT_TYPE[0]);
-        return StringUtils.hasText(ajaxParam) || CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[1].equalsIgnoreCase(ajaxAccept) || (StringUtil.isNotBlank(ajaxHeader) && CommonConstants.AJAX_HEADER_CONTENT_TYPE[1].equalsIgnoreCase(ajaxHeader));
+        return StringUtil.hasText(ajaxParam) || CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[1].equalsIgnoreCase(ajaxAccept) || (StringUtil.isNotBlank(ajaxHeader) && CommonConstants.AJAX_HEADER_CONTENT_TYPE[1].equalsIgnoreCase(ajaxHeader));
     }
 
     /**

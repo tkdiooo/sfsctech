@@ -1,10 +1,8 @@
-package com.sfsctech.mybatis;
+package com.sfsctech.mybatis.dao;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,8 +14,7 @@ import java.util.Map;
  * @author 张麒 2017/6/27.
  * @version Description:
  */
-public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable>
-        extends SqlSessionDaoSupport
+public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable> extends SqlSessionDaoSupport
 //        implements IBaseGenericDAO<T, ID>
 {
 
@@ -106,16 +103,14 @@ public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable>
     */
     public Integer save(T ob) {
         generateId(ob);
-        return this.getSqlSession().insert(
-                getSqlName(SQL_SAVE), ob);
+        return this.getSqlSession().insert(getSqlName(SQL_SAVE), ob);
     }
 
     /* (non-Javadoc)
     * @see com.harmony.framework.dao.mybatis.IBaseGenericDAO#update(java.lang.Object)
     */
     public Integer update(T ob) {
-        return this.getSqlSession().update(
-                getSqlName(SQL_UPDATE), ob);
+        return this.getSqlSession().update(getSqlName(SQL_UPDATE), ob);
     }
 
     /* (non-Javadoc)
@@ -123,24 +118,21 @@ public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable>
     */
     @SuppressWarnings("unchecked")
     public T getById(String id) {
-        return (T) this.getSqlSession().selectOne(
-                getSqlName(SQL_GETBYID), id);
+        return (T) this.getSqlSession().selectOne(getSqlName(SQL_GETBYID), id);
     }
 
     /* (non-Javadoc)
     * @see com.harmony.framework.dao.mybatis.IBaseGenericDAO#deleteByIds(ID[])
     */
     public Integer deleteByIds(ID[] ids) {
-        return this.getSqlSession().delete(
-                getSqlName(SQL_DELETEBYIDS), ids);
+        return this.getSqlSession().delete(getSqlName(SQL_DELETEBYIDS), ids);
     }
 
     /* (non-Javadoc)
     * @see com.harmony.framework.dao.mybatis.IBaseGenericDAO#deleteById(java.io.Serializable)
     */
     public Integer deleteById(ID id) {
-        return this.getSqlSession().delete(
-                getSqlName(SQL_DELETEBYID), id);
+        return this.getSqlSession().delete(getSqlName(SQL_DELETEBYID), id);
     }
 
     /* (non-Javadoc)
