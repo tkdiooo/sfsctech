@@ -3,6 +3,7 @@ package com.sfsctech.framework.service.write.impl;
 import com.sfsctech.framework.mapper.TSysAccountMapper;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.service.write.AccountWriteService;
+import com.sfsctech.mybatis.datasource.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @version Description:
  */
 @Service
+@DataSource
 public class AccountWriteServiceImpl implements AccountWriteService {
 
     @Autowired

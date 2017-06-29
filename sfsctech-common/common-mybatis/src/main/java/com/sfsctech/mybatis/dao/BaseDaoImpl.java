@@ -2,7 +2,9 @@ package com.sfsctech.mybatis.dao;
 
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,9 +16,10 @@ import java.util.Map;
  * @author 张麒 2017/6/27.
  * @version Description:
  */
-public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable> extends SqlSessionDaoSupport
+public abstract class BaseDaoImpl<T, ID extends Serializable> extends DynamicDaoImpl
 //        implements IBaseGenericDAO<T, ID>
 {
+
 
     public static final String SQLNAME_SEPARATOR = ".";
 
@@ -103,7 +106,7 @@ public abstract class MybatisBaseGenericDAOImpl<T, ID extends Serializable> exte
     */
     public Integer save(T ob) {
         generateId(ob);
-        return this.getSqlSession().insert(getSqlName(SQL_SAVE), ob);
+        return super.getSqlSession().insert(getSqlName(SQL_SAVE), ob);
     }
 
     /* (non-Javadoc)

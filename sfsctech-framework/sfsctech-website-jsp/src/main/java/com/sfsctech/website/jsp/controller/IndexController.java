@@ -35,11 +35,12 @@ public class IndexController {
 
     @GetMapping("index.html")
     public String index() {
-        for (int i = 0; i < 100; i++) {
-            logger.info("IndexController.index()");
-        }
+        SysAccountDto model = new SysAccountDto();
+        model.setAccount("tkdiooo");
+        model.setPassword("tk4880300");
+        model.setInitpassword("1111111111");
+        accountService.save(model);
         redis.put("test_key", IndexController.class);
-
         logger.info(String.valueOf(redis.get("test_key")));
         return "index";
     }

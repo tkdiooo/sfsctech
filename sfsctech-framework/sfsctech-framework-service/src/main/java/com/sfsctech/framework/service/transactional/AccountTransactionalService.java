@@ -1,5 +1,7 @@
 package com.sfsctech.framework.service.transactional;
 
+import com.sfsctech.framework.model.domain.TSysAccount;
+
 /**
  * Class AccountTransactionalService
  *
@@ -7,4 +9,5 @@ package com.sfsctech.framework.service.transactional;
  * @version Description:
  */
 public interface AccountTransactionalService {
+    Long save(TSysAccount account);
 }

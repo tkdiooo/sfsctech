@@ -1,7 +1,5 @@
 package com.sfsctech.cache.inf;
 
-import java.util.Date;
-
 /**
  * Class ICacheService
  *

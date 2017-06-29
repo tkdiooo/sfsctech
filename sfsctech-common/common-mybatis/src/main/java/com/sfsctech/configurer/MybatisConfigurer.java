@@ -3,21 +3,27 @@ package com.sfsctech.configurer;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.mybatis.datasource.ReadWriteAdvice;
+import com.sfsctech.mybatis.datasource.ReadWriteDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class MybatisConfigurer
@@ -29,24 +35,37 @@ import javax.sql.DataSource;
 @MapperScan("com.sfsctech.*.mapper")
 public class MybatisConfigurer {
 
-    @Bean
+    @Bean()
+    @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource datasource() throws Exception {
+    public DataSource masterDatasource() {
         return new DruidDataSource();
     }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
-        factoryBean.setDataSource(datasource());
-        // 指定xml文件位置
-        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));
-        return factoryBean.getObject();
+    @Bean()
+    @ConfigurationProperties(prefix = "spring.slaveDatasource")
+    public Map<String, Map<String, Object>> slaveDatasource() {
+        return new HashMap<>();
+    }
+
+    @Bean()
+    public DataSource dynamicDatasource() {
+        ReadWriteDataSource dataSource = new ReadWriteDataSource();
+        dataSource.setWriteDataSource(masterDatasource());
+        Map<String, Map<String, Object>> slaves = slaveDatasource();
+        Map<String, DruidDataSource> slaveMap = new HashMap<>();
+        slaves.forEach((key, value) -> slaveMap.put(key, JSON.parseObject(JSON.toJSONString(value), DruidDataSource.class)));
+        dataSource.setReadDataSources(slaveMap);
+        return dataSource;
     }
 
     @Bean
-    public SqlSessionTemplate sqlSessionTemplate() throws Exception {
-        return new SqlSessionTemplate(sqlSessionFactoryBean());
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dynamicDatasource());
+        // 指定xml文件位置
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));
+        return factoryBean.getObject();
     }
 
     /**

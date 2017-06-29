@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ReadWriteDataSource extends AbstractDataSource implements InitializingBean {
 
-    private Map<Object, Object> readDataSources;
+    private Map<?, ?> readDataSources;
 
     private Object writeDataSource;
 
@@ -34,13 +34,12 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
 
     private DataSource resolvedWriteDataSource;
 
-
     public void setWriteDataSource(Object writeDataSource) {
         this.writeDataSource = writeDataSource;
     }
 
 
-    public void setReadDataSources(Map<Object, Object> readDataSources) {
+    public void setReadDataSources(Map<?, ?> readDataSources) {
         this.readDataSources = readDataSources;
         initReadNodes();
     }
@@ -75,9 +74,7 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
         DBType dbtype = DbTypeHolder.getDbType();
         if (dbtype == DBType.READ) {
             Connection conn = getReadConnection();
-            if (conn != null) {
-                return conn;
-            }
+            if (conn != null) return conn;
         }
         return getWriteDataSource().getConnection();
     }

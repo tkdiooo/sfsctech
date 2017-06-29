@@ -8,6 +8,8 @@ import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.framework.service.read.AccountReadService;
+import com.sfsctech.mybatis.datasource.DBType;
+import com.sfsctech.mybatis.datasource.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * @version Description:
  */
 @Service
+@DataSource(DBType.READ)
 public class AccountReadServiceImpl implements AccountReadService {
 
     @Autowired

@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 //import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.framework.dao.AccountDao;
+import com.sfsctech.framework.service.transactional.AccountTransactionalService;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.common.util.BeanUtil;
@@ -35,7 +37,13 @@ public class SysAccountServiceProvider implements SysAccountService {
     private AccountReadService accountReadService;
 
     @Autowired
+    private AccountTransactionalService transactionalService;
+
+    @Autowired
     private RedisProxy redis;
+
+    @Autowired
+    private AccountDao accountDao;
 
     @Override
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
@@ -43,7 +51,7 @@ public class SysAccountServiceProvider implements SysAccountService {
         model.setLocked(0);
         model.setStatus(StatusConstants.Status.VALID.getKey());
         TSysAccount entity = BeanUtil.copyPropertiesNotEmpty(TSysAccount.class, model);
-        model.setGuid(accountWriteService.save(entity));
+        model.setGuid(transactionalService.save(entity));
         return new ActionResult<>(model);
     }
 

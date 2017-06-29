@@ -25,6 +25,5 @@ public class ReadWriteAdvice implements MethodBeforeAdvice {
             DataSource rwd = arg0.getAnnotation(DataSource.class);
             DbTypeHolder.setDbType(rwd.value());
         }
-
     }
 }

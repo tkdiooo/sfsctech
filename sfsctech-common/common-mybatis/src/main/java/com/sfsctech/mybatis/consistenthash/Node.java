@@ -8,7 +8,6 @@ package com.sfsctech.mybatis.consistenthash;
  */
 public class Node {
 
-
     private String name;
     private String ip;
     private String port;
