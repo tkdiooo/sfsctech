@@ -51,7 +51,9 @@ public class SysAccountServiceProvider implements SysAccountService {
         model.setLocked(0);
         model.setStatus(StatusConstants.Status.VALID.getKey());
         TSysAccount entity = BeanUtil.copyPropertiesNotEmpty(TSysAccount.class, model);
-        model.setGuid(transactionalService.save(entity));
+        accountDao.insert(entity);
+        model.setGuid(entity.getGuid());
+        System.out.println(model);
         return new ActionResult<>(model);
     }
 

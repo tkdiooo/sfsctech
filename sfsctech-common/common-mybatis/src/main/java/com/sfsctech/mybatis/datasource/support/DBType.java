@@ -1,4 +1,4 @@
-package com.sfsctech.mybatis.datasource;
+package com.sfsctech.mybatis.datasource.support;
 
 /**
  * Class DBType

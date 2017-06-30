@@ -8,8 +8,8 @@ import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.framework.service.read.AccountReadService;
-import com.sfsctech.mybatis.datasource.DBType;
-import com.sfsctech.mybatis.datasource.DataSource;
+import com.sfsctech.mybatis.datasource.support.DBType;
+import com.sfsctech.mybatis.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

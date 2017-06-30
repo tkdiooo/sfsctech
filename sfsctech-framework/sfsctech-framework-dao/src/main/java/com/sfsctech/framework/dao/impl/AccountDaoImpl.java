@@ -2,7 +2,9 @@ package com.sfsctech.framework.dao.impl;
 
 import com.sfsctech.framework.dao.AccountDao;
 import com.sfsctech.framework.model.domain.TSysAccount;
-import com.sfsctech.mybatis.dao.BaseDaoImpl;
+import com.sfsctech.framework.model.domain.TSysAccountExample;
+import com.sfsctech.mybatis.dao.impl.BaseDaoImpl;
+import com.sfsctech.mybatis.annotation.Namespace;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,5 +14,7 @@ import org.springframework.stereotype.Repository;
  * @version Description:
  */
 @Repository
-public class AccountDaoImpl extends BaseDaoImpl<TSysAccount, Long> implements AccountDao {
+@Namespace("com.sfsctech.framework.mapper.TSysAccountMapper")
+public class AccountDaoImpl extends BaseDaoImpl<TSysAccount, Long, TSysAccountExample> implements AccountDao {
+
 }

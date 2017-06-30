@@ -1,4 +1,4 @@
-package com.sfsctech.mybatis.dao;
+package com.sfsctech.mybatis.dao.monitor;
 
 import com.sfsctech.cache.inf.ICacheClient;
 import com.sfsctech.cache.inf.ICacheService;

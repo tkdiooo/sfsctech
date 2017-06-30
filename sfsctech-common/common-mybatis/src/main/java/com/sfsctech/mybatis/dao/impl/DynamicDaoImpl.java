@@ -1,5 +1,6 @@
-package com.sfsctech.mybatis.dao;
+package com.sfsctech.mybatis.dao.impl;
 
+import com.sfsctech.mybatis.dao.monitor.MyBatisDaoSupportMonitor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 

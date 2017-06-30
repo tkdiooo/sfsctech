@@ -1,6 +1,7 @@
 package com.sfsctech.mybatis.consistenthash;
 
-import org.springframework.util.CollectionUtils;
+
+import com.sfsctech.common.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class RoundRobinWeight {
 
     public static boolean removeNode(final Node node) {
         synchronized (lock) {
-            if (CollectionUtils.isEmpty(lNodes)) return false;
+            if (ListUtil.isEmpty(lNodes)) return false;
             boolean f = false;
             for (int i = 0; i < lNodes.size(); i++) {
                 Node n = lNodes.get(i);

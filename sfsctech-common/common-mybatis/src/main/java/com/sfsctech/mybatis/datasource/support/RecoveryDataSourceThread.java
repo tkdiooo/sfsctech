@@ -1,4 +1,4 @@
-package com.sfsctech.mybatis.datasource;
+package com.sfsctech.mybatis.datasource.support;
 
 import com.sfsctech.mybatis.consistenthash.Node;
 import com.sfsctech.mybatis.consistenthash.RoundRobinWeight;

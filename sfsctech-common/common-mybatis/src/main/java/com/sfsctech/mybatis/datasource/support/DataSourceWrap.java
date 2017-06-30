@@ -1,4 +1,4 @@
-package com.sfsctech.mybatis.datasource;
+package com.sfsctech.mybatis.datasource.support;
 
 import javax.sql.DataSource;
 
@@ -10,7 +10,7 @@ import javax.sql.DataSource;
  */
 public class DataSourceWrap {
 
-    public DataSourceWrap(Object key, javax.sql.DataSource dataSource) {
+    public DataSourceWrap(Object key, DataSource dataSource) {
         super();
         this.key = key;
         this.dataSource = dataSource;

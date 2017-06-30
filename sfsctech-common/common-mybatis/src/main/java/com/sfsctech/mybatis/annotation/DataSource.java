@@ -1,4 +1,6 @@
-package com.sfsctech.mybatis.datasource;
+package com.sfsctech.mybatis.annotation;
+
+import com.sfsctech.mybatis.datasource.support.DBType;
 
 import java.lang.annotation.*;
 
