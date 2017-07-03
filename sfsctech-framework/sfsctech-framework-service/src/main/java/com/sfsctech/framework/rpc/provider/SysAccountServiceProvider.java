@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.framework.dao.AccountDao;
+import com.sfsctech.framework.model.domain.TSysAccountExample;
 import com.sfsctech.framework.service.transactional.AccountTransactionalService;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.cache.redis.RedisProxy;
@@ -31,10 +32,10 @@ public class SysAccountServiceProvider implements SysAccountService {
     private final Logger logger = LoggerFactory.getLogger(SysAccountServiceProvider.class);
 
     @Autowired
-    private AccountWriteService accountWriteService;
+    private AccountWriteService writeService;
 
     @Autowired
-    private AccountReadService accountReadService;
+    private AccountReadService readService;
 
     @Autowired
     private AccountTransactionalService transactionalService;
@@ -47,6 +48,13 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
+        TSysAccountExample example = new TSysAccountExample();
+        TSysAccountExample.Criteria criteria = example.createCriteria();
+        criteria.andAccountEqualTo("tkdiooo");
+        criteria.andAccountIsNull();
+        criteria.andAccountLike("sdsd");
+        criteria.andPasswordEqualTo("sdsd");
+        accountDao.selectByExample(example);
         model.setEnabled(0);
         model.setLocked(0);
         model.setStatus(StatusConstants.Status.VALID.getKey());
@@ -54,6 +62,10 @@ public class SysAccountServiceProvider implements SysAccountService {
         accountDao.insert(entity);
         model.setGuid(entity.getGuid());
         System.out.println(model);
+        entity.setAccount("sdsdssdsd");
+        accountDao.updateByPrimaryKey(entity);
+        System.out.println(entity);
+        System.out.println(accountDao.selectByPrimaryKey(entity.getGuid()));
         return new ActionResult<>(model);
     }
 
@@ -71,7 +83,7 @@ public class SysAccountServiceProvider implements SysAccountService {
     public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
         System.out.println(redis.get("test_key"));
         logger.info("日志消息");
-        PageInfo<TSysAccount> page = accountReadService.findByPage(pagingInfo);
+        PageInfo<TSysAccount> page = readService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
         page.getList().forEach(account -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(SysAccountDto.class, account)));
         return new ActionResult<>(pagingInfo);

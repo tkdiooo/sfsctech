@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @version Description:
  */
 @Component
-public class RedisProxy implements IRedisService {
+public class RedisProxy implements IRedisService<String, Object> {
 
     @Autowired
     private RedisTemplate<String, ?> redisTemplate;
@@ -85,8 +85,14 @@ public class RedisProxy implements IRedisService {
     }
 
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Object putTimeOut(String key, Object value, int timeOut) {
-        return null;
+        return redisTemplate.execute((RedisCallback) connection -> {
+            RedisSerializer keySlz = redisTemplate.getKeySerializer();
+            RedisSerializer valueSlz = redisTemplate.getValueSerializer();
+            connection.setEx(keySlz.serialize(key), timeOut, valueSlz.serialize(value));
+            return null;
+        });
     }
 
     @Override
@@ -100,8 +106,12 @@ public class RedisProxy implements IRedisService {
     }
 
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Object remove(String key) {
-        return null;
+        return redisTemplate.execute((RedisCallback<Long>) connection -> {
+            RedisSerializer keySlz = redisTemplate.getKeySerializer();
+            return connection.del(keySlz.serialize(key));
+        });
     }
 
     @Override

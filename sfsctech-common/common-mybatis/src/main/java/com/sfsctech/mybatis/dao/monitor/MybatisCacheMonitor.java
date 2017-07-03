@@ -1,8 +1,9 @@
 package com.sfsctech.mybatis.dao.monitor;
 
-import com.sfsctech.cache.inf.ICacheClient;
+import com.sfsctech.cache.inf.ICacheFactory;
 import com.sfsctech.cache.inf.ICacheService;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
+import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.constants.LabelConstants;
 
 /**
  * Class SqlMapClientTemplateCacheMonitor
@@ -10,12 +11,29 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
  * @author 张麒 2017/6/29.
  * @version Description:
  */
-public class MybatisCacheMonitor extends SqlSessionDaoSupport {
+public class MybatisCacheMonitor {
 
-    private ICacheClient<ICacheService<String, ?>> cacheClient;
+    private ICacheFactory<String, Object> cacheClient;
 
-    protected void setCacheClient(ICacheClient<ICacheService<String, ?>> cacheClient) {
+    final void setCacheClient(ICacheFactory<String, Object> cacheClient) {
         this.cacheClient = cacheClient;
+    }
+
+    final ICacheService<String, Object> getCacheClient() {
+        return cacheClient.getCacheClient();
+    }
+
+    String getCacheKey(String namespace, String key) {
+        return namespace + LabelConstants.UNDERLINE + key;
+    }
+
+    void putTimeOut(String namespace, Object value, int timeOut) {
+        try {
+            String key = getCacheKey(namespace, BeanUtil.getProperty(value, "guid"));
+            getCacheClient().putTimeOut(getCacheKey(namespace, key), value, timeOut);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //    public List queryCacheForList(String statementName, int skipResults, int maxResults, String key, Date date) {

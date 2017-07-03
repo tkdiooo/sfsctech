@@ -204,8 +204,7 @@ public class HttpClientWrapper {
             if (contentType != null) request.addHeader(HttpHeaders.CONTENT_TYPE, contentType);
 
             request.setConfig(requestConfig);
-            request.addHeader(HttpHeaders.USER_AGENT,
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)");
+            request.addHeader(HttpHeaders.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)");
 
             response = client.execute(request);
             entity = response.getEntity(); // 获取响应实体

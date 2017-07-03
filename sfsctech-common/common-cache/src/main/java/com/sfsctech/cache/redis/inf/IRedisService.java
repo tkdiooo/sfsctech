@@ -8,13 +8,13 @@ import com.sfsctech.cache.inf.ICacheService;
  * @author 张麒 2017/6/15.
  * @version Description:
  */
-public interface IRedisService extends ICacheService<String, Object> {
+public interface IRedisService<K, V> extends ICacheService<K, V> {
 
-    boolean expire(String key, long expire);
+    boolean expire(K key, long expire);
 
-    long lpush(String key, Object obj);
+    long lpush(K key, V obj);
 
-    long rpush(String key, Object obj);
+    long rpush(K key, V obj);
 
-    Object lpop(String key);
+    Object lpop(K key);
 }
