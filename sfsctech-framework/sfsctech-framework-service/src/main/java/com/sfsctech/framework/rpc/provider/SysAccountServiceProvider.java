@@ -50,6 +50,7 @@ public class SysAccountServiceProvider implements SysAccountService {
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
         TSysAccountExample example = new TSysAccountExample();
         TSysAccountExample.Criteria criteria = example.createCriteria();
+        criteria.andGuidEqualTo(433L);
         criteria.andAccountEqualTo("tkdiooo");
         criteria.andAccountIsNull();
         criteria.andAccountLike("sdsd");

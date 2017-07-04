@@ -1,5 +1,6 @@
 package com.sfsctech.mybatis.dao.monitor;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Example> extends SqlSessionDaoSupport implements IBaseDao<T, PK, Example> {
 
-    private MybatisCacheMonitor cacheMonitor = new MybatisCacheMonitor();
+    private MybatisCacheMonitor<Example> cacheMonitor = new MybatisCacheMonitor<>();
 
     protected final void setCacheClient(ICacheFactory<String, Object> cacheClient) {
         cacheMonitor.setCacheClient(cacheClient);
@@ -35,19 +36,17 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public List<T> selectByExample(Example example) {
-        System.out.println(JSONObject.toJSON(example));
         return getSqlSession().selectList(getStatName("selectByExample"), example);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public T selectByPrimaryKey(PK key) {
-        String cacheKey = cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key));
-        Object model = getCacheClient().get(cacheKey);
+        Object model = getCacheClient().get(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
         if (null != model) return (T) model;
         else {
             T t = getSqlSession().selectOne(getStatName("selectByPrimaryKey"), key);
-            getCacheClient().putTimeOut(cacheKey, t, 60 * 10);
+            cacheMonitor.putTimeOut(getNamespace(), t, 60 * 10);
             return t;
         }
     }
@@ -60,16 +59,15 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int deleteByExample(Example example) {
-        Integer key = getSqlSession().delete(getStatName("deleteByExample"), example);
-        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
-        return key;
+        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), example));
+        return getSqlSession().delete(getStatName("deleteByExample"), example);
     }
 
     @Override
     public int insert(T model) {
         generateId(model);
         Integer key = getSqlSession().insert(getStatName("insert"), model);
-        getCacheClient().putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
         return key;
     }
 
@@ -77,7 +75,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     public int insertSelective(T model) {
         generateId(model);
         Integer key = getSqlSession().insert(getStatName("insertSelective"), model);
-        getCacheClient().putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
         return key;
     }
 
@@ -92,7 +90,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         params.put("record", model);
         params.put("example", example);
         Integer key = getSqlSession().update(getStatName("updateByExampleSelective"), params);
-        getCacheClient().putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
         return key;
     }
 
@@ -102,14 +100,14 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         params.put("record", model);
         params.put("example", example);
         Integer key = getSqlSession().update(getStatName("updateByExample"), params);
-        getCacheClient().putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
         return key;
     }
 
     @Override
     public int updateByPrimaryKeySelective(T model) {
         Integer key = getSqlSession().update(getStatName("updateByPrimaryKeySelective"), model);
-        getCacheClient().putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
         return key;
     }
 
