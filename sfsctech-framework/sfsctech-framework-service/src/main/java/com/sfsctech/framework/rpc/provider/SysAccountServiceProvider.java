@@ -43,30 +43,13 @@ public class SysAccountServiceProvider implements SysAccountService {
     @Autowired
     private RedisProxy redis;
 
-    @Autowired
-    private AccountDao accountDao;
-
     @Override
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
-        TSysAccountExample example = new TSysAccountExample();
-        TSysAccountExample.Criteria criteria = example.createCriteria();
-        criteria.andGuidEqualTo(433L);
-        criteria.andAccountEqualTo("tkdiooo");
-        criteria.andAccountIsNull();
-        criteria.andAccountLike("sdsd");
-        criteria.andPasswordEqualTo("sdsd");
-        accountDao.selectByExample(example);
-        model.setEnabled(0);
-        model.setLocked(0);
-        model.setStatus(StatusConstants.Status.VALID.getKey());
-        TSysAccount entity = BeanUtil.copyPropertiesNotEmpty(TSysAccount.class, model);
-        accountDao.insert(entity);
-        model.setGuid(entity.getGuid());
-        System.out.println(model);
-        entity.setAccount("sdsdssdsd");
-        accountDao.updateByPrimaryKey(entity);
-        System.out.println(entity);
-        System.out.println(accountDao.selectByPrimaryKey(entity.getGuid()));
+        readService.find();
+//        model.setEnabled(0);
+//        model.setLocked(0);
+//        model.setStatus(StatusConstants.Status.VALID.getKey());
+//        writeService.save(model);
         return new ActionResult<>(model);
     }
 

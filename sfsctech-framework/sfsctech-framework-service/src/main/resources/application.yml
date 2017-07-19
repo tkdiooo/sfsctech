@@ -112,6 +112,8 @@ spring:
         max-wait-millis: 10000
         max-idle: 100
         min-idle: 50
+  aop:
+    auto: false
 #dubbo setting
 dubbo:
   application:

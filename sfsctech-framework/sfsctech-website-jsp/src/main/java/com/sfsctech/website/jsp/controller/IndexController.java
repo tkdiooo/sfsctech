@@ -36,9 +36,9 @@ public class IndexController {
     @GetMapping("index.html")
     public String index() {
         SysAccountDto model = new SysAccountDto();
-        model.setAccount("tkdiooo");
-        model.setPassword("tk4880300");
-        model.setInitpassword("1111111111");
+        model.setAccount("tkdio");
+        model.setPassword("tk488");
+        model.setInitpassword("1111");
         accountService.save(model);
         redis.put("test_key", IndexController.class);
         logger.info(String.valueOf(redis.get("test_key")));

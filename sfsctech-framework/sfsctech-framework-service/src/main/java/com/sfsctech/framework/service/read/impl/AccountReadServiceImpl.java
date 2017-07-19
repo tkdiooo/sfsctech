@@ -3,13 +3,13 @@ package com.sfsctech.framework.service.read.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.framework.mapper.TSysAccountMapper;
+import com.sfsctech.framework.dao.AccountDao;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.framework.service.read.AccountReadService;
-import com.sfsctech.mybatis.datasource.support.DBType;
 import com.sfsctech.mybatis.annotation.DataSource;
+import com.sfsctech.mybatis.datasource.support.DBType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +26,11 @@ import java.util.List;
 public class AccountReadServiceImpl implements AccountReadService {
 
     @Autowired
-    private TSysAccountMapper mapper;
+    private AccountDao dao;
 
     @Override
     public List<TSysAccount> find() {
-        return mapper.selectByExample(new TSysAccountExample());
+        return dao.selectByExample(new TSysAccountExample());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AccountReadServiceImpl implements AccountReadService {
         TSysAccountExample example = new TSysAccountExample();
         TSysAccountExample.Criteria criteria = example.createCriteria();
         criteria.andAccountEqualTo(account);
-        return mapper.selectByExample(example);
+        return dao.selectByExample(example);
     }
 
     @Override

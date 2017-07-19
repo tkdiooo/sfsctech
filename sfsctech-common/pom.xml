@@ -21,6 +21,7 @@
         <module>common-tools</module>
         <module>common-util</module>
         <module>common-cache</module>
+        <module>common-security</module>
     </modules>
 
     <properties>
@@ -28,7 +29,7 @@
         <java.version>1.8</java.version>
         <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
         <spring.version>4.3.7.RELEASE</spring.version>
-        <spring-boot.version>1.5.2.RELEASE</spring-boot.version>
+        <spring.boot.version>1.5.2.RELEASE</spring.boot.version>
     </properties>
 
     <dependencies>
@@ -202,14 +203,14 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring.boot.version}</version>
             </dependency>
             <!-- spring-boot-starter-web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <optional>true</optional>
-                <version>${spring-boot.version}</version>
+                <version>${spring.boot.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>ch.qos.logback</groupId>

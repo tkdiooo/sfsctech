@@ -25,8 +25,7 @@ public class RandomUtil extends RandomUtils {
      * @return UUID
      */
     public static String getUUID() {
-        String id = UUID.randomUUID().toString();
-        return id.replace("-", "");
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
     /**

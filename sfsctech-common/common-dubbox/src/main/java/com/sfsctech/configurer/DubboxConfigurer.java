@@ -5,8 +5,11 @@ import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
+import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +26,9 @@ public class DubboxConfigurer {
 
     @Autowired
     private DubboConfig dubboConfig;
+
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.DUBBO_PROTOCOL_KRYO + LabelConstants.COLON + LabelConstants.FALSE + LabelConstants.CLOSE_CURLY_BRACE)
+    public Boolean IS_EMPLOY_KRYO;
 
     /**
      * <code><</code>dubbo:application<code>></code>
