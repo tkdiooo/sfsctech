@@ -16,7 +16,7 @@
         <!-- sfsctech-common-constants support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-constants</artifactId>
+            <artifactId>common-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- spring-boot-starter-web -->

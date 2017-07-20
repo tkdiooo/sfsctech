@@ -1,7 +1,9 @@
 package com.sfsctech.spring.properties;
 
+import com.sfsctech.constants.FilterConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -59,4 +61,11 @@ public class AppConfig {
      */
     @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SSO_LOGOUT_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String SSO_LOGOUT_URL;
+
+    @Autowired
+    public void initProperties(
+            @Value("${spring.mvc.view.suffix}") String suffix
+    ) {
+        FilterConstants.addFilterExcludes(suffix);
+    }
 }

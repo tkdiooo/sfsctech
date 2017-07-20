@@ -54,6 +54,12 @@
             <artifactId>common-cache</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-security support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

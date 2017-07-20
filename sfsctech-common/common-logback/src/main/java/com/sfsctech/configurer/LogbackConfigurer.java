@@ -1,5 +1,7 @@
 package com.sfsctech.configurer;
 
+import com.sfsctech.constants.CommonConstants;
+import com.sfsctech.constants.FilterConstants;
 import com.sfsctech.logback.core.listener.LogbackConfigListener;
 import com.sfsctech.logback.rmt.filter.TraceNoFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -15,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class LogbackConfigurer {
-
 
     /**
      * 注册logback rmt监听
@@ -35,6 +36,7 @@ public class LogbackConfigurer {
         registration.setFilter(new TraceNoFilter());
         registration.addUrlPatterns("/*");
         registration.setName("traceNoFilter");
+        registration.addInitParameter(FilterConstants.FILTER_EXCLUDES_KEY, FilterConstants.getaddFilterExcludes());
         return registration;
     }
 }

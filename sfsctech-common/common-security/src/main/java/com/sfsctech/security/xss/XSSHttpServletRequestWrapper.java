@@ -1,5 +1,6 @@
 package com.sfsctech.security.xss;
 
+import com.sfsctech.common.util.HtmlEscapeUtil;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,9 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
-    public XssHttpServletRequestWrapper(HttpServletRequest servletRequest) {
+    public XSSHttpServletRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
     }
 
@@ -47,6 +48,13 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String cleanXSS(String value) {
+        System.out.println(test1(value));
+        System.out.println(HtmlUtils.htmlEscape(value));
+        System.out.println(HtmlEscapeUtil.htmlEncode(value));
+        return value;
+    }
+
+    private String test1(String value) {
         //You'll need to remove the spaces from the html entities below
         value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
         value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");

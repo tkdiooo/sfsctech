@@ -1,5 +1,8 @@
 package com.sfsctech.security.interceptor;
 
+import com.sfsctech.security.csrf.CSRFTokenManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -16,6 +19,8 @@ import java.lang.reflect.Method;
  */
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
+
     /**
      * 在请求处理之前进行调用（Controller方法调用之前）
      *
@@ -27,8 +32,14 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(request);
         // 只有返回true才会继续向下执行，返回false取消当前请求
         // Csrf防御验证
+        if (CSRFTokenManager.validCsrfToken(request)) {
+            logger.warn("CSRF attack intercept");
+            return false;
+        }
+
         return true;
     }
 
@@ -48,7 +59,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         // 加密敏感参数
 
         // 设置Csrf防御
-
+        CSRFTokenManager.generateCSRFToken(request);
     }
 
     /**

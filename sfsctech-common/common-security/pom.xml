@@ -13,6 +13,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- sfsctech-common-util support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
