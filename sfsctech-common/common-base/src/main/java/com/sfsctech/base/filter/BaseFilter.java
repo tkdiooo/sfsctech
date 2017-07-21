@@ -1,9 +1,14 @@
 package com.sfsctech.base.filter;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.regex.Matcher;
+import com.sfsctech.constants.SecurityConstants;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -13,45 +18,56 @@ import java.util.stream.Collectors;
  * @author 张麒 2017/7/20.
  * @version Description:
  */
-public abstract class BaseFilter {
+public abstract class BaseFilter implements Filter {
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private static final ThreadLocal<Map<String, Boolean>> handler = new ThreadLocal<>();
     private Set<String> excludesPattern;
-    protected String contextPath;
-    private static Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
+    private String contextPath;
 
-    protected void init(String param) {
-        if (param != null && param.trim().length() != 0) {
-            this.excludesPattern = Arrays.stream(param.split("\\s*,\\s*")).collect(Collectors.toSet());
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        this.contextPath = filterConfig.getServletContext().getContextPath();
+        logger.info(getClass() + "[contextPath：" + this.contextPath + "]");
+        String params = filterConfig.getInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY);
+        logger.info(getClass() + "[" + SecurityConstants.FILTER_EXCLUDES_KEY + "：" + params + "]");
+        if (StringUtils.isNotBlank(params)) {
+            this.excludesPattern = Arrays.stream(params.split("\\s*,\\s*")).collect(Collectors.toSet());
         }
     }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String requestURI = httpServletRequest.getRequestURI();
+        boolean bool = this.isExclusion(requestURI);
+        logger.info(getClass() + " isExclusion：[" + bool + "] requestURI：[" + requestURI + "]");
+        if (bool) {
+            chain.doFilter(request, response);
+        } else {
+            doHandler(request, response, chain);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        logger.debug(getClass() + " destroy");
+    }
+
+    public abstract void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException;
 
     protected boolean isExclusion(String requestURI) {
-        if (this.excludesPattern != null && requestURI != null) {
-            if (this.contextPath != null && requestURI.startsWith(this.contextPath)) {
-                requestURI = requestURI.substring(this.contextPath.length());
-                if (!requestURI.startsWith("/")) {
-                    requestURI = "/" + requestURI;
-                }
-            }
-            return this.matches(requestURI) || excludesPattern(requestURI);
+        // 责任链不为空，并且当前请求的URL已处理过
+        if (null != handler.get() && handler.get().containsKey(requestURI)) {
+            return handler.get().get(requestURI);
         } else {
-            return false;
+            return verify(requestURI);
         }
-    }
-
-    private boolean excludesPattern(String requestURI) {
-        Iterator<String> var2 = this.excludesPattern.iterator();
-
-        do {
-            if (!var2.hasNext()) return false;
-        } while (!this.matches(var2.next(), requestURI));
-
-        return true;
     }
 
     protected boolean matches(String url) {
-        Matcher matcher = pattern.matcher(url);
-        return matcher.matches();
+        return SecurityConstants.pattern.matcher(url).matches();
     }
 
     protected boolean matches(String pattern, String source) {
@@ -82,5 +98,31 @@ public abstract class BaseFilter {
         } else {
             return false;
         }
+    }
+
+    private boolean verify(String requestURI) {
+        final String url = requestURI;
+        if (null == handler.get()) {
+            handler.set(new HashMap<>());
+        }
+        handler.get().put(url, false);
+        if (this.excludesPattern != null && requestURI != null) {
+            if (this.contextPath != null && requestURI.startsWith(this.contextPath)) {
+                requestURI = requestURI.substring(this.contextPath.length());
+                if (!requestURI.startsWith("/")) {
+                    requestURI = "/" + requestURI;
+                }
+            }
+            handler.get().put(url, this.matches(requestURI) || excludesPattern(requestURI));
+        }
+        return handler.get().get(url);
+    }
+
+    private boolean excludesPattern(String requestURI) {
+        Iterator<String> var2 = this.excludesPattern.iterator();
+        do {
+            if (!var2.hasNext()) return false;
+        } while (!this.matches(var2.next(), requestURI));
+        return true;
     }
 }

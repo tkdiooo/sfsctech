@@ -11,9 +11,13 @@ public class PropertiesConstants {
     // the custom Attribute
     //-------------------------------------------------------------------------------------------
     /**
-     * Properties：website.static.resources"
+     * Properties：website.support.static-resources"
      */
-    public final static String STATIC_RESOURCE = "website.static.resources";
+    public final static String WEBSITE_SUPPORT_STATIC_RESOURCE = "website.support.static-resources";
+    /**
+     * Properties：website.request.exclude-mapping"
+     */
+    public final static String WEBSITE_REQUEST_EXCLUDE_MAPPING = "website.request.exclude-mapping";
     /**
      * Properties：sso.login.url
      */

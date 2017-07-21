@@ -34,8 +34,14 @@ logging:
   level: error
 #common setting
 website:
-  static:
-    resources: http://localhost:8080/static-resources
+  # 网站支持
+  support:
+    # 静态资源服务
+    static-resources: http://localhost:8080/static-resources
+  # 网站请求
+  request:
+    # 排除映射
+    exclude-mapping: /, /index.html, *.jsp
 #dubbo setting
 dubbo:
   application:

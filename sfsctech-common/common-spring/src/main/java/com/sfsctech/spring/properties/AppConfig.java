@@ -1,11 +1,13 @@
 package com.sfsctech.spring.properties;
 
-import com.sfsctech.constants.FilterConstants;
+import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Class Application
@@ -44,7 +46,7 @@ public class AppConfig {
     /**
      * 静态资源地址
      */
-    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.STATIC_RESOURCE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SUPPORT_STATIC_RESOURCE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String STATIC_RESOURCES;
     /**
      * 单点登录 - 登录服务
@@ -64,8 +66,7 @@ public class AppConfig {
 
     @Autowired
     public void initProperties(
-            @Value("${spring.mvc.view.suffix}") String suffix
-    ) {
-        FilterConstants.addFilterExcludes(suffix);
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_REQUEST_EXCLUDE_MAPPING + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String[] exclude) {
+        SecurityConstants.addFilterExcludes(exclude);
     }
 }

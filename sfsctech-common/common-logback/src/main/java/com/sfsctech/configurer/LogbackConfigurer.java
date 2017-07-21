@@ -1,7 +1,6 @@
 package com.sfsctech.configurer;
 
-import com.sfsctech.constants.CommonConstants;
-import com.sfsctech.constants.FilterConstants;
+import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.logback.core.listener.LogbackConfigListener;
 import com.sfsctech.logback.rmt.filter.TraceNoFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -32,11 +31,10 @@ public class LogbackConfigurer {
 
     @Bean
     public FilterRegistrationBean filterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new TraceNoFilter());
+        FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns("/*");
         registration.setName("traceNoFilter");
-        registration.addInitParameter(FilterConstants.FILTER_EXCLUDES_KEY, FilterConstants.getaddFilterExcludes());
+        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, SecurityConstants.getFilterExcludes());
         return registration;
     }
 }

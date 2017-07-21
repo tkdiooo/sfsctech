@@ -1,5 +1,6 @@
 package com.sfsctech.website.jsp;
 
+import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
         TomcatContextCustomizer contextCustomizer = context -> context.addWelcomeFile("/index.html");
+        SecurityConstants.addFilterExcludes("/index.html");
         factory.addContextCustomizers(contextCustomizer);
         return factory;
     }
