@@ -1,5 +1,6 @@
 package com.sfsctech.configurer;
 
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.logback.core.listener.LogbackConfigListener;
 import com.sfsctech.logback.rmt.filter.TraceNoFilter;
@@ -32,9 +33,9 @@ public class LogbackConfigurer {
     @Bean
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         registration.setName("traceNoFilter");
-        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, SecurityConstants.getFilterExcludes());
+        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, "*.jsp,/druid/*");
         return registration;
     }
 }

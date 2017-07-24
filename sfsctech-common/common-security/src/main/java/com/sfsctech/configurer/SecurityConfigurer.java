@@ -26,20 +26,18 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        System.out.println(SecurityConstants.getFilterExcludes());
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/**").excludePathPatterns(SecurityConstants.getFilterExcludes().split(","));
+        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.DOUBLE_STAR);
         super.addInterceptors(registry);
     }
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         registration.setName("XSSFilter");
-        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, SecurityConstants.getFilterExcludes());
         return registration;
     }
 }

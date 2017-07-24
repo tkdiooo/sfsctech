@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.fastjson.JSON;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.mybatis.datasource.ReadWriteDataSource;
 import com.sfsctech.mybatis.datasource.aop.ReadWriteAdvice;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,7 +12,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -161,7 +161,7 @@ public class MybatisConfigurer {
     public FilterRegistrationBean druidStatFilter() {
         FilterRegistrationBean druidWebStatFilter = new FilterRegistrationBean(new WebStatFilter());
         //添加过滤规则.
-        druidWebStatFilter.addUrlPatterns("/*");
+        druidWebStatFilter.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         //添加不需要忽略的格式信息.
         druidWebStatFilter.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*");
         return druidWebStatFilter;

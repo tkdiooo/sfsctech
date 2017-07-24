@@ -8,6 +8,13 @@ package com.sfsctech.constants;
  */
 public class PropertiesConstants {
 
+    // the server Attribute
+    //-------------------------------------------------------------------------------------------
+    /**
+     * Properties：server.contextPath"
+     */
+    public final static String SERVER_CONTEXTPATH = "server.contextPath";
+
     // the custom Attribute
     //-------------------------------------------------------------------------------------------
     /**
@@ -30,6 +37,7 @@ public class PropertiesConstants {
      * Properties：sso.logout.url
      */
     public final static String SSO_LOGOUT_URL = "sso.logout.url";
+
     // spring.http.multipart Attribute
     //-------------------------------------------------------------------------------------------
     /**

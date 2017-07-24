@@ -1,5 +1,6 @@
 package com.sfsctech.resources;
 
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.resources.filter.SecurityFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -19,7 +20,7 @@ public class StaticResources {
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new SecurityFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         registration.setName("SecurityFilter");
         registration.setOrder(1);
         return registration;

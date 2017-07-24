@@ -339,6 +339,11 @@ public class LabelConstants {
     public static final String STAR = "*";
 
     /**
+     * *
+     */
+    public static final String DOUBLE_STAR = "**";
+
+    /**
      * \t
      */
     public static final String TAB = "\t";

@@ -25,12 +25,16 @@ public class SessionInfo implements Serializable {
         this.userAuthData = JSON.parseObject(userAuthInfo, UserAuthData.class);
     }
 
-    public Map<String, Object> getAttribute() {
-        return attribute;
+    public Object getAttribute(String key) {
+        return attribute.get(key);
     }
 
     public void setAttribute(String key, Object value) {
         attribute.put(key, value);
+    }
+
+    public void removeAttribute(String key) {
+        attribute.remove(key);
     }
 
     public UserAuthData getUserAuthData() {

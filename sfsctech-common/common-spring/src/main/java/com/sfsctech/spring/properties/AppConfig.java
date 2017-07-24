@@ -66,7 +66,9 @@ public class AppConfig {
 
     @Autowired
     public void initProperties(
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_CONTEXTPATH + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String contextPath,
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_REQUEST_EXCLUDE_MAPPING + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String[] exclude) {
+        SecurityConstants.contextPath = contextPath;
         SecurityConstants.addFilterExcludes(exclude);
     }
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public abstract class UuidUtil {
+public abstract class UUIDUtil {
 
     public static String uuid() {
         UUID uuid = UUID.randomUUID();
