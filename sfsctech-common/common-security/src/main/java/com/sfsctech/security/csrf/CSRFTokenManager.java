@@ -1,6 +1,10 @@
 package com.sfsctech.security.csrf;
 
+import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.inf.ICacheFactory;
+import com.sfsctech.common.util.SpringContextUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.security.session.SessionHolder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,38 +17,41 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CSRFTokenManager {
 
-    private static String CSRF_TOKEN_SESSION = "_csrf";
+    public static final String CSRF_TOKEN = "_csrf";
 
-    public static void generateCSRFToken(HttpServletRequest request) {
-        // 销毁token
-        destroy(request);
+    public static CSRFToken generateCSRFToken(HttpServletRequest request) {
         CSRFToken token = new CSRFToken();
-        if (null != SessionHolder.getSessionInfo()) {
-            SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN_SESSION, token);
+        if (!SecurityConstants.SERVER_SOA) {
+            request.getSession().setAttribute(CSRF_TOKEN, token);
         } else {
-            request.getSession().setAttribute(CSRF_TOKEN_SESSION, token);
+            SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
         }
+        return token;
     }
 
     public static boolean isValidCSRFToken(HttpServletRequest request) {
         CSRFToken token;
-        if (null != SessionHolder.getSessionInfo()) {
-            token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN_SESSION);
+        boolean bool = true;
+        if (!SecurityConstants.SERVER_SOA) {
+            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
         } else {
-            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN_SESSION);
+            token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
         }
         String tokenValue = request.getParameter(token.getParameterName());
         if (StringUtil.isNotBlank(tokenValue) && tokenValue.equals(token.getToken())) {
-            return false;
+            bool = false;
         }
-        return true;
+        destroy(request);
+        return bool;
     }
 
     public static void destroy(HttpServletRequest request) {
-        if (null != SessionHolder.getSessionInfo()) {
-            SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN_SESSION);
+        if (SecurityConstants.SERVER_SOA) {
+            if (null != SessionHolder.getSessionInfo()) {
+                SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
+            }
         } else {
-            request.getSession().removeAttribute(CSRF_TOKEN_SESSION);
+            request.getSession().removeAttribute(CSRF_TOKEN);
         }
     }
 }

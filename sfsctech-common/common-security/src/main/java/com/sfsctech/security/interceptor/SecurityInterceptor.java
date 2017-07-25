@@ -1,6 +1,5 @@
 package com.sfsctech.security.interceptor;
 
-import com.sfsctech.base.filter.BaseFilter;
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.security.csrf.CSRFTokenManager;
 import org.slf4j.Logger;
@@ -34,10 +33,13 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Method method = handlerMethod.getMethod();
+        
         // 当前请求路径是否需要验证
         if (!SecurityConstants.isExclusion(request.getRequestURI())) {
             // Csrf防御验证
-            if (CSRFTokenManager.isValidCSRFToken(request)) {
+            if (!CSRFTokenManager.isValidCSRFToken(request)) {
                 logger.warn("CSRF attack intercept");
                 return false;
             }
@@ -60,9 +62,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         // 加密敏感参数
-
-        // 设置Csrf Token
-        CSRFTokenManager.generateCSRFToken(request);
+        // 请求路径不是静态资源
+        if (SecurityConstants.matches(request.getRequestURI())) {
+            // 设置Csrf Token
+            modelAndView.getModel().put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
+        }
     }
 
     /**

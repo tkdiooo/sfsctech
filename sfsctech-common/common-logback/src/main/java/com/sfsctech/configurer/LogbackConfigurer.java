@@ -35,7 +35,7 @@ public class LogbackConfigurer {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         registration.setName("traceNoFilter");
-        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, "*.jsp,/druid/*");
+        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, SecurityConstants.SERVER_SUFFIX + "/druid/*");
         return registration;
     }
 }

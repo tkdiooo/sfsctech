@@ -2,10 +2,13 @@ package com.sfsctech.configurer;
 
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.security.annotation.SOAExistsCondition;
+import com.sfsctech.security.filter.SSOFilter;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -34,10 +37,20 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
+    public FilterRegistrationBean XSSFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
         registration.setName("XSSFilter");
+        return registration;
+    }
+
+    @Bean
+    @Conditional(SOAExistsCondition.class)
+    public FilterRegistrationBean SSOFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new SSOFilter());
+        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
+        registration.setName("SSOFilter");
         return registration;
     }
 }

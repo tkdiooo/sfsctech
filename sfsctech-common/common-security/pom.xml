@@ -19,6 +19,12 @@
             <artifactId>common-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-cache support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>

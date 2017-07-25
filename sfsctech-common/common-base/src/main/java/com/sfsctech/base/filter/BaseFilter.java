@@ -37,7 +37,7 @@ public abstract class BaseFilter implements Filter {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String requestURI = httpServletRequest.getRequestURI();
         boolean bool = (null != this.excludesPattern && this.excludesPattern.size() > 0) ? SecurityConstants.isExclusion(requestURI, this.excludesPattern) : SecurityConstants.isExclusion(requestURI);
-        logger.info(getClass() + " isExclusion：[" + bool + "] requestURI：[" + requestURI + "]");
+        logger.info("isExclusion：[" + bool + "] requestURI：[" + requestURI + "] " + getClass());
         if (bool) {
             chain.doFilter(request, response);
         } else {

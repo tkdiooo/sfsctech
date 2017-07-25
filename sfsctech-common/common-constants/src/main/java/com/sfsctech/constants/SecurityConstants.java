@@ -41,7 +41,7 @@ public class SecurityConstants {
         }
     }
 
-    private static boolean matches(String url) {
+    public static boolean matches(String url) {
         return pattern.matcher(url).matches();
     }
 
@@ -82,8 +82,8 @@ public class SecurityConstants {
         }
         handler.get().put(url, false);
         if (excludesPattern != null && requestURI != null) {
-            if (contextPath != null && requestURI.startsWith(contextPath)) {
-                requestURI = requestURI.substring(contextPath.length());
+            if (CONTEXT_PATH != null && requestURI.startsWith(CONTEXT_PATH)) {
+                requestURI = requestURI.substring(CONTEXT_PATH.length());
                 if (!requestURI.startsWith("/")) {
                     requestURI = "/" + requestURI;
                 }
@@ -104,7 +104,9 @@ public class SecurityConstants {
     // Filter Attribute
     //-------------------------------------------------------------------------------------------
     public static final String FILTER_EXCLUDES_KEY = "exclusions";
-    public static String contextPath;
+    public static String CONTEXT_PATH;
+    public static String SERVER_SUFFIX;
+    public static boolean SERVER_SOA;
 
 
     private static String toString(Set<String> set, String separate) {

@@ -1,7 +1,7 @@
 server:
   port: 8082
   address: localhost
-  contextPath: /mybatis
+  context-path: /mybatis
   tomcat:
     uri-encoding: utf-8
   context-parameters:

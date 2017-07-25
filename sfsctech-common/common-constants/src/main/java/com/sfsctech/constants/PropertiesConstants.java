@@ -11,9 +11,17 @@ public class PropertiesConstants {
     // the server Attribute
     //-------------------------------------------------------------------------------------------
     /**
-     * Properties：server.contextPath"
+     * Properties：server.context-path"
      */
-    public final static String SERVER_CONTEXTPATH = "server.contextPath";
+    public final static String SERVER_CONTEXTPATH = "server.context-path";
+    /**
+     * Properties：server.soa"
+     */
+    public final static String SERVER_SOA = "server.soa";
+    /**
+     * Properties：spring.mvc.view.suffix"
+     */
+    public final static String SERVER_SUFFIX = "spring.mvc.view.suffix";
 
     // the custom Attribute
     //-------------------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 package com.sfsctech.spring.properties;
 
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
@@ -65,10 +66,14 @@ public class AppConfig {
     public String SSO_LOGOUT_URL;
 
     @Autowired
-    public void initProperties(
+    public void staticAttribute(
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_SUFFIX + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String suffix,
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_CONTEXTPATH + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String contextPath,
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_SOA + LabelConstants.COLON + LabelConstants.FALSE + LabelConstants.CLOSE_CURLY_BRACE) boolean soa,
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_REQUEST_EXCLUDE_MAPPING + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String[] exclude) {
-        SecurityConstants.contextPath = contextPath;
+        SecurityConstants.CONTEXT_PATH = contextPath;
+        SecurityConstants.SERVER_SOA = soa;
+        SecurityConstants.SERVER_SUFFIX = StringUtil.isNotBlank(suffix) ? LabelConstants.STAR + suffix + LabelConstants.COMMA : "";
         SecurityConstants.addFilterExcludes(exclude);
     }
 }

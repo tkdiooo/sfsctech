@@ -22,13 +22,7 @@ public class XSSFilter extends BaseFilter {
 
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try {
-            SessionInfo session = new SessionInfo();
-            SessionHolder.setSessionInfo(session);
-            chain.doFilter(new XSSHttpServletRequestWrapper((HttpServletRequest) request), response);
-        } finally {
-            SessionHolder.clear();
-        }
+        chain.doFilter(new XSSHttpServletRequestWrapper((HttpServletRequest) request), response);
     }
 
 }

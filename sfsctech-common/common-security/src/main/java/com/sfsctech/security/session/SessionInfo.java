@@ -25,6 +25,10 @@ public class SessionInfo implements Serializable {
         this.userAuthData = JSON.parseObject(userAuthInfo, UserAuthData.class);
     }
 
+    public UserAuthData getUserAuthData() {
+        return userAuthData;
+    }
+
     public Object getAttribute(String key) {
         return attribute.get(key);
     }
@@ -35,10 +39,6 @@ public class SessionInfo implements Serializable {
 
     public void removeAttribute(String key) {
         attribute.remove(key);
-    }
-
-    public UserAuthData getUserAuthData() {
-        return userAuthData;
     }
 
 }
