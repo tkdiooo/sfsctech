@@ -69,11 +69,13 @@ public class AppConfig {
     public void staticAttribute(
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_SUFFIX + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String suffix,
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_CONTEXTPATH + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String contextPath,
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_STATIC_PATH_PATTERN + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath,
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_SOA + LabelConstants.COLON + LabelConstants.FALSE + LabelConstants.CLOSE_CURLY_BRACE) boolean soa,
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_REQUEST_EXCLUDE_MAPPING + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String[] exclude) {
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_REQUEST_FILTER_EXCLUDE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String[] exclude) {
         SecurityConstants.CONTEXT_PATH = contextPath;
         SecurityConstants.SERVER_SOA = soa;
-        SecurityConstants.SERVER_SUFFIX = StringUtil.isNotBlank(suffix) ? LabelConstants.STAR + suffix + LabelConstants.COMMA : "";
+        SecurityConstants.SERVER_SUFFIX = StringUtil.isNotBlank(suffix) ? LabelConstants.STAR + suffix + LabelConstants.COMMA : suffix;
+        SecurityConstants.SERVER_STATIC_PATH = staticPath;
         SecurityConstants.addFilterExcludes(exclude);
     }
 }

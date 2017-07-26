@@ -18,6 +18,7 @@ public class SecurityConstants {
     static {
         FILTER_EXCLUDES_VALUE = new HashSet<>();
         FILTER_EXCLUDES_VALUE.add("/druid/*");
+        FILTER_EXCLUDES_VALUE.add("/error");
     }
 
     public static void addFilterExcludes(String... excludes) {
@@ -83,11 +84,19 @@ public class SecurityConstants {
         handler.get().put(url, false);
         if (excludesPattern != null && requestURI != null) {
             if (CONTEXT_PATH != null && requestURI.startsWith(CONTEXT_PATH)) {
-                requestURI = requestURI.substring(CONTEXT_PATH.length());
+                if (requestURI.endsWith(LabelConstants.FORWARD_SLASH)) {
+                    requestURI = requestURI.substring(CONTEXT_PATH.length(), requestURI.length() - 1);
+                } else {
+                    requestURI = requestURI.substring(CONTEXT_PATH.length());
+                }
                 if (!requestURI.startsWith("/")) {
                     requestURI = "/" + requestURI;
                 }
             }
+            if (requestURI.endsWith(LabelConstants.FORWARD_SLASH)) {
+
+            }
+
             handler.get().put(url, matches(requestURI) || excludesPattern(requestURI));
         }
         return handler.get().get(url);
@@ -106,6 +115,7 @@ public class SecurityConstants {
     public static final String FILTER_EXCLUDES_KEY = "exclusions";
     public static String CONTEXT_PATH;
     public static String SERVER_SUFFIX;
+    public static String SERVER_STATIC_PATH;
     public static boolean SERVER_SOA;
 
 

@@ -22,6 +22,10 @@ public class PropertiesConstants {
      * Properties：spring.mvc.view.suffix"
      */
     public final static String SERVER_SUFFIX = "spring.mvc.view.suffix";
+    /**
+     * Properties：spring.mvc.static-path-pattern"
+     */
+    public final static String SERVER_STATIC_PATH_PATTERN = "spring.mvc.static-path-pattern";
 
     // the custom Attribute
     //-------------------------------------------------------------------------------------------
@@ -30,9 +34,9 @@ public class PropertiesConstants {
      */
     public final static String WEBSITE_SUPPORT_STATIC_RESOURCE = "website.support.static-resources";
     /**
-     * Properties：website.request.exclude-mapping"
+     * Properties：website.request.filter-exclude"
      */
-    public final static String WEBSITE_REQUEST_EXCLUDE_MAPPING = "website.request.exclude-mapping";
+    public final static String WEBSITE_REQUEST_FILTER_EXCLUDE = "website.request.filter-exclude";
     /**
      * Properties：sso.login.url
      */

@@ -48,21 +48,7 @@ public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String cleanXSS(String value) {
-        System.out.println(test1(value));
-        System.out.println(HtmlUtils.htmlEscape(value));
-        System.out.println(HtmlEscapeUtil.htmlEncode(value));
-        return value;
-    }
-
-    private String test1(String value) {
-        //You'll need to remove the spaces from the html entities below
-        value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
-        value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
-        value = value.replaceAll("'", "& #39;");
-        value = value.replaceAll("eval\\((.*)\\)", "");
-        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
-        value = value.replaceAll("script", "");
-        return value;
+        return HtmlEscapeUtil.htmlEncode(value);
     }
 
 }

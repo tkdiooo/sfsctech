@@ -29,7 +29,11 @@ spring:
       min-idle: 50
 #common setting
 website:
+  # 网站支持
+  support:
+    # 静态资源服务
+    static-resources: http://localhost:8080/static-resources
   # 网站请求
   request:
-    # 排除映射
-    exclude-mapping: /, /index, /error, *.html
+    # filter排除
+    filter-exclude: /, /index, *.html

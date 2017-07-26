@@ -37,9 +37,11 @@ public class CSRFTokenManager {
         } else {
             token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
         }
-        String tokenValue = request.getParameter(token.getParameterName());
-        if (StringUtil.isNotBlank(tokenValue) && tokenValue.equals(token.getToken())) {
-            bool = false;
+        if (null != token) {
+            String tokenValue = request.getParameter(token.getParameterName());
+            if (StringUtil.isNotBlank(tokenValue) && tokenValue.equals(token.getToken())) {
+                bool = false;
+            }
         }
         destroy(request);
         return bool;

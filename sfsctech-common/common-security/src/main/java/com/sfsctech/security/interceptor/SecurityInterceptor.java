@@ -35,15 +35,19 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        
+        String requestURI = request.getRequestURI();
+        boolean bool = SecurityConstants.isExclusion(requestURI);
+        logger.info("isExclusion：[" + bool + "] requestURI：[" + requestURI + "] " + getClass());
         // 当前请求路径是否需要验证
-        if (!SecurityConstants.isExclusion(request.getRequestURI())) {
+        if (!bool) {
             // Csrf防御验证
-            if (!CSRFTokenManager.isValidCSRFToken(request)) {
+            if (CSRFTokenManager.isValidCSRFToken(request)) {
                 logger.warn("CSRF attack intercept");
                 return false;
             }
         }
+        // 解密敏感参数
+
         // 只有返回true才会继续向下执行，返回false取消当前请求
         return true;
     }
@@ -61,12 +65,10 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
+        logger.info("requestURI：[" + request.getRequestURI() + "] " + getClass());
         // 加密敏感参数
-        // 请求路径不是静态资源
-        if (SecurityConstants.matches(request.getRequestURI())) {
-            // 设置Csrf Token
-            modelAndView.getModel().put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
-        }
+        // 设置Csrf Token
+        modelAndView.getModel().put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
     }
 
     /**

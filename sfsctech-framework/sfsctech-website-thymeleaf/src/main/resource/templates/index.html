@@ -15,8 +15,11 @@
 		<!--[if lt IE 9]>
 		<script type="text/javascript" src="_js/html5.js"></script>
 		<![endif]-->
-		<script th:src="@{/webjars/jquery/3.1.1/dist/jquery.min.js}"></script>
-		<script th:src="@{/static/js/dialog.js}"></script>
+		<script th:src="${application.static_resource} + '/webjars/jquery/3.2.1/dist/jquery.min.js'"></script>
+		<script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>
+		<script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>
+		<script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
+		<script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
 	</head>
 	<!--=== *** 重要：未换行和换行的部分都请保持原状，否则会引起低版本IE浏览器的布局差异！ *** ===-->
 	<body>
@@ -25,11 +28,12 @@
 	<input name="prikeypwd" type="hidden" id="prikeypwd" value="12345678" size="20"/>
 
 		<section class="login">
-			<form>
+			<form id="contact-form" action="login" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				<h1>OA办公平台<span>OA办公平台</span></h1>
-				<p><i class="fa fa-user"></i><input name="userName" type="text" value="张世俊" placeholder="账号"></p>
-				<p><i class="fa fa-lock"></i><input name="userPassword" type="password" value="111111" placeholder="密码"></p>
-				<p><button type="button" onclick="login();">登 录</button></p>
+				<p><i class="fa fa-user"></i><input name="userName" type="text" value="" placeholder="账号"></p>
+				<p><i class="fa fa-lock"></i><input name="password" type="password" value="111111" placeholder="密码"></p>
+				<p><button type="submit">登 录</button></p>
 			</form>
 		</section>
 		<footer>Powered by 外服信 &copy; 2017</footer>
@@ -44,40 +48,8 @@
 			});
 			// 登录提交
 			function login(){
-				var userName = $("input[name=userName]").val();
-		        if (userName === null || userName === "") {
-		            $.dialog({
-		                content: "用户名不能为空",
-		                ok: true
-		            });
-		            return;
-		        }
-		        var userPassword = $("input[name=userPassword]").val();
-		       // alert((userName === null || userName === "")+"\n"+(userPassword === null || userPassword === ""));
-		        if (userPassword === null || userPassword === "") {
-		            $.dialog({
-		                content: "用户密码不能为空",
-		                ok: true
-		            });
-		            return;
-		        }
-		    	debugger;
-		    	$.ajax({
-		            type: "post",
-		            data: $("form").serialize(),
-		            url: /*[[@{/login}]]*/ "",
-		            dataType: "json",
-		            success: function (res) {
-		                if (res.rspCode === "0000") {
-		                    location.href = /*[[@{/home}]]*/ "";
-		                } else {
-		                    $.dialog({
-		                        content: res.rspMsg,
-		                        ok:true
-		                    });
-		                }
-		            }
-		        });
+                var formParams = $("#contact-form").serializeJson();
+                ajax_action(/*[[@{/login}]]*/ "", formParams);
 			}
 			
 		</script>
