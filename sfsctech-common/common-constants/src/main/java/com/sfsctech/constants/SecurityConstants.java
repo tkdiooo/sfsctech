@@ -18,7 +18,7 @@ public class SecurityConstants {
     static {
         FILTER_EXCLUDES_VALUE = new HashSet<>();
         FILTER_EXCLUDES_VALUE.add("/druid/*");
-        FILTER_EXCLUDES_VALUE.add("/error");
+        FILTER_EXCLUDES_VALUE.add(SecurityConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
     }
 
     public static void addFilterExcludes(String... excludes) {
@@ -113,6 +113,7 @@ public class SecurityConstants {
     // Filter Attribute
     //-------------------------------------------------------------------------------------------
     public static final String FILTER_EXCLUDES_KEY = "exclusions";
+    public static final String ERROR_PATH = "/error";
     public static String CONTEXT_PATH;
     public static String SERVER_SUFFIX;
     public static String SERVER_STATIC_PATH;

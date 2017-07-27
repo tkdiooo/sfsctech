@@ -161,7 +161,7 @@ public class MybatisConfigurer {
     public FilterRegistrationBean druidStatFilter() {
         FilterRegistrationBean druidWebStatFilter = new FilterRegistrationBean(new WebStatFilter());
         //添加过滤规则.
-        druidWebStatFilter.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
+        druidWebStatFilter.addUrlPatterns(LabelConstants.SLASH_STAR);
         //添加不需要忽略的格式信息.
         druidWebStatFilter.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*");
         return druidWebStatFilter;

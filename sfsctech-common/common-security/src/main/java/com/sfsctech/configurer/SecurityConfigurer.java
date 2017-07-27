@@ -32,14 +32,14 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.DOUBLE_STAR).excludePathPatterns(SecurityConstants.SERVER_STATIC_PATH, "/error");
+        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(SecurityConstants.SERVER_STATIC_PATH, SecurityConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
         super.addInterceptors(registry);
     }
 
     @Bean
     public FilterRegistrationBean XSSFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
-        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("XSSFilter");
         return registration;
     }
@@ -49,7 +49,7 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean SSOFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new SSOFilter());
-        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SSOFilter");
         return registration;
     }

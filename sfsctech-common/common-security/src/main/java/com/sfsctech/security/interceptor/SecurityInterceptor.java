@@ -1,7 +1,10 @@
 package com.sfsctech.security.interceptor;
 
+import com.sfsctech.base.exception.BizException;
+import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.security.csrf.CSRFTokenManager;
+import netscape.security.ForbiddenTargetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -43,7 +46,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             // Csrf防御验证
             if (CSRFTokenManager.isValidCSRFToken(request)) {
                 logger.warn("CSRF attack intercept");
-                return false;
+                throw new BizException(I18NConstants.Tips.Exception403);
             }
         }
         // 解密敏感参数

@@ -37,5 +37,6 @@ public class IndexController {
         System.out.println(model);
         System.out.println(request.getParameter("userName"));
         System.out.println(userInfo.getUserName());
+//        return "index";
     }
 }

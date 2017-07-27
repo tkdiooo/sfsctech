@@ -34,6 +34,11 @@ public class I18NConstants {
         ExceptionUpload("tips.exception.upload"),
 
         /**
+         * 请求的页面没有访问权限
+         */
+        Exception403("tips.exception.403"),
+
+        /**
          * 请求的页面不存在
          */
         Exception404("tips.exception.404"),

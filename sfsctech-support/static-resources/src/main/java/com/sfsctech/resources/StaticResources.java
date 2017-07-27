@@ -20,7 +20,7 @@ public class StaticResources {
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new SecurityFilter());
-        registration.addUrlPatterns(LabelConstants.FORWARD_SLASH + LabelConstants.STAR);
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SecurityFilter");
         registration.setOrder(1);
         return registration;

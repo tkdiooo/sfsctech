@@ -339,9 +339,19 @@ public class LabelConstants {
     public static final String STAR = "*";
 
     /**
-     * *
+     * **
      */
     public static final String DOUBLE_STAR = "**";
+
+    /**
+     * /**
+     */
+    public static final String SLASH_DOUBLE_STAR = FORWARD_SLASH + DOUBLE_STAR;
+
+    /**
+     * /*
+     */
+    public static final String SLASH_STAR = FORWARD_SLASH + STAR;
 
     /**
      * \t
@@ -383,4 +393,13 @@ public class LabelConstants {
      */
     public static final String MATCHING_FILE = "file:";
 
+    /**
+     * 404
+     */
+    public static final String NOT_FOUND = "404";
+
+    /**
+     * 500
+     */
+    public static final String INTERNAL_SERVER_ERROR = "500";
 }
