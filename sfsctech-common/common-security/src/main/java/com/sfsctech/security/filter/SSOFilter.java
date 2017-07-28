@@ -1,6 +1,8 @@
 package com.sfsctech.security.filter;
 
 import com.sfsctech.base.filter.BaseFilter;
+import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.security.csrf.CSRFTokenManager;
 import com.sfsctech.security.session.SessionHolder;
 import com.sfsctech.security.session.SessionInfo;
 
@@ -8,6 +10,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -19,17 +22,24 @@ import java.io.IOException;
 public class SSOFilter extends BaseFilter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         SessionHolder.setSessionInfo(new SessionInfo());
         try {
-            super.doFilter(request, response, chain);
+            // 排除请求路径验证
+            final HttpServletRequest httpRequest = (HttpServletRequest) request;
+            String requestURI = httpRequest.getRequestURI();
+            boolean bool = SecurityConstants.isExclusion(requestURI);
+            logger.info("SSO登录验证：exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
+            if (bool) {
+                chain.doFilter(request, response);
+            }
+            // SSO用户登录验证
+            else {
+                chain.doFilter(request, response);
+            }
         } finally {
+            System.out.println("22323");
             SessionHolder.clear();
         }
-    }
-
-    @Override
-    public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
     }
 }

@@ -5,6 +5,12 @@ server:
   context-path: /thymeleaf
   tomcat:
     uri-encoding: utf-8
+  session:
+    cookie:
+#      domain:
+      http-only: true
+      max-age: 3600000
+  soa: true
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true

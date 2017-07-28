@@ -36,11 +36,13 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
         String requestURI = request.getRequestURI();
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+        }
         boolean bool = SecurityConstants.isExclusion(requestURI);
-        logger.info("isExclusion：[" + bool + "] requestURI：[" + requestURI + "] " + getClass());
+        logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
         // 当前请求路径是否需要验证
         if (!bool) {
             // Csrf防御验证
@@ -66,8 +68,10 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            Method method = handlerMethod.getMethod();
+        }
         logger.info("requestURI：[" + request.getRequestURI() + "] " + getClass());
         // 加密敏感参数
         // 设置Csrf Token

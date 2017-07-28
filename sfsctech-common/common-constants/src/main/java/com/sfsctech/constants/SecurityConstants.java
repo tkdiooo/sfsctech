@@ -29,17 +29,30 @@ public class SecurityConstants {
         return toString(FILTER_EXCLUDES_VALUE, LabelConstants.COMMA);
     }
 
+    /**
+     * 通过责任链处理的校验
+     *
+     * @param requestURI
+     * @return
+     */
     public static boolean isExclusion(String requestURI) {
-        return isExclusion(requestURI, FILTER_EXCLUDES_VALUE);
-    }
-
-    public static boolean isExclusion(String requestURI, Set<String> excludesPattern) {
         // 责任链不为空，并且当前请求的URL已处理过
         if (null != SecurityConstants.handler.get() && SecurityConstants.handler.get().containsKey(requestURI)) {
             return SecurityConstants.handler.get().get(requestURI);
         } else {
-            return SecurityConstants.verify(requestURI, excludesPattern);
+            return SecurityConstants.verify(requestURI);
         }
+    }
+
+    /**
+     * 不通过责任链处理的校验
+     *
+     * @param requestURI
+     * @param excludes
+     * @return
+     */
+    public static boolean isExclusion(String requestURI, Set<String> excludes) {
+        return SecurityConstants.verify(requestURI, excludes);
     }
 
     public static boolean matches(String url) {
@@ -76,34 +89,43 @@ public class SecurityConstants {
         }
     }
 
-    private static boolean verify(String requestURI, Set<String> excludesPattern) {
+    private static boolean verify(String requestURI) {
         final String url = requestURI;
         if (null == handler.get()) {
             handler.set(new HashMap<>());
         }
         handler.get().put(url, false);
-        if (excludesPattern != null && requestURI != null) {
-            if (CONTEXT_PATH != null && requestURI.startsWith(CONTEXT_PATH)) {
-                if (requestURI.endsWith(LabelConstants.FORWARD_SLASH)) {
-                    requestURI = requestURI.substring(CONTEXT_PATH.length(), requestURI.length() - 1);
-                } else {
-                    requestURI = requestURI.substring(CONTEXT_PATH.length());
-                }
-                if (!requestURI.startsWith("/")) {
-                    requestURI = "/" + requestURI;
-                }
-            }
-            if (requestURI.endsWith(LabelConstants.FORWARD_SLASH)) {
-
-            }
-
-            handler.get().put(url, matches(requestURI) || excludesPattern(requestURI));
+        if (FILTER_EXCLUDES_VALUE != null && requestURI != null) {
+            requestURI = formatRequestURI(requestURI);
+            handler.get().put(url, matches(requestURI) || excludesPattern(requestURI, FILTER_EXCLUDES_VALUE));
         }
         return handler.get().get(url);
     }
 
-    private static boolean excludesPattern(String requestURI) {
-        Iterator<String> var2 = FILTER_EXCLUDES_VALUE.iterator();
+    private static boolean verify(String requestURI, Set<String> excludes) {
+        if (excludes != null && requestURI != null) {
+            requestURI = formatRequestURI(requestURI);
+            return matches(requestURI) || excludesPattern(requestURI, excludes);
+        }
+        return false;
+    }
+
+    private static String formatRequestURI(String requestURI) {
+        if (CONTEXT_PATH != null && requestURI.startsWith(CONTEXT_PATH)) {
+            if (requestURI.endsWith(LabelConstants.FORWARD_SLASH) && requestURI.length() > CONTEXT_PATH.length() + 1) {
+                requestURI = requestURI.substring(CONTEXT_PATH.length(), requestURI.length() - 1);
+            } else {
+                requestURI = requestURI.substring(CONTEXT_PATH.length());
+            }
+            if (!requestURI.startsWith("/")) {
+                requestURI = "/" + requestURI;
+            }
+        }
+        return requestURI;
+    }
+
+    private static boolean excludesPattern(String requestURI, Set<String> excludes) {
+        Iterator<String> var2 = excludes.iterator();
         do {
             if (!var2.hasNext()) return false;
         } while (!matches(var2.next(), requestURI));

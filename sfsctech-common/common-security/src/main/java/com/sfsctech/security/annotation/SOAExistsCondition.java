@@ -1,5 +1,7 @@
 package com.sfsctech.security.annotation;
 
+import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.constants.SecurityConstants;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -14,7 +16,11 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 public class SOAExistsCondition implements Condition {
 
     @Override
-    public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        return SecurityConstants.SERVER_SOA;
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
+        String serverSOA = context.getEnvironment().getProperty(PropertiesConstants.SERVER_SOA);
+        if (StringUtil.isNotBlank(serverSOA)) {
+            return Boolean.valueOf(serverSOA);
+        }
+        return false;
     }
 }

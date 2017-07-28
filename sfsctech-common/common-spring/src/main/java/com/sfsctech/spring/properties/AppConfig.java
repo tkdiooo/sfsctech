@@ -19,6 +19,14 @@ import java.util.List;
 @Component
 public class AppConfig {
 
+    // Cookie属性
+    //-------------------------------------------------------------------------------------------
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_COOKIE_HTTP_ONLY + LabelConstants.COLON + LabelConstants.FALSE + LabelConstants.CLOSE_CURLY_BRACE)
+    public boolean COOKIE_HTTP_ONLY;
+
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_COOKIE_MAX_AGE + LabelConstants.COLON + "-1" + LabelConstants.CLOSE_CURLY_BRACE)
+    public int COOKIE_MAX_AGE;
+
     // 文件上传属性
     //-------------------------------------------------------------------------------------------
     /**
