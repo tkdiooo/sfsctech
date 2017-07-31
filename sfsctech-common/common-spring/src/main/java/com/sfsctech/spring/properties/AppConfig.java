@@ -1,14 +1,12 @@
 package com.sfsctech.spring.properties;
 
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
+import com.sfsctech.constants.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Class Application
@@ -60,18 +58,28 @@ public class AppConfig {
     /**
      * 单点登录 - 登录服务
      */
-    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SSO_LOGIN_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SSO_LOGIN_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String SSO_LOGIN_URL;
     /**
      * 单点登录 - 验证服务
      */
-    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SSO_CHECK_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SSO_CHECK_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String SSO_CHECK_URL;
     /**
      * 单点登录 - 登出服务
      */
-    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SSO_LOGOUT_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SSO_LOGOUT_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     public String SSO_LOGOUT_URL;
+    /**
+     * 单点登录 - 找回密码
+     */
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SSO_FORGET_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    public String SSO_FORGET_URL;
+    /**
+     * 单点登录 - 注册服务
+     */
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.WEBSITE_SSO_REGISTER_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
+    public String SSO_REGISTER_URL;
 
     @Autowired
     public void staticAttribute(

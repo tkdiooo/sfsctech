@@ -1,4 +1,4 @@
-package com.sfsctech.security.annotation;
+package com.sfsctech.security.tools;
 
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;

@@ -28,15 +28,19 @@ public class IndexController {
 
 
     @GetMapping("index")
-    public String index() {
+    public String index(ModelMap model) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName("account");
+        userInfo.setPassword("password");
+        model.put("userInfo", userInfo);
         return "index";
     }
 
     @PostMapping("login")
-    public void login(ModelMap model, HttpServletRequest request, UserInfo userInfo) {
+    public String login(ModelMap model, HttpServletRequest request, UserInfo userInfo) {
         System.out.println(model);
         System.out.println(request.getParameter("userName"));
         System.out.println(userInfo.getUserName());
-//        return "index";
+        return "login";
     }
 }

@@ -46,17 +46,25 @@ public class PropertiesConstants {
      */
     public final static String WEBSITE_REQUEST_FILTER_EXCLUDE = "website.request.filter-exclude";
     /**
-     * Properties：sso.login.url
+     * Properties：website.sso.login-url
      */
-    public final static String SSO_LOGIN_URL = "sso.login.url";
+    public final static String WEBSITE_SSO_LOGIN_URL = "website.sso.login-url";
     /**
-     * Properties：sso.check.url
+     * Properties：website.sso.check-url
      */
-    public final static String SSO_CHECK_URL = "sso.check.url";
+    public final static String WEBSITE_SSO_CHECK_URL = "website.sso.check-url";
     /**
-     * Properties：sso.logout.url
+     * Properties：website.sso.logout-url
      */
-    public final static String SSO_LOGOUT_URL = "sso.logout.url";
+    public final static String WEBSITE_SSO_LOGOUT_URL = "website.sso.logout-url";
+    /**
+     * Properties：website.sso.register-url
+     */
+    public final static String WEBSITE_SSO_REGISTER_URL = "website.sso.register-url";
+    /**
+     * Properties：website.sso.forget-url
+     */
+    public final static String WEBSITE_SSO_FORGET_URL = "website.sso.forget-url";
 
     // spring.http.multipart Attribute
     //-------------------------------------------------------------------------------------------

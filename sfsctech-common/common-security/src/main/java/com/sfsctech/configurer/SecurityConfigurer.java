@@ -2,17 +2,21 @@ package com.sfsctech.configurer;
 
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.security.annotation.SOAExistsCondition;
+import com.sfsctech.security.tools.SOAExistsCondition;
 import com.sfsctech.security.filter.SSOFilter;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
+import com.sfsctech.security.resolver.RequestAttributeMethodResolver;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.List;
 
 /**
  * Class SecurityConfigurer
@@ -22,6 +26,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class SecurityConfigurer extends WebMvcConfigurerAdapter {
+
+    /**
+     * 自定义参数解析器
+     *
+     * @param argumentResolvers HandlerMethodArgumentResolver
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new RequestAttributeMethodResolver());
+        super.addArgumentResolvers(argumentResolvers);
+    }
 
     /**
      * 添加拦截器

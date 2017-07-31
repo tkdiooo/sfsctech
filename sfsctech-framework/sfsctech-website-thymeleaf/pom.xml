@@ -34,12 +34,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- sfsctech-common-dubbox support-->
-        <!--<dependency>-->
-            <!--<groupId>com.sfsctech.common</groupId>-->
-            <!--<artifactId>common-dubbox</artifactId>-->
-            <!--<version>${sfsctech.common.version}</version>-->
-        <!--</dependency>-->
         <!-- sfsctech-common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
@@ -52,19 +46,12 @@
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-cache support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <!-- sfsctech-common-security support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>

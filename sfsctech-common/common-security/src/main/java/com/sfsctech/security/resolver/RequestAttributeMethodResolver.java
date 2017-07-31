@@ -1,12 +1,17 @@
-package com.sfsctech.spring.resolver;
+package com.sfsctech.security.resolver;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.base.result.ValidatorResult;
+import com.sfsctech.common.security.EncrypterTool;
+import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.common.util.ObjectUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.rpc.util.ValidatorUtil;
+import com.sfsctech.security.annotation.Encrypt;
+import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -16,6 +21,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 
 /**
  * Class argumentResolvers
@@ -50,6 +56,8 @@ public class RequestAttributeMethodResolver implements HandlerMethodArgumentReso
         if (result.hasErrors()) {
             throw new VerifyException(I18NConstants.Tips.ExceptionValidator, result);
         }
+        // 解密敏感参数
+        SecurityUtil.Decrypt(o);
         return o;
     }
 }

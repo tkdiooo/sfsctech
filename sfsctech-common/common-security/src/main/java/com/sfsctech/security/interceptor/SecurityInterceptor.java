@@ -1,19 +1,20 @@
 package com.sfsctech.security.interceptor;
 
 import com.sfsctech.base.exception.BizException;
+import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.security.csrf.CSRFTokenManager;
-import netscape.security.ForbiddenTargetException;
+import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * Class SecurityInterceptor
@@ -36,11 +37,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        if (handler instanceof HandlerMethod) {
+//            HandlerMethod handlerMethod = (HandlerMethod) handler;
+//            Method method = handlerMethod.getMethod();
+//        }
         String requestURI = request.getRequestURI();
-        if (handler instanceof HandlerMethod) {
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-        }
         boolean bool = SecurityConstants.isExclusion(requestURI);
         logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
         // 当前请求路径是否需要验证
@@ -51,8 +52,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                 throw new BizException(I18NConstants.Tips.Exception403);
             }
         }
-        // 解密敏感参数
-
         // 只有返回true才会继续向下执行，返回false取消当前请求
         return true;
     }
@@ -68,14 +67,23 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (handler instanceof HandlerMethod) {
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-        }
+//        if (handler instanceof HandlerMethod) {
+//            HandlerMethod handlerMethod = (HandlerMethod) handler;
+//            Method method = handlerMethod.getMethod();
+//        }
         logger.info("requestURI：[" + request.getRequestURI() + "] " + getClass());
         // 加密敏感参数
+        Map<String, Object> model = modelAndView.getModel();
+        for (String key : model.keySet()) {
+            Object obj = model.get(key);
+            if (BaseDto.class.equals(obj.getClass().getSuperclass())) {
+                SecurityUtil.Encrypt(obj);
+            }
+        }
         // 设置Csrf Token
-        modelAndView.getModel().put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
+        model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
+        // 设置无缓存，防止浏览器回退操作
+        ResponseUtil.setNoCacheHeaders(response);
     }
 
     /**

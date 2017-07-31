@@ -6,7 +6,6 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SecurityConstants;
-import com.sfsctech.spring.resolver.RequestAttributeMethodResolver;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -96,17 +94,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public Validator getValidator() {
         return validator();
-    }
-
-    /**
-     * 自定义参数解析器
-     *
-     * @param argumentResolvers HandlerMethodArgumentResolver
-     */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new RequestAttributeMethodResolver());
-        super.addArgumentResolvers(argumentResolvers);
     }
 
     @Bean

@@ -28,11 +28,11 @@
 	<input name="prikeypwd" type="hidden" id="prikeypwd" value="12345678" size="20"/>
 
 		<section class="login">
-			<form id="contact-form" action="login" method="post">
+			<form id="contact-form" th:action="@{/login}" method="post">
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				<h1>OA办公平台<span>OA办公平台</span></h1>
-				<p><i class="fa fa-user"></i><input name="userName" type="text" value="" placeholder="账号"></p>
-				<p><i class="fa fa-lock"></i><input name="password" type="password" value="111111" placeholder="密码"></p>
+				<p><i class="fa fa-user"></i><input name="userName" th:value="${userInfo.userName}" placeholder="账号"></p>
+				<p><i class="fa fa-lock"></i><input name="password" th:value="${userInfo.password}" placeholder="密码"></p>
 				<p><button type="submit">登 录</button></p>
 			</form>
 		</section>
