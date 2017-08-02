@@ -46,6 +46,10 @@ public class PropertiesConstants {
      */
     public final static String WEBSITE_REQUEST_FILTER_EXCLUDE = "website.request.filter-exclude";
     /**
+     * Properties：website.request.csrf-exclude"
+     */
+    public final static String WEBSITE_REQUEST_CSRF_EXCLUDE = "website.request.csrf-exclude";
+    /**
      * Properties：website.sso.login-url
      */
     public final static String WEBSITE_SSO_LOGIN_URL = "website.sso.login-url";

@@ -14,19 +14,31 @@ public class SecurityConstants {
     private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
     private static final ThreadLocal<Map<String, Boolean>> handler = new ThreadLocal<>();
     private static Set<String> FILTER_EXCLUDES_VALUE;
+    private static Set<String> CSRF_EXCLUDES_VALUE;
 
     static {
         FILTER_EXCLUDES_VALUE = new HashSet<>();
         FILTER_EXCLUDES_VALUE.add("/druid/*");
         FILTER_EXCLUDES_VALUE.add(SecurityConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
+        CSRF_EXCLUDES_VALUE = new HashSet<>();
+        CSRF_EXCLUDES_VALUE.add("/druid/*");
+        CSRF_EXCLUDES_VALUE.add(SecurityConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
     }
 
     public static void addFilterExcludes(String... excludes) {
         FILTER_EXCLUDES_VALUE.addAll(Arrays.asList(excludes));
     }
 
-    public static String getExcludes() {
+    public static void addCSRFExcludes(String... excludes) {
+        CSRF_EXCLUDES_VALUE.addAll(Arrays.asList(excludes));
+    }
+
+    public static String getFilterExcludes() {
         return toString(FILTER_EXCLUDES_VALUE, LabelConstants.COMMA);
+    }
+
+    public static String[] getCSRFExcludes() {
+        return CSRF_EXCLUDES_VALUE.toArray(new String[]{});
     }
 
     /**

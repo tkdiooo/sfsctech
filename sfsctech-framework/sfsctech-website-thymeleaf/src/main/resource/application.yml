@@ -43,3 +43,5 @@ website:
   request:
     # filter排除
     filter-exclude: /, /index, *.html
+    # csrf排除
+#    csrf-exclude: /**
