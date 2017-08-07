@@ -72,16 +72,18 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //            Method method = handlerMethod.getMethod();
 //        }
         logger.info("requestURI：[" + request.getRequestURI() + "] " + getClass());
-        // 加密敏感参数
-        Map<String, Object> model = modelAndView.getModel();
-        for (String key : model.keySet()) {
-            Object obj = model.get(key);
-            if (BaseDto.class.equals(obj.getClass().getSuperclass())) {
-                SecurityUtil.Encrypt(obj);
+        if (null != modelAndView && null != modelAndView.getModel()) {
+            // 加密敏感参数
+            Map<String, Object> model = modelAndView.getModel();
+            for (String key : model.keySet()) {
+                Object obj = model.get(key);
+                if (BaseDto.class.equals(obj.getClass().getSuperclass())) {
+                    SecurityUtil.Encrypt(obj);
+                }
             }
+            // 设置Csrf Token
+            model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
         }
-        // 设置Csrf Token
-        model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
         // 设置无缓存，防止浏览器回退操作
         ResponseUtil.setNoCacheHeaders(response);
     }
