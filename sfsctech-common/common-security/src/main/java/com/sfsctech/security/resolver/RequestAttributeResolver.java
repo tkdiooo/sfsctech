@@ -5,12 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.base.result.ValidatorResult;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.ObjectUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.rpc.util.ValidatorUtil;
-import com.sfsctech.security.annotation.Encrypt;
 import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +17,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Field;
 
 /**
  * Class argumentResolvers
@@ -29,9 +24,9 @@ import java.lang.reflect.Field;
  * @author 张麒 2017/6/22.
  * @version Description:
  */
-public class RequestAttributeMethodResolver implements HandlerMethodArgumentResolver {
+public class RequestAttributeResolver implements HandlerMethodArgumentResolver {
 
-    private final Logger logger = LoggerFactory.getLogger(RequestAttributeMethodResolver.class);
+    private final Logger logger = LoggerFactory.getLogger(RequestAttributeResolver.class);
 
     /**
      * 检查参数是否需要验证

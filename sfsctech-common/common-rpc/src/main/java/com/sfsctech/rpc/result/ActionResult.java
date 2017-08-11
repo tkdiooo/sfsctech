@@ -5,6 +5,7 @@ import com.sfsctech.common.util.ResourceUtil;
 import com.sfsctech.constants.I18NConstants.Tips;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,6 +86,9 @@ public class ActionResult<T> extends BaseResult {
     private Map<String, Object> attachs;
 
     public void addAttach(String key, Object value) {
+        if (null == this.attachs) {
+            this.attachs = new HashMap<>();
+        }
         this.attachs.put(key, value);
     }
 

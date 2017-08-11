@@ -2,6 +2,7 @@ package com.sfsctech.security.interceptor;
 
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SecurityConstants;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;

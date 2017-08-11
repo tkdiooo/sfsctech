@@ -234,9 +234,12 @@ function ajax_action(url, data, opt) {
                 });
             }
         },
-        success: function (data) {
+        success: function (data, textStatus, request) {
             if (plugin.settings.waiting) {
                 layer.closeAll();
+            }
+            if (data.attachs) {
+                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
             }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 alert(data.messages.join('<br/>'), plugin.settings.handler, data);
@@ -308,6 +311,9 @@ function load_url(url, container, data, opt) {
             }).html(data).delay(50).animate({
                 opacity: '1.0'
             }, 300);
+            if (data.attachs) {
+                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
+            }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
             if (plugin.settings.waiting) {

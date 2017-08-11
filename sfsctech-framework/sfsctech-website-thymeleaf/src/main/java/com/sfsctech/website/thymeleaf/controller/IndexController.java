@@ -1,5 +1,6 @@
 package com.sfsctech.website.thymeleaf.controller;
 
+import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +38,11 @@ public class IndexController {
     }
 
     @PostMapping("login")
-    public String login(ModelMap model, HttpServletRequest request, UserInfo userInfo) {
+    @ResponseBody
+    public ActionResult<UserInfo> login(ModelMap model, HttpServletRequest request, UserInfo userInfo) {
         System.out.println(model);
         System.out.println(request.getParameter("userName"));
         System.out.println(userInfo.getUserName());
-        return "login";
+        return new ActionResult<>(userInfo);
     }
 }
