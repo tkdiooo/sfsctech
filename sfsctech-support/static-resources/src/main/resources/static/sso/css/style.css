@@ -934,13 +934,19 @@ Parallax
     color: white;
 }
 
-.form .user, .form .pass {
-    margin-top: 15px;
-    z-index: 1
+.form .form-group {
+    height: 55px !important;
+}
+
+.form .help-block {
+    font-size: 12px !important;
+    color: #b44b49 !important;
 }
 
 .form input:focus, select:focus, textarea:focus {
     border-color: #67b0d1;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
 .form input, select, textarea {
@@ -949,11 +955,6 @@ Parallax
     -webkit-box-shadow: none;
     box-shadow: none;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-.form input:focus, select:focus, textarea:focus {
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
 .form .options {
@@ -1006,22 +1007,22 @@ Parallax
 
 .form .forget a {
     right: 0;
-    color: #eee !important;
+    color: #eee;
 }
 
 .form .forget a:hover, a:focus {
-    text-decoration: none !important;
-    color: #206fd5 !important;
+    text-decoration: none;
+    color: #206fd5;
 }
 
 .login-panel .widget {
     font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 1.1em;
     padding: 0 20px 0 20px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
-.widget .highlight {
+.widget .warn {
     border: 1px solid #fed22f;
     background: #ffe45c;
     color: #363636;
@@ -1038,12 +1039,12 @@ Parallax
     border-radius: 4px;
 }
 
-.highlight img {
+.warn img {
     float: left;
     margin: 1px 10px 0 0;
 }
 
-.highlight span {
+.warn span {
     color: red;
     font-weight: bold;
 }

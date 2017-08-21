@@ -236,20 +236,20 @@ function ajax_action(url, data, opt) {
         },
         success: function (data, textStatus, request) {
             if (plugin.settings.waiting) {
-                layer.closeAll();
+                layer.closeAll('loading');
             }
             if (data.attachs) {
                 $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
             }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
-                alert(data.messages.join('<br/>'), plugin.settings.handler, data);
+                invoke(plugin.settings.handler, data);
             } else {
                 alert(data.messages.join('<br/>'));
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
             if (plugin.settings.waiting) {
-                layer.closeAll();
+                layer.closeAll('loading');
             }
             var json = JSON.parse(XMLHttpRequest.responseText);
             if (json.messages_details) {

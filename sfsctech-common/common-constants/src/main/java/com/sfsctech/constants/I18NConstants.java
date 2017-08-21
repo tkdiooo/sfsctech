@@ -127,15 +127,11 @@ public class I18NConstants {
          * 禁用账号{0}失败
          */
         AccountUnenableFailure("tips.account.unenable.failure"),
-        /**
-         * 请填写账号
-         */
-        LoginEmptyAccount("tips.login.empty.account"),
 
         /**
-         * 请填写密码
+         * 账号和密码不能为空
          */
-        LoginEmptyPassword("tips.login.empty.password"),
+        LoginAuthNotEmpty("tips.login.auth.notempty"),
 
         /**
          * 验证码错误

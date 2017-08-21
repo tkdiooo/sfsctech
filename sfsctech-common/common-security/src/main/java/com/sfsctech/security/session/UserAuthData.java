@@ -1,5 +1,9 @@
 package com.sfsctech.security.session;
 
+import com.sfsctech.constants.VerifyConstants;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * Class UserAuthData
  *
@@ -8,8 +12,17 @@ package com.sfsctech.security.session;
  */
 public class UserAuthData {
 
+    public UserAuthData(String account, String password) {
+        this.account = account;
+        this.password = password;
+    }
+
+    @NotBlank
+    @Length(min = 5, max = 20, message = VerifyConstants.Length)
     private String account;
 
+    @NotBlank
+    @Length(min = 6, max = 20, message = VerifyConstants.Length)
     private String password;
 
     public String getAccount() {

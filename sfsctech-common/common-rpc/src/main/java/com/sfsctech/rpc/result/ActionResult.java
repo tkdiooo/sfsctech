@@ -99,4 +99,8 @@ public class ActionResult<T> extends BaseResult {
     public Map<String, Object> getAttachs() {
         return this.attachs;
     }
+
+    public void addMessage(Tips tips, String... params) {
+        super.addMessage(ResourceUtil.getMessage(tips, params));
+    }
 }
