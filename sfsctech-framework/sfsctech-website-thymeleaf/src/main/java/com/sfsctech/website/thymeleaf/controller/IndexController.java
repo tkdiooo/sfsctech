@@ -1,9 +1,11 @@
 package com.sfsctech.website.thymeleaf.controller;
 
+import com.sfsctech.common.cookie.Config;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ public class IndexController {
 
     private final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
+    @Autowired
+    private Config config;
 
     @GetMapping("index")
     public String index(ModelMap model) {

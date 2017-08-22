@@ -1,0 +1,46 @@
+package com.sfsctech.common.cookie;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Class CookiesHelp
+ *
+ * @author 张麒 2017/8/22.
+ * @version Description:
+ */
+public class CookieHelper {
+
+    private final Logger logger = LoggerFactory.getLogger(CookieHelper.class);
+
+    private Cookies cookies;
+    private Config config;
+
+    public CookieHelper(HttpServletRequest request, HttpServletResponse response, Config config) {
+        this.cookies = new Cookies(request, response);
+        this.config = config;
+    }
+
+    public void setCookie(String key, String value) {
+        cookies.setCookie(key, value, config);
+    }
+
+    public void setCookie(String key, String value, int expire) {
+        cookies.setCookie(key, value, expire, config.getDomain());
+    }
+
+    public void setSessionCookie(String key, String value) {
+        cookies.setSessionCookie(key, value, config.getDomain());
+    }
+
+    public String getCookie(String key) {
+        return cookies.getCookieValue(key);
+    }
+
+    public void clearCookie(String key) {
+        cookies.remove(key, config.getDomain());
+    }
+}

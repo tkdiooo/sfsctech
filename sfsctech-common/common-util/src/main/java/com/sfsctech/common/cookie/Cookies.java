@@ -1,4 +1,4 @@
-package com.sfsctech.common.tools;
+package com.sfsctech.common.cookie;
 
 import com.sfsctech.common.util.ArrayUtil;
 import com.sfsctech.common.util.StringUtil;
@@ -27,7 +27,6 @@ public class Cookies {
         this.request = request;
         this.response = response;
     }
-
 
     /**
      * 根据cookie name获取cookie对象
@@ -79,20 +78,32 @@ public class Cookies {
         else return null;
     }
 
+    /**
+     * 设置cookie
+     *
+     * @param name   config name
+     * @param value  config value
+     * @param config config Config
+     */
+    public void setCookie(String name, String value, Config config) {
+        Cookie cookie = new Cookie(name, value);
+        setCookieConfig(cookie, config);
+        response.addCookie(cookie);
+    }
 
     /**
      * 设置cookie
      *
      * @param name   config name
      * @param value  config value
-     * @param expire expire date
+     * @param expire config expire
      * @param domain config domain
      */
     public void setCookie(String name, String value, int expire, String... domain) {
         Cookie cookie = new Cookie(name, value);
         if (ArrayUtil.isNotEmpty(domain) && StringUtil.isNotBlank(domain[0])) cookie.setDomain(domain[0]);
         cookie.setPath("/");
-        if (expire >= 0) {
+        if (expire != 0) {
             cookie.setMaxAge(expire);
         }
         response.addCookie(cookie);
@@ -127,6 +138,27 @@ public class Cookies {
             for (Cookie cookie : request.getCookies()) {
                 remove(cookie.getName(), cookie.getDomain());
             }
+        }
+    }
+
+    public void setCookieConfig(Cookie cookie, Config config) {
+        if (config.getMaxAge() != 0) {
+            cookie.setMaxAge(config.getMaxAge());
+        }
+        if (StringUtil.isNotBlank(config.getDomain())) {
+            cookie.setDomain(config.getDomain());
+        }
+        if (StringUtil.isNotBlank(config.getPath())) {
+            cookie.setPath(config.getPath());
+        }
+        if (StringUtil.isNotBlank(config.getComment())) {
+            cookie.setComment(config.getComment());
+        }
+        if (config.isSecure()) {
+            cookie.setSecure(config.isSecure());
+        }
+        if (config.isHttpOnly()) {
+            cookie.setHttpOnly(config.isHttpOnly());
         }
     }
 }

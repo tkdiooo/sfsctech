@@ -19,14 +19,6 @@ public class PropertiesConstants {
      */
     public final static String SERVER_SOA = "server.soa";
     /**
-     * Properties：server.session.cookie.http-only"
-     */
-    public final static String SERVER_COOKIE_HTTP_ONLY = "server.session.cookie.http-only";
-    /**
-     * Properties：server.session.cookie.max-age"
-     */
-    public final static String SERVER_COOKIE_MAX_AGE = "server.session.cookie.max-age";
-    /**
      * Properties：spring.mvc.view.suffix"
      */
     public final static String SERVER_SUFFIX = "spring.mvc.view.suffix";
