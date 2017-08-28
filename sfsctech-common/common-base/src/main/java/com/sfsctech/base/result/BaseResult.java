@@ -1,8 +1,7 @@
 package com.sfsctech.base.result;
 
-import com.sfsctech.constants.RpcConstants;
+import com.sfsctech.base.http.Status;
 import com.sfsctech.constants.RpcConstants.ResponseCode;
-import com.sfsctech.constants.RpcConstants.Status;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public abstract class BaseResult implements Serializable {
     /**
      * 响应代码
      */
-    protected Status status = RpcConstants.newStatus(ResponseCode.SC_OK);
+    protected Status status = new Status(ResponseCode.SC_OK);
     /**
      * 响应消息列表
      */

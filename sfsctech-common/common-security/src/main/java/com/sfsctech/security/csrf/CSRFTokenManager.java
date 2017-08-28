@@ -18,10 +18,10 @@ public class CSRFTokenManager {
 
     public static CSRFToken generateCSRFToken(HttpServletRequest request) {
         CSRFToken token = new CSRFToken();
-        if (!SecurityConstants.SERVER_SOA) {
-            request.getSession().setAttribute(CSRF_TOKEN, token);
-        } else {
+        if (StringUtil.isNotBlank(SecurityConstants.SERVICE_AUTHENTICATION) && SecurityConstants.SERVICE_AUTHENTICATION.equals(SecurityConstants.SERVICE_SOA)) {
             SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
+        } else {
+            request.getSession().setAttribute(CSRF_TOKEN, token);
         }
         return token;
     }
@@ -29,10 +29,10 @@ public class CSRFTokenManager {
     public static boolean isValidCSRFToken(HttpServletRequest request) {
         CSRFToken token;
         boolean bool = true;
-        if (!SecurityConstants.SERVER_SOA) {
-            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
-        } else {
+        if (StringUtil.isNotBlank(SecurityConstants.SERVICE_AUTHENTICATION) && SecurityConstants.SERVICE_AUTHENTICATION.equals(SecurityConstants.SERVICE_SOA)) {
             token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
+        } else {
+            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
         }
         if (null != token) {
             String tokenValue = request.getParameter(token.getParameterName());
@@ -45,7 +45,7 @@ public class CSRFTokenManager {
     }
 
     public static void destroy(HttpServletRequest request) {
-        if (SecurityConstants.SERVER_SOA) {
+        if (StringUtil.isNotBlank(SecurityConstants.SERVICE_AUTHENTICATION) && SecurityConstants.SERVICE_AUTHENTICATION.equals(SecurityConstants.SERVICE_SOA)) {
             if (null != SessionHolder.getSessionInfo()) {
                 SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
             }

@@ -3,8 +3,6 @@ package com.sfsctech.constants;
 
 import com.sfsctech.constants.inf.IEnum;
 
-import java.io.Serializable;
-
 /**
  * Class RpcConstants
  *
@@ -16,39 +14,6 @@ public class RpcConstants {
     public static final boolean SUCCESSFUL = true;
 
     public static final boolean FAILURE = false;
-
-    public static Status newStatus(ResponseCode responseCode) {
-        return new Status(responseCode.getKey(), responseCode.getValue());
-    }
-
-    public static class Status implements Serializable {
-
-        private static final long serialVersionUID = -3139661368812891814L;
-
-        private Status(int code, String content) {
-            this.code = code;
-            this.content = content;
-        }
-
-        private int code;
-        private String content;
-
-        public int getCode() {
-            return code;
-        }
-
-        public void setCode(int code) {
-            this.code = code;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-    }
 
     public enum ResponseCode implements IEnum<Integer, String> {
         SC_OK(200, "OK"),

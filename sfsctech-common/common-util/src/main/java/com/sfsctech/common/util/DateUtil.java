@@ -24,22 +24,22 @@ import java.util.List;
  */
 public class DateUtil extends DateUtils {
 
-    /**
-     * 获取系统时间
-     *
-     * @return Date
-     */
+
     public static Date getCurrentDate() {
-        return Calendar.getInstance().getTime();
+        return new Date(System.currentTimeMillis());
+    }
+
+    public static Date getTimeMillisDate(Long timeMillis) {
+        return new Date(timeMillis);
     }
 
     /**
-     * 获取系统时间毫秒数
+     * 获取时区时间
      *
-     * @return Long
+     * @return Date
      */
-    public static long getCurrentTime() {
-        return getCurrentDate().getTime();
+    public static Date getTimeZoneDate() {
+        return Calendar.getInstance().getTime();
     }
 
     /**
@@ -48,7 +48,7 @@ public class DateUtil extends DateUtils {
      * @return Timestamp
      */
     public static Timestamp getCurrentTimestamp() {
-        return new Timestamp(getCurrentTime());
+        return new Timestamp(System.currentTimeMillis());
     }
 
     /**

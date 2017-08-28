@@ -8,7 +8,6 @@ server:
   context-parameters:
     logback-config-location: http://localhost:8888/logback/framework/jsp
     logback-expose-webapp-root: true
-  soa: true
 #spring mvc setting
 spring:
   mvc:
@@ -44,6 +43,9 @@ website:
   request:
     # 排除映射
     exclude-mapping: /, /index.html, *.jsp
+  # 服务架构
+  service:
+    authentication: soa
 #dubbo setting
 dubbo:
   application:

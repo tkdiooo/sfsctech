@@ -3,6 +3,7 @@ package com.sfsctech.common.cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,11 +37,23 @@ public class CookieHelper {
         cookies.setSessionCookie(key, value, config.getDomain());
     }
 
-    public String getCookie(String key) {
+    public Cookie getCookie(String key) {
+        return cookies.getCookie(key);
+    }
+
+    public String getCookieValue(String key) {
         return cookies.getCookieValue(key);
     }
 
     public void clearCookie(String key) {
         cookies.remove(key, config.getDomain());
+    }
+
+    public Config getConfig() {
+        return config;
+    }
+
+    public Cookies getCookies() {
+        return cookies;
     }
 }

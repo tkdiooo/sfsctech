@@ -15,10 +15,6 @@ public class PropertiesConstants {
      */
     public final static String SERVER_CONTEXTPATH = "server.context-path";
     /**
-     * Properties：server.soa"
-     */
-    public final static String SERVER_SOA = "server.soa";
-    /**
      * Properties：spring.mvc.view.suffix"
      */
     public final static String SERVER_SUFFIX = "spring.mvc.view.suffix";
@@ -61,6 +57,10 @@ public class PropertiesConstants {
      * Properties：website.sso.forget-url
      */
     public final static String WEBSITE_SSO_FORGET_URL = "website.sso.forget-url";
+    /**
+     * Properties：website.service.authentication"
+     */
+    public final static String WEBSITE_SERVICE_AUTHENTICATION = "website.service.authentication";
 
     // spring.http.multipart Attribute
     //-------------------------------------------------------------------------------------------

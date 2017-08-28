@@ -1,4 +1,4 @@
-package com.sfsctech.security.tools;
+package com.sfsctech.security.condition;
 
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;
@@ -13,14 +13,11 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @author 张麒 2017/7/25.
  * @version Description:
  */
-public class SOAExistsCondition implements Condition {
+public class DistributedAuthentication implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        String serverSOA = context.getEnvironment().getProperty(PropertiesConstants.SERVER_SOA);
-        if (StringUtil.isNotBlank(serverSOA)) {
-            return Boolean.valueOf(serverSOA);
-        }
-        return false;
+        String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
+        return StringUtil.isNotBlank(authentication) && authentication.equals(SecurityConstants.SERVICE_SOA);
     }
 }
