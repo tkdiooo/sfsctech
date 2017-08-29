@@ -2,6 +2,8 @@ package com.sfsctech.constants;
 
 
 import com.sfsctech.constants.inf.IEnum;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Class RpcConstants
@@ -11,32 +13,29 @@ import com.sfsctech.constants.inf.IEnum;
  */
 public class RpcConstants {
 
-    public static final boolean SUCCESSFUL = true;
+    public enum Status implements IEnum<Integer, String> {
 
-    public static final boolean FAILURE = false;
+        Successful(200, "操作成功"),
+        Failure(300, "操作失败"),
+        Server_Error(500, "服务器错误"),
+        Client_Error(600, "客户端错误");
 
-    public enum ResponseCode implements IEnum<Integer, String> {
-        SC_OK(200, "OK"),
-        SC_ROUTE_CHANGE(300, "Route change"),
-        SC_CLIENT_ERROR(400, "Client Error"),
-        SC_SERVER_ERROR(500, "Server Error");
-
-        ResponseCode(Integer key, String value) {
-            this.key = key;
-            this.value = value;
+        Status(Integer key, String value) {
+            this.code = key;
+            this.content = value;
         }
 
-        private Integer key;
-        private String value;
+        private int code;
+        private String content;
 
         @Override
         public Integer getKey() {
-            return key;
+            return code;
         }
 
         @Override
         public String getValue() {
-            return value;
+            return content;
         }
 
         public static String getValueByKey(Integer key) {
@@ -45,6 +44,11 @@ public class RpcConstants {
 
         public static Integer getKeyByValue(String value) {
             return IEnum.findKey(values(), value);
+        }
+
+        @Override
+        public String toString() {
+            return new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE).setExcludeFieldNames("name", "ordinal").toString();
         }
     }
 

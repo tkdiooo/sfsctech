@@ -80,26 +80,6 @@ public class ActionResult<T> extends BaseResult {
         this.result = result;
     }
 
-    /**
-     * Attachment message
-     */
-    private Map<String, Object> attachs;
-
-    public void addAttach(String key, Object value) {
-        if (null == this.attachs) {
-            this.attachs = new HashMap<>();
-        }
-        this.attachs.put(key, value);
-    }
-
-    public void setAttachs(Map<String, Object> map) {
-        this.attachs = map;
-    }
-
-    public Map<String, Object> getAttachs() {
-        return this.attachs;
-    }
-
     public void addMessage(Tips tips, String... params) {
         super.addMessage(ResourceUtil.getMessage(tips, params));
     }

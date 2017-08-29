@@ -1,7 +1,5 @@
 package com.sfsctech.security.jwt;
 
-import com.sfsctech.security.session.UserAuthData;
-
 /**
  * Class Playload
  *

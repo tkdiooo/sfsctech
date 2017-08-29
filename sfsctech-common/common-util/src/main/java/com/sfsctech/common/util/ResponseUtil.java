@@ -1,6 +1,7 @@
 package com.sfsctech.common.util;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class ResponseUtil {
     public static void writeJson(Object jsonObject, HttpServletResponse response) throws IOException {
         response.setContentType("application/json; charset=UTF-8");
         setNoCacheHeaders(response);
-        response.getWriter().write(JSON.toJSONString(jsonObject));
+        response.getWriter().write(JSON.toJSONString(jsonObject, SerializerFeature.WriteEnumUsingToString));
         response.getWriter().flush();
         response.getWriter().close();
     }

@@ -81,7 +81,12 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         super.configureMessageConverters(converters);
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.QuoteFieldNames);
+        fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.QuoteFieldNames,
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.WriteMapNullValue
+        );
         fastConverter.setFastJsonConfig(fastJsonConfig);
         converters.add(fastConverter);
     }

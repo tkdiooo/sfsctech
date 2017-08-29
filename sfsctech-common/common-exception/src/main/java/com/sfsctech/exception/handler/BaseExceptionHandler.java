@@ -1,6 +1,8 @@
 package com.sfsctech.exception.handler;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.StringUtil;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Class BaseExceptionHandler
@@ -24,33 +26,34 @@ import java.util.Map;
  */
 public abstract class BaseExceptionHandler {
 
-    protected final Logger logger = LoggerFactory.getLogger(BaseExceptionHandler.class);
+    protected final static Logger logger = LoggerFactory.getLogger(BaseExceptionHandler.class);
 
-    protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, JSONObject json, String viewName, HttpStatus status) {
-        System.out.println(json.toJSONString());
+    protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, BaseResult result, String viewName, HttpStatus status) {
         String ret_url = request.getHeader("Referer");
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
         if (StringUtil.isBlank(ret_url)) {
             ret_url = SecurityConstants.CONTEXT_PATH;
         }
+        result.addAttach("url", ret_url);
         if (HttpUtil.isAjaxRequest(request)) {
-            json.put("url", ret_url);
-            return handleAjaxError(response, json, status);
+            return handleAjaxError(response, result, status);
         }
-        return handleViewError(ret_url, json, viewName, status);
+        return handleViewError(viewName, result, status);
     }
 
-    private ModelAndView handleViewError(String url, Map<String, Object> model, String viewName, HttpStatus status) {
-        ModelAndView mav = new ModelAndView(viewName, model, status);
-        mav.addObject("url", url);
+    private ModelAndView handleViewError(String viewName, BaseResult result, HttpStatus status) {
+        System.out.println(JSON.toJSONString(result, SerializerFeature.WriteEnumUsingToString));
+        ModelAndView mav = new ModelAndView(viewName, new HashMap<>(), status);
+        mav.addObject("result", result);
         mav.addObject("timestamp", new Date());
         return mav;
     }
 
-    private ModelAndView handleAjaxError(HttpServletResponse response, JSONObject json, HttpStatus status) {
+    private ModelAndView handleAjaxError(HttpServletResponse response, BaseResult result, HttpStatus status) {
+        System.out.println(JSON.toJSONString(result, SerializerFeature.WriteEnumUsingToString));
         response.setStatus(status.value());
         try {
-            ResponseUtil.writeJson(json, response);
+            ResponseUtil.writeJson(result, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

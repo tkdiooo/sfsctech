@@ -3,11 +3,12 @@ package com.sfsctech.dubbox.serialize;
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.exception.VerifyException;
-import com.sfsctech.base.http.Status;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.ClassUtil;
+import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.security.session.UserAuthData;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -31,7 +32,9 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         classes.add(PagingInfo.class);
         classes.add(VerifyException.class);
         classes.add(BizException.class);
-        classes.add(Status.class);
+        classes.add(RpcConstants.class);
+        classes.add(RpcConstants.Status.class);
+        classes.add(UserAuthData.class);
     }
 
     @Override

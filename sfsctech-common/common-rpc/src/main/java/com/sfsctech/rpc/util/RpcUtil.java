@@ -11,21 +11,21 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public class RpcUtil {
 
-    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
-        ActionResult<T> ar = new ActionResult<>();
+//    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
+//        ActionResult<T> ar = new ActionResult<>();
 //        ar.setSuccess(success);
 //        ar.setResponseCode(responseCode);
 //        ar.setMessages(ListUtil.toList(messages));
-        return ar;
-    }
+//        return ar;
+//    }
 
-    public static <T> ActionResult<T> getRpcResult(ActionResult<T> ar) {
-        // 接口返回错误，处理错误信息
-        if (ar.isSuccess()) {
-            System.out.println(ar.getMessages());
-        }
-        return ar;
-    }
+//    public static <T> ActionResult<T> getRpcResult(ActionResult<T> ar) {
+//        // 接口返回错误，处理错误信息
+//        if (ar.isSuccess()) {
+//            System.out.println(ar.getMessages());
+//        }
+//        return ar;
+//    }
 
 //    @SuppressWarnings("unchecked")
 //    public static <T> List<T> getList(String paramKey, RpcResult<T> ar) {

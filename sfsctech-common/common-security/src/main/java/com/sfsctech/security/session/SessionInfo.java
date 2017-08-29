@@ -1,6 +1,8 @@
 package com.sfsctech.security.session;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sfsctech.common.util.StringUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -23,6 +25,9 @@ public class SessionInfo implements Serializable {
     public void setUserAuthInfo(String userAuthInfo) {
         this.userAuthInfo = userAuthInfo;
         this.userAuthData = JSON.parseObject(userAuthInfo, UserAuthData.class);
+        if (StringUtil.isNotBlank(this.userAuthData.getSessionData())) {
+            attribute.putAll(JSONObject.parseObject(this.userAuthData.getSessionData()));
+        }
     }
 
     public UserAuthData getUserAuthData() {

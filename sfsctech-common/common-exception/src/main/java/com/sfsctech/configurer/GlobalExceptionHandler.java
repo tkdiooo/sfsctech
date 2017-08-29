@@ -3,11 +3,13 @@ package com.sfsctech.configurer;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.exception.VerifyException;
+import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResourceUtil;
 import com.sfsctech.common.util.ThrowableUtil;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.I18NConstants;
+import com.sfsctech.constants.RpcConstants.Status;
 import com.sfsctech.exception.handler.BaseExceptionHandler;
 import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +41,9 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(BizException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) throws Exception {
-        JSONObject json = new JSONObject();
-        json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ThrowableUtil.getRootMessage(e));
-        logger.info("业务异常捕获：" + json.getString(CommonConstants.MESSAGES));
-        return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        BaseResult result = new BaseResult(false, Status.Failure, ThrowableUtil.getRootMessage(e));
+        logger.info("业务异常捕获：" + result.getMessages());
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -51,12 +51,10 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(VerifyException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) throws Exception {
-        JSONObject json = new JSONObject();
-        json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ThrowableUtil.getRootMessage(e));
-        json.put(CommonConstants.MESSAGES_DETAILS, e.getResult());
-        logger.warn("校验异常捕获：" + json.getString(CommonConstants.MESSAGES));
-        return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        BaseResult result = new BaseResult(false, Status.Failure, ThrowableUtil.getRootMessage(e));
+        result.addAttach(CommonConstants.MESSAGES_DETAILS, e.getResult());
+        logger.warn("校验异常捕获：" + result.getMessages());
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -68,11 +66,9 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         JSONObject json = new JSONObject();
         json.put("message", ThrowableUtil.getRootMessage(e));
         json.put("request ip", HttpUtil.getRequestIP(request));
-        logger.warn("404异常捕获：" + json.toJSONString() + "");
-        json.clear();
-        json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.Exception404));
-        return handleError(request, response, json, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND);
+        logger.warn("404异常捕获：" + json.toJSONString());
+        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.Exception404));
+        return handleError(request, response, result, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -81,10 +77,8 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException e) throws Exception {
         logger.warn("文件上传异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
-        JSONObject json = new JSONObject();
-        json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, appConfig.MULTIPART_MAX_FILE_SIZE));
-        return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, appConfig.MULTIPART_MAX_FILE_SIZE));
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -93,10 +87,8 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
         logger.error("系统异常捕获：" + ThrowableUtil.getStackTraceMessage(e), e);
-        JSONObject json = new JSONObject();
-        json.put(CommonConstants.SUCCESS, false);
-        json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService));
-        return handleError(request, response, json, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        BaseResult result = new BaseResult(false, Status.Server_Error, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService));
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

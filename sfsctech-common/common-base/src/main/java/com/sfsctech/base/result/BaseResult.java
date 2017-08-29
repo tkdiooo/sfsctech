@@ -1,11 +1,11 @@
 package com.sfsctech.base.result;
 
-import com.sfsctech.base.http.Status;
-import com.sfsctech.constants.RpcConstants.ResponseCode;
+import com.sfsctech.constants.RpcConstants.Status;
+import com.sfsctech.constants.inf.IEnum;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class BasicResult
@@ -13,7 +13,7 @@ import java.util.List;
  * @author 张麒 2017/3/21.
  * @version Description:
  */
-public abstract class BaseResult implements Serializable {
+public class BaseResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,15 +22,23 @@ public abstract class BaseResult implements Serializable {
      */
     private boolean success = true;
     /**
-     * 响应代码
+     * 响应状态
      */
-    protected Status status = new Status(ResponseCode.SC_OK);
+    protected IEnum status = Status.Successful;
     /**
      * 响应消息列表
      */
     private List<String> messages = new ArrayList<>();
 
     public BaseResult() {
+    }
+
+    public BaseResult(boolean success, Status status, String... messages) {
+        this.success = success;
+        this.status = status;
+        if (ArrayUtils.isNotEmpty(messages)) {
+            this.messages.addAll(Arrays.asList(messages));
+        }
     }
 
     public boolean isSuccess() {
@@ -41,7 +49,7 @@ public abstract class BaseResult implements Serializable {
         this.success = hasErrors;
     }
 
-    public Status getStatus() {
+    public IEnum getStatus() {
         return status;
     }
 
@@ -60,4 +68,25 @@ public abstract class BaseResult implements Serializable {
     public void addMessage(String message) {
         this.messages.add(message);
     }
+
+    /**
+     * Attachment
+     */
+    private Map<String, Object> attachs;
+
+    public void addAttach(String key, Object value) {
+        if (null == this.attachs) {
+            this.attachs = new HashMap<>();
+        }
+        this.attachs.put(key, value);
+    }
+
+    public void setAttachs(Map<String, Object> map) {
+        this.attachs = map;
+    }
+
+    public Map<String, Object> getAttachs() {
+        return this.attachs;
+    }
+
 }

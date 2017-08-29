@@ -15,6 +15,8 @@ public interface IEnum<K, V> {
 
     V getValue();
 
+    String toString();
+
     static <K, V> V findValue(IEnum<K, V>[] enums, K key) {
         V value = null;
         for (IEnum<K, V> e : enums) {

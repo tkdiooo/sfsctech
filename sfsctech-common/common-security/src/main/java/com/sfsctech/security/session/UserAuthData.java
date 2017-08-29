@@ -1,5 +1,6 @@
 package com.sfsctech.security.session;
 
+import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,7 +14,9 @@ import java.util.Map;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public class UserAuthData {
+public class UserAuthData extends BaseDto {
+
+    private static final long serialVersionUID = 909824046354265186L;
 
     public UserAuthData(String account, String password) {
         this.account = account;
@@ -29,6 +32,9 @@ public class UserAuthData {
     private String password;
 
     private String sessionID;
+
+    //session 数据
+    private String sessionData;
 
     private Map<String, Integer> roles;
 
@@ -56,6 +62,14 @@ public class UserAuthData {
         this.sessionID = sessionID;
     }
 
+    public String getSessionData() {
+        return sessionData;
+    }
+
+    public void setSessionData(String sessionData) {
+        this.sessionData = sessionData;
+    }
+    
     public Map<String, Integer> getRoles() {
         return roles;
     }
@@ -63,4 +77,5 @@ public class UserAuthData {
     public void setRoles(Map<String, Integer> roles) {
         this.roles = roles;
     }
+
 }

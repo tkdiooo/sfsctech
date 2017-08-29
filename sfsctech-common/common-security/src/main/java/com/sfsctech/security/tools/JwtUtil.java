@@ -25,6 +25,7 @@ public class JwtUtil {
                 .setAudience("")// 接收方
                 .setPayload("") // 承载内容
                 .signWith(SignatureAlgorithm.HS512, key);
+        // 过期时间
         if (null != config.getExpiration() && config.getExpiration() >= 0) {
             builder.setExpiration(DateUtil.getTimeMillisDate(config.getExpiration() + nowMillis));
         }
