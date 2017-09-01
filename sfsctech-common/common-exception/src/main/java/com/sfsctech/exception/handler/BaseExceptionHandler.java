@@ -1,9 +1,8 @@
 package com.sfsctech.exception.handler;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
+import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.SecurityConstants;
@@ -42,7 +41,7 @@ public abstract class BaseExceptionHandler {
     }
 
     private ModelAndView handleViewError(String viewName, BaseResult result, HttpStatus status) {
-        System.out.println(JSON.toJSONString(result, SerializerFeature.WriteEnumUsingToString));
+        System.out.println(JsonUtil.toJSONString(result));
         ModelAndView mav = new ModelAndView(viewName, new HashMap<>(), status);
         mav.addObject("result", result);
         mav.addObject("timestamp", new Date());
@@ -50,7 +49,7 @@ public abstract class BaseExceptionHandler {
     }
 
     private ModelAndView handleAjaxError(HttpServletResponse response, BaseResult result, HttpStatus status) {
-        System.out.println(JSON.toJSONString(result, SerializerFeature.WriteEnumUsingToString));
+        System.out.println(JsonUtil.toJSONString(result));
         response.setStatus(status.value());
         try {
             ResponseUtil.writeJson(result, response);

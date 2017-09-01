@@ -160,12 +160,12 @@ public class I18NConstants {
         private String value;
 
         @Override
-        public String getKey() {
+        public String getCode() {
             return "";
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
     }

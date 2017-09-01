@@ -11,17 +11,17 @@ package com.sfsctech.constants.inf;
  */
 public interface IEnum<K, V> {
 
-    K getKey();
+    K getCode();
 
-    V getValue();
+    V getContent();
 
     String toString();
 
     static <K, V> V findValue(IEnum<K, V>[] enums, K key) {
         V value = null;
         for (IEnum<K, V> e : enums) {
-            if (key == e.getKey() || key.equals(e.getKey())) {
-                value = e.getValue();
+            if (key == e.getCode() || key.equals(e.getCode())) {
+                value = e.getContent();
                 break;
             }
         }
@@ -31,8 +31,8 @@ public interface IEnum<K, V> {
     static <K, V> K findKey(IEnum<K, V>[] enums, V value) {
         K key = null;
         for (IEnum<K, V> e : enums) {
-            if (e.getValue().equals(value)) {
-                key = e.getKey();
+            if (e.getContent().equals(value)) {
+                key = e.getCode();
                 break;
             }
         }

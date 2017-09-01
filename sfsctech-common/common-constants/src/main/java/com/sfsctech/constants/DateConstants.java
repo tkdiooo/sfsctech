@@ -36,12 +36,12 @@ public class DateConstants {
         private String value;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 
@@ -100,12 +100,12 @@ public class DateConstants {
         private String value;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 

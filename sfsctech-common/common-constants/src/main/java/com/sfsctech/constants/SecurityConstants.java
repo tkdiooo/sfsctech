@@ -13,8 +13,8 @@ public class SecurityConstants {
 
     private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
     private static final ThreadLocal<Map<String, Boolean>> handler = new ThreadLocal<>();
-    private static Set<String> FILTER_EXCLUDES_VALUE;
-    private static Set<String> CSRF_EXCLUDES_VALUE;
+    public static Set<String> FILTER_EXCLUDES_VALUE;
+    public static Set<String> CSRF_EXCLUDES_VALUE;
 
     static {
         FILTER_EXCLUDES_VALUE = new HashSet<>();

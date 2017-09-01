@@ -71,6 +71,6 @@ public class ResourceUtil {
      * @return
      */
     public static <K> String getMessage(IEnum<K, String> iEnum, String... params) {
-        return getMessage(iEnum.getValue(), params);
+        return getMessage(iEnum.getContent(), params);
     }
 }

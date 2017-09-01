@@ -25,14 +25,10 @@ spring:
         max-wait-millis: 10000
         max-idle: 100
         min-idle: 50
-#jsp development setting
+  # jsp development setting
   jsp-servlet:
     init-parameters:
       development: true
-#logging setting
-logging:
-  file: D:\opt\logs\test.log
-  level: error
 #common setting
 website:
   # 网站支持
@@ -42,9 +38,10 @@ website:
   # 网站请求
   request:
     # 排除映射
-    exclude-mapping: /, /index.html, *.jsp
+    filter-exclude: /, /index.html, *.jsp
+    csrf-exclude:
   # 服务架构
-  service:
+  session:
     authentication: soa
 #dubbo setting
 dubbo:

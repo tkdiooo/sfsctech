@@ -32,6 +32,9 @@ spring:
       max-wait-millis: 10000
       max-idle: 100
       min-idle: 50
+  http:
+    multipart:
+      location: ssdsd
 #common setting
 website:
   # 网站支持
@@ -43,4 +46,6 @@ website:
     # filter排除
     filter-exclude: /, /index, *.html
     # csrf排除
-#    csrf-exclude: /**
+    csrf-exclude: /**
+  session:
+    authentication: soa

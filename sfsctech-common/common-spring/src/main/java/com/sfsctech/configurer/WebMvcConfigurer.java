@@ -1,11 +1,14 @@
 package com.sfsctech.configurer;
 
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.inf.IEnum;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -83,10 +86,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(
                 SerializerFeature.QuoteFieldNames,
-                SerializerFeature.WriteEnumUsingToString,
                 SerializerFeature.WriteDateUseDateFormat,
                 SerializerFeature.WriteMapNullValue
         );
+        fastJsonConfig.setSerializeConfig(serializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
         converters.add(fastConverter);
     }
@@ -129,6 +132,13 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {
         return javaConfigUtil.getServletRegistrationBean(servlet);
+    }
+
+    @Bean
+    public SerializeConfig serializeConfig() {
+        SerializeConfig serializeConfig = new SerializeConfig();
+        serializeConfig.configEnumAsJavaBean(RpcConstants.Status.class, RpcConstants.ServiceStatus.class);
+        return serializeConfig;
     }
 
     /**

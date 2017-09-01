@@ -28,12 +28,12 @@ public class StatusConstants {
         private String value;
 
         @Override
-        public Boolean getKey() {
+        public Boolean getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 
@@ -73,12 +73,12 @@ public class StatusConstants {
         private String value;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 
@@ -124,12 +124,12 @@ public class StatusConstants {
         private String value;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 

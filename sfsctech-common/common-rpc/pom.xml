@@ -19,7 +19,7 @@
             <artifactId>common-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- spring -->
+        <!-- spring-context support-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>

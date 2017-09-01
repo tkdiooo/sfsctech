@@ -11,8 +11,8 @@ import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.RpcConstants.Status;
 import com.sfsctech.exception.handler.BaseExceptionHandler;
-import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.MultipartProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler extends BaseExceptionHandler {
 
     @Autowired
-    private AppConfig appConfig;
+    private MultipartProperties multipart;
 
     /**
      * 业务异常捕获
@@ -67,7 +67,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         json.put("message", ThrowableUtil.getRootMessage(e));
         json.put("request ip", HttpUtil.getRequestIP(request));
         logger.warn("404异常捕获：" + json.toJSONString());
-        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.Exception404));
+        BaseResult result = new BaseResult(false, Status.Not_Found, ResourceUtil.getMessage(I18NConstants.Tips.Exception404));
         return handleError(request, response, result, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND);
     }
 
@@ -77,7 +77,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException e) throws Exception {
         logger.warn("文件上传异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
-        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, appConfig.MULTIPART_MAX_FILE_SIZE));
+        BaseResult result = new BaseResult(false, Status.Payload_Too_Large, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, multipart.getMaxFileSize()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -90,5 +90,4 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
         BaseResult result = new BaseResult(false, Status.Server_Error, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

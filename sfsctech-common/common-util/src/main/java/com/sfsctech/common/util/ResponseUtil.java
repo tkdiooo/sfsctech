@@ -17,7 +17,7 @@ public class ResponseUtil {
     public static void writeJson(Object jsonObject, HttpServletResponse response) throws IOException {
         response.setContentType("application/json; charset=UTF-8");
         setNoCacheHeaders(response);
-        response.getWriter().write(JSON.toJSONString(jsonObject, SerializerFeature.WriteEnumUsingToString));
+        response.getWriter().write(JsonUtil.toJSONString(jsonObject));
         response.getWriter().flush();
         response.getWriter().close();
     }

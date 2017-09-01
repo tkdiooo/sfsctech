@@ -259,7 +259,7 @@ function ajax_action(url, data, opt) {
                     });
                 })
             }
-            alert(json.messages);
+            alert(json.messages.join('<br/>'));
         }
     });
 }

@@ -2,9 +2,6 @@ package com.sfsctech.constants;
 
 
 import com.sfsctech.constants.inf.IEnum;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
  * Class RpcConstants
  *
@@ -18,7 +15,10 @@ public class RpcConstants {
         Successful(200, "操作成功"),
         Failure(300, "操作失败"),
         Server_Error(500, "服务器错误"),
-        Client_Error(600, "客户端错误");
+        Client_Error(600, "客户端错误"),
+        Not_Found(404, "资源不存在"),
+        Payload_Too_Large(413, "负荷太大"),
+        ;
 
         Status(Integer key, String value) {
             this.code = key;
@@ -29,12 +29,12 @@ public class RpcConstants {
         private String content;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return code;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return content;
         }
 
@@ -44,11 +44,6 @@ public class RpcConstants {
 
         public static Integer getKeyByValue(String value) {
             return IEnum.findKey(values(), value);
-        }
-
-        @Override
-        public String toString() {
-            return new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE).setExcludeFieldNames("name", "ordinal").toString();
         }
     }
 
@@ -67,12 +62,12 @@ public class RpcConstants {
         private String value;
 
         @Override
-        public Integer getKey() {
+        public Integer getCode() {
             return key;
         }
 
         @Override
-        public String getValue() {
+        public String getContent() {
             return value;
         }
 

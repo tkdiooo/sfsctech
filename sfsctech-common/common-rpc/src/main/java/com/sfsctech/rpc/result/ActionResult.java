@@ -5,9 +5,7 @@ import com.sfsctech.common.util.ResourceUtil;
 import com.sfsctech.constants.I18NConstants.Tips;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * RPC服务通信接口响应对象<br/>

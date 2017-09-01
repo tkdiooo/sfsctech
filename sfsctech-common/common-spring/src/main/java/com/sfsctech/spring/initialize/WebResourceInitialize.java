@@ -2,7 +2,7 @@ package com.sfsctech.spring.initialize;
 
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.SecurityConstants;
-import com.sfsctech.spring.properties.AppConfig;
+import com.sfsctech.spring.properties.WebsiteProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import javax.servlet.ServletContext;
 public class WebResourceInitialize extends WebApplicationObjectSupport implements CommandLineRunner {
 
     @Autowired
-    private AppConfig appConfig;
+    private WebsiteProperties properties;
 
     /**
      * 设置网页资源地址至ServletContext
@@ -31,7 +31,7 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
     @Override
     public void run(String... args) throws Exception {
         ServletContext servletContext = super.getWebApplicationContext().getServletContext();
-        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, appConfig.STATIC_RESOURCES);
+        servletContext.setAttribute(CommonConstants.STATIC_RESOURCE, properties.getSupport().getStaticResources());
         servletContext.setAttribute(CommonConstants.CONTEXT_PATH, SecurityConstants.CONTEXT_PATH);
     }
 }

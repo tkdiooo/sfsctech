@@ -13,12 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-constants support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-constants</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <!-- sfsctech-common-rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>

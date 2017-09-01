@@ -3,13 +3,14 @@ package com.sfsctech.spring.util;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.common.util.ByteSizeUtil;
+import com.sfsctech.spring.properties.WebsiteProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.MultipartProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletRegistration;
 
 /**
  * Class SpringUtil
@@ -21,7 +22,10 @@ import javax.servlet.ServletRegistration;
 public class JavaConfigUtil {
 
     @Autowired
-    private AppConfig appConfig;
+    private WebsiteProperties properties;
+
+    @Autowired
+    private MultipartProperties multipart;
 
     public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet) {
         // 404请求抛出NoHandlerFoundException
@@ -29,7 +33,7 @@ public class JavaConfigUtil {
         ServletRegistrationBean registration = new ServletRegistrationBean(servlet);
         registration.addInitParameter("defaultHtmlEscape", LabelConstants.TRUE);
         // 上传文件配置
-        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(appConfig.MULTIPART_LOCATION, ByteSizeUtil.parseBytesSize(appConfig.MULTIPART_MAX_FILE_SIZE), ByteSizeUtil.parseBytesSize(appConfig.MULTIPART_MAX_REQUEST_SIZE), appConfig.MULTIPART_FILE_SIZE_THRESHOLD);
+        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(multipart.getLocation(), ByteSizeUtil.parseBytesSize(multipart.getMaxFileSize()), ByteSizeUtil.parseBytesSize(multipart.getMaxRequestSize()), Integer.valueOf(multipart.getFileSizeThreshold()));
         registration.setMultipartConfig(multipartConfigElement);
         return registration;
     }
