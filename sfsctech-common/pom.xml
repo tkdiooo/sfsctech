@@ -22,6 +22,7 @@
         <module>common-util</module>
         <module>common-cache</module>
         <module>common-security</module>
+        <module>common-auth</module>
     </modules>
 
     <properties>
