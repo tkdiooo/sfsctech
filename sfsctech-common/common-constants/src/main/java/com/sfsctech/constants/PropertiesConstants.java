@@ -11,14 +11,6 @@ public class PropertiesConstants {
     // the server Attribute
     //-------------------------------------------------------------------------------------------
     /**
-     * Properties：server.context-path"
-     */
-    public final static String SERVER_CONTEXTPATH = "server.context-path";
-    /**
-     * Properties：spring.mvc.view.suffix"
-     */
-    public final static String SERVER_SUFFIX = "spring.mvc.view.suffix";
-    /**
      * Properties：spring.mvc.static-path-pattern"
      */
     public final static String SERVER_STATIC_PATH_PATTERN = "spring.mvc.static-path-pattern";

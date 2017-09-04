@@ -5,11 +5,9 @@ import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.dubbox.properties.DubboProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,56 +19,53 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = DubboConfig.class)
+@ComponentScan(basePackageClasses = DubboProperties.class)
 public class DubboxConfigurer {
 
     @Autowired
-    private DubboConfig dubboConfig;
-
-    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.DUBBO_PROTOCOL_KRYO + LabelConstants.COLON + LabelConstants.FALSE + LabelConstants.CLOSE_CURLY_BRACE)
-    public Boolean IS_EMPLOY_KRYO;
+    private DubboProperties properties;
 
     /**
      * <code><</code>dubbo:application<code>></code>
      *
-     * @return
+     * @return ApplicationConfig
      */
     @Bean
     public ApplicationConfig applicationConfig() {
         ApplicationConfig config = new ApplicationConfig();
-        config.setLogger(dubboConfig.APPLICATION_LOGGER);
-        config.setName(dubboConfig.APPLICATION_NAME);
+        config.setLogger(properties.getApplication().getLogger());
+        config.setName(properties.getApplication().getName());
         return config;
     }
 
     /**
      * <code><</code>dubbo:registry<code>></code>
      *
-     * @return
+     * @return RegistryConfig
      */
     @Bean
     public RegistryConfig registryConfig() {
         RegistryConfig config = new RegistryConfig();
-        config.setAddress(dubboConfig.REGISTRY_ADDRESS);
-        config.setCheck(dubboConfig.REGISTRY_CHECK);
-        config.setRegister(dubboConfig.REGISTRY_REGISTRY);
-        config.setSubscribe(dubboConfig.REGISTRY_SUBSCRIBE);
-        config.setTimeout(dubboConfig.REGISTRY_TIMEOUT);
+        config.setAddress(properties.getRegistry().getAddress());
+        config.setCheck(properties.getRegistry().isCheck());
+        config.setRegister(properties.getRegistry().isRegister());
+        config.setSubscribe(properties.getRegistry().isSubscribe());
+        config.setTimeout(properties.getRegistry().getTimeout());
         return config;
     }
 
     /**
      * <code><</code>dubbo:protocol<code>></code>
      *
-     * @return
+     * @return ProtocolConfig
      */
     @Bean
     public ProtocolConfig protocolConfig() {
         ProtocolConfig config = new ProtocolConfig();
-        config.setName(dubboConfig.PROTOCOL_NAME);
-        config.setPort(dubboConfig.PROTOCOL_PORT);
+        config.setName(properties.getProtocol().getName());
+        config.setPort(properties.getProtocol().getPort());
         // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
-        if (dubboConfig.IS_EMPLOY_KRYO) {
+        if (properties.getProtocol().isKryo()) {
             config.setSerialization("kryo");
             config.setOptimizer("com.sfsctech.dubbox.serialize.KryoSerializationOptimizer");
         }
@@ -88,12 +83,12 @@ public class DubboxConfigurer {
      * <code><</code>dubbo:annotation<code>></code>
      * 所以含有@com.alibaba.dubbo.config.annotation.Service的注解类都应在此包中,多个包名可以使用英文逗号分隔.
      *
-     * @return
+     * @return AnnotationBean
      */
     @Bean
     public static AnnotationBean annotationBean() {
         AnnotationBean annotationBean = new AnnotationBean();
-        annotationBean.setPackage(DubboConfig.getAnnotationPackage());
+        annotationBean.setPackage(DubboConfig.getServicePackage());
         return annotationBean;
     }
 }

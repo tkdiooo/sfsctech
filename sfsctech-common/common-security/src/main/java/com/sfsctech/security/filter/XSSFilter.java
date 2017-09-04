@@ -1,8 +1,6 @@
 package com.sfsctech.security.filter;
 
 import com.sfsctech.base.filter.BaseFilter;
-import com.sfsctech.security.session.SessionHolder;
-import com.sfsctech.security.session.SessionInfo;
 import com.sfsctech.security.xss.XSSHttpServletRequestWrapper;
 
 import javax.servlet.FilterChain;

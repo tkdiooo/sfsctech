@@ -1,5 +1,6 @@
 package com.sfsctech.mybatis.datasource;
 
+import com.alibaba.fastjson.JSON;
 import com.sfsctech.common.tools.Assert;
 import com.sfsctech.mybatis.consistenthash.Node;
 import com.sfsctech.mybatis.consistenthash.RoundRobinWeight;
@@ -16,6 +17,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -154,11 +156,14 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
      * @return the resolved DataSource (never <code>null</code>)
      * @throws IllegalArgumentException in case of an unsupported value type
      */
-    protected DataSource resolveSpecifiedDataSource(Object dataSource) throws IllegalArgumentException {
+    protected DataSource resolveSpecifiedDataSource(Object dataSource) throws IllegalArgumentException, ClassNotFoundException {
         if (dataSource instanceof DataSource) {
             return (DataSource) dataSource;
         } else if (dataSource instanceof String) {
             return this.dataSourceLookup.getDataSource((String) dataSource);
+        } else if (dataSource instanceof LinkedHashMap) {
+            String type = String.valueOf(((LinkedHashMap) dataSource).get("type"));
+            return (DataSource) JSON.parseObject(JSON.toJSONString(dataSource), Class.forName(type));
         } else {
             throw new IllegalArgumentException("Illegal data source value - only [javax.sql.DataSource] and String supported: " + dataSource);
         }

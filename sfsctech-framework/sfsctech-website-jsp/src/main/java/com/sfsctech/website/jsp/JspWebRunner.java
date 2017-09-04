@@ -48,7 +48,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) throws Exception {
-        DubboConfig.setAnnotationPackage("com.sfsctech.website.jsp.service");
+        DubboConfig.setServicePackage("com.sfsctech.website.jsp.service");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

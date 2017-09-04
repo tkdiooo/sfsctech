@@ -150,9 +150,7 @@ public class SecurityConstants {
     public static final String ERROR_PATH = "/error";
     public static final String SERVICE_SOA = "soa";
     public static String CONTEXT_PATH;
-    public static String SERVER_SUFFIX;
-    public static String SERVER_STATIC_PATH;
-    public static String SERVICE_AUTHENTICATION;
+    public static String SESSION_AUTHENTICATION;
 
 
     private static String toString(Set<String> set, String separate) {

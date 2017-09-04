@@ -1,22 +1,23 @@
-package com.sfsctech.security.condition;
+package com.sfsctech.auth.condition;
 
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;
+import com.sfsctech.constants.SecurityConstants;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * Class Simple
+ * Class SOAExistsCondition
  *
- * @author 张麒 2017/8/28.
+ * @author 张麒 2017/7/25.
  * @version Description:
  */
-public class SimpleAuthentication implements Condition {
+public class DistributedAuthentication implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
-        return StringUtil.isNotBlank(authentication) && authentication.equals("simple");
+        return StringUtil.isNotBlank(authentication) && authentication.equals(SecurityConstants.SERVICE_SOA);
     }
 }

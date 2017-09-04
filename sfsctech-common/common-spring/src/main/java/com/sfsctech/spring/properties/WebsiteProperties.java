@@ -17,7 +17,6 @@ import java.util.List;
 )
 public class WebsiteProperties {
 
-
     private final WebsiteProperties.Support support;
     private final WebsiteProperties.Request request;
     private final WebsiteProperties.Session session;

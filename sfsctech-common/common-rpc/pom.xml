@@ -13,21 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-util support -->
+        <!-- sfsctech-common-auth support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>common-auth</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- spring-context support-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <!--hibernate-validator-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 </project>

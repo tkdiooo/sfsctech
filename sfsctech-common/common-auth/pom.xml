@@ -12,5 +12,18 @@
     <artifactId>common-auth</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <!-- sfsctech-common-util support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

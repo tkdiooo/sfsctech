@@ -154,11 +154,11 @@ public class Cookies {
         if (StringUtil.isNotBlank(config.getComment())) {
             cookie.setComment(config.getComment());
         }
-        if (config.isSecure()) {
-            cookie.setSecure(config.isSecure());
+        if (config.getSecure()) {
+            cookie.setSecure(config.getSecure());
         }
-        if (config.isHttpOnly()) {
-            cookie.setHttpOnly(config.isHttpOnly());
+        if (config.getHttpOnly()) {
+            cookie.setHttpOnly(config.getHttpOnly());
         }
     }
 }

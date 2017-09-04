@@ -22,9 +22,6 @@ import javax.servlet.MultipartConfigElement;
 public class JavaConfigUtil {
 
     @Autowired
-    private WebsiteProperties properties;
-
-    @Autowired
     private MultipartProperties multipart;
 
     public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet servlet) {

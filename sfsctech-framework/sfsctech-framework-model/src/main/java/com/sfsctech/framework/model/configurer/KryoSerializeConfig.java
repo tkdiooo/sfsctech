@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @version Description:
  */
 @Component
-public class SerializeConfig {
+public class KryoSerializeConfig {
 
     static {
         DubboConstants.addKryoSerializePackage("com.sfsctech.framework.model.dto");

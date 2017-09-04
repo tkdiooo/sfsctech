@@ -8,7 +8,6 @@ import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.SecurityConstants;
-import com.sfsctech.constants.inf.IEnum;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;

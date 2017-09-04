@@ -5,9 +5,14 @@ server:
   context-path: /jspdemo
   tomcat:
     uri-encoding: utf-8
+  # logback config service setting
   context-parameters:
     logback-config-location: http://localhost:8888/logback/framework/jsp
     logback-expose-webapp-root: true
+  # jsp development setting
+  jsp-servlet:
+    init-parameters:
+      development: true
 #spring mvc setting
 spring:
   mvc:
@@ -25,10 +30,6 @@ spring:
         max-wait-millis: 10000
         max-idle: 100
         min-idle: 50
-  # jsp development setting
-  jsp-servlet:
-    init-parameters:
-      development: true
 #common setting
 website:
   # 网站支持

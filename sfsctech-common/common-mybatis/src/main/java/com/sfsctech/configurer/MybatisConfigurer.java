@@ -37,14 +37,14 @@ public class MybatisConfigurer {
 
     @Bean()
     @Primary
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource masterDatasource() {
+    @ConfigurationProperties(prefix = "spring.druid-datasource.master")
+    public DruidDataSource masterDatasource() {
         return new DruidDataSource();
     }
 
     @Bean()
-    @ConfigurationProperties(prefix = "spring.slaveDatasource")
-    public Map<String, Map<String, Object>> slaveDatasource() {
+    @ConfigurationProperties(prefix = "spring.druid-datasource.slave")
+    public Map<String, Map<String, DruidDataSource>> slaveDatasource() {
         return new HashMap<>();
     }
 
@@ -52,10 +52,7 @@ public class MybatisConfigurer {
     public DataSource dynamicDatasource() {
         ReadWriteDataSource dataSource = new ReadWriteDataSource();
         dataSource.setWriteDataSource(masterDatasource());
-        Map<String, Map<String, Object>> slaves = slaveDatasource();
-        Map<String, DruidDataSource> slaveMap = new HashMap<>();
-        slaves.forEach((key, value) -> slaveMap.put(key, JSON.parseObject(JSON.toJSONString(value), DruidDataSource.class)));
-        dataSource.setReadDataSources(slaveMap);
+        dataSource.setReadDataSources(slaveDatasource());
         return dataSource;
     }
 

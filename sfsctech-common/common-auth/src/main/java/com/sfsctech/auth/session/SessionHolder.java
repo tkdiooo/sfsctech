@@ -5,7 +5,7 @@
  * @date 2015年8月19日 下午5:43:41
  */
 
-package com.sfsctech.security.session;
+package com.sfsctech.auth.session;
 
 
 /**

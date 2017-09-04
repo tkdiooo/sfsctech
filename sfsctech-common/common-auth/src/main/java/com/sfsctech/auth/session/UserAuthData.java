@@ -1,11 +1,10 @@
-package com.sfsctech.security.session;
+package com.sfsctech.auth.session;
 
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.util.List;
 import java.util.Map;
 
 /**

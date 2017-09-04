@@ -10,19 +10,20 @@ import com.sfsctech.constants.LabelConstants;
  */
 public class Config {
 
-    private String path = LabelConstants.FORWARD_SLASH;
+    private String name;
     private String domain;
+    private String path = LabelConstants.FORWARD_SLASH;
     private String comment;
-    private int maxAge;
-    private boolean secure;
-    private boolean httpOnly;
+    private Boolean httpOnly;
+    private Boolean secure;
+    private Integer maxAge;
 
-    public String getPath() {
-        return path;
+    public String getName() {
+        return name;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDomain() {
@@ -33,6 +34,14 @@ public class Config {
         this.domain = domain;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -41,27 +50,27 @@ public class Config {
         this.comment = comment;
     }
 
-    public int getMaxAge() {
-        return maxAge;
-    }
-
-    public void setMaxAge(int maxAge) {
-        this.maxAge = maxAge;
-    }
-
-    public boolean isSecure() {
-        return secure;
-    }
-
-    public void setSecure(boolean secure) {
-        this.secure = secure;
-    }
-
-    public boolean isHttpOnly() {
+    public Boolean getHttpOnly() {
         return httpOnly;
     }
 
-    public void setHttpOnly(boolean httpOnly) {
+    public void setHttpOnly(Boolean httpOnly) {
         this.httpOnly = httpOnly;
+    }
+
+    public Boolean getSecure() {
+        return secure;
+    }
+
+    public void setSecure(Boolean secure) {
+        this.secure = secure;
+    }
+
+    public Integer getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(Integer maxAge) {
+        this.maxAge = maxAge;
     }
 }

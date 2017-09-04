@@ -1,4 +1,4 @@
-package com.sfsctech.security.filter;
+package com.sfsctech.auth.filter;
 
 import com.sfsctech.base.filter.BaseFilter;
 
