@@ -1,7 +1,7 @@
 package com.sfsctech.security.csrf;
 
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 //import com.sfsctech.security.session.SessionHolder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class CSRFTokenManager {
 
     public static CSRFToken generateCSRFToken(HttpServletRequest request) {
         CSRFToken token = new CSRFToken();
-        if (StringUtil.isNotBlank(SecurityConstants.SESSION_AUTHENTICATION) && SecurityConstants.SESSION_AUTHENTICATION.equals(SecurityConstants.SERVICE_SOA)) {
+        if (StringUtil.isNotBlank(ExcludesConstants.SESSION_AUTHENTICATION) && ExcludesConstants.SESSION_AUTHENTICATION.equals(ExcludesConstants.SERVICE_SOA)) {
 //            SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
         } else {
             request.getSession().setAttribute(CSRF_TOKEN, token);
@@ -45,7 +45,7 @@ public class CSRFTokenManager {
     }
 
     public static void destroy(HttpServletRequest request) {
-        if (StringUtil.isNotBlank(SecurityConstants.SESSION_AUTHENTICATION) && SecurityConstants.SESSION_AUTHENTICATION.equals(SecurityConstants.SERVICE_SOA)) {
+        if (StringUtil.isNotBlank(ExcludesConstants.SESSION_AUTHENTICATION) && ExcludesConstants.SESSION_AUTHENTICATION.equals(ExcludesConstants.SERVICE_SOA)) {
 //            if (null != SessionHolder.getSessionInfo()) {
 //                SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
 //            }

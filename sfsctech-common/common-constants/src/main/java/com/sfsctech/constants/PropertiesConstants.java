@@ -22,46 +22,4 @@ public class PropertiesConstants {
      */
     public final static String WEBSITE_SERVICE_AUTHENTICATION = "website.session.authentication";
 
-    // dubbo Attribute
-    //-------------------------------------------------------------------------------------------
-    /**
-     * Properties：dubbo.application.name
-     */
-    public final static String DUBBO_APPLICATION_NAME = "dubbo.application.name";
-    /**
-     * Properties：dubbo.application.logger
-     */
-    public final static String DUBBO_APPLICATION_LOGGER = "dubbo.application.logger";
-    /**
-     * Properties：dubbo.registry.address
-     */
-    public final static String DUBBO_REGISTRY_ADDRESS = "dubbo.registry.address";
-    /**
-     * Properties：dubbo.registry.check
-     */
-    public final static String DUBBO_REGISTRY_CHECK = "dubbo.registry.check";
-    /**
-     * Properties：dubbo.registry.register
-     */
-    public final static String DUBBO_REGISTRY_REGISTER = "dubbo.registry.register";
-    /**
-     * Properties：dubbo.registry.subscribe
-     */
-    public final static String DUBBO_REGISTRY_SUBSCRIBE = "dubbo.registry.subscribe";
-    /**
-     * Properties：dubbo.registry.timeout
-     */
-    public final static String DUBBO_REGISTRY_TIMEOUT = "dubbo.registry.timeout";
-    /**
-     * Properties：dubbo.protocol.name
-     */
-    public final static String DUBBO_PROTOCOL_NAME = "dubbo.protocol.name";
-    /**
-     * Properties：dubbo.protocol.port
-     */
-    public final static String DUBBO_PROTOCOL_PORT = "dubbo.protocol.port";
-    /**
-     * Properties：dubbo.protocol.kryo
-     */
-    public final static String DUBBO_PROTOCOL_KRYO = "dubbo.protocol.kryo";
 }

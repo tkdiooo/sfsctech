@@ -1,7 +1,7 @@
 package com.sfsctech.security.tools;
 
 import com.sfsctech.common.util.DateUtil;
-import com.sfsctech.security.jwt.JwtConfig;
+import com.sfsctech.auth.jwt.JwtConfig;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 

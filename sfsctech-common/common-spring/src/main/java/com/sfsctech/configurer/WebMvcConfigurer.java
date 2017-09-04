@@ -7,7 +7,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -106,10 +106,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
         return (container -> {
-            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, (SecurityConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
-            ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, (SecurityConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
-            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, (SecurityConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.NOT_FOUND));
-            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, (SecurityConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
+            ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
+            ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
+            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.NOT_FOUND));
+            ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             container.addErrorPages(error401Page, error403Page, error404Page, error500Page);
         });
     }

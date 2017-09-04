@@ -1,7 +1,6 @@
 package com.sfsctech.spring.initialize;
 
 import com.sfsctech.constants.CommonConstants;
-import com.sfsctech.constants.SecurityConstants;
 import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

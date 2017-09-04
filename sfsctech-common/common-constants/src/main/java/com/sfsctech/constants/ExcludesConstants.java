@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @author 张麒 2017/7/20.
  * @version Description:
  */
-public class SecurityConstants {
+public class ExcludesConstants {
 
     private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
     private static final ThreadLocal<Map<String, Boolean>> handler = new ThreadLocal<>();
@@ -19,10 +19,10 @@ public class SecurityConstants {
     static {
         FILTER_EXCLUDES_VALUE = new HashSet<>();
         FILTER_EXCLUDES_VALUE.add("/druid/*");
-        FILTER_EXCLUDES_VALUE.add(SecurityConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
+        FILTER_EXCLUDES_VALUE.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
         CSRF_EXCLUDES_VALUE = new HashSet<>();
         CSRF_EXCLUDES_VALUE.add("/druid/*");
-        CSRF_EXCLUDES_VALUE.add(SecurityConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
+        CSRF_EXCLUDES_VALUE.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
     }
 
     public static void addFilterExcludes(String... excludes) {
@@ -49,10 +49,10 @@ public class SecurityConstants {
      */
     public static boolean isExclusion(String requestURI) {
         // 责任链不为空，并且当前请求的URL已处理过
-        if (null != SecurityConstants.handler.get() && SecurityConstants.handler.get().containsKey(requestURI)) {
-            return SecurityConstants.handler.get().get(requestURI);
+        if (null != ExcludesConstants.handler.get() && ExcludesConstants.handler.get().containsKey(requestURI)) {
+            return ExcludesConstants.handler.get().get(requestURI);
         } else {
-            return SecurityConstants.verify(requestURI);
+            return ExcludesConstants.verify(requestURI);
         }
     }
 
@@ -64,7 +64,7 @@ public class SecurityConstants {
      * @return
      */
     public static boolean isExclusion(String requestURI, Set<String> excludes) {
-        return SecurityConstants.verify(requestURI, excludes);
+        return ExcludesConstants.verify(requestURI, excludes);
     }
 
     public static boolean matches(String url) {

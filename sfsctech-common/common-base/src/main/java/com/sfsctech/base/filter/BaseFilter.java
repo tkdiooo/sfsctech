@@ -1,6 +1,6 @@
 package com.sfsctech.base.filter;
 
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ public abstract class BaseFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String params = filterConfig.getInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY);
+        String params = filterConfig.getInitParameter(ExcludesConstants.FILTER_EXCLUDES_KEY);
         if (StringUtils.isNotBlank(params)) {
-            logger.info(getClass() + "[" + SecurityConstants.FILTER_EXCLUDES_KEY + "：" + params + "]");
+            logger.info(getClass() + "[" + ExcludesConstants.FILTER_EXCLUDES_KEY + "：" + params + "]");
             this.excludesPattern = Arrays.stream(params.split("\\s*,\\s*")).collect(Collectors.toSet());
         }
     }
@@ -36,7 +36,7 @@ public abstract class BaseFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String requestURI = httpServletRequest.getRequestURI();
-        boolean bool = (null != this.excludesPattern && this.excludesPattern.size() > 0) ? SecurityConstants.isExclusion(requestURI, this.excludesPattern) : SecurityConstants.isExclusion(requestURI);
+        boolean bool = (null != this.excludesPattern && this.excludesPattern.size() > 0) ? ExcludesConstants.isExclusion(requestURI, this.excludesPattern) : ExcludesConstants.isExclusion(requestURI);
         logger.info("请求路径：[" + requestURI + "]，" + (bool ? "无需" : "需要") + "执行" + getClass().getSimpleName() + ".doHandler()。");
         if (bool) {
             chain.doFilter(request, response);

@@ -1,7 +1,7 @@
 package com.sfsctech.configurer;
 
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.logback.core.listener.LogbackConfigListener;
 import com.sfsctech.logback.rmt.filter.TraceNoFilter;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +41,7 @@ public class LogbackConfigurer {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("traceNoFilter");
-        registration.addInitParameter(SecurityConstants.FILTER_EXCLUDES_KEY, (StringUtils.isNotBlank(properties.getView().getSuffix()) ? LabelConstants.STAR + properties.getView().getSuffix() + LabelConstants.COMMA : "") + "/druid/*");
+        registration.addInitParameter(ExcludesConstants.FILTER_EXCLUDES_KEY, (StringUtils.isNotBlank(properties.getView().getSuffix()) ? LabelConstants.STAR + properties.getView().getSuffix() + LabelConstants.COMMA : "") + "/druid/*");
         return registration;
     }
 }

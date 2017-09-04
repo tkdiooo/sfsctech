@@ -1,7 +1,7 @@
 package com.sfsctech.configurer;
 
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.security.factory.HandlerMethodFactory;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
@@ -45,7 +45,7 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(SecurityConstants.getCSRFExcludes());
+        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(ExcludesConstants.getCSRFExcludes());
         super.addInterceptors(registry);
     }
 

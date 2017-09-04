@@ -1,4 +1,4 @@
-package com.sfsctech.security.jwt;
+package com.sfsctech.auth.jwt;
 
 /**
  * Class Playload

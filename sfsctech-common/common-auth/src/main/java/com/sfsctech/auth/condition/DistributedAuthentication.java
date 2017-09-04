@@ -2,7 +2,7 @@ package com.sfsctech.auth.condition;
 
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
@@ -18,6 +18,6 @@ public class DistributedAuthentication implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
-        return StringUtil.isNotBlank(authentication) && authentication.equals(SecurityConstants.SERVICE_SOA);
+        return StringUtil.isNotBlank(authentication) && authentication.equals(ExcludesConstants.SERVICE_SOA);
     }
 }

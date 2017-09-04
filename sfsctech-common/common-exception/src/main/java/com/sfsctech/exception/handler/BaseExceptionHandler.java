@@ -5,7 +5,7 @@ import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.SecurityConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public abstract class BaseExceptionHandler {
         String ret_url = request.getHeader("Referer");
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
         if (StringUtil.isBlank(ret_url)) {
-            ret_url = SecurityConstants.CONTEXT_PATH;
+            ret_url = ExcludesConstants.CONTEXT_PATH;
         }
         result.addAttach("url", ret_url);
         if (HttpUtil.isAjaxRequest(request)) {

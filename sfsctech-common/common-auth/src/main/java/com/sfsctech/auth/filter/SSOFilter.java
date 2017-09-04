@@ -1,0 +1,56 @@
+package com.sfsctech.auth.filter;
+
+import com.sfsctech.auth.jwt.JwtToken;
+import com.sfsctech.auth.session.SessionHolder;
+import com.sfsctech.auth.session.SessionInfo;
+import com.sfsctech.auth.util.UserTokenUtil;
+import com.sfsctech.base.filter.BaseFilter;
+import com.sfsctech.common.cookie.Config;
+import com.sfsctech.common.cookie.CookieHelper;
+import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.constants.ExcludesConstants;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * Class SSOFilter
+ *
+ * @author 张麒 2017/7/25.
+ * @version Description:
+ */
+public class SSOFilter extends BaseFilter {
+
+    @Override
+    public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        SessionHolder.setSessionInfo(new SessionInfo());
+        try {
+            // 排除请求路径验证
+            final HttpServletRequest httpRequest = (HttpServletRequest) request;
+            String requestURI = httpRequest.getRequestURI();
+            boolean bool = ExcludesConstants.isExclusion(requestURI);
+            logger.info("请求路径：[" + requestURI + "]，" + (bool ? "无需" : "需要") + "进行Session验证。");
+            if (bool) {
+                chain.doFilter(request, response);
+            } else {
+                Config config = SpringContextUtil.getBean(Config.class);
+//                AppConfig appConfig = SpringContextUtil.getBean(AppConfig.class);
+                // SSO用户登录验证
+                CookieHelper helper = new CookieHelper((HttpServletRequest) request, (HttpServletResponse) response, config);
+                final JwtToken jt = UserTokenUtil.getJwtTokenByCookie(helper);
+//                if (null != jt) {
+//
+//                } else {
+                chain.doFilter(request, response);
+//                }
+            }
+        } finally {
+            SessionHolder.clear();
+        }
+    }
+}
