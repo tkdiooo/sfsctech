@@ -1,16 +1,13 @@
 package com.sfsctech.configurer;
 
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.logback.core.listener.LogbackConfigListener;
 import com.sfsctech.logback.rmt.filter.TraceNoFilter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.WebMvcProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 /**
  * Class LogbackRmtConfigurer
@@ -20,9 +17,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class LogbackConfigurer {
-
-    @Autowired
-    private WebMvcProperties properties;
 
     /**
      * 注册logback rmt监听
@@ -36,12 +30,17 @@ public class LogbackConfigurer {
         return registration;
     }
 
+    /**
+     * 日志跟踪 - 不过滤静态资源、页面模板、和druid
+     *
+     * @return
+     */
     @Bean
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("traceNoFilter");
-        registration.addInitParameter(ExcludesConstants.FILTER_EXCLUDES_KEY, (StringUtils.isNotBlank(properties.getView().getSuffix()) ? LabelConstants.STAR + properties.getView().getSuffix() + LabelConstants.COMMA : "") + "/druid/*");
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registration;
     }
 }

@@ -34,7 +34,7 @@
     {
       "name": "website.request.filter-exclude",
       "type": "java.util.List<java.lang.String>",
-      "description": "过滤器排除路径",
+      "description": "Session认证排除路径",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Request"
     },
     {

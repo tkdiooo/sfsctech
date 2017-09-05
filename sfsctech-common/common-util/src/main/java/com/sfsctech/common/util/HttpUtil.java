@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HttpUtil {
 
-    public static String getFullUrlRequest(HttpServletRequest request) {
+    public static String getFullUrl(HttpServletRequest request) {
         return request.getScheme() + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + request.getServerName() + LabelConstants.COLON + request.getServerPort() + request.getRequestURI() + (StringUtil.isBlank(request.getQueryString()) ? "" : (LabelConstants.QUESTION + request.getQueryString()));
-
     }
 
     public static boolean isAjaxRequest(HttpServletRequest request) {

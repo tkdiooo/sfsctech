@@ -27,12 +27,13 @@ import java.io.IOException;
 public class SSOFilter extends BaseFilter {
 
     @Override
-    public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doHandler(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         SessionHolder.setSessionInfo(new SessionInfo());
         try {
+            final HttpServletRequest request = (HttpServletRequest) servletRequest;
+            final HttpServletResponse response = (HttpServletResponse) servletResponse;
             // 排除请求路径验证
-            final HttpServletRequest httpRequest = (HttpServletRequest) request;
-            String requestURI = httpRequest.getRequestURI();
+            String requestURI = request.getRequestURI();
             boolean bool = ExcludesConstants.isExclusion(requestURI);
             logger.info("请求路径：[" + requestURI + "]，" + (bool ? "无需" : "需要") + "进行Session验证。");
             if (bool) {
@@ -41,7 +42,7 @@ public class SSOFilter extends BaseFilter {
                 Config config = SpringContextUtil.getBean(Config.class);
 //                AppConfig appConfig = SpringContextUtil.getBean(AppConfig.class);
                 // SSO用户登录验证
-                CookieHelper helper = new CookieHelper((HttpServletRequest) request, (HttpServletResponse) response, config);
+                CookieHelper helper = new CookieHelper(request, response, config);
                 final JwtToken jt = UserTokenUtil.getJwtTokenByCookie(helper);
 //                if (null != jt) {
 //

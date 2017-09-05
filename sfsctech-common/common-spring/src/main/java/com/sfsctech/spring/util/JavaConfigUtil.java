@@ -1,9 +1,7 @@
 package com.sfsctech.spring.util;
 
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.common.util.ByteSizeUtil;
-import com.sfsctech.spring.properties.WebsiteProperties;
+import com.sfsctech.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.MultipartProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

@@ -6,7 +6,7 @@ package com.sfsctech.auth.constants;
  * @author 张麒 2016/5/19.
  * @version Description:
  */
-public class SSOConstants {
+public class AuthConstants {
 
     public static final String UTF_8 = "UTF-8";
 

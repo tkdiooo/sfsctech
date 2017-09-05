@@ -13,10 +13,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-auth support -->
+        <!-- sfsctech-common-util support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-auth</artifactId>
+            <artifactId>common-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

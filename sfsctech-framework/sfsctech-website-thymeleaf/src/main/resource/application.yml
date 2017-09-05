@@ -43,8 +43,8 @@ website:
     static-resources: http://localhost:8080/static-resources
   # 网站请求
   request:
-    # filter排除
-    filter-exclude: /, /index, *.html
+    # Session认证排除路径
+    filter-exclude: /, /index, /login
     # csrf排除
     csrf-exclude: /**
   session:

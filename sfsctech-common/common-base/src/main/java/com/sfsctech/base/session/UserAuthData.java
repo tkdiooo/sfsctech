@@ -1,4 +1,4 @@
-package com.sfsctech.auth.session;
+package com.sfsctech.base.session;
 
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.constants.VerifyConstants;

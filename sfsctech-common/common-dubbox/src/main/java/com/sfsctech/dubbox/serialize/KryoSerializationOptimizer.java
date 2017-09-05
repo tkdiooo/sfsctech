@@ -1,10 +1,10 @@
 package com.sfsctech.dubbox.serialize;
 
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
-import com.sfsctech.auth.session.UserAuthData;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.tools.Assert;
 import com.sfsctech.common.util.ClassUtil;
 import com.sfsctech.constants.RpcConstants;

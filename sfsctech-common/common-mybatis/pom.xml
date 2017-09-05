@@ -13,6 +13,17 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--Common support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- pagehelper-spring-boot-starter -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -40,17 +51,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <!--Common support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-util</artifactId>
-            <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
 </project>

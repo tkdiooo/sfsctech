@@ -13,26 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-constants support -->
+        <!-- sfsctech-common-spring support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-base</artifactId>
+            <artifactId>common-spring</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- spring-boot-starter-web -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- commons-lang -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <!-- fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka_2.11 -->
         <dependency>

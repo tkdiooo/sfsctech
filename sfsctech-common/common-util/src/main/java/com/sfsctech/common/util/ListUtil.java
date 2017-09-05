@@ -15,14 +15,14 @@ public class ListUtil extends CollectionUtils {
     /**
      * 将字符串Set转换成String
      *
-     * @param set      --字符串Set
-     * @param separate --分隔符
+     * @param collection --字符串集合
+     * @param separate   --分隔符
      * @return String
      */
-    public static String toString(Set<String> set, String separate) {
+    public static String toString(Collection<String> collection, String separate) {
         StringBuilder buffer = new StringBuilder();
-        if (!isEmpty(set)) {
-            set.forEach(s -> {
+        if (!isEmpty(collection)) {
+            collection.forEach(s -> {
                 if (buffer.length() > 0) {
                     buffer.append(separate);
                     buffer.append(s);

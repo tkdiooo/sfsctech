@@ -1,4 +1,4 @@
-package com.sfsctech.security.tools;
+package com.sfsctech.auth.util;
 
 import com.sfsctech.common.util.DateUtil;
 import com.sfsctech.auth.jwt.JwtConfig;

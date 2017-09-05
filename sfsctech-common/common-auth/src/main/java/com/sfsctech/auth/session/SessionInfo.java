@@ -2,6 +2,7 @@ package com.sfsctech.auth.session;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.StringUtil;
 
 import java.io.Serializable;

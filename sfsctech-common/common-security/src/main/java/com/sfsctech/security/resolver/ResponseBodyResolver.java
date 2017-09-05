@@ -1,7 +1,6 @@
 package com.sfsctech.security.resolver;
 
 import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.security.csrf.CSRFToken;
 import com.sfsctech.security.csrf.CSRFTokenManager;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.context.request.NativeWebRequest;

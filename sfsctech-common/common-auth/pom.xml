@@ -13,10 +13,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-util support -->
+        <!-- sfsctech-common-spring support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>common-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- Spring Boot -->
@@ -30,6 +30,12 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <version>${spring.boot.version}</version>
             <optional>true</optional>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
         </dependency>
     </dependencies>
 

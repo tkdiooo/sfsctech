@@ -1,6 +1,6 @@
 package com.sfsctech.auth.util;
 
-import com.sfsctech.auth.constants.SSOConstants;
+import com.sfsctech.auth.constants.AuthConstants;
 import com.sfsctech.auth.jwt.JwtToken;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.util.StringUtil;
@@ -29,13 +29,13 @@ public class UserTokenUtil {
      * @return
      */
     public static JwtToken getJwtTokenByCookie(CookieHelper helper) {
-        String token = helper.getCookieValue(SSOConstants.COOKIE_TOKEN_NAME);
-        String saltCacheKey = helper.getCookieValue(SSOConstants.COOKIE_SALT_CACHE_KEY_NAME);
+        String token = helper.getCookieValue(AuthConstants.COOKIE_TOKEN_NAME);
+        String saltCacheKey = helper.getCookieValue(AuthConstants.COOKIE_SALT_CACHE_KEY_NAME);
         if (StringUtil.isNotBlank(token) && StringUtil.isNotBlank(saltCacheKey)) {
             try {
                 JwtToken jt = new JwtToken();
-                jt.setJwt(URLDecoder.decode(token, SSOConstants.UTF_8));
-                jt.setSalt_CacheKey(URLDecoder.decode(saltCacheKey, SSOConstants.UTF_8));
+                jt.setJwt(URLDecoder.decode(token, AuthConstants.UTF_8));
+                jt.setSalt_CacheKey(URLDecoder.decode(saltCacheKey, AuthConstants.UTF_8));
                 return jt;
             } catch (UnsupportedEncodingException e) {
                 clearUserToken(helper);
@@ -52,7 +52,7 @@ public class UserTokenUtil {
      * @param jt     JwtToken
      */
     public static void updateToken(CookieHelper helper, JwtToken jt) {
-        updateToken(helper, SSOConstants.COOKIE_TOKEN_NAME, SSOConstants.COOKIE_SALT_CACHE_KEY_NAME, jt);
+        updateToken(helper, AuthConstants.COOKIE_TOKEN_NAME, AuthConstants.COOKIE_SALT_CACHE_KEY_NAME, jt);
     }
 
     /**
@@ -65,8 +65,8 @@ public class UserTokenUtil {
      */
     public static void updateToken(CookieHelper helper, String token_key, String salt_cache_key, JwtToken jt) {
         try {
-            helper.setCookie(token_key, URLEncoder.encode(jt.getJwt(), SSOConstants.UTF_8));
-            helper.setCookie(salt_cache_key, URLEncoder.encode(jt.getSalt_CacheKey(), SSOConstants.UTF_8));
+            helper.setCookie(token_key, URLEncoder.encode(jt.getJwt(), AuthConstants.UTF_8));
+            helper.setCookie(salt_cache_key, URLEncoder.encode(jt.getSalt_CacheKey(), AuthConstants.UTF_8));
             logger.info("set cookies token value [domain:" + helper.getConfig().getDomain() + " Jwt:" + jt.getJwt() + " Salt_CacheKey:" + jt.getSalt_CacheKey() + "]");
         } catch (UnsupportedEncodingException e) {
             clearUserToken(helper);
@@ -80,7 +80,7 @@ public class UserTokenUtil {
      * @param helper CookieHelper
      */
     public static void clearUserToken(CookieHelper helper) {
-        helper.clearCookie(SSOConstants.COOKIE_TOKEN_NAME);
-        helper.clearCookie(SSOConstants.COOKIE_SALT_CACHE_KEY_NAME);
+        helper.clearCookie(AuthConstants.COOKIE_TOKEN_NAME);
+        helper.clearCookie(AuthConstants.COOKIE_SALT_CACHE_KEY_NAME);
     }
 }

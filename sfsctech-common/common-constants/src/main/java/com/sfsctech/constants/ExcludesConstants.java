@@ -12,8 +12,11 @@ import java.util.regex.Pattern;
 public class ExcludesConstants {
 
     private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
-    private static final ThreadLocal<Map<String, Boolean>> handler = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Boolean>> STATIC_RESOURCE = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Boolean>> REQUEST_MAPPING = new ThreadLocal<>();
+    // 默认不过滤/druid/*和/error/*
     public static Set<String> FILTER_EXCLUDES_VALUE;
+    // 默认不过滤/druid/*和/error/**
     public static Set<String> CSRF_EXCLUDES_VALUE;
 
     static {
@@ -42,35 +45,57 @@ public class ExcludesConstants {
     }
 
     /**
-     * 通过责任链处理的校验
+     * 全局规则校验
      *
      * @param requestURI
      * @return
      */
     public static boolean isExclusion(String requestURI) {
-        // 责任链不为空，并且当前请求的URL已处理过
-        if (null != ExcludesConstants.handler.get() && ExcludesConstants.handler.get().containsKey(requestURI)) {
-            return ExcludesConstants.handler.get().get(requestURI);
+        // 静态资源责任链不为空，并且当前请求的URL已处理过
+        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(requestURI)) {
+            return STATIC_RESOURCE.get().get(requestURI);
+        }
+        // request映射责任链不为空，并且当前请求的URL已处理过
+        else if (null != REQUEST_MAPPING.get() && REQUEST_MAPPING.get().containsKey(requestURI)) {
+            return REQUEST_MAPPING.get().get(requestURI);
         } else {
-            return ExcludesConstants.verify(requestURI);
+            return verify(requestURI);
         }
     }
 
     /**
-     * 不通过责任链处理的校验
+     * 自定义规则校验
      *
      * @param requestURI
      * @param excludes
      * @return
      */
     public static boolean isExclusion(String requestURI, Set<String> excludes) {
-        return ExcludesConstants.verify(requestURI, excludes);
+        // 静态资源责任链不为空，并且当前请求的URL已处理过
+        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(requestURI)) {
+            return STATIC_RESOURCE.get().get(requestURI);
+        } else {
+            return verify(requestURI, excludes);
+        }
     }
 
+    /**
+     * 静态资源校验
+     *
+     * @param url
+     * @return
+     */
     public static boolean matches(String url) {
         return pattern.matcher(url).matches();
     }
 
+    /**
+     * 根据条件校验
+     *
+     * @param pattern
+     * @param source
+     * @return
+     */
     private static boolean matches(String pattern, String source) {
         if (pattern != null && source != null) {
             pattern = pattern.trim();
@@ -103,15 +128,25 @@ public class ExcludesConstants {
 
     private static boolean verify(String requestURI) {
         final String url = requestURI;
-        if (null == handler.get()) {
-            handler.set(new HashMap<>());
+        boolean static_ = false, request_ = false;
+        if (null == STATIC_RESOURCE.get()) {
+            STATIC_RESOURCE.set(new HashMap<>());
         }
-        handler.get().put(url, false);
+        if (null == REQUEST_MAPPING.get()) {
+            REQUEST_MAPPING.set(new HashMap<>());
+        }
         if (FILTER_EXCLUDES_VALUE != null && requestURI != null) {
             requestURI = formatRequestURI(requestURI);
-            handler.get().put(url, matches(requestURI) || excludesPattern(requestURI, FILTER_EXCLUDES_VALUE));
+            static_ = matches(requestURI);
+            // 如果是静态资源
+            if (static_) {
+                STATIC_RESOURCE.get().put(url, true);
+            } else {
+                request_ = excludesPattern(requestURI, FILTER_EXCLUDES_VALUE);
+                REQUEST_MAPPING.get().put(url, request_);
+            }
         }
-        return handler.get().get(url);
+        return static_ || request_;
     }
 
     private static boolean verify(String requestURI, Set<String> excludes) {
@@ -146,7 +181,6 @@ public class ExcludesConstants {
 
     // Filter Attribute
     //-------------------------------------------------------------------------------------------
-    public static final String FILTER_EXCLUDES_KEY = "exclusions";
     public static final String ERROR_PATH = "/error";
     public static final String SERVICE_SOA = "soa";
     public static String CONTEXT_PATH;
