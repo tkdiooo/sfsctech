@@ -137,6 +137,11 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         return javaConfigUtil.getServletRegistrationBean(servlet);
     }
 
+    /**
+     * FastJson Enum处理
+     *
+     * @return
+     */
     @Bean
     public SerializeConfig serializeConfig() {
         SerializeConfig serializeConfig = new SerializeConfig();
