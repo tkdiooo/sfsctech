@@ -45,4 +45,9 @@ public class IndexController {
         System.out.println(userInfo.getUserName());
         return new ActionResult<>(userInfo);
     }
+
+    @GetMapping("test")
+    public String test(){
+        return "index";
+    }
 }

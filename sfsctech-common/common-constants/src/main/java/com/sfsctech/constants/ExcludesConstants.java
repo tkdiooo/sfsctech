@@ -14,34 +14,36 @@ public class ExcludesConstants {
     private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
     private static final ThreadLocal<Map<String, Boolean>> STATIC_RESOURCE = new ThreadLocal<>();
     private static final ThreadLocal<Map<String, Boolean>> REQUEST_MAPPING = new ThreadLocal<>();
-    // 默认不过滤/druid/*和/error/*
-    public static Set<String> FILTER_EXCLUDES_VALUE;
-    // 默认不过滤/druid/*和/error/**
-    public static Set<String> CSRF_EXCLUDES_VALUE;
+    // 默认不过滤/、/druid/*、/error/*
+    public static Set<String> SESSION_EXCLUDES_PATTERNS;
+    // 默认不过滤/、/druid/*、/error/**
+    public static Set<String> INTERCEPT_EXCLUDES_PATTERNS;
 
     static {
-        FILTER_EXCLUDES_VALUE = new HashSet<>();
-        FILTER_EXCLUDES_VALUE.add("/druid/*");
-        FILTER_EXCLUDES_VALUE.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
-        CSRF_EXCLUDES_VALUE = new HashSet<>();
-        CSRF_EXCLUDES_VALUE.add("/druid/*");
-        CSRF_EXCLUDES_VALUE.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
+        SESSION_EXCLUDES_PATTERNS = new HashSet<>();
+        SESSION_EXCLUDES_PATTERNS.add("/");
+        SESSION_EXCLUDES_PATTERNS.add("/druid/*");
+        SESSION_EXCLUDES_PATTERNS.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_STAR);
+        INTERCEPT_EXCLUDES_PATTERNS = new HashSet<>();
+        INTERCEPT_EXCLUDES_PATTERNS.add("/");
+        INTERCEPT_EXCLUDES_PATTERNS.add("/druid/*");
+        INTERCEPT_EXCLUDES_PATTERNS.add(ExcludesConstants.ERROR_PATH + LabelConstants.SLASH_DOUBLE_STAR);
     }
 
     public static void addFilterExcludes(String... excludes) {
-        FILTER_EXCLUDES_VALUE.addAll(Arrays.asList(excludes));
+        SESSION_EXCLUDES_PATTERNS.addAll(Arrays.asList(excludes));
     }
 
     public static void addCSRFExcludes(String... excludes) {
-        CSRF_EXCLUDES_VALUE.addAll(Arrays.asList(excludes));
+        INTERCEPT_EXCLUDES_PATTERNS.addAll(Arrays.asList(excludes));
     }
 
     public static String getFilterExcludes() {
-        return toString(FILTER_EXCLUDES_VALUE, LabelConstants.COMMA);
+        return toString(SESSION_EXCLUDES_PATTERNS, LabelConstants.COMMA);
     }
 
     public static String[] getCSRFExcludes() {
-        return CSRF_EXCLUDES_VALUE.toArray(new String[]{});
+        return INTERCEPT_EXCLUDES_PATTERNS.toArray(new String[]{});
     }
 
     /**
@@ -135,14 +137,14 @@ public class ExcludesConstants {
         if (null == REQUEST_MAPPING.get()) {
             REQUEST_MAPPING.set(new HashMap<>());
         }
-        if (FILTER_EXCLUDES_VALUE != null && requestURI != null) {
+        if (SESSION_EXCLUDES_PATTERNS != null && requestURI != null) {
             requestURI = formatRequestURI(requestURI);
             static_ = matches(requestURI);
             // 如果是静态资源
             if (static_) {
                 STATIC_RESOURCE.get().put(url, true);
             } else {
-                request_ = excludesPattern(requestURI, FILTER_EXCLUDES_VALUE);
+                request_ = excludesPattern(requestURI, SESSION_EXCLUDES_PATTERNS);
                 REQUEST_MAPPING.get().put(url, request_);
             }
         }

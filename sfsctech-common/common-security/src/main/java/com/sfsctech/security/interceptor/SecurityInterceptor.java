@@ -3,8 +3,8 @@ package com.sfsctech.security.interceptor;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.model.BaseDto;
 import com.sfsctech.common.util.ResponseUtil;
-import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.ExcludesConstants;
+import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.security.csrf.CSRFTokenManager;
 import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class SecurityInterceptor
@@ -25,6 +26,12 @@ import java.util.Map;
 public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
+
+    private Set<String> excludesPattern;
+
+    public void setExcludesPattern(Set<String> excludesPattern) {
+        this.excludesPattern = excludesPattern;
+    }
 
     /**
      * 在请求处理之前进行调用（Controller方法调用之前）
@@ -42,7 +49,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //            Method method = handlerMethod.getMethod();
 //        }
         String requestURI = request.getRequestURI();
-        boolean bool = ExcludesConstants.isExclusion(requestURI);
+        boolean bool = ExcludesConstants.isExclusion(requestURI, excludesPattern);
         logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
         // 当前请求路径是否需要验证
         if (!bool) {

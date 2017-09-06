@@ -2,6 +2,7 @@ package com.sfsctech.website.jsp;
 
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +25,9 @@ public class JspWebRunner extends SpringBootServletInitializer {
     @Autowired
     private JavaConfigUtil springUtil;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Bean
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet servlet) {
         ServletRegistrationBean registration = springUtil.getServletRegistrationBean(servlet);
@@ -36,8 +40,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
-        TomcatContextCustomizer contextCustomizer = context -> context.addWelcomeFile("/index.html");
-        ExcludesConstants.addFilterExcludes("/index.html");
+        TomcatContextCustomizer contextCustomizer = context -> context.addWelcomeFile(appConfig.getWebsiteProperties().getSupport().getWelcomeFile());
         factory.addContextCustomizers(contextCustomizer);
         return factory;
     }

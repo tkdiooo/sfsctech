@@ -36,12 +36,12 @@ website:
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
+    welcome-file: /index.html
   # 网站请求
   request:
     # 排除映射
     filter-exclude: /, /index.html, *.jsp
     csrf-exclude:
-  # 服务架构
   session:
     authentication: soa
 #dubbo setting

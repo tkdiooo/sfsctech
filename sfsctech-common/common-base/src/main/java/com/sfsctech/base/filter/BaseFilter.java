@@ -18,7 +18,7 @@ import java.util.Set;
 public abstract class BaseFilter implements Filter {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    private Set<String> excludesPattern;
+    protected Set<String> excludesPattern;
 
     public void setExcludesPattern(Set<String> excludesPattern) {
         this.excludesPattern = excludesPattern;
@@ -30,11 +30,9 @@ public abstract class BaseFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String requestURI = httpServletRequest.getRequestURI();
-        boolean bool = (null != this.excludesPattern && this.excludesPattern.size() > 0) ? ExcludesConstants.isExclusion(requestURI, this.excludesPattern) : ExcludesConstants.isExclusion(requestURI);
-        logger.info("请求路径：[" + requestURI + "]，" + (bool ? "无需" : "需要") + "执行" + getClass().getSimpleName() + ".doHandler。");
-        if (bool) {
+        String requestURI = ((HttpServletRequest) request).getRequestURI();
+        // 全局filter路径校验（静态资源、页面模板、Spring默认错误页面、druid分析页面）
+        if (ExcludesConstants.isExclusion(requestURI)) {
             chain.doFilter(request, response);
         } else {
             doHandler(request, response, chain);

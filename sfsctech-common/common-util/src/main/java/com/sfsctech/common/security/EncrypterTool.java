@@ -1,5 +1,6 @@
 package com.sfsctech.common.security;
 
+import com.sfsctech.common.security.aes.Aes;
 import com.sfsctech.common.security.base64.Base64;
 import com.sfsctech.common.security.des3.Des3;
 import com.sfsctech.common.security.des3.Des3Manager;
@@ -18,7 +19,7 @@ public class EncrypterTool {
     private static final Logger logger = LoggerFactory.getLogger(EncrypterTool.class);
 
     public enum Security {
-        Base64, Des3, Des3ECB, DEs3CBC, Md5
+        Base64, Des3, Des3ECB, DEs3CBC, Md5, Aes
     }
 
     /**
@@ -35,6 +36,8 @@ public class EncrypterTool {
             return Des3.encryptCBC(info);
         } else if (security.equals(Security.Md5)) {
             return Md5.encode(info);
+        } else if (security.equals(Security.Aes)) {
+            return Aes.encrypt(info);
         }
         return "";
     }
@@ -53,6 +56,8 @@ public class EncrypterTool {
             return Des3.decryptCBC(info);
         } else if (security.equals(Security.Md5)) {
             return info;
+        } else if (security.equals(Security.Aes)) {
+            return Aes.decrypt(info);
         }
         return "";
     }

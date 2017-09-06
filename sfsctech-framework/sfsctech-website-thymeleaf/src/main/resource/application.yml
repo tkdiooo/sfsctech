@@ -32,20 +32,17 @@ spring:
       max-wait-millis: 10000
       max-idle: 100
       min-idle: 50
-  http:
-    multipart:
-      location: ssdsd
 #common setting
 website:
-  # 网站支持
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
-  # 网站请求
-  request:
-    # Session认证排除路径
-    filter-exclude: /, /index, /login
-    # csrf排除
-    csrf-exclude: /**
+    # 首页路径
+    welcome-file: /index
   session:
-    authentication: soa
+    authentication: simple
+  filter:
+    session-exclude-path: /index, /login
+  csrf:
+    intercept-exclude-path:
+    verify-exclude-path: /index

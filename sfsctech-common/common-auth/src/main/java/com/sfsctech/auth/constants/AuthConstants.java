@@ -38,4 +38,7 @@ public class AuthConstants {
     // session 过期
     public static final String SESSION_TIME_OUT = "timeout";
 
+    public static final String JWT_USER_AUTH_INFO = "jwt_user_auth_info";
+    public static final String JWT_SESSION_ATTRIBUTE = "jwt_session_attribute";
+
 }

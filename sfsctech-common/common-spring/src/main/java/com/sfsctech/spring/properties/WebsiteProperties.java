@@ -3,7 +3,7 @@ package com.sfsctech.spring.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Class WebsiteProperties
@@ -18,12 +18,14 @@ import java.util.List;
 public class WebsiteProperties {
 
     private final WebsiteProperties.Support support;
-    private final WebsiteProperties.Request request;
+    private final WebsiteProperties.Filter filter;
+    private final WebsiteProperties.Csrf csrf;
     private final WebsiteProperties.Session session;
 
     public WebsiteProperties() {
         this.support = new WebsiteProperties.Support();
-        this.request = new WebsiteProperties.Request();
+        this.filter = new WebsiteProperties.Filter();
+        this.csrf = new WebsiteProperties.Csrf();
         this.session = new WebsiteProperties.Session();
     }
 
@@ -31,17 +33,23 @@ public class WebsiteProperties {
         return support;
     }
 
-    public Request getRequest() {
-        return request;
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public Csrf getCsrf() {
+        return csrf;
     }
 
     public Session getSession() {
         return session;
     }
 
+
     public static class Support {
 
         private String staticResources;
+        private String welcomeFile;
 
         public Support() {
         }
@@ -53,29 +61,53 @@ public class WebsiteProperties {
         public void setStaticResources(String staticResources) {
             this.staticResources = staticResources;
         }
+
+        public String getWelcomeFile() {
+            return welcomeFile;
+        }
+
+        public void setWelcomeFile(String welcomeFile) {
+            this.welcomeFile = welcomeFile;
+        }
     }
 
-    public static class Request {
-        private List<String> filterExclude;
-        private List<String> csrfExclude;
+    public static class Filter {
+        private Set<String> sessionExcludePath;
 
-        public Request() {
+        public Filter() {
         }
 
-        public List<String> getFilterExclude() {
-            return filterExclude;
+        public Set<String> getSessionExcludePath() {
+            return sessionExcludePath;
         }
 
-        public void setFilterExclude(List<String> filterExclude) {
-            this.filterExclude = filterExclude;
+        public void setSessionExcludePath(Set<String> sessionExcludePath) {
+            this.sessionExcludePath = sessionExcludePath;
+        }
+    }
+
+    public static class Csrf {
+        private Set<String> interceptExcludePath;
+        private Set<String> verifyExcludePath;
+
+        public Csrf() {
+
         }
 
-        public List<String> getCsrfExclude() {
-            return csrfExclude;
+        public Set<String> getInterceptExcludePath() {
+            return interceptExcludePath;
         }
 
-        public void setCsrfExclude(List<String> csrfExclude) {
-            this.csrfExclude = csrfExclude;
+        public void setInterceptExcludePath(Set<String> interceptExcludePath) {
+            this.interceptExcludePath = interceptExcludePath;
+        }
+
+        public Set<String> getVerifyExcludePath() {
+            return verifyExcludePath;
+        }
+
+        public void setVerifyExcludePath(Set<String> verifyExcludePath) {
+            this.verifyExcludePath = verifyExcludePath;
         }
     }
 

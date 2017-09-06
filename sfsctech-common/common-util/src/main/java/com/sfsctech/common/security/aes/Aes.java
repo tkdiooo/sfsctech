@@ -1,5 +1,7 @@
 package com.sfsctech.common.security.aes;
 
+import com.sfsctech.common.util.HexUtil;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -14,6 +16,13 @@ import java.security.SecureRandom;
  * @version Description:
  */
 public class Aes {
+
+    // 盐值
+    private static final String salt = "242DD6B633BB77C2A76FBDFE";
+
+    public static String encrypt(String bef_aes) {
+        return encrypt(bef_aes, salt);
+    }
 
     public static String encrypt(String bef_aes, String password) {
         byte[] byteContent = null;
@@ -38,6 +47,10 @@ public class Aes {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String decrypt(String aft_aes) {
+        return decrypt(aft_aes, salt);
     }
 
     public static String decrypt(String aft_aes, String password) {
@@ -98,6 +111,7 @@ public class Aes {
         System.out.println("加密前：" + content);
         String s = encrypt(content, password);
         System.out.println("加密后：" + s);
+        System.out.println("加密后：" + HexUtil.toHexString(s.getBytes()));
         // 解密
 
         String s1 = decrypt(s, password);

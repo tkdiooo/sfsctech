@@ -6,6 +6,8 @@ import com.sfsctech.security.factory.HandlerMethodFactory;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
 import com.sfsctech.security.resolver.RequestAttributeResolver;
+import com.sfsctech.spring.properties.AppConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +27,9 @@ import java.util.List;
 @Configuration
 public class SecurityConfigurer extends WebMvcConfigurerAdapter {
 
+    @Autowired
+    private AppConfig appConfig;
+
     /**
      * 自定义参数解析器
      *
@@ -43,10 +48,12 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        SecurityInterceptor securityInterceptor = new SecurityInterceptor();
+        securityInterceptor.setExcludesPattern(appConfig.getWebsiteProperties().getCsrf().getVerifyExcludePath());
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(ExcludesConstants.getCSRFExcludes());
+        registry.addInterceptor(securityInterceptor).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(ExcludesConstants.getCSRFExcludes());
         super.addInterceptors(registry);
     }
 

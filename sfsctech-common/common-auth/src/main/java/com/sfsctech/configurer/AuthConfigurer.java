@@ -32,7 +32,7 @@ public class AuthConfigurer {
     public FilterRegistrationBean SessionFilter() {
         SessionFilter filter = new SessionFilter();
         // Session认证排除路径
-        filter.setExcludesPattern(appConfig.getFilterExcludes());
+        filter.setExcludesPattern(appConfig.getSessionExcludePath());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SessionFilter");
@@ -44,7 +44,7 @@ public class AuthConfigurer {
     public FilterRegistrationBean SSOFilter() {
         SSOFilter filter = new SSOFilter();
         // Session认证排除路径
-        filter.setExcludesPattern(appConfig.getFilterExcludes());
+        filter.setExcludesPattern(appConfig.getSessionExcludePath());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SSOFilter");

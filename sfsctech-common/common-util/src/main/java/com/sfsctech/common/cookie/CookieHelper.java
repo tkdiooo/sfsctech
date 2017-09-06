@@ -1,5 +1,6 @@
 package com.sfsctech.common.cookie;
 
+import com.sfsctech.common.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,10 @@ import javax.servlet.http.HttpServletResponse;
  * @version Description:
  */
 public class CookieHelper {
+
+    public static CookieHelper getInstance(HttpServletRequest request, HttpServletResponse response) {
+        return new CookieHelper(request, response, SpringContextUtil.getBean(Config.class));
+    }
 
     private final Logger logger = LoggerFactory.getLogger(CookieHelper.class);
 

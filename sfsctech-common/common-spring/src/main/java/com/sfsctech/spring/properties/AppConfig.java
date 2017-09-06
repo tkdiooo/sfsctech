@@ -1,6 +1,7 @@
 package com.sfsctech.spring.properties;
 
 import com.sfsctech.common.cookie.Config;
+import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
@@ -14,7 +15,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -58,10 +58,10 @@ public class AppConfig {
         return viewTemplate;
     }
 
-    public Set<String> getFilterExcludes() {
-        if (null != websiteProperties.getRequest().getFilterExclude()) {
-            Set<String> excludes = new HashSet<>(websiteProperties.getRequest().getFilterExclude());
-            excludes.addAll(ExcludesConstants.FILTER_EXCLUDES_VALUE);
+    public Set<String> getSessionExcludePath() {
+        if (ListUtil.isNotEmpty(websiteProperties.getFilter().getSessionExcludePath())) {
+            Set<String> excludes = websiteProperties.getFilter().getSessionExcludePath();
+            excludes.addAll(ExcludesConstants.SESSION_EXCLUDES_PATTERNS);
             return excludes;
         } else {
             return null;
@@ -75,11 +75,11 @@ public class AppConfig {
         ExcludesConstants.CONTEXT_PATH = serverProperties.getContextPath();
         // 项目Session认证方式
         ExcludesConstants.SESSION_AUTHENTICATION = websiteProperties.getSession().getAuthentication();
-        // 过滤器排除 - 项目视图模板、项目ContextPath
-        ExcludesConstants.addFilterExcludes(getViewTemplate(), ExcludesConstants.CONTEXT_PATH);
+        // 过滤器排除 - 项目视图模板
+        ExcludesConstants.addFilterExcludes(getViewTemplate());
         // CSRF防御拦截排除 - 路径
-        if (null != websiteProperties.getRequest().getCsrfExclude())
-            ExcludesConstants.CSRF_EXCLUDES_VALUE.addAll(websiteProperties.getRequest().getCsrfExclude());
+        if (null != websiteProperties.getCsrf().getInterceptExcludePath())
+            ExcludesConstants.INTERCEPT_EXCLUDES_PATTERNS.addAll(websiteProperties.getCsrf().getInterceptExcludePath());
         // 项目静态资源路径
         if (StringUtil.isNotBlank(staticPath)) {
             // CSRF防御拦截排除 - 项目静态资源

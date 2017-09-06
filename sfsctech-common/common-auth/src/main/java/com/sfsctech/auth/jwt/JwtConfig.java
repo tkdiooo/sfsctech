@@ -1,5 +1,7 @@
 package com.sfsctech.auth.jwt;
 
+import java.util.Map;
+
 /**
  * Class Playload
  *
@@ -16,6 +18,8 @@ public class JwtConfig {
     private String audience;
     // 保持时间
     private Long expiration;
+
+    private Map<String, Object> claims;
 
     public String getSubject() {
         return subject;
@@ -47,5 +51,13 @@ public class JwtConfig {
 
     public void setExpiration(Long expiration) {
         this.expiration = expiration;
+    }
+
+    public Map<String, Object> getClaims() {
+        return claims;
+    }
+
+    public void setClaims(Map<String, Object> claims) {
+        this.claims = claims;
     }
 }

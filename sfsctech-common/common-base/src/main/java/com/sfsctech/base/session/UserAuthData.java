@@ -32,11 +32,6 @@ public class UserAuthData extends BaseDto {
 
     private String sessionID;
 
-    //session 数据
-    private String sessionData;
-
-    private Map<String, Integer> roles;
-
     public String getAccount() {
         return account;
     }
@@ -60,21 +55,4 @@ public class UserAuthData extends BaseDto {
     public void setSessionID(String sessionID) {
         this.sessionID = sessionID;
     }
-
-    public String getSessionData() {
-        return sessionData;
-    }
-
-    public void setSessionData(String sessionData) {
-        this.sessionData = sessionData;
-    }
-    
-    public Map<String, Integer> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Map<String, Integer> roles) {
-        this.roles = roles;
-    }
-
 }

@@ -1,7 +1,6 @@
 package com.sfsctech.security.xss;
 
 import com.sfsctech.common.util.HtmlEscapeUtil;
-import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -27,7 +26,7 @@ public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            encodedValues[i] = cleanXSS(values[i]);
+            encodedValues[i] = HtmlEscapeUtil.htmlEncode(values[i]);
         }
         return encodedValues;
     }
@@ -37,17 +36,13 @@ public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return cleanXSS(value);
+        return HtmlEscapeUtil.htmlEncode(value);
     }
 
     public String getHeader(String name) {
         String value = super.getHeader(name);
         if (value == null)
             return null;
-        return cleanXSS(value);
-    }
-
-    private String cleanXSS(String value) {
         return HtmlEscapeUtil.htmlEncode(value);
     }
 

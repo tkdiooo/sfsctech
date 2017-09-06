@@ -12,10 +12,16 @@
       "sourceMethod": "getSupport()"
     },
     {
-      "name": "website.request",
-      "type": "com.sfsctech.spring.properties.WebsiteProperties$Request",
+      "name": "website.filter",
+      "type": "com.sfsctech.spring.properties.WebsiteProperties$Filter",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
-      "sourceMethod": "getRequest()"
+      "sourceMethod": "getFilter()"
+    },
+    {
+      "name": "website.csrf",
+      "type": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
+      "sourceMethod": "getCsrf()"
     },
     {
       "name": "website.session",
@@ -32,16 +38,28 @@
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
     },
     {
-      "name": "website.request.filter-exclude",
-      "type": "java.util.List<java.lang.String>",
-      "description": "Session认证排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Request"
+      "name": "website.support.welcome-file",
+      "type": "java.lang.String",
+      "description": "网站欢迎页面地址",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
     },
     {
-      "name": "website.request.csrf-exclude",
-      "type": "java.util.List<java.lang.String>",
-      "description": "CSRF防御排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Request"
+      "name": "website.filter.session-exclude-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Session认证排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Filter"
+    },
+    {
+      "name": "website.csrf.intercept-exclude-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "CSRF拦截排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+    },
+    {
+      "name": "website.csrf.verify-exclude-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "CSRF校验排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
     },
     {
       "name": "website.session.authentication",

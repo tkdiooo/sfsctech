@@ -8,6 +8,7 @@ import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.ExcludesConstants;
+import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -51,6 +52,9 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Autowired
     private JavaConfigUtil javaConfigUtil;
 
+    @Autowired
+    private AppConfig appConfig;
+
     /**
      * 默认首页
      *
@@ -58,7 +62,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:/index");
+        registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:" + appConfig.getWebsiteProperties().getSupport().getWelcomeFile());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
     }
