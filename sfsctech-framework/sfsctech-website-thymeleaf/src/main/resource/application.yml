@@ -34,6 +34,9 @@ spring:
       min-idle: 50
 #common setting
 website:
+  csrf:
+    intercept-exclude-path: /**
+    verify-exclude-path: /index
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
@@ -43,6 +46,3 @@ website:
     authentication: simple
   filter:
     session-exclude-path: /index, /login
-  csrf:
-    intercept-exclude-path:
-    verify-exclude-path: /index
