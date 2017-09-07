@@ -2,10 +2,9 @@ package com.sfsctech.exception.handler;
 
 import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
-import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.ExcludesConstants;
+import com.sfsctech.constants.CommonConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public abstract class BaseExceptionHandler {
         String ret_url = request.getHeader("Referer");
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
         if (StringUtil.isBlank(ret_url)) {
-            ret_url = ExcludesConstants.CONTEXT_PATH;
+            ret_url = CommonConstants.CONTEXT_PATH;
         }
         result.addAttach("url", ret_url);
         if (HttpUtil.isAjaxRequest(request)) {
@@ -41,7 +40,6 @@ public abstract class BaseExceptionHandler {
     }
 
     private ModelAndView handleViewError(String viewName, BaseResult result, HttpStatus status) {
-        System.out.println(JsonUtil.toJSONString(result));
         ModelAndView mav = new ModelAndView(viewName, new HashMap<>(), status);
         mav.addObject("result", result);
         mav.addObject("timestamp", new Date());
@@ -49,7 +47,6 @@ public abstract class BaseExceptionHandler {
     }
 
     private ModelAndView handleAjaxError(HttpServletResponse response, BaseResult result, HttpStatus status) {
-        System.out.println(JsonUtil.toJSONString(result));
         response.setStatus(status.value());
         try {
             ResponseUtil.writeJson(result, response);

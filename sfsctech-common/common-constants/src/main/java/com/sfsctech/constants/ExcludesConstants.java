@@ -160,11 +160,11 @@ public class ExcludesConstants {
     }
 
     private static String formatRequestURI(String requestURI) {
-        if (CONTEXT_PATH != null && requestURI.startsWith(CONTEXT_PATH)) {
-            if (requestURI.endsWith(LabelConstants.FORWARD_SLASH) && requestURI.length() > CONTEXT_PATH.length() + 1) {
-                requestURI = requestURI.substring(CONTEXT_PATH.length(), requestURI.length() - 1);
+        if (CommonConstants.CONTEXT_PATH != null && requestURI.startsWith(CommonConstants.CONTEXT_PATH)) {
+            if (requestURI.endsWith(LabelConstants.FORWARD_SLASH) && requestURI.length() > CommonConstants.CONTEXT_PATH.length() + 1) {
+                requestURI = requestURI.substring(CommonConstants.CONTEXT_PATH.length(), requestURI.length() - 1);
             } else {
-                requestURI = requestURI.substring(CONTEXT_PATH.length());
+                requestURI = requestURI.substring(CommonConstants.CONTEXT_PATH.length());
             }
             if (!requestURI.startsWith("/")) {
                 requestURI = "/" + requestURI;
@@ -184,9 +184,6 @@ public class ExcludesConstants {
     // Filter Attribute
     //-------------------------------------------------------------------------------------------
     public static final String ERROR_PATH = "/error";
-    public static final String SERVICE_SOA = "soa";
-    public static String CONTEXT_PATH;
-    public static String SESSION_AUTHENTICATION;
 
 
     private static String toString(Set<String> set, String separate) {

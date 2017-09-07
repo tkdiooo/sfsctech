@@ -42,12 +42,12 @@ public class CommonConstants {
     /**
      * 静态资源地址
      */
-    public final static String STATIC_RESOURCE = "static_resource";
+    public final static String STATIC_RESOURCE_ATTRIBUTE = "static_resource";
 
     /**
      * 项目ContextPath
      */
-    public final static String CONTEXT_PATH = "context_path";
+    public final static String CONTEXT_PATH_ATTRIBUTE = "context_path";
 
     // Logback Setting Attribute
     //-------------------------------------------------------------------------------------------
@@ -60,4 +60,9 @@ public class CommonConstants {
      * 是否显示WebAppRoot
      */
     public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logback-expose-webapp-root";
+
+
+    public static final String SERVICE_SOA = "soa";
+    public static String CONTEXT_PATH;
+    public static String SESSION_AUTHENTICATION;
 }

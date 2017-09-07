@@ -37,13 +37,13 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
     welcome-file: /index.html
-  # 网站请求
-  request:
-    # 排除映射
-    filter-exclude: /, /index.html, *.jsp
-    csrf-exclude:
   session:
     authentication: soa
+  filter:
+    session-exclude-path: /index.html
+  csrf:
+    verify-exclude-path:
+    intercept-exclude-path:
 #dubbo setting
 dubbo:
   application:

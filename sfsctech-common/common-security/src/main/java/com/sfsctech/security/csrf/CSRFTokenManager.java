@@ -2,7 +2,7 @@ package com.sfsctech.security.csrf;
 
 import com.sfsctech.auth.session.SessionHolder;
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.ExcludesConstants;
+import com.sfsctech.constants.CommonConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +18,7 @@ public class CSRFTokenManager {
 
     public static CSRFToken generateCSRFToken(HttpServletRequest request) {
         CSRFToken token = new CSRFToken();
-        if (StringUtil.isNotBlank(ExcludesConstants.SESSION_AUTHENTICATION) && ExcludesConstants.SESSION_AUTHENTICATION.equals(ExcludesConstants.SERVICE_SOA)) {
+        if (StringUtil.isNotBlank(CommonConstants.SESSION_AUTHENTICATION) && CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
             SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
         } else {
             request.getSession().setAttribute(CSRF_TOKEN, token);
@@ -29,7 +29,7 @@ public class CSRFTokenManager {
     public static boolean isValidCSRFToken(HttpServletRequest request) {
         CSRFToken token;
         boolean bool = true;
-        if (StringUtil.isNotBlank(ExcludesConstants.SESSION_AUTHENTICATION) && ExcludesConstants.SESSION_AUTHENTICATION.equals(ExcludesConstants.SERVICE_SOA)) {
+        if (StringUtil.isNotBlank(CommonConstants.SESSION_AUTHENTICATION) && CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
             token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
         } else {
             token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
@@ -45,7 +45,7 @@ public class CSRFTokenManager {
     }
 
     public static void destroy(HttpServletRequest request) {
-        if (StringUtil.isNotBlank(ExcludesConstants.SESSION_AUTHENTICATION) && ExcludesConstants.SESSION_AUTHENTICATION.equals(ExcludesConstants.SERVICE_SOA)) {
+        if (StringUtil.isNotBlank(CommonConstants.SESSION_AUTHENTICATION) && CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
             SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
         } else {
             request.getSession().removeAttribute(CSRF_TOKEN);
