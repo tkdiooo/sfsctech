@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,8 +48,14 @@ public class IndexController {
         return new ActionResult<>(userInfo);
     }
 
+    @PostMapping("upload")
+    @ResponseBody
+    public ActionResult upload(@RequestParam(value = "fileUpload") MultipartFile[] files) {
+        return new ActionResult();
+    }
+
     @GetMapping("test")
-    public String test(){
+    public String test() {
         return "index";
     }
 }
