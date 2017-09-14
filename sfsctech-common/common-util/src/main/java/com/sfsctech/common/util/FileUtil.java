@@ -213,7 +213,7 @@ public class FileUtil extends FileUtils {
      * 获取文件夹下所有文件集合
      *
      * @param path folder Address
-     * @return List<File>
+     * @return List&lt;File&gt;
      */
     public static List<File> getFileFromFolders(String path) {
         String folderPath = convertPath(path);
@@ -230,7 +230,7 @@ public class FileUtil extends FileUtils {
      *
      * @param path   folder Address
      * @param suffix 后缀名
-     * @return List<File>
+     * @return List&lt;File&gt;
      */
     public static List<File> getFileFromFolders(String path, final String suffix) {
         String folderPath = convertPath(path);

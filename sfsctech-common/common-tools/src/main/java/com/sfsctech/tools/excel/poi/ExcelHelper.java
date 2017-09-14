@@ -124,10 +124,10 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Map<code><</code>String, Object>设置Sheet的标题
+     * 通过Map&lt;String, Object&gt;设置Sheet的标题
      *
      * @param excelModel ExcelModel
-     * @param header     标题集合<英文，中文>
+     * @param header     标题集合&lt;英文，中文&gt;
      * @param sheetName  Excel Sheet name
      * @param rower      标题行标
      */
@@ -142,7 +142,7 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Class<code><</code>T>设置Sheet的标题
+     * 通过Class&lt;T&gt;设置Sheet的标题
      *
      * @param excelModel ExcelModel
      * @param cls        映射Class，需要配置com.qi.common.excel.annotation.ExcelSheet
@@ -158,7 +158,7 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Class<code><</code>T>设置数据行
+     * 通过Class&lt;T&gt;设置数据行
      *
      * @param excelModel ExcelModel
      * @param dataRows   数据行
@@ -176,7 +176,7 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Class<code><</code>T>转换List<code><</code>T>集合对象为SheetModel对象
+     * 通过Class&lt;T&gt;转换List&lt;T&gt;集合对象为SheetModel对象
      *
      * @param dataRows 数据集合
      * @param cls      映射Class，需要配置com.qi.common.excel.annotation.ExcelSheet
@@ -211,12 +211,12 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Class<code><</code>T>转换SheetModel对象为List<code><</code>T>集合对象
+     * 通过Class&lt;T&gt;转换SheetModel对象为List&lt;T&gt;集合对象
      *
      * @param sheetModel SheetModel
      * @param cls        映射Class
      * @param <T>        范型类
-     * @return List<code><</code>T>
+     * @return List&lt;T&gt;
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
@@ -242,11 +242,11 @@ public abstract class ExcelHelper {
     }
 
     /**
-     * 通过Class<code><</code>T>获取标题集合
+     * 通过Class&lt;T&gt;获取标题集合
      *
      * @param cls 映射Class，需要配置com.qi.common.excel.annotation.ExcelHeader
      * @param <T> 范型类
-     * @return LinkedHashMap<code><</code>String, Object>
+     * @return LinkedHashMap&lt;String, Object&gt;
      */
     public static <T> LinkedHashMap<String, Object> getHeader(Class<T> cls) {
         LinkedHashMap<String, Object> header = new LinkedHashMap<>();

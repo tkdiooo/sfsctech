@@ -248,7 +248,7 @@ public class BeanUtil extends BeanUtils {
     }
 
     /**
-     * 提取集合中的对象的属性(通过getter函数), 组合成List<?>.
+     * 提取集合中的对象的属性(通过getter函数), 组合成List&lt;?&gt;.
      *
      * @param collection   来源集合.
      * @param propertyName 要提取的属性名.

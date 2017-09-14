@@ -1,5 +1,6 @@
 package com.sfsctech.website.thymeleaf;
 
+import com.sfsctech.dubbox.properties.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @version Description:
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sfsctech.website.thymeleaf", "com.sfsctech.configurer"})
+@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.website.thymeleaf", "com.sfsctech.configurer"})
 public class WebRunner extends SpringBootServletInitializer {
 
     @Override
@@ -21,7 +22,8 @@ public class WebRunner extends SpringBootServletInitializer {
         return application.sources(WebRunner.class);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        DubboConfig.setServicePackage("com.sfsctech.website.thymeleaf.rpc");
         SpringApplication.run(WebRunner.class, args);
     }
 }

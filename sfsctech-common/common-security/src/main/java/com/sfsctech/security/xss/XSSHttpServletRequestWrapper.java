@@ -26,7 +26,7 @@ public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
         int count = values.length;
         String[] encodedValues = new String[count];
         for (int i = 0; i < count; i++) {
-            encodedValues[i] = HtmlEscapeUtil.htmlEncode(values[i]);
+            encodedValues[i] = HtmlEscapeUtil.escapeHtml4(values[i]);
         }
         return encodedValues;
     }
@@ -36,14 +36,14 @@ public class XSSHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (value == null) {
             return null;
         }
-        return HtmlEscapeUtil.htmlEncode(value);
+        return HtmlEscapeUtil.escapeHtml4(value);
     }
 
     public String getHeader(String name) {
         String value = super.getHeader(name);
         if (value == null)
             return null;
-        return HtmlEscapeUtil.htmlEncode(value);
+        return HtmlEscapeUtil.escapeHtml4(value);
     }
 
 }

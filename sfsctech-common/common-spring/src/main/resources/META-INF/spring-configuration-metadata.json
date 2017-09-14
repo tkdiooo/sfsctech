@@ -12,12 +12,6 @@
       "sourceMethod": "getSupport()"
     },
     {
-      "name": "website.filter",
-      "type": "com.sfsctech.spring.properties.WebsiteProperties$Filter",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
-      "sourceMethod": "getFilter()"
-    },
-    {
       "name": "website.csrf",
       "type": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
@@ -28,6 +22,11 @@
       "type": "com.sfsctech.spring.properties.WebsiteProperties$Session",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
       "sourceMethod": "getSession()"
+    },
+    {
+      "name": "server.tomcat",
+      "type": "com.sfsctech.spring.properties.TomcatProperties",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
     }
   ],
   "properties": [
@@ -42,12 +41,6 @@
       "type": "java.lang.String",
       "description": "网站欢迎页面地址",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
-    },
-    {
-      "name": "website.filter.session-exclude-path",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "Session认证排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Filter"
     },
     {
       "name": "website.csrf.intercept-exclude-path",
@@ -66,6 +59,24 @@
       "type": "java.lang.String",
       "description": "系统Session认证方式",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
+    },
+    {
+      "name": "website.session.exclude-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Session认证排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
+    },
+    {
+      "name": "server.tomcat.optimize",
+      "type": "java.lang.Boolean",
+      "description": "tomcat优化",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.connector",
+      "type": "java.lang.String",
+      "description": "tomcat连接器",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
     }
   ],
   "hints": [
@@ -79,6 +90,19 @@
         {
           "value": "soa",
           "description": "分布式系统，通过缓存存储认证信息"
+        }
+      ]
+    },
+    {
+      "name": "server.tomcat.connector",
+      "values": [
+        {
+          "value": "org.apache.coyote.http11.Http11AprProtocol",
+          "description": "tomcat连接器Http11AprProtocol"
+        },
+        {
+          "value": "org.apache.coyote.http11.Http11NioProtocol",
+          "description": "tomcat连接器Http11NioProtocol"
         }
       ]
     },

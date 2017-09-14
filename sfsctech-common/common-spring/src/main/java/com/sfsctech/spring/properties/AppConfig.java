@@ -60,8 +60,8 @@ public class AppConfig {
     }
 
     public Set<String> getSessionExcludePath() {
-        if (ListUtil.isNotEmpty(websiteProperties.getFilter().getSessionExcludePath())) {
-            Set<String> excludes = websiteProperties.getFilter().getSessionExcludePath();
+        if (ListUtil.isNotEmpty(websiteProperties.getSession().getExcludePath())) {
+            Set<String> excludes = websiteProperties.getSession().getExcludePath();
             excludes.addAll(ExcludesConstants.SESSION_EXCLUDES_PATTERNS);
             return excludes;
         } else {

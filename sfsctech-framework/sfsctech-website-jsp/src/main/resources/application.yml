@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   # logback config service setting
   context-parameters:
-    logback-config-location: http://localhost:8888/logback/framework/jsp
+    logback-config-location: http://172.16.225.98:8888/config-service/logback/framework/website
     logback-expose-webapp-root: true
   # jsp development setting
   jsp-servlet:

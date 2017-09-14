@@ -9,7 +9,7 @@ package com.sfsctech.constants;
 public class LabelConstants {
 
     /**
-     * &
+     * &amp;
      */
     public static final String AMPERSAND = "&";
 
@@ -24,7 +24,7 @@ public class LabelConstants {
     public static final String APOSTROPHE = "'";
 
     /**
-     * @
+     * <pre>@</pre>
      */
     public static final String AT = "@";
 
@@ -49,12 +49,12 @@ public class LabelConstants {
     public static final String CARET = "^";
 
     /**
-     * ]]>
+     * ]]&gt;
      */
     public static final String CDATA_CLOSE = "]]>";
 
     /**
-     * <![CDATA[
+     * &lt;![CDATA[
      */
     public static final String CDATA_OPEN = "<![CDATA[";
 
@@ -179,12 +179,12 @@ public class LabelConstants {
     public static final String GRAVE_ACCENT = "`";
 
     /**
-     * >
+     * &gt;
      */
     public static final String GREATER_THAN = ">";
 
     /**
-     * >=
+     * &gt;=
      */
     public static final String GREATER_THAN_OR_EQUAL = ">=";
 
@@ -214,12 +214,12 @@ public class LabelConstants {
     public static final String ISO_8859_1 = "ISO-8859-1";
 
     /**
-     * <
+     * &lt;
      */
     public static final String LESS_THAN = "<";
 
     /**
-     * <=
+     * &lt;=
      */
     public static final String LESS_THAN_OR_EQUAL = "<=";
 

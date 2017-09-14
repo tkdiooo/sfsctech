@@ -34,6 +34,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- business -->
+        <dependency>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-framework-interface</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- sfsctech-common-dubbox support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- sfsctech-common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>

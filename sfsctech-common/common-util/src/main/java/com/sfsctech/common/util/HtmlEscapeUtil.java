@@ -19,9 +19,6 @@ public class HtmlEscapeUtil extends StringEscapeUtils {
 
     /**
      * Html字符串编码，以适应页面显示
-     * <pre>
-     * StringUtil.htmlEncode("<code><</code>a href="javascript:void(0)">取消&lt/a>") = <b>&<b>lt;a<b>&<b>nbsp;href=<b>&<b>quot;javascript:void(0)<b>&<b>quot;<b>&<b>gt;取消<b>&<b>lt;/a<b>&<b>gt
-     * </pre>
      *
      * @param html html
      * @return String
@@ -36,9 +33,6 @@ public class HtmlEscapeUtil extends StringEscapeUtils {
 
     /**
      * html字符解码
-     * <pre>
-     * StringUtil.htmlEncode("<b>&<b>lt;a<b>&<b>nbsp;href=<b>&<b>quot;javascript:void(0)<b>&<b>quot;<b>&<b>gt;取消<b>&<b>lt;/a<b>&<b>gt") = <code><</code>a href="javascript:void(0)">取消&lt/a>
-     * </pre>
      *
      * @param html html
      * @return String
@@ -53,9 +47,6 @@ public class HtmlEscapeUtil extends StringEscapeUtils {
 
     /**
      * 清除html代码
-     * <pre>
-     * StringUtil.clearHtmlChar("<code><</code>a href="javascript:void(0)">取消&lt/a>") = "取消"
-     * </pre>
      *
      * @param html Html
      * @return "取消"

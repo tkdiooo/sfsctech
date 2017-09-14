@@ -18,23 +18,17 @@ import java.util.Set;
 public class WebsiteProperties {
 
     private final WebsiteProperties.Support support;
-    private final WebsiteProperties.Filter filter;
     private final WebsiteProperties.Csrf csrf;
     private final WebsiteProperties.Session session;
 
     public WebsiteProperties() {
         this.support = new WebsiteProperties.Support();
-        this.filter = new WebsiteProperties.Filter();
         this.csrf = new WebsiteProperties.Csrf();
         this.session = new WebsiteProperties.Session();
     }
 
     public Support getSupport() {
         return support;
-    }
-
-    public Filter getFilter() {
-        return filter;
     }
 
     public Csrf getCsrf() {
@@ -44,7 +38,6 @@ public class WebsiteProperties {
     public Session getSession() {
         return session;
     }
-
 
     public static class Support {
 
@@ -68,21 +61,6 @@ public class WebsiteProperties {
 
         public void setWelcomeFile(String welcomeFile) {
             this.welcomeFile = welcomeFile;
-        }
-    }
-
-    public static class Filter {
-        private Set<String> sessionExcludePath;
-
-        public Filter() {
-        }
-
-        public Set<String> getSessionExcludePath() {
-            return sessionExcludePath;
-        }
-
-        public void setSessionExcludePath(Set<String> sessionExcludePath) {
-            this.sessionExcludePath = sessionExcludePath;
         }
     }
 
@@ -113,6 +91,7 @@ public class WebsiteProperties {
 
     public static class Session {
         private String authentication;
+        private Set<String> excludePath;
 
         public Session() {
         }
@@ -124,5 +103,14 @@ public class WebsiteProperties {
         public void setAuthentication(String authentication) {
             this.authentication = authentication;
         }
+
+        public Set<String> getExcludePath() {
+            return excludePath;
+        }
+
+        public void setExcludePath(Set<String> excludePath) {
+            this.excludePath = excludePath;
+        }
     }
+
 }

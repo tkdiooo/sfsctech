@@ -26,7 +26,7 @@ public class DubboxConfigurer {
     private DubboProperties properties;
 
     /**
-     * <code><</code>dubbo:application<code>></code>
+     * &lt;dubbo:application&gt;
      *
      * @return ApplicationConfig
      */
@@ -39,7 +39,7 @@ public class DubboxConfigurer {
     }
 
     /**
-     * <code><</code>dubbo:registry<code>></code>
+     * &lt;dubbo:registry&gt;
      *
      * @return RegistryConfig
      */
@@ -55,7 +55,7 @@ public class DubboxConfigurer {
     }
 
     /**
-     * <code><</code>dubbo:protocol<code>></code>
+     * &lt;dubbo:protocol&gt;
      *
      * @return ProtocolConfig
      */
@@ -80,7 +80,7 @@ public class DubboxConfigurer {
     }
 
     /**
-     * <code><</code>dubbo:annotation<code>></code>
+     * &lt;dubbo:annotation&gt;
      * 所以含有@com.alibaba.dubbo.config.annotation.Service的注解类都应在此包中,多个包名可以使用英文逗号分隔.
      *
      * @return AnnotationBean

@@ -8,13 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RPC服务通信接口响应对象<br/>
- * success：成功 or 失败<br/>
- * ReplyCode：响应状态码<br/>
- * messages：响应消息列表<br/>
- * dataSet：数据集合<br/>
- * result：单一数据对象<br/>
- * attachs：附件集合
+ * RPC服务通信接口响应对象
  *
  * @author 张麒 2016/4/11.
  * @version Description:

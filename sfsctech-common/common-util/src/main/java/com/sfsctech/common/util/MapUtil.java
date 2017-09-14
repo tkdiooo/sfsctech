@@ -23,7 +23,7 @@ public class MapUtil extends MapUtils {
      * List转Map
      *
      * @param list List
-     * @return Map<code><</code>String, V<code>></code>
+     * @return Map&lt;String, V&gt;
      */
     public static <V> Map<String, V> toMap(List<V> list) {
         Assert.notEmpty(list, "list is empty");
@@ -39,7 +39,7 @@ public class MapUtil extends MapUtils {
      *
      * @param list 实体集合
      * @param kp   map的key对应实体属性名称，重复会覆盖
-     * @return Map<code><</code>String, V<code>></code>
+     * @return Map&lt;String, V&gt;
      */
     public static <V> Map<String, V> toMap(List<V> list, String kp) {
         Assert.notEmpty(list, "list is empty");
@@ -58,7 +58,7 @@ public class MapUtil extends MapUtils {
      * Object转Map
      *
      * @param obj Object
-     * @return Map<code><</code>String, V<code>></code>
+     * @return Map&lt;String, V&gt;
      */
     public static Map<String, Object> toMap(Object obj) {
         Map<String, Object> map = new HashMap<>();
@@ -81,11 +81,11 @@ public class MapUtil extends MapUtils {
     /**
      * Map根据Key排序
      *
-     * @param map   Map<code><</code>K,V>
+     * @param map   Map&lt;K,V&gt;
      * @param order true：asc、false：desc
      * @param <K>   Object
      * @param <V>   Object
-     * @return TreeMap<code><</code>K, V<code>></code>
+     * @return TreeMap&lt;K, V&gt;
      */
     public static <K, V> Map<K, V> sortByKey(Map<K, V> map, final boolean order) {
         Assert.notEmpty(map, "map is empty");
@@ -98,11 +98,11 @@ public class MapUtil extends MapUtils {
     /**
      * Map根据Value排序
      *
-     * @param map   Map<code><</code>K,V>
+     * @param map   Map&lt;K,V&gt;
      * @param order true：asc、false：desc
      * @param <K>   Object
      * @param <V>   Object
-     * @return LinkedHashMap<code><</code>K, V<code>></code>
+     * @return LinkedHashMap&lt;K, V&gt;
      */
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map, final boolean order) {
         Assert.notEmpty(map, "map is empty");

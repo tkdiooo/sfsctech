@@ -49,7 +49,7 @@ public class JspWebRunner extends SpringBootServletInitializer {
         return application.sources(JspWebRunner.class);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         DubboConfig.setServicePackage("com.sfsctech.website.jsp.service");
         SpringApplication.run(JspWebRunner.class, args);
     }

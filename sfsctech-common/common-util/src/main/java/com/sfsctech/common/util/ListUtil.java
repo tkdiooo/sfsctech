@@ -48,7 +48,7 @@ public class ListUtil extends CollectionUtils {
      * @param map Map
      * @param <K> Key
      * @param <V> Bean
-     * @return List<code><</code>V<code>></code>
+     * @return List&lt;V&gt;
      */
     public static <K, V> List<V> toList(Map<K, V> map) {
         List<V> list = new ArrayList<>();
@@ -61,7 +61,7 @@ public class ListUtil extends CollectionUtils {
      *
      * @param cls     Class
      * @param dataSet DataSet
-     * @return List<code><</code>T<code>></code>
+     * @return List&lt;V&gt;
      */
     public static <S, T> List<T> copyConvert(Class<T> cls, List<S> dataSet) {
         List<T> list = new ArrayList<>();

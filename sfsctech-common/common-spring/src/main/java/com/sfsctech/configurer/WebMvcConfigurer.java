@@ -150,8 +150,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 添加国际化资源<br/>
-     * <b>Note<b/> 静态方法保证其在系统启动时就调用
+     * 添加国际化资源<br>
+     * 静态方法保证其在系统启动时就调用
      *
      * @return MessageSource
      */

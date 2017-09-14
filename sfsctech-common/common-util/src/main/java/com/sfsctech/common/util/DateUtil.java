@@ -516,8 +516,8 @@ public class DateUtil extends DateUtils {
     /**
      * 日期比较大小<br>
      * 0相等<br>
-     * >0 date1 > date2<br>
-     * <0 date1 < date2
+     * &gt;0 date1 &gt; date2<br>
+     * &lt;0 date1 &lt; date2
      *
      * @param date1 Date
      * @param date2 Date
