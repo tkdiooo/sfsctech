@@ -5,7 +5,7 @@ server:
   tomcat:
     uri-encoding: utf-8
   context-parameters:
-    logback-config-location: http://172.16.225.98:8888/config-service/logback/framework/service
+    logback-config-location: http://localhost:8888/logback/framework/service
     logback-expose-webapp-root: true
 # datasource setting
 spring:
@@ -43,7 +43,7 @@ spring:
       useGlobalDataSourceStat: true
     slave:
       datasource1:
-        url: jdbc:mysql://172.16.96.112:3306/dubbo-demo?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/qi_system?useUnicode=true&characterEncoding=utf-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
@@ -74,7 +74,7 @@ spring:
         # 合并多个DruidDataSource的监控数据
         useGlobalDataSourceStat: true
       datasource2:
-        url: jdbc:mysql://172.16.96.112:3306/dubbo-demo?useUnicode=true&characterEncoding=utf-8
+        url: jdbc:mysql://localhost:3306/qi_system?useUnicode=true&characterEncoding=utf-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
