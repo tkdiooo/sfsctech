@@ -49,10 +49,11 @@ public class ExcludesConstants {
     /**
      * 全局规则校验
      *
-     * @param requestURI
-     * @return
+     * @param requestURI URL
+     * @return Boolean
      */
     public static boolean isExclusion(String requestURI) {
+        requestURI = formatJsessionID(requestURI);
         // 静态资源责任链不为空，并且当前请求的URL已处理过
         if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(requestURI)) {
             return STATIC_RESOURCE.get().get(requestURI);
@@ -68,9 +69,9 @@ public class ExcludesConstants {
     /**
      * 自定义规则校验
      *
-     * @param requestURI
-     * @param excludes
-     * @return
+     * @param requestURI URL
+     * @param excludes   Set
+     * @return Boolean
      */
     public static boolean isExclusion(String requestURI, Set<String> excludes) {
         // 静态资源责任链不为空，并且当前请求的URL已处理过
@@ -84,8 +85,8 @@ public class ExcludesConstants {
     /**
      * 静态资源校验
      *
-     * @param url
-     * @return
+     * @param url URL
+     * @return Boolean
      */
     public static boolean matches(String url) {
         return pattern.matcher(url).matches();
@@ -93,10 +94,6 @@ public class ExcludesConstants {
 
     /**
      * 根据条件校验
-     *
-     * @param pattern
-     * @param source
-     * @return
      */
     private static boolean matches(String pattern, String source) {
         if (pattern != null && source != null) {
@@ -169,6 +166,13 @@ public class ExcludesConstants {
             if (!requestURI.startsWith("/")) {
                 requestURI = "/" + requestURI;
             }
+        }
+        return requestURI;
+    }
+
+    private static String formatJsessionID(String requestURI) {
+        if (requestURI.contains(";jsessionid")) {
+            return requestURI.substring(0, requestURI.indexOf(";jsessionid"));
         }
         return requestURI;
     }

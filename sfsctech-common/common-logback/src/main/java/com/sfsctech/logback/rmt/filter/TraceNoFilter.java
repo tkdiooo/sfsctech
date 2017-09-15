@@ -7,6 +7,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -20,7 +21,7 @@ public class TraceNoFilter extends BaseFilter {
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         TraceNoUtil.newTraceNo();
-        logger.info("日志跟踪编号：" + TraceNoUtil.getTraceNo());
+        logger.info("traceNo：[" + TraceNoUtil.getTraceNo() + "] requestURL:[" + ((HttpServletRequest) request).getRequestURI() + "]");
         try {
             chain.doFilter(request, response);
         } finally {
