@@ -50,11 +50,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //        }
         String requestURI = request.getRequestURI();
         boolean bool = ExcludesConstants.isExclusion(requestURI, excludesPattern);
-        logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
+        logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] ");
         // 当前请求路径是否需要验证
         if (!bool) {
             // Csrf防御验证
-            if (CSRFTokenManager.isValidCSRFToken(request)) {
+            if (CSRFTokenManager.isValidCSRFToken(request, response)) {
                 logger.warn("CSRF attack intercept");
                 throw new BizException(I18NConstants.Tips.Exception403);
             }
@@ -78,7 +78,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //            HandlerMethod handlerMethod = (HandlerMethod) handler;
 //            Method method = handlerMethod.getMethod();
 //        }
-        logger.info("requestURI：[" + request.getRequestURI() + "] " + getClass());
+        logger.info("postHandle：[" + request.getRequestURI() + "] ");
         if (null != modelAndView && null != modelAndView.getModel()) {
             // 加密敏感参数
             Map<String, Object> model = modelAndView.getModel();
@@ -89,7 +89,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
                 }
             }
             // 设置Csrf Token
-            model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
+            model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request, response));
         }
         // 设置无缓存，防止浏览器回退操作
         ResponseUtil.setNoCacheHeaders(response);

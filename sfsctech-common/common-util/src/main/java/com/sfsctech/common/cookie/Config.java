@@ -14,8 +14,8 @@ public class Config {
     private String domain;
     private String path = LabelConstants.FORWARD_SLASH;
     private String comment;
-    private Boolean httpOnly;
-    private Boolean secure;
+    private boolean httpOnly;
+    private boolean secure;
     private Integer maxAge;
 
     public String getName() {
@@ -50,19 +50,19 @@ public class Config {
         this.comment = comment;
     }
 
-    public Boolean getHttpOnly() {
+    public boolean getHttpOnly() {
         return httpOnly;
     }
 
-    public void setHttpOnly(Boolean httpOnly) {
+    public void setHttpOnly(boolean httpOnly) {
         this.httpOnly = httpOnly;
     }
 
-    public Boolean getSecure() {
+    public boolean getSecure() {
         return secure;
     }
 
-    public void setSecure(Boolean secure) {
+    public void setSecure(boolean secure) {
         this.secure = secure;
     }
 

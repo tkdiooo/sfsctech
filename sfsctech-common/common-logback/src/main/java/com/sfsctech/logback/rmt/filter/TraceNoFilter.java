@@ -21,8 +21,8 @@ public class TraceNoFilter extends BaseFilter {
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         TraceNoUtil.newTraceNo();
-        logger.info("traceNo：[" + TraceNoUtil.getTraceNo() + "] requestURL:[" + ((HttpServletRequest) request).getRequestURI() + "]");
         try {
+            logger.info("traceNo：[" + TraceNoUtil.getTraceNo() + "] requestURI:[" + ((HttpServletRequest) request).getRequestURI() + "]");
             chain.doFilter(request, response);
         } finally {
             TraceNoUtil.clearTraceNo();

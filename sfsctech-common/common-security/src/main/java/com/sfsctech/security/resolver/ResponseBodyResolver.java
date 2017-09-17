@@ -8,6 +8,7 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Class ResponseRe
@@ -33,8 +34,9 @@ public class ResponseBodyResolver implements HandlerMethodReturnValueHandler {
         // 处理Ajax请求的CSRF
         if (returnValue.getClass().equals(ActionResult.class)) {
             HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+            HttpServletResponse response = (HttpServletResponse) webRequest.getNativeResponse();
             ActionResult result = (ActionResult) returnValue;
-            result.addAttach(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request));
+            result.addAttach(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request, response));
         }
         delegate.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
     }

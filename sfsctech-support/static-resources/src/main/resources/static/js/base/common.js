@@ -252,14 +252,16 @@ function ajax_action(url, data, opt) {
                 layer.closeAll('loading');
             }
             var json = JSON.parse(XMLHttpRequest.responseText);
-            if (json.messages_details) {
-                $.each(json.messages_details.messages, function (key, value) {
+            if (json.attachs.messages_details) {
+                $.each(json.attachs.messages_details.messages, function (key, value) {
                     layer.tips(value, '#' + key, {
                         tipsMore: true, time: 10000
                     });
                 })
             }
-            alert(json.messages.join('<br/>'));
+            alert(json.messages.join('<br/>'), function () {
+                to_url(json.attachs.url);
+            });
         }
     });
 }
@@ -321,7 +323,7 @@ function load_url(url, container, data, opt) {
             }
             var json = JSON.parse(XMLHttpRequest.responseText);
             alert(json.messages, function () {
-                to_url(json.url);
+                to_url(json.attachs.url);
             });
         }
     });

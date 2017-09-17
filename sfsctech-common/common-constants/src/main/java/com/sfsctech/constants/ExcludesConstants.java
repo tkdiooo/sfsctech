@@ -52,17 +52,17 @@ public class ExcludesConstants {
      * @param requestURI URL
      * @return Boolean
      */
-    public static boolean isExclusion(String requestURI) {
-        requestURI = formatJsessionID(requestURI);
+    public static boolean isExclusion(final String requestURI) {
+        String url = formatJsessionID(requestURI);
         // 静态资源责任链不为空，并且当前请求的URL已处理过
-        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(requestURI)) {
-            return STATIC_RESOURCE.get().get(requestURI);
+        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(url)) {
+            return STATIC_RESOURCE.get().get(url);
         }
         // request映射责任链不为空，并且当前请求的URL已处理过
-        else if (null != REQUEST_MAPPING.get() && REQUEST_MAPPING.get().containsKey(requestURI)) {
-            return REQUEST_MAPPING.get().get(requestURI);
+        else if (null != REQUEST_MAPPING.get() && REQUEST_MAPPING.get().containsKey(url)) {
+            return REQUEST_MAPPING.get().get(url);
         } else {
-            return verify(requestURI);
+            return verify(url);
         }
     }
 
@@ -73,12 +73,13 @@ public class ExcludesConstants {
      * @param excludes   Set
      * @return Boolean
      */
-    public static boolean isExclusion(String requestURI, Set<String> excludes) {
+    public static boolean isExclusion(final String requestURI, Set<String> excludes) {
+        String url = formatJsessionID(requestURI);
         // 静态资源责任链不为空，并且当前请求的URL已处理过
-        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(requestURI)) {
-            return STATIC_RESOURCE.get().get(requestURI);
+        if (null != STATIC_RESOURCE.get() && STATIC_RESOURCE.get().containsKey(url)) {
+            return STATIC_RESOURCE.get().get(url);
         } else {
-            return verify(requestURI, excludes);
+            return verify(url, excludes);
         }
     }
 
