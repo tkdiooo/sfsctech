@@ -69,7 +69,7 @@ dubbo:
 website:
   csrf:
     # csrf拦截排除路径
-    intercept-exclude-path: /**
+#    intercept-exclude-path: /**
     # csrf验证排除路径
     verify-exclude-path: /index
   support:
