@@ -57,7 +57,7 @@
     {
       "name": "website.session.authentication",
       "type": "java.lang.String",
-      "description": "系统Session认证方式",
+      "description": "系统Session认证方式，默认为HttpSession",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
     },
     {
@@ -84,12 +84,12 @@
       "name": "website.session.authentication",
       "values": [
         {
-          "value": "simple",
-          "description": "普通方式，通过HttpSession存储认证信息"
+          "value": "cache",
+          "description": "缓存方式，通过Cache服务存储认证信息"
         },
         {
           "value": "soa",
-          "description": "分布式系统，通过缓存存储认证信息"
+          "description": "分布式系统，通过SSO验证服务支持存储认证信息"
         }
       ]
     },

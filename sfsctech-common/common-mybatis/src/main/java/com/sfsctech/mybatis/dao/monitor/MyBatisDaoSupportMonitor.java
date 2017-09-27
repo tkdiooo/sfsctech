@@ -151,7 +151,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     }
 
     protected int update(String name, Object parameter) {
-        return getSqlSession().update(name, parameter);
+        return getSqlSession().update(getStatName(name), parameter);
     }
 
     /**

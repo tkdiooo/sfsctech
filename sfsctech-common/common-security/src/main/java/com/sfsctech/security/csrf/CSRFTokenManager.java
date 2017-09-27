@@ -24,21 +24,21 @@ public class CSRFTokenManager {
 
     public static CSRFToken generateCSRFToken(HttpServletRequest request, HttpServletResponse response) {
         CSRFToken token = new CSRFToken();
-        // 缓存处理
+        // Session处理
         if (StringUtil.isBlank(CommonConstants.SESSION_AUTHENTICATION)) {
+            request.getSession().setAttribute(CSRF_TOKEN, token);
+        }
+        // 分布式服务
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SOA)) {
+            SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
+        }
+        // 缓存处理
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.CACHE)) {
             CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
             String key = UUIDUtil.base64Uuid();
             factory.getCacheClient().add(key, token);
             CookieHelper helper = CookieHelper.getInstance(request, response);
             helper.setCookie(CSRF_TOKEN, EncrypterTool.encrypt(EncrypterTool.Security.Aes, key));
-        }
-        // 分布式服务
-        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
-            SessionHolder.getSessionInfo().setAttribute(CSRF_TOKEN, token);
-        }
-        // Session处理
-        else {
-            request.getSession().setAttribute(CSRF_TOKEN, token);
         }
         return token;
     }
@@ -46,22 +46,22 @@ public class CSRFTokenManager {
     public static boolean isValidCSRFToken(HttpServletRequest request, HttpServletResponse response) {
         CSRFToken token = null;
         boolean bool = true;
-        // 缓存处理
+        // Session处理
         if (StringUtil.isBlank(CommonConstants.SESSION_AUTHENTICATION)) {
+            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
+        }
+        // 分布式服务
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SOA)) {
+            token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
+        }
+        // 缓存处理
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.CACHE)) {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             String key = helper.getCookieValue(CSRF_TOKEN);
             if (StringUtil.isNotBlank(key)) {
                 CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
                 token = (CSRFToken) factory.getCacheClient().get(EncrypterTool.decrypt(EncrypterTool.Security.Aes, key));
             }
-        }
-        // 分布式服务
-        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
-            token = (CSRFToken) SessionHolder.getSessionInfo().getAttribute(CSRF_TOKEN);
-        }
-        // Session处理
-        else {
-            token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
         }
         if (null != token) {
             String tokenValue = request.getParameter(token.getParameterName());
@@ -74,18 +74,22 @@ public class CSRFTokenManager {
     }
 
     public static void destroy(HttpServletRequest request, HttpServletResponse response) {
-        // 缓存处理
+        // Session处理
         if (StringUtil.isBlank(CommonConstants.SESSION_AUTHENTICATION)) {
+            request.getSession().removeAttribute(CSRF_TOKEN);
+        }
+        // 分布式服务
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SOA)) {
+            SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
+        }
+        // 缓存处理
+        else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.CACHE)) {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             String key = helper.getCookieValue(CSRF_TOKEN);
             if (StringUtil.isNotBlank(key)) {
                 CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
                 factory.getCacheClient().remove(EncrypterTool.decrypt(EncrypterTool.Security.Aes, key));
             }
-        } else if (CommonConstants.SESSION_AUTHENTICATION.equals(CommonConstants.SERVICE_SOA)) {
-            SessionHolder.getSessionInfo().removeAttribute(CSRF_TOKEN);
-        } else {
-            request.getSession().removeAttribute(CSRF_TOKEN);
         }
     }
 }

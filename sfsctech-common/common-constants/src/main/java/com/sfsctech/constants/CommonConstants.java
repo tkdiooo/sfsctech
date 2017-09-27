@@ -62,7 +62,8 @@ public class CommonConstants {
     public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logback-expose-webapp-root";
 
 
-    public static final String SERVICE_SOA = "soa";
+    public static final String SOA = "soa";
+    public static final String CACHE = "cache";
     public static String CONTEXT_PATH;
     public static String SESSION_AUTHENTICATION;
 }
