@@ -61,9 +61,18 @@ public class CommonConstants {
      */
     public static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logback-expose-webapp-root";
 
+    // Authentication Attribute
+    //-------------------------------------------------------------------------------------------
+    public static final String AUTHENTICATION_SSO = "sso";
+    public static final String AUTHENTICATION_SESSION = "session";
 
-    public static final String SOA = "soa";
-    public static final String CACHE = "cache";
+    // Common Attribute
+    //-------------------------------------------------------------------------------------------
     public static String CONTEXT_PATH;
-    public static String SESSION_AUTHENTICATION;
+
+    // Csrf Attribute
+    //-------------------------------------------------------------------------------------------
+    public static String CSRF_KEEP_PATTERN;
+    public static final String CSRF_KEEP_PATTERN_SOA = "soa";
+    public static final String CSRF_KEEP_PATTERN_CACHE = "cache";
 }

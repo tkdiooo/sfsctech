@@ -28,7 +28,7 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
      * @throws Exception
      */
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         ServletContext servletContext = super.getWebApplicationContext().getServletContext();
         servletContext.setAttribute(CommonConstants.STATIC_RESOURCE_ATTRIBUTE, config.getWebsiteProperties().getSupport().getStaticResources());
         servletContext.setAttribute(CommonConstants.CONTEXT_PATH_ATTRIBUTE, config.getServerProperties().getContextPath());

@@ -1,7 +1,7 @@
 package com.sfsctech.configurer;
 
 import com.sfsctech.auth.condition.DistributedAuthentication;
-import com.sfsctech.auth.condition.SimpleAuthentication;
+import com.sfsctech.auth.condition.SessionAuthentication;
 import com.sfsctech.auth.filter.SSOFilter;
 import com.sfsctech.auth.filter.SessionFilter;
 import com.sfsctech.auth.properties.SSOProperties;
@@ -28,7 +28,7 @@ public class AuthConfigurer {
     private AppConfig appConfig;
 
     @Bean
-    @Conditional(SimpleAuthentication.class)
+    @Conditional(SessionAuthentication.class)
     public FilterRegistrationBean SessionFilter() {
         SessionFilter filter = new SessionFilter();
         // Session认证排除路径

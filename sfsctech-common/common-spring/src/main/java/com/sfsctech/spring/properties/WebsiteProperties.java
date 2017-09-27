@@ -65,11 +65,20 @@ public class WebsiteProperties {
     }
 
     public static class Csrf {
+        private String keepPattern;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
 
         public Csrf() {
 
+        }
+
+        public String getKeepPattern() {
+            return keepPattern;
+        }
+
+        public void setKeepPattern(String keepPattern) {
+            this.keepPattern = keepPattern;
         }
 
         public Set<String> getInterceptExcludePath() {
@@ -87,6 +96,7 @@ public class WebsiteProperties {
         public void setVerifyExcludePath(Set<String> verifyExcludePath) {
             this.verifyExcludePath = verifyExcludePath;
         }
+
     }
 
     public static class Session {

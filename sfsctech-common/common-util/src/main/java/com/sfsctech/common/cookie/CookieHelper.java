@@ -25,7 +25,7 @@ public class CookieHelper {
     private Cookies cookies;
     private Config config;
 
-    public CookieHelper(HttpServletRequest request, HttpServletResponse response, Config config) {
+    private CookieHelper(HttpServletRequest request, HttpServletResponse response, Config config) {
         this.cookies = new Cookies(request, response);
         this.config = config;
     }

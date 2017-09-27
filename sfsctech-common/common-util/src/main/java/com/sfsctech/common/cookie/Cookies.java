@@ -142,23 +142,25 @@ public class Cookies {
     }
 
     public void setCookieConfig(Cookie cookie, Config config) {
-        if (config.getMaxAge() != 0) {
-            cookie.setMaxAge(config.getMaxAge());
-        }
-        if (StringUtil.isNotBlank(config.getDomain())) {
-            cookie.setDomain(config.getDomain());
-        }
-        if (StringUtil.isNotBlank(config.getPath())) {
-            cookie.setPath(config.getPath());
-        }
-        if (StringUtil.isNotBlank(config.getComment())) {
-            cookie.setComment(config.getComment());
-        }
-        if (config.getSecure()) {
-            cookie.setSecure(config.getSecure());
-        }
-        if (config.getHttpOnly()) {
-            cookie.setHttpOnly(config.getHttpOnly());
+        if (null != config) {
+            if (config.getMaxAge() != 0) {
+                cookie.setMaxAge(config.getMaxAge());
+            }
+            if (StringUtil.isNotBlank(config.getDomain())) {
+                cookie.setDomain(config.getDomain());
+            }
+            if (StringUtil.isNotBlank(config.getPath())) {
+                cookie.setPath(config.getPath());
+            }
+            if (StringUtil.isNotBlank(config.getComment())) {
+                cookie.setComment(config.getComment());
+            }
+            if (config.getSecure()) {
+                cookie.setSecure(config.getSecure());
+            }
+            if (config.getHttpOnly()) {
+                cookie.setHttpOnly(config.getHttpOnly());
+            }
         }
     }
 }

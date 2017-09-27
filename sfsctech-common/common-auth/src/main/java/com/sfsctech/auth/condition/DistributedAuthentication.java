@@ -18,6 +18,6 @@ public class DistributedAuthentication implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
-        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.SOA);
+        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.AUTHENTICATION_SSO);
     }
 }

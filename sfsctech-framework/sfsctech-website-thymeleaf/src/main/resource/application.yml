@@ -72,6 +72,7 @@ website:
 #    intercept-exclude-path: /**
     # csrf验证排除路径
     verify-exclude-path: /index
+    keep-pattern: soa
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
@@ -79,7 +80,7 @@ website:
     welcome-file: /index
   session:
     # session认证模式
-    authentication: simple
+    authentication: sso
     # session过滤排除路径
     exclude-path: /index, /login
 
