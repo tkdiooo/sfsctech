@@ -25,7 +25,6 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
      * 设置网页资源地址至ServletContext
      *
      * @param args
-     * @throws Exception
      */
     @Override
     public void run(String... args) {
