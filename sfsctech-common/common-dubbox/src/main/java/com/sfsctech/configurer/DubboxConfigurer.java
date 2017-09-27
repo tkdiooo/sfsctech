@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.dubbox.properties.DubboConfig;
 import com.sfsctech.dubbox.properties.DubboProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ public class DubboxConfigurer {
         ProtocolConfig config = new ProtocolConfig();
         config.setName(properties.getProtocol().getName());
         config.setPort(properties.getProtocol().getPort());
+        if (StringUtil.isNotBlank(properties.getProtocol().getServer())) {
+            config.setServer(properties.getProtocol().getServer());
+        }
         // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
         if (properties.getProtocol().isKryo()) {
             config.setSerialization("kryo");

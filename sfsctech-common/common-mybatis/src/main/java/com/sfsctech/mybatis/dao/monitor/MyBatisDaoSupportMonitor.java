@@ -150,6 +150,10 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         return getSqlSession().selectOne(getStatName(name), parameter);
     }
 
+    protected int update(String name, Object parameter) {
+        return getSqlSession().update(name, parameter);
+    }
+
     /**
      * 获取配置文件中的statementName
      *

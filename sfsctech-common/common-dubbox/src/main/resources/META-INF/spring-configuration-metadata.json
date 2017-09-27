@@ -80,6 +80,12 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
     },
     {
+      "name": "dubbo.protocol.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+    },
+    {
       "name": "dubbo.protocol.kryo",
       "type": "java.lang.Boolean",
       "description": "是否使用kryo序列化",
@@ -113,6 +119,23 @@
         {
           "value": "thrif",
           "description": "Thrift协议"
+        }
+      ]
+    },
+    {
+      "name": "dubbo.protocol.server",
+      "values": [
+        {
+          "value": "mina"
+        },
+        {
+          "value": "netty"
+        },
+        {
+          "value": "jetty"
+        },
+        {
+          "value": "servlet"
         }
       ]
     }

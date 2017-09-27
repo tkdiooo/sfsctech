@@ -117,6 +117,7 @@ public class DubboProperties {
     public static class Protocol {
         private String name = "dubbo";
         private int port = 20880;
+        private String server;
         private boolean kryo;
 
         public Protocol() {
@@ -144,6 +145,14 @@ public class DubboProperties {
 
         public void setKryo(boolean kryo) {
             this.kryo = kryo;
+        }
+
+        public String getServer() {
+            return server;
+        }
+
+        public void setServer(String server) {
+            this.server = server;
         }
     }
 }
