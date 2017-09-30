@@ -25,6 +25,12 @@
             <artifactId>jquery</artifactId>
             <version>1.10.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery-i18n-properties -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery-i18n-properties</artifactId>
+            <version>1.10.2</version>
+        </dependency>
         <!-- jquery-ui -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
