@@ -27,7 +27,6 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
     private List<Class> classes;
 
     public KryoSerializationOptimizer() {
-        Assert.notEmpty(DubboConstants.KRYO_SERIALIZE_PACKAGE, "dubbox kryo serialization package path can not be empty!");
         DubboConstants.addKryoSerializePackage("com.sfsctech.base.result");
         classes = new LinkedList<>(ClassUtil.getClasses(DubboConfig.getKryoSerializePackagePath()));
         classes.add(PagingInfo.class);

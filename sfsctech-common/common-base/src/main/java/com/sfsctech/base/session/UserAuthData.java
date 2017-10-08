@@ -17,6 +17,10 @@ public class UserAuthData extends BaseDto {
 
     private static final long serialVersionUID = 909824046354265186L;
 
+    public UserAuthData(){
+
+    }
+
     public UserAuthData(String account, String password) {
         this.account = account;
         this.password = password;
