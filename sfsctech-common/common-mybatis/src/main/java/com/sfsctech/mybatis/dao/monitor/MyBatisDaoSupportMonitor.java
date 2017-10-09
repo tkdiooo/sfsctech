@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Example> extends SqlSessionDaoSupport implements IBaseDao<T, PK, Example> {
 
-    private MybatisCacheMonitor<Example> cacheMonitor = new MybatisCacheMonitor<>();
+    private MyBatisCacheMonitor<Example> cacheMonitor = new MyBatisCacheMonitor<>();
 
     protected final void setCacheClient(ICacheFactory<String, Object> cacheClient) {
         cacheMonitor.setCacheClient(cacheClient);
@@ -44,7 +44,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         if (null != model) return (T) model;
         else {
             T t = getSqlSession().selectOne(getStatName("selectByPrimaryKey"), key);
-            cacheMonitor.putTimeOut(getNamespace(), t, 60 * 10);
+            cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), t, 60 * 10);
             return t;
         }
     }
@@ -65,7 +65,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     public int insert(T model) {
         generateId(model);
         Integer key = getSqlSession().insert(getStatName("insert"), model);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -73,7 +73,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     public int insertSelective(T model) {
         generateId(model);
         Integer key = getSqlSession().insert(getStatName("insertSelective"), model);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -88,7 +88,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         params.put("record", model);
         params.put("example", example);
         Integer key = getSqlSession().update(getStatName("updateByExampleSelective"), params);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -98,21 +98,21 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         params.put("record", model);
         params.put("example", example);
         Integer key = getSqlSession().update(getStatName("updateByExample"), params);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
     @Override
     public int updateByPrimaryKeySelective(T model) {
         Integer key = getSqlSession().update(getStatName("updateByPrimaryKeySelective"), model);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
     @Override
     public int updateByPrimaryKey(T model) {
         Integer key = getSqlSession().update(getStatName("updateByPrimaryKey"), model);
-        cacheMonitor.putTimeOut(getNamespace(), model, 60 * 10);
+        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 

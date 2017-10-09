@@ -20,8 +20,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,23 +36,24 @@ import java.util.Map;
  * @version Description:
  */
 @Configuration
+@EnableTransactionManagement
 @MapperScan("com.sfsctech.*.mapper")
-public class MybatisConfigurer {
+public class MyBatisConfigurer {
 
-    @Bean()
+    @Bean(name = "masterDatasource")
     @Primary
     @ConfigurationProperties(prefix = "spring.druid-datasource.master")
     public DruidDataSource masterDatasource() {
         return new DruidDataSource();
     }
 
-    @Bean()
+    @Bean(name = "slaveDatasource")
     @ConfigurationProperties(prefix = "spring.druid-datasource.slave")
     public Map<String, Map<String, DruidDataSource>> slaveDatasource() {
         return new HashMap<>();
     }
 
-    @Bean()
+    @Bean(name = "dataSource")
     public DataSource dynamicDatasource() {
         ReadWriteDataSource dataSource = new ReadWriteDataSource();
         dataSource.setWriteDataSource(masterDatasource());
@@ -63,6 +68,12 @@ public class MybatisConfigurer {
         // 指定xml文件位置
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));
         return factoryBean.getObject();
+    }
+
+    @Bean(name = "transactionManager")
+    @Primary
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dynamicDatasource());
     }
 
     /**

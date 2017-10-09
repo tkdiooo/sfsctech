@@ -13,7 +13,7 @@ import com.sfsctech.constants.LabelConstants;
  * @author 张麒 2017/6/29.
  * @version Description:
  */
-class MybatisCacheMonitor<Example> {
+class MyBatisCacheMonitor<Example> {
 
     private ICacheFactory<String, Object> cacheClient;
 
@@ -41,13 +41,11 @@ class MybatisCacheMonitor<Example> {
         return "";
     }
 
-    void putTimeOut(String namespace, Object value, int timeOut) {
+    void putTimeOut(String namespace, String cacheKey, Object value, int timeOut) {
         try {
-            String cacheKey = getCacheKey(namespace, BeanUtil.getProperty(value, "guid"));
-            getCacheClient().putTimeOut(cacheKey, value, timeOut);
+            getCacheClient().putTimeOut(getCacheKey(namespace, cacheKey), value, timeOut);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
