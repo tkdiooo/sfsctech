@@ -2,6 +2,7 @@ package com.sfsctech.constants;
 
 
 import com.sfsctech.constants.inf.IEnum;
+
 /**
  * Class RpcConstants
  *
@@ -12,13 +13,17 @@ public class RpcConstants {
 
     public enum Status implements IEnum<Integer, String> {
 
-        Successful(200, "操作成功"),
+        Successful,
         Failure(300, "操作失败"),
         Server_Error(500, "服务器错误"),
         Client_Error(600, "客户端错误"),
         Not_Found(404, "资源不存在"),
-        Payload_Too_Large(413, "负荷太大"),
-        ;
+        Payload_Too_Large(413, "负荷太大");
+
+        Status() {
+            this.code = 200;
+            this.content = "操作成功";
+        }
 
         Status(Integer key, String value) {
             this.code = key;
