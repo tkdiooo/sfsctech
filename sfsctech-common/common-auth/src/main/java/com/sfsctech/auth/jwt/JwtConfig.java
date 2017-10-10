@@ -1,18 +1,23 @@
 package com.sfsctech.auth.jwt;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 /**
  * Class Playload
  *
  * @author 张麒 2017/8/22.
  * @version Description:
  */
+@Component
+@ConfigurationProperties(
+        prefix = "website.jwt"
+)
 public class JwtConfig {
     // 主题
     private String subject;
     // 发行方
     private String issuer;
-    // 接收方
-    private String audience;
     // 保持时间
     private Long expiration;
 
@@ -30,14 +35,6 @@ public class JwtConfig {
 
     public void setIssuer(String issuer) {
         this.issuer = issuer;
-    }
-
-    public String getAudience() {
-        return audience;
-    }
-
-    public void setAudience(String audience) {
-        this.audience = audience;
     }
 
     public Long getExpiration() {

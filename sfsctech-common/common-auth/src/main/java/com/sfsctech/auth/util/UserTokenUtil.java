@@ -30,12 +30,12 @@ public class UserTokenUtil {
      */
     public static JwtToken getJwtTokenByCookie(CookieHelper helper) {
         String token = helper.getCookieValue(AuthConstants.COOKIE_TOKEN_NAME);
-        String saltCacheKey = helper.getCookieValue(AuthConstants.COOKIE_SALT_CACHE_KEY_NAME);
-        if (StringUtil.isNotBlank(token) && StringUtil.isNotBlank(saltCacheKey)) {
+//        String saltCacheKey = helper.getCookieValue(AuthConstants.COOKIE_SALT_CACHE_KEY_NAME);
+        if (StringUtil.isNotBlank(token)) {
             try {
                 JwtToken jt = new JwtToken();
                 jt.setJwt(URLDecoder.decode(token, AuthConstants.UTF_8));
-                jt.setSalt_CacheKey(URLDecoder.decode(saltCacheKey, AuthConstants.UTF_8));
+//                jt.setSalt_CacheKey(URLDecoder.decode(saltCacheKey, AuthConstants.UTF_8));
                 return jt;
             } catch (UnsupportedEncodingException e) {
                 clearUserToken(helper);
@@ -66,7 +66,7 @@ public class UserTokenUtil {
     public static void updateToken(CookieHelper helper, String token_key, String salt_cache_key, JwtToken jt) {
         try {
             helper.setCookie(token_key, URLEncoder.encode(jt.getJwt(), AuthConstants.UTF_8));
-            helper.setCookie(salt_cache_key, URLEncoder.encode(jt.getSalt_CacheKey(), AuthConstants.UTF_8));
+//            helper.setCookie(salt_cache_key, URLEncoder.encode(jt.getSalt_CacheKey(), AuthConstants.UTF_8));
             logger.info("set cookies token value [domain:" + helper.getConfig().getDomain() + " Jwt:" + jt.getJwt() + " Salt_CacheKey:" + jt.getSalt_CacheKey() + "]");
         } catch (UnsupportedEncodingException e) {
             clearUserToken(helper);

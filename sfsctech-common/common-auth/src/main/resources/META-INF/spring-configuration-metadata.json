@@ -4,6 +4,11 @@
       "name": "website.sso",
       "type": "com.sfsctech.auth.properties.SSOProperties",
       "sourceType": "com.sfsctech.auth.properties.SSOProperties"
+    },
+    {
+      "name": "website.jwt",
+      "type": "com.sfsctech.auth.jwt.JwtConfig",
+      "sourceType": "com.sfsctech.auth.jwt.JwtConfig"
     }
   ],
   "properties": [
@@ -36,6 +41,24 @@
       "type": "java.lang.String",
       "description": "SSO 密码找回路径",
       "sourceType": "com.sfsctech.auth.properties.SSOProperties"
+    },
+    {
+      "name": "website.jwt.subject",
+      "type": "java.lang.String",
+      "description": "jwt 主题",
+      "sourceType": "com.sfsctech.auth.jwt.JwtConfig"
+    },
+    {
+      "name": "website.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "jwt 发行方",
+      "sourceType": "com.sfsctech.auth.jwt.JwtConfig"
+    },
+    {
+      "name": "website.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "jwt 保持时间",
+      "sourceType": "com.sfsctech.auth.jwt.JwtConfig"
     }
   ],
   "hints": []

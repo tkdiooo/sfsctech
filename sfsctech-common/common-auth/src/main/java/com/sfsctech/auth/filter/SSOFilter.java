@@ -1,5 +1,6 @@
 package com.sfsctech.auth.filter;
 
+import com.sfsctech.auth.constants.AuthConstants;
 import com.sfsctech.auth.jwt.JwtToken;
 import com.sfsctech.auth.session.SessionHolder;
 import com.sfsctech.auth.session.SessionInfo;
@@ -51,9 +52,9 @@ public class SSOFilter extends BaseFilter {
                 if (result.isSuccess()) {
                     Claims claims = JwtUtil.parseJWT(result.getResult().getJwt());
                     // 设置UserAuthInfo
-//                    session.setUserAuthInfo(claims.get("jwt_user_auth_info"));
+//                    session.setUserAuthInfo(claims.get(AuthConstants.JWT_USER_AUTH_INFO));
                     // 设置Session attribute
-//                    session.setAttribute(claims.get("jwt_session_attribute"));
+//                    session.setAttribute(claims.get(AuthConstants.JWT_SESSION_ATTRIBUTE));
                     // 设置RoleInfo
                     // 更新token
                     UserTokenUtil.updateToken(helper, result.getResult());

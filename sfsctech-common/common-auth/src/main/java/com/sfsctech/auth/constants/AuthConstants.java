@@ -35,6 +35,8 @@ public class AuthConstants {
     public static final String CONST_UAMS_ASSERTION = "const_uams_assertion";
     // SSO验证参数名称
     public static final String UAMS_CHECK_PARAM_NAME = "uams_check_param";
+    // 存储用户TOKEN 内容 头部标识
+    public final static String UAMS_USER_TOKEN = "UAMST";
     // session 过期
     public static final String SESSION_TIME_OUT = "timeout";
 

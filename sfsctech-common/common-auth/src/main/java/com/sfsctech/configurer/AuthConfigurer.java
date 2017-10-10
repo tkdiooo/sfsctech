@@ -4,6 +4,7 @@ import com.sfsctech.auth.condition.DistributedAuthentication;
 import com.sfsctech.auth.condition.SessionAuthentication;
 import com.sfsctech.auth.filter.SSOFilter;
 import com.sfsctech.auth.filter.SessionFilter;
+import com.sfsctech.auth.jwt.JwtConfig;
 import com.sfsctech.auth.properties.SSOProperties;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.spring.properties.AppConfig;
@@ -21,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = SSOProperties.class)
+@ComponentScan(basePackageClasses = {SSOProperties.class, JwtConfig.class})
 public class AuthConfigurer {
 
     @Autowired
