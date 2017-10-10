@@ -1,4 +1,4 @@
-package com.sfsctech.dubbox.properties;
+package com.sfsctech.dubbox.config;
 
 import com.sfsctech.common.util.ArrayUtil;
 import com.sfsctech.common.util.ListUtil;

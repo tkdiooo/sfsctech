@@ -1,4 +1,4 @@
-package com.sfsctech.auth.jwt;
+package com.sfsctech.base.jwt;
 
 /**
  * Class JwtToken

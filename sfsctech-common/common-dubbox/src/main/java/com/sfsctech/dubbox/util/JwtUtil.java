@@ -1,7 +1,7 @@
-package com.sfsctech.auth.util;
+package com.sfsctech.dubbox.util;
 
 import com.sfsctech.common.util.DateUtil;
-import com.sfsctech.auth.jwt.JwtConfig;
+import com.sfsctech.dubbox.properties.JwtProperties;
 import com.sfsctech.common.util.SpringContextUtil;
 import io.jsonwebtoken.*;
 
@@ -20,7 +20,7 @@ public class JwtUtil {
 
     private static final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
 
-    private static JwtConfig config = SpringContextUtil.getBean(JwtConfig.class);
+    private static JwtProperties config = SpringContextUtil.getBean(JwtProperties.class);
 
     private static Key getKey() {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(salt);

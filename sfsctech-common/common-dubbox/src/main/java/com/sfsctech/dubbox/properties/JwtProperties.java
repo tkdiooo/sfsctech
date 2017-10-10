@@ -1,4 +1,4 @@
-package com.sfsctech.auth.jwt;
+package com.sfsctech.dubbox.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(
         prefix = "website.jwt"
 )
-public class JwtConfig {
+public class JwtProperties {
     // 主题
     private String subject;
     // 发行方

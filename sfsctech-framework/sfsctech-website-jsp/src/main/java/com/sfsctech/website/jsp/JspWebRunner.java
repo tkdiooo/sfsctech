@@ -1,6 +1,6 @@
 package com.sfsctech.website.jsp;
 
-import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.dubbox.config.DubboConfig;
 import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;

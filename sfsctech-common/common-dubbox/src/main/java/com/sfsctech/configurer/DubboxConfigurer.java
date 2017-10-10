@@ -6,7 +6,7 @@ import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.dubbox.config.DubboConfig;
 import com.sfsctech.dubbox.properties.DubboProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

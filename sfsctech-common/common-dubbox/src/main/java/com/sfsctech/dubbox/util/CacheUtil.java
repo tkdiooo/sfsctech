@@ -1,6 +1,6 @@
-package com.sfsctech.auth.util;
+package com.sfsctech.dubbox.util;
 
-import com.sfsctech.auth.constants.AuthConstants;
+import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.base.session.UserAuthData;
 
 /**
@@ -17,13 +17,13 @@ public class CacheUtil {
      * 根据用户鉴权数据生成token缓存的key
      */
     public static String getTokenCacheKey(final UserAuthData authData) {
-        return AuthConstants.UAMS_USER_TOKEN + AuthConstants.SPLIT_FLAG + authData.getSessionID() + AuthConstants.SPLIT_FLAG + authData.getAccount();
+        return SSOConstants.UAMS_USER_TOKEN + SSOConstants.SPLIT_FLAG + authData.getSessionID() + SSOConstants.SPLIT_FLAG + authData.getAccount();
     }
 
     /**
      * 据用户鉴权数据生成salt缓存的key
      */
     public static String getSaltCacheKey(final UserAuthData authData) {
-        return getTokenCacheKey(authData) + AuthConstants.SPLIT_FLAG + CACHE_API_KEY;
+        return getTokenCacheKey(authData) + SSOConstants.SPLIT_FLAG + CACHE_API_KEY;
     }
 }

@@ -1,6 +1,6 @@
 package com.sfsctech.security.csrf;
 
-import com.sfsctech.auth.session.SessionHolder;
+import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
