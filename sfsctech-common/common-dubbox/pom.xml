@@ -13,10 +13,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-rpc support -->
+        <!-- sfsctech-common-spring support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-rpc</artifactId>
+            <artifactId>common-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- Spring Boot -->
@@ -63,6 +63,12 @@
                     <artifactId>log4j</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
         </dependency>
     </dependencies>
 </project>
