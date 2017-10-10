@@ -1,11 +1,10 @@
-package com.sfsctech.auth.filter;
+package com.sfsctech.dubbox.filter;
 
-import com.sfsctech.auth.constants.AuthConstants;
-import com.sfsctech.auth.jwt.JwtToken;
-import com.sfsctech.auth.session.SessionHolder;
-import com.sfsctech.auth.session.SessionInfo;
-import com.sfsctech.auth.util.JwtUtil;
-import com.sfsctech.auth.util.UserTokenUtil;
+import com.sfsctech.base.jwt.JwtToken;
+import com.sfsctech.base.session.SessionHolder;
+import com.sfsctech.base.session.SessionInfo;
+import com.sfsctech.dubbox.util.JwtUtil;
+import com.sfsctech.dubbox.util.JwtTokenUtil;
 import com.sfsctech.base.filter.BaseFilter;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.constants.ExcludesConstants;
@@ -44,7 +43,7 @@ public class SSOFilter extends BaseFilter {
             }
             // SSO用户登录验证
             CookieHelper helper = CookieHelper.getInstance(request, response);
-            final JwtToken jt = UserTokenUtil.getJwtTokenByCookie(helper);
+            final JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
             if (null != jt) {
                 // 校验jwt信息
                 ActionResult<JwtToken> result = new ActionResult<>();
@@ -57,7 +56,7 @@ public class SSOFilter extends BaseFilter {
 //                    session.setAttribute(claims.get(AuthConstants.JWT_SESSION_ATTRIBUTE));
                     // 设置RoleInfo
                     // 更新token
-                    UserTokenUtil.updateToken(helper, result.getResult());
+                    JwtTokenUtil.updateJwtToken(helper, result.getResult());
 
                 }
                 // 校验失败

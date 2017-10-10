@@ -1,4 +1,4 @@
-package com.sfsctech.auth.condition;
+package com.sfsctech.dubbox.condition;
 
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.CommonConstants;
@@ -8,16 +8,16 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * Class Simple
+ * Class SOAExistsCondition
  *
- * @author 张麒 2017/8/28.
+ * @author 张麒 2017/7/25.
  * @version Description:
  */
-public class SessionAuthentication implements Condition {
+public class SSOCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
-        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.AUTHENTICATION_SESSION);
+        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.AUTHENTICATION_SSO);
     }
 }

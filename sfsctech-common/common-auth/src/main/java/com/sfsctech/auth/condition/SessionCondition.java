@@ -8,16 +8,16 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * Class SOAExistsCondition
+ * Class Simple
  *
- * @author 张麒 2017/7/25.
+ * @author 张麒 2017/8/28.
  * @version Description:
  */
-public class DistributedAuthentication implements Condition {
+public class SessionCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String authentication = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SERVICE_AUTHENTICATION);
-        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.AUTHENTICATION_SSO);
+        return StringUtil.isNotBlank(authentication) && authentication.equals(CommonConstants.AUTHENTICATION_SESSION);
     }
 }

@@ -22,6 +22,16 @@
       "type": "com.sfsctech.dubbox.properties.DubboProperties$Protocol",
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties",
       "sourceMethod": "getProtocol()"
+    },
+    {
+      "name": "website.sso",
+      "type": "com.sfsctech.dubbox.properties.SSOProperties",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.jwt",
+      "type": "com.sfsctech.dubbox.properties.JwtProperties",
+      "sourceType": "com.sfsctech.dubbox.properties.JwtProperties"
     }
   ],
   "properties": [
@@ -90,6 +100,54 @@
       "type": "java.lang.Boolean",
       "description": "是否使用kryo序列化",
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+    },
+    {
+      "name": "website.sso.login-url",
+      "type": "java.lang.String",
+      "description": "SSO 登录路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.logout-url",
+      "type": "java.lang.String",
+      "description": "SSO 登出路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.check-url",
+      "type": "java.lang.String",
+      "description": "SSO Session校验路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.register-url",
+      "type": "java.lang.String",
+      "description": "SSO 用户注册路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.forget-url",
+      "type": "java.lang.String",
+      "description": "SSO 密码找回路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.jwt.subject",
+      "type": "java.lang.String",
+      "description": "jwt 主题",
+      "sourceType": "com.sfsctech.dubbox.properties.JwtProperties"
+    },
+    {
+      "name": "website.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "jwt 发行方",
+      "sourceType": "com.sfsctech.dubbox.properties.JwtProperties"
+    },
+    {
+      "name": "website.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "jwt 保持时间",
+      "sourceType": "com.sfsctech.dubbox.properties.JwtProperties"
     }
   ],
   "hints": [

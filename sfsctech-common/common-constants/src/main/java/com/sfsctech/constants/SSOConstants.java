@@ -1,4 +1,4 @@
-package com.sfsctech.auth.constants;
+package com.sfsctech.constants;
 
 /**
  * Class SSOConstants
@@ -6,7 +6,7 @@ package com.sfsctech.auth.constants;
  * @author 张麒 2016/5/19.
  * @version Description:
  */
-public class AuthConstants {
+public class SSOConstants {
 
     public static final String UTF_8 = "UTF-8";
 
@@ -15,7 +15,6 @@ public class AuthConstants {
     public static final String PARAM_FROM_URL = "from_url";
 
     public static final String LOGIN_ACCOUNT = "account";
-    public static final String LOGIN_PASSWORD = "password";
     public static final String LOGIN_REMEMBER = "remember";
 
     // 登录

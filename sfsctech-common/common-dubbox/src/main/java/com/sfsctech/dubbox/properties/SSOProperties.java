@@ -1,4 +1,4 @@
-package com.sfsctech.auth.properties;
+package com.sfsctech.dubbox.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
