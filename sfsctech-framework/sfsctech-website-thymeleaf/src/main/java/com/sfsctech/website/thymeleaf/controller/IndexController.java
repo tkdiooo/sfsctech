@@ -1,8 +1,10 @@
 package com.sfsctech.website.thymeleaf.controller;
 
 import com.sfsctech.common.cookie.Config;
+import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
+import com.sfsctech.website.thymeleaf.rpc.provider.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class IndexController {
     private final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    private Config config;
+    private AccountService service;
 
     @GetMapping("index")
     public String index(ModelMap model) {
@@ -36,6 +38,10 @@ public class IndexController {
         userInfo.setUserName("account");
         userInfo.setPassword("password");
         model.put("userInfo", userInfo);
+        SysAccountDto dto = new SysAccountDto();
+        dto.setAccount("sdsada11111");
+        dto.setPassword("sdsada11111");
+        service.save(dto);
         return "index";
     }
 

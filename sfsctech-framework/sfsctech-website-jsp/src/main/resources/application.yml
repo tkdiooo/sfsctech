@@ -38,9 +38,8 @@ website:
     static-resources: http://localhost:8080/static-resources
     welcome-file: /index.html
   session:
-    authentication: soa
-  filter:
-    session-exclude-path: /index.html
+    authentication: sso
+    exclude-path: /index.html
   csrf:
     verify-exclude-path:
     intercept-exclude-path:
@@ -62,6 +61,8 @@ dubbo:
     subscribe: true
     #注册中心请求超时时间(毫秒)
     timeout: 2000
+  rpc:
+    service-package: com.sfsctech.website.jsp.service
 
 #spring.cloud.config
 #--spring.cloud.config.name=jsp

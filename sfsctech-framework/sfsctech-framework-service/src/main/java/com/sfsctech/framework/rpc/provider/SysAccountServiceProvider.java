@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-//import com.alibaba.dubbo.rpc.proxy.TraceIdUtil;
 
 /**
  * Class SysAccountServiceProvider
@@ -43,7 +42,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
-        readService.find();
+        System.out.println(readService.find());
 //        model.setEnabled(0);
 //        model.setLocked(0);
 //        model.setStatus(StatusConstants.Status.VALID.getKey());

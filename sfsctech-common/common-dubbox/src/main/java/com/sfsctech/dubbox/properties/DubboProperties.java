@@ -3,6 +3,10 @@ package com.sfsctech.dubbox.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Class DubboProperties
  *
@@ -18,11 +22,13 @@ public class DubboProperties {
     private final DubboProperties.Application application;
     private final DubboProperties.Registry registry;
     private final DubboProperties.Protocol protocol;
+    private final DubboProperties.Rpc rpc;
 
     public DubboProperties() {
         this.application = new DubboProperties.Application();
         this.registry = new DubboProperties.Registry();
         this.protocol = new DubboProperties.Protocol();
+        this.rpc = new DubboProperties.Rpc();
     }
 
     public Application getApplication() {
@@ -35,6 +41,10 @@ public class DubboProperties {
 
     public Protocol getProtocol() {
         return protocol;
+    }
+
+    public Rpc getRpc() {
+        return rpc;
     }
 
     public static class Application {
@@ -119,6 +129,7 @@ public class DubboProperties {
         private int port = 20880;
         private String server;
         private boolean kryo;
+        private Map<String, String> map = new HashMap<>();
 
         public Protocol() {
         }
@@ -153,6 +164,33 @@ public class DubboProperties {
 
         public void setServer(String server) {
             this.server = server;
+        }
+
+        public Map<String, String> getMap() {
+            map.put("pro1", "1111");
+            map.put("pro2", "2222");
+            map.put("pro3", "3333");
+            return map;
+        }
+
+        public void setMap(Map<String, String> map) {
+            this.map = map;
+        }
+    }
+
+    public static class Rpc {
+        private String servicePackage;
+
+        public Rpc() {
+
+        }
+
+        public String getServicePackage() {
+            return servicePackage;
+        }
+
+        public void setServicePackage(String servicePackage) {
+            this.servicePackage = servicePackage;
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.sfsctech.framework;
 
-import com.sfsctech.dubbox.config.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,8 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.configurer"})
 public class ServiceRunner {
 
-    public static void main(String[] args) throws Exception {
-        DubboConfig.setServicePackage("com.sfsctech.framework.rpc");
+    public static void main(String[] args) {
         SpringApplication.run(ServiceRunner.class, args);
     }
 }

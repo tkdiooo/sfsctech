@@ -140,6 +140,8 @@ dubbo:
     port: 20880
     # 是否使用kryo序列化
     kryo: true
+  rpc:
+    service-package: com.sfsctech.framework.rpc
 #spring.cloud.config
 #--spring.cloud.config.name=jsp
 #--spring.cloud.config.profile=deve

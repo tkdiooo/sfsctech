@@ -24,6 +24,12 @@
       "sourceMethod": "getProtocol()"
     },
     {
+      "name": "dubbo.rpc",
+      "type": "com.sfsctech.dubbox.properties.DubboProperties$Rpc",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties",
+      "sourceMethod": "getRpc()"
+    },
+    {
       "name": "website.sso",
       "type": "com.sfsctech.dubbox.properties.SSOProperties",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
@@ -100,6 +106,12 @@
       "type": "java.lang.Boolean",
       "description": "是否使用kryo序列化",
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+    },
+    {
+      "name": "dubbo.rpc.service-package",
+      "type": "java.lang.String",
+      "description": "服务类所在的包路径，多个包名可以使用英文逗号分隔",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Rpc"
     },
     {
       "name": "website.sso.login-url",

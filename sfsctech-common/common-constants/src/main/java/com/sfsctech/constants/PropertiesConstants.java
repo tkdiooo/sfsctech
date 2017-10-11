@@ -27,4 +27,9 @@ public class PropertiesConstants {
      */
     public static final String WEBSITE_SERVICE_AUTHENTICATION = "website.session.authentication";
 
+    /**
+     * Properties：dubbo.rpc.service-package"
+     */
+    public static final String DUBBO_RPC_SERVICE_PACKAGE = "dubbo.rpc.service-package";
+
 }

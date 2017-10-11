@@ -1,6 +1,5 @@
 package com.sfsctech.website.jsp;
 
-import com.sfsctech.dubbox.config.DubboConfig;
 import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,6 @@ public class JspWebRunner extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) {
-        DubboConfig.setServicePackage("com.sfsctech.website.jsp.service");
         SpringApplication.run(JspWebRunner.class, args);
     }
 

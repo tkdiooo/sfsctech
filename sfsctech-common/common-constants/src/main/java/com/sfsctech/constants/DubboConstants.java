@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class DubboConstants {
 
+    public static final String SERIALIZE_KRYO = "kryo";
+
     /**
      * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
      */

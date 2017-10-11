@@ -5,13 +5,26 @@ import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
+import com.sfsctech.common.util.SpringContextUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.DubboConstants;
+import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.dubbox.config.DubboConfig;
 import com.sfsctech.dubbox.properties.DubboProperties;
+import com.sfsctech.dubbox.serialize.KryoSerializationOptimizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class DubboxConfigurer
@@ -23,8 +36,11 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackageClasses = DubboProperties.class)
 public class DubboxConfigurer {
 
+    private static final Logger logger = LoggerFactory.getLogger(DubboxConfigurer.class);
+
     @Autowired
     private DubboProperties properties;
+    Map<String, String> map = new HashMap<>();
 
     /**
      * &lt;dubbo:application&gt;
@@ -61,19 +77,38 @@ public class DubboxConfigurer {
      * @return ProtocolConfig
      */
     @Bean
-    public ProtocolConfig protocolConfig() {
-        ProtocolConfig config = new ProtocolConfig();
-        config.setName(properties.getProtocol().getName());
-        config.setPort(properties.getProtocol().getPort());
-        if (StringUtil.isNotBlank(properties.getProtocol().getServer())) {
-            config.setServer(properties.getProtocol().getServer());
+    public Object protocolConfig() {
+        map.put("pro1", "1111");
+        map.put("pro2", "2222");
+        map.put("pro3", "3333");
+        DefaultListableBeanFactory acf = (DefaultListableBeanFactory) SpringContextUtil.getApplicationContext().getAutowireCapableBeanFactory();
+        for (String key : map.keySet()) {
+            BeanDefinitionBuilder bdb = BeanDefinitionBuilder.rootBeanDefinition(ProtocolConfig.class.getName());
+            bdb.getBeanDefinition().setAttribute("id", key);
+            acf.registerBeanDefinition(key, bdb.getBeanDefinition());
         }
-        // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
-        if (properties.getProtocol().isKryo()) {
-            config.setSerialization("kryo");
-            config.setOptimizer("com.sfsctech.dubbox.serialize.KryoSerializationOptimizer");
+//        bdb.addPropertyValue("proxy", new MapperProxy(application, mapper));
+//        bdb.addPropertyValue("type", mapper.getDaoClass());
+//        bdb.addPropertyValue("singleton", mapper.isSingle());
+//        注册bean
+        return new Object();
+    }
+
+    @Bean
+    public Object protocolConfigsd() {
+        for (String key : map.keySet()) {
+            ProtocolConfig config = (ProtocolConfig) SpringContextUtil.getBean(key);
+            config.setName(properties.getProtocol().getName());
+            config.setPort(properties.getProtocol().getPort());
+            if (StringUtil.isNotBlank(properties.getProtocol().getServer()))
+                config.setServer(properties.getProtocol().getServer());
+            // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
+            if (properties.getProtocol().isKryo()) {
+                config.setSerialization(DubboConstants.SERIALIZE_KRYO);
+                config.setOptimizer(KryoSerializationOptimizer.class.getName());
+            }
         }
-        return config;
+        return new Object();
     }
 
     @Bean
@@ -90,9 +125,11 @@ public class DubboxConfigurer {
      * @return AnnotationBean
      */
     @Bean
-    public static AnnotationBean annotationBean() {
+    public static AnnotationBean annotationBean
+    (@Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.DUBBO_RPC_SERVICE_PACKAGE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String
+             servicePackage) {
         AnnotationBean annotationBean = new AnnotationBean();
-        annotationBean.setPackage(DubboConfig.getServicePackage());
+        annotationBean.setPackage(servicePackage);
         return annotationBean;
     }
 }
