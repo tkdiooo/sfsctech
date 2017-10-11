@@ -84,16 +84,24 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Registry"
     },
     {
+      "name": "dubbo.protocol.kryo",
+      "type": "java.lang.Boolean",
+      "description": "是否使用kryo序列化",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+    },
+    {
       "name": "dubbo.protocol.name",
       "type": "java.lang.String",
-      "description": "通信协议，默认dubbo",
-      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+      "description": "协议名称",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol",
+      "defaultValue": "dubbo"
     },
     {
       "name": "dubbo.protocol.port",
       "type": "java.lang.Integer",
-      "description": "协议端口，默认20880",
-      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+      "description": "协议端口",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol",
+      "defaultValue": 20080
     },
     {
       "name": "dubbo.protocol.server",
@@ -102,10 +110,154 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
     },
     {
-      "name": "dubbo.protocol.kryo",
+      "name": "dubbo.protocol.single",
       "type": "java.lang.Boolean",
-      "description": "是否使用kryo序列化",
-      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Protocol"
+      "description": "是否是单协议",
+      "defaultValue": true
+    },
+    {
+      "name": "dubbo.protocol.multiple",
+      "type": "java.util.Map<java.lang.String,com.alibaba.dubbo.multiple.ProtocolConfig>",
+      "description": "dubbo 多协议配置",
+      "sourceType": "java.util.Map<java.lang.String,com.alibaba.dubbo.multiple.ProtocolConfig>"
+    },
+    {
+      "name": "dubbo.protocol.multiple.dubbo",
+      "type": "java.lang.String",
+      "description": "dubbo通信协议，dubbo缺省协议，适用场景：常规远程服务方法调用"
+    },
+    {
+      "name": "dubbo.protocol.multiple.dubbo.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.dubbo.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.dubbo.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.rmi",
+      "type": "java.lang.String",
+      "description": "rmi通信协议，采用JDK标准的java.rmi.*实现，适用场景：常规远程服务方法调用，与原生RMI服务互操作。"
+    },
+    {
+      "name": "dubbo.protocol.multiple.rmi.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.rmi.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.rmi.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.hessian",
+      "type": "java.lang.String",
+      "description": "hessian通信协议，基于Hessian框架的通信协议，适用场景：页面传输，文件传输，与原生hessian服务交互。"
+    },
+    {
+      "name": "dubbo.protocol.multiple.hessian.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.hessian.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.hessian.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.http",
+      "type": "java.lang.String",
+      "description": "http通信协议，采用Spring的HttpInvoker实现，适用场景：前端调用、移动端调用，跨语言调用。"
+    },
+    {
+      "name": "dubbo.protocol.multiple.http.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.http.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.http.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.webservice",
+      "type": "java.lang.String",
+      "description": "webservice通信协议，基于CXF的frontend-simple和transports-http实现，适用场景：系统集成，跨语言调用。"
+    },
+    {
+      "name": "dubbo.protocol.multiple.webservice.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.webservice.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.webservice.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.thrift",
+      "type": "java.lang.String",
+      "description": "thrift通信协议，基于Thrift框架的通信协议，不建议使用"
+    },
+    {
+      "name": "dubbo.protocol.multiple.thrift.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.thrift.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
+    },
+    {
+      "name": "dubbo.protocol.multiple.thrift.server",
+      "type": "java.lang.String",
+      "description": "协议的服务器端实现类型",
+      "sourceType": "com.alibaba.dubbo.multiple.ProtocolConfig"
     },
     {
       "name": "dubbo.rpc.service-package",
@@ -168,27 +320,27 @@
       "values": [
         {
           "value": "dubbo",
-          "description": "dubbo协议"
+          "description": "dubbo通信协议，dubbo缺省协议，适用场景：常规远程服务方法调用"
         },
         {
-          "value": "RMI",
-          "description": "RMI协议"
+          "value": "rmi",
+          "description": "rmi通信协议，采用JDK标准的java.rmi.*实现，适用场景：常规远程服务方法调用，与原生RMI服务互操作。"
         },
         {
           "value": "hessian",
-          "description": "Hessian协议"
+          "description": "hessian通信协议，基于Hessian框架的通信协议，适用场景：页面传输，文件传输，与原生hessian服务交互。"
         },
         {
           "value": "http",
-          "description": "Spring的HttpInvoker"
+          "description": "http通信协议，采用Spring的HttpInvoker实现，适用场景：前端调用、移动端调用，跨语言调用。"
         },
         {
           "value": "webservice",
-          "description": "基于CXF的frontend-simple和transports-http实现"
+          "description": "webservice通信协议，基于CXF的frontend-simple和transports-http实现，适用场景：系统集成，跨语言调用。"
         },
         {
           "value": "thrif",
-          "description": "Thrift协议"
+          "description": "thrift通信协议，基于Thrift框架的通信协议，不建议使用"
         }
       ]
     },

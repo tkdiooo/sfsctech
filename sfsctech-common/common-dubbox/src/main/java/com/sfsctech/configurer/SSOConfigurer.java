@@ -28,7 +28,6 @@ public class SSOConfigurer {
     private AppConfig appConfig;
 
     @Bean
-    @Conditional(SSOCondition.class)
     public FilterRegistrationBean SSOFilter() {
         SSOFilter filter = new SSOFilter();
         // Session认证排除路径

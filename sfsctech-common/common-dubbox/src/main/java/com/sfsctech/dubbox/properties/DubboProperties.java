@@ -1,11 +1,11 @@
 package com.sfsctech.dubbox.properties;
 
+import com.alibaba.dubbo.config.ProtocolConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class DubboProperties
@@ -125,13 +125,23 @@ public class DubboProperties {
     }
 
     public static class Protocol {
-        private String name = "dubbo";
-        private int port = 20880;
-        private String server;
         private boolean kryo;
-        private Map<String, String> map = new HashMap<>();
+
+        private String name;
+        private int port;
+        private String server;
+
+        private Map<String, ProtocolConfig> multiple = new HashMap<>();
 
         public Protocol() {
+        }
+
+        public boolean isKryo() {
+            return kryo;
+        }
+
+        public void setKryo(boolean kryo) {
+            this.kryo = kryo;
         }
 
         public String getName() {
@@ -150,14 +160,6 @@ public class DubboProperties {
             this.port = port;
         }
 
-        public boolean isKryo() {
-            return kryo;
-        }
-
-        public void setKryo(boolean kryo) {
-            this.kryo = kryo;
-        }
-
         public String getServer() {
             return server;
         }
@@ -166,15 +168,12 @@ public class DubboProperties {
             this.server = server;
         }
 
-        public Map<String, String> getMap() {
-            map.put("pro1", "1111");
-            map.put("pro2", "2222");
-            map.put("pro3", "3333");
-            return map;
+        public Map<String, ProtocolConfig> getMultiple() {
+            return multiple;
         }
 
-        public void setMap(Map<String, String> map) {
-            this.map = map;
+        public void setMultiple(Map<String, ProtocolConfig> multiple) {
+            this.multiple = multiple;
         }
     }
 

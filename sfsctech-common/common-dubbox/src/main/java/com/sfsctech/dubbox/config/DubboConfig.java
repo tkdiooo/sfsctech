@@ -2,7 +2,6 @@ package com.sfsctech.dubbox.config;
 
 import com.sfsctech.common.util.ArrayUtil;
 import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.configurer.Registrar;
 import com.sfsctech.constants.DubboConstants;
 import com.sfsctech.constants.LabelConstants;
 

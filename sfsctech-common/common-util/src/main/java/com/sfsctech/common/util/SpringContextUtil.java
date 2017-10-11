@@ -1,6 +1,8 @@
 package com.sfsctech.common.util;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -61,6 +63,20 @@ public class SpringContextUtil implements ApplicationContextAware {
      */
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
+    }
+
+
+    /**
+     * 手动注入Bean
+     *
+     * @param name
+     * @param beanClassName
+     */
+    public static void registerBeanDefinition(String name, String beanClassName) {
+        DefaultListableBeanFactory acf = (DefaultListableBeanFactory) SpringContextUtil.getApplicationContext().getAutowireCapableBeanFactory();
+        BeanDefinitionBuilder bdb = BeanDefinitionBuilder.rootBeanDefinition(beanClassName);
+        bdb.getBeanDefinition().setAttribute("id", name);
+        acf.registerBeanDefinition(name, bdb.getBeanDefinition());
     }
 
 }
