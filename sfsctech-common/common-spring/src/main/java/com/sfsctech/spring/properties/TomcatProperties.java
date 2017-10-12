@@ -17,6 +17,9 @@ public class TomcatProperties {
 
     private boolean optimize;
     private String connector;
+    private Integer maxKeepAliveRequests;
+    private Integer connectionTimeout;
+    private Integer keepAliveTimeout;
 
     public TomcatProperties() {
 
@@ -36,5 +39,29 @@ public class TomcatProperties {
 
     public void setConnector(String connector) {
         this.connector = connector;
+    }
+
+    public Integer getMaxKeepAliveRequests() {
+        return maxKeepAliveRequests;
+    }
+
+    public void setMaxKeepAliveRequests(Integer maxKeepAliveRequests) {
+        this.maxKeepAliveRequests = maxKeepAliveRequests;
+    }
+
+    public Integer getConnectionTimeout() {
+        return connectionTimeout;
+    }
+
+    public void setConnectionTimeout(Integer connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
+
+    public Integer getKeepAliveTimeout() {
+        return keepAliveTimeout;
+    }
+
+    public void setKeepAliveTimeout(Integer keepAliveTimeout) {
+        this.keepAliveTimeout = keepAliveTimeout;
     }
 }

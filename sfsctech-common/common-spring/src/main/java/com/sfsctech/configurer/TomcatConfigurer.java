@@ -75,5 +75,14 @@ public class TomcatConfigurer {
             protocol.setMinSpareThreads(appConfig.getServerProperties().getTomcat().getMinSpareThreads());
         if (appConfig.getServerProperties().getTomcat().getAcceptCount() > 0)
             protocol.setAcceptorThreadCount(appConfig.getServerProperties().getTomcat().getAcceptCount());
+        if (null != properties.getConnectionTimeout()) {
+            protocol.setMaxKeepAliveRequests(properties.getConnectionTimeout());
+        }
+        if (null != properties.getKeepAliveTimeout()) {
+            protocol.setKeepAliveTimeout(properties.getKeepAliveTimeout());
+        }
+        if (null != properties.getConnectionTimeout()) {
+            protocol.setConnectionTimeout(properties.getConnectionTimeout());
+        }
     }
 }

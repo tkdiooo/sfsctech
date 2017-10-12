@@ -83,6 +83,24 @@
       "type": "java.lang.String",
       "description": "tomcat连接器",
       "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.connectionTimeout",
+      "type": "java.lang.Integer",
+      "description": "连接时间",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.maxKeepAliveRequests",
+      "type": "java.lang.Integer",
+      "description": "一次连接可以进行的HTTP请求的最大请求次数",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.keepAliveTimeout",
+      "type": "java.lang.Integer",
+      "description": "一次连接中的多次请求传输之间的时间",
+      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
     }
   ],
   "hints": [
