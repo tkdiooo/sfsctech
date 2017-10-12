@@ -1,8 +1,13 @@
 package com.sfsctech.configurer;
 
+import com.alibaba.dubbo.config.ConsumerConfig;
+import com.alibaba.dubbo.config.ReferenceConfig;
+import com.alibaba.dubbo.config.ServiceConfig;
+import com.alibaba.dubbo.config.annotation.Service;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.dubbox.condition.SSOCondition;
 import com.sfsctech.dubbox.filter.SSOFilter;
+import com.sfsctech.dubbox.inf.VerifyService;
 import com.sfsctech.dubbox.properties.JwtProperties;
 import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.spring.properties.AppConfig;
@@ -26,6 +31,8 @@ public class SSOConfigurer {
 
     @Autowired
     private AppConfig appConfig;
+    @Autowired
+    private SSOProperties properties;
 
     @Bean
     public FilterRegistrationBean SSOFilter() {
@@ -36,5 +43,16 @@ public class SSOConfigurer {
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SSOFilter");
         return registration;
+    }
+
+    @Bean
+    public ReferenceConfig<VerifyService> referenceConfig() {
+        ReferenceConfig<VerifyService> config = new ReferenceConfig<>();
+        config.setInterface(VerifyService.class);
+        config.setId(VerifyService.class.getSimpleName());
+        config.setLazy(properties.getReference().isLazy());
+        config.setVersion(properties.getReference().getVersion());
+        config.setTimeout(properties.getReference().getTimeout());
+        return config;
     }
 }

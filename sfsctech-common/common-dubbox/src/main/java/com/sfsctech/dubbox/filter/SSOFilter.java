@@ -1,8 +1,11 @@
 package com.sfsctech.dubbox.filter;
 
+import com.alibaba.dubbo.config.ReferenceConfig;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.base.session.SessionInfo;
+import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.dubbox.inf.VerifyService;
 import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.dubbox.util.JwtTokenUtil;
 import com.sfsctech.base.filter.BaseFilter;
@@ -45,8 +48,9 @@ public class SSOFilter extends BaseFilter {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             final JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
             if (null != jt) {
+                VerifyService service = (VerifyService) SpringContextUtil.getBean(ReferenceConfig.class).get();
                 // 校验jwt信息
-                ActionResult<JwtToken> result = new ActionResult<>();
+                ActionResult<JwtToken> result = service.check(jt);
                 // 校验成功
                 if (result.isSuccess()) {
                     Claims claims = JwtUtil.parseJWT(result.getResult().getJwt());

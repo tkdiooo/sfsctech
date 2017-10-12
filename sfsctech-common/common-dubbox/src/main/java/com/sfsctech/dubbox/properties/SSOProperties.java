@@ -20,8 +20,10 @@ public class SSOProperties {
     private String registerUrl;
     private String forgetUrl;
 
-    public SSOProperties() {
+    private final SSOProperties.Reference reference;
 
+    public SSOProperties() {
+        this.reference = new SSOProperties.Reference();
     }
 
     public String getLoginUrl() {
@@ -62,5 +64,42 @@ public class SSOProperties {
 
     public void setForgetUrl(String forgetUrl) {
         this.forgetUrl = forgetUrl;
+    }
+
+    public Reference getReference() {
+        return reference;
+    }
+
+    public static class Reference {
+        private boolean lazy;
+        private String version;
+        private Integer timeout;
+
+        public Reference() {
+        }
+
+        public boolean isLazy() {
+            return lazy;
+        }
+
+        public void setLazy(boolean lazy) {
+            this.lazy = lazy;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+        public Integer getTimeout() {
+            return timeout;
+        }
+
+        public void setTimeout(Integer timeout) {
+            this.timeout = timeout;
+        }
     }
 }
