@@ -1,16 +1,25 @@
 package com.sfsctech.base.jwt;
 
+import com.sfsctech.base.model.BaseDto;
+import org.hibernate.validator.constraints.NotBlank;
+
+import java.io.Serializable;
+
 /**
  * Class JwtToken
  *
  * @author 张麒 2017/8/28.
  * @version Description:
  */
-public class JwtToken {
+public class JwtToken extends BaseDto {
+
+    private static final long serialVersionUID = 2763237712905519322L;
 
     // jwt信息（根据盐值加密）
+    @NotBlank
     private String jwt;
     // 加密盐值 - 缓存key（加密后）
+    @NotBlank
     private String salt_CacheKey;
 
     public String getJwt() {

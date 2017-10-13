@@ -18,9 +18,9 @@ import java.net.URLEncoder;
  * @author 张麒 2017/8/28.
  * @version Description:
  */
-public class JwtTokenUtil {
+public class JwtCookieUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtCookieUtil.class);
 
     /**
      * 根据Cookie获取JwtToken对象

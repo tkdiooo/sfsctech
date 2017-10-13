@@ -1,7 +1,6 @@
 package com.sfsctech.logback.rmt.kafka.sender;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sfsctech.logback.rmt.kafka.partitioner.CustomPartitioner;
 import com.sfsctech.logback.rmt.util.NetUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;

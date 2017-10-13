@@ -55,22 +55,23 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | MissingClaimException | IncorrectClaimException e) {
             // 签名(Signature)验证失败
             if (e instanceof SignatureException) {
-
+                e.printStackTrace();
             }
             // jwt 解析错误
             else if (e instanceof MalformedJwtException) {
-
+                e.printStackTrace();
             }
             // jwt 已经过期，在设置jwt的时候如果设置了过期时间，这里会自动判断jwt是否已经过期，如果过期则会抛出这个异常。
             else if (e instanceof ExpiredJwtException) {
+                e.printStackTrace();
             }
             // 需要的声明不存在
             else if (e instanceof MissingClaimException) {
-
+                e.printStackTrace();
             }
             // 载荷(Payload) 有错误
             else if (e instanceof IncorrectClaimException) {
-
+                e.printStackTrace();
             }
             return null;
         }

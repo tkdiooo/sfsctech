@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = DubboProperties.class)
+@ComponentScan("com.sfsctech.dubbox")
 public class DubboxConfigurer {
 
     private static final Logger logger = LoggerFactory.getLogger(DubboxConfigurer.class);
