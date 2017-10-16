@@ -3,7 +3,6 @@ package com.sfsctech.configurer;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.alibaba.fastjson.JSON;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.mybatis.datasource.ReadWriteDataSource;
 import com.sfsctech.mybatis.datasource.aop.ReadWriteAdvice;
@@ -25,7 +24,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +64,7 @@ public class MyBatisConfigurer {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dynamicDatasource());
         // 指定xml文件位置
-        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/ibatis/*/*.xml"));
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/config/mybatis/*/*.xml"));
         return factoryBean.getObject();
     }
 
