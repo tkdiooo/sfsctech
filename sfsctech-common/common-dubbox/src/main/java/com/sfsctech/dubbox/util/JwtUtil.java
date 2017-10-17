@@ -24,7 +24,7 @@ public class JwtUtil {
 
     private static Key getKey() {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(salt);
-        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
+        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS512.getJcaName());
     }
 
     public static String generalJwt(Map<String, Object> claims) {
