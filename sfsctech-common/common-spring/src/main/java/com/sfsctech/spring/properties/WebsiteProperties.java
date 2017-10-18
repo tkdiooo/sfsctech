@@ -65,12 +65,22 @@ public class WebsiteProperties {
     }
 
     public static class Csrf {
+        private Boolean open = false;
         private String keepPattern;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
+        private Set<String> requiredVerifyPath;
 
         public Csrf() {
 
+        }
+
+        public Boolean isOpen() {
+            return open;
+        }
+
+        public void setOpen(Boolean open) {
+            this.open = open;
         }
 
         public String getKeepPattern() {
@@ -97,6 +107,13 @@ public class WebsiteProperties {
             this.verifyExcludePath = verifyExcludePath;
         }
 
+        public Set<String> getRequiredVerifyPath() {
+            return requiredVerifyPath;
+        }
+
+        public void setRequiredVerifyPath(Set<String> requiredVerifyPath) {
+            this.requiredVerifyPath = requiredVerifyPath;
+        }
     }
 
     public static class Session {

@@ -29,8 +29,14 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
     private Set<String> excludesPattern;
 
+    private Set<String> verifyPattern;
+
     public void setExcludesPattern(Set<String> excludesPattern) {
         this.excludesPattern = excludesPattern;
+    }
+
+    public void setVerifyPattern(Set<String> verifyPattern) {
+        this.verifyPattern = verifyPattern;
     }
 
     /**
@@ -49,15 +55,13 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 //            Method method = handlerMethod.getMethod();
 //        }
         String requestURI = request.getRequestURI();
-        boolean bool = ExcludesConstants.isExclusion(requestURI, excludesPattern);
-        logger.info("exclusion：[" + bool + "] request uri：[" + requestURI + "] ");
-        // 当前请求路径是否需要验证
-        if (!bool) {
-            // Csrf防御验证
-            if (CSRFTokenManager.isValidCSRFToken(request, response)) {
-                logger.warn("CSRF attack intercept");
-                throw new BizException(I18NConstants.Tips.Exception403);
-            }
+        boolean excludes = ExcludesConstants.isExclusion(requestURI, excludesPattern);
+        boolean verify = ExcludesConstants.isExclusion(requestURI, verifyPattern);
+        logger.info("exclusion：[" + excludes + "] request uri：[" + requestURI + "] ");
+        // 当前请求路径是否需要验证 && Csrf防御验证
+        if ((!excludes || verify) && CSRFTokenManager.isValidCSRFToken(request, response)) {
+            logger.warn("CSRF attack intercept");
+            throw new BizException(I18NConstants.Tips.Exception403);
         }
         // 只有返回true才会继续向下执行，返回false取消当前请求
         return true;
@@ -120,5 +124,4 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
     public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
     }
-
 }

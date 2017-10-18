@@ -72,9 +72,9 @@ website:
   csrf:
     # csrf拦截排除路径
 #    intercept-exclude-path: /**
+    open: false
     # csrf验证排除路径
-    verify-exclude-path: /index
-    keep-pattern: soa
+    verify-exclude-path: /**
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources

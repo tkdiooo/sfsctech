@@ -43,6 +43,13 @@
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
     },
     {
+      "name": "website.csrf.open",
+      "type": "java.lang.Boolean",
+      "description": "是否开启CSRF防御",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
+      "defaultValue": false
+    },
+    {
       "name": "website.csrf.keep-pattern",
       "type": "java.lang.String",
       "description": "CSRF防御Token保持方式，为空默认HttpSession",
@@ -58,6 +65,12 @@
       "name": "website.csrf.verify-exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF防御校验排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+    },
+    {
+      "name": "website.csrf.required-verify-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "必须通过CSRF防御校验路径",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
     },
     {

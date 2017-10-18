@@ -101,7 +101,12 @@ public class ExcludesConstants {
             pattern = pattern.trim();
             source = source.trim();
             int start;
-            if (pattern.endsWith("*")) {
+            if (pattern.endsWith("**")) {
+                start = pattern.length() - 2;
+                if (source.length() >= start && pattern.substring(0, start).equals(source.substring(0, start))) {
+                    return true;
+                }
+            } else if (pattern.endsWith("*")) {
                 start = pattern.length() - 1;
                 if (source.length() >= start && pattern.substring(0, start).equals(source.substring(0, start))) {
                     return true;

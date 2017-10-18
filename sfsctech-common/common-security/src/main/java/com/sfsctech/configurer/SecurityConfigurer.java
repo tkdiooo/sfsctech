@@ -48,13 +48,16 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        SecurityInterceptor securityInterceptor = new SecurityInterceptor();
-        securityInterceptor.setExcludesPattern(appConfig.getWebsiteProperties().getCsrf().getVerifyExcludePath());
-        // 多个拦截器组成一个拦截器链
-        // addPathPatterns 用于添加拦截规则
-        // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(securityInterceptor).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(ExcludesConstants.getCSRFExcludes());
-        super.addInterceptors(registry);
+        if (appConfig.getWebsiteProperties().getCsrf().isOpen()) {
+            SecurityInterceptor securityInterceptor = new SecurityInterceptor();
+            securityInterceptor.setExcludesPattern(appConfig.getWebsiteProperties().getCsrf().getVerifyExcludePath());
+            securityInterceptor.setVerifyPattern(appConfig.getWebsiteProperties().getCsrf().getRequiredVerifyPath());
+            // 多个拦截器组成一个拦截器链
+            // addPathPatterns 用于添加拦截规则
+            // excludePathPatterns 用户排除拦截
+            registry.addInterceptor(securityInterceptor).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(ExcludesConstants.getCSRFExcludes());
+            super.addInterceptors(registry);
+        }
     }
 
     @Bean

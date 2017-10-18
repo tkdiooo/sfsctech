@@ -29,7 +29,7 @@
 
 		<section class="login">
 			<form id="contact-form" method="post">
-				<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+				<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 				<h1>OA办公平台<span>OA办公平台</span></h1>
 				<p><i class="fa fa-user"></i><input name="userName" th:value="${userInfo.userName}" placeholder="账号"></p>
 				<p><i class="fa fa-lock"></i><input name="password" th:value="${userInfo.password}" placeholder="密码"></p>

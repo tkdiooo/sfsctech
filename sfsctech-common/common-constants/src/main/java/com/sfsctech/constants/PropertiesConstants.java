@@ -15,17 +15,22 @@ public class PropertiesConstants {
      */
     public static final String SERVER_STATIC_PATH_PATTERN = "spring.mvc.static-path-pattern";
 
+    // the custom Attribute
+    //-------------------------------------------------------------------------------------------
     /**
      * server.tomcat.optimize
      */
     public static final String SERVER_TOMCAT_OPTIMIZE = "server.tomcat.optimize";
 
-    // the custom Attribute
-    //-------------------------------------------------------------------------------------------
     /**
      * Properties：website.service.authentication"
      */
     public static final String WEBSITE_SERVICE_AUTHENTICATION = "website.session.authentication";
+
+    /**
+     * Properties：website.csrf.open"
+     */
+    public static final String WEBSITE_CSRF_OPEN = "website.csrf.open";
 
     /**
      * Properties：dubbo.protocol.single"
