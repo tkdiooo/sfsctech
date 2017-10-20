@@ -55,14 +55,34 @@ public class StatusConstants {
     public enum Status implements IEnum<Integer, String> {
 
         /**
-         * 有效
+         * 删除
          */
-        VALID(1, "有效"),
+        Delete(0, "删除"),
 
         /**
-         * 失效
+         * 有效
          */
-        INVALID(0, "失效");
+        Valid(1, "有效"),
+
+        /**
+         * 禁用
+         */
+        Disable(2, "禁用"),
+
+        /**
+         * 启用
+         */
+        Enabled(3, "启用"),
+
+        /**
+         * 锁定
+         */
+        Locked(4, "锁定"),
+
+        /**
+         * 解锁
+         */
+        UnLocked(5, "解锁");
 
         Status(int key, String value) {
             this.key = key;
@@ -98,24 +118,24 @@ public class StatusConstants {
     }
 
     /**
-     * Class DictDefine
+     * Class Define
      *
      * @author 张麒 2016年3月28日
-     * @version Description：字典界限
+     * @version Description：界限
      */
-    public enum DictDefine implements IEnum<Integer, String> {
+    public enum Define implements IEnum<Integer, String> {
 
         /**
-         * 系统级
+         * 系统字典
          */
-        SYS_LEVEL(0, "系统级"),
+        SysDict(0, "系统级"),
 
         /**
-         * 业务级
+         * 业务字典
          */
-        BIZ_LEVEL(1, "业务级");
+        BizDict(1, "业务级");
 
-        DictDefine(Integer key, String value) {
+        Define(Integer key, String value) {
             this.key = key;
             this.value = value;
         }

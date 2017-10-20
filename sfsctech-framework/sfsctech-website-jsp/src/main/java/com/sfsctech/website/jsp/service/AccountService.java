@@ -31,7 +31,7 @@ public class AccountService {
             dto.setCreator((long) i);
             dto.setEnabled(0);
             dto.setLocked(0);
-            dto.setStatus(StatusConstants.Status.VALID.getCode());
+            dto.setStatus(StatusConstants.Status.Valid.getCode());
             dto.setAccount(RandomUtil.getRandom(RandomUtil.Strategy.Char, 15));
             dto.setPassword(RandomUtil.getRandom(RandomUtil.Strategy.Full, 10));
             System.out.println(accountService.save(dto));
