@@ -35,7 +35,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.sfsctech.*.mapper")
+@MapperScan("com.*.*.mapper")
 public class MyBatisConfigurer {
 
     @Bean(name = "masterDatasource")
