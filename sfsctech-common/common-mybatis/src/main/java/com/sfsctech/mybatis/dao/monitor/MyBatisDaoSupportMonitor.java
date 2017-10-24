@@ -38,12 +38,17 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public T selectByPrimaryKey(PK key) {
+        return getSqlSession().selectOne(getStatName("selectByPrimaryKey"), key);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T selectByPrimaryKeyForCache(PK key) {
         Object model = getCacheClient().get(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
         if (null != model) return (T) model;
         else {
-            T t = getSqlSession().selectOne(getStatName("selectByPrimaryKey"), key);
+            T t = this.selectByPrimaryKey(key);
             cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), t, 60 * 10);
             return t;
         }
@@ -51,20 +56,35 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int deleteByPrimaryKey(PK key) {
-        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
         return getSqlSession().delete(getStatName("deleteByPrimaryKey"), key);
     }
 
     @Override
+    public int deleteByPrimaryKeyForCache(PK key) {
+        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
+        return this.deleteByPrimaryKey(key);
+    }
+
+    @Override
     public int deleteByExample(Example example) {
-        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), example));
         return getSqlSession().delete(getStatName("deleteByExample"), example);
+    }
+
+    @Override
+    public int deleteByExampleForCache(Example example) {
+        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), example));
+        return this.deleteByExample(example);
     }
 
     @Override
     public int insert(T model) {
         generateId(model);
-        Integer key = getSqlSession().insert(getStatName("insert"), model);
+        return getSqlSession().insert(getStatName("insert"), model);
+    }
+
+    @Override
+    public int insertForCache(T model) {
+        Integer key = this.insert(model);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -72,7 +92,12 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int insertSelective(T model) {
         generateId(model);
-        Integer key = getSqlSession().insert(getStatName("insertSelective"), model);
+        return getSqlSession().insert(getStatName("insertSelective"), model);
+    }
+
+    @Override
+    public int insertSelectiveForCache(T model) {
+        Integer key = this.insertSelective(model);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -87,7 +112,12 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         Map<String, Object> params = new HashMap<>();
         params.put("record", model);
         params.put("example", example);
-        Integer key = getSqlSession().update(getStatName("updateByExampleSelective"), params);
+        return getSqlSession().update(getStatName("updateByExampleSelective"), params);
+    }
+
+    @Override
+    public int updateByExampleSelectiveForCache(T model, Example example) {
+        Integer key = this.updateByExampleSelective(model, example);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -97,21 +127,36 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
         Map<String, Object> params = new HashMap<>();
         params.put("record", model);
         params.put("example", example);
-        Integer key = getSqlSession().update(getStatName("updateByExample"), params);
+        return getSqlSession().update(getStatName("updateByExample"), params);
+    }
+
+    @Override
+    public int updateByExampleForCache(T model, Example example) {
+        Integer key = this.updateByExample(model, example);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
     @Override
     public int updateByPrimaryKeySelective(T model) {
-        Integer key = getSqlSession().update(getStatName("updateByPrimaryKeySelective"), model);
+        return getSqlSession().update(getStatName("updateByPrimaryKeySelective"), model);
+    }
+
+    @Override
+    public int updateByPrimaryKeySelectiveForCache(T model) {
+        Integer key = this.updateByPrimaryKeySelective(model);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
     @Override
     public int updateByPrimaryKey(T model) {
-        Integer key = getSqlSession().update(getStatName("updateByPrimaryKey"), model);
+        return getSqlSession().update(getStatName("updateByPrimaryKey"), model);
+    }
+
+    @Override
+    public int updateByPrimaryKeyForCache(T model) {
+        Integer key = this.updateByPrimaryKey(model);
         cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
