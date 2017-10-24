@@ -35,19 +35,19 @@ public class CommonConstants {
     /**
      * 国际化文件路径
      */
-    public final static String[] RESOURCES_I18N_PATH = {"i18n/defaultMessages", "i18n/messages"};
+    public static final String[] RESOURCES_I18N_PATH = {"i18n/defaultMessages", "i18n/messages"};
 
     // Front UI Attribute
     //-------------------------------------------------------------------------------------------
     /**
      * 静态资源地址
      */
-    public final static String STATIC_RESOURCE_ATTRIBUTE = "static_resource";
+    public static final String STATIC_RESOURCE_ATTRIBUTE = "static_resource";
 
     /**
      * 项目ContextPath
      */
-    public final static String CONTEXT_PATH_ATTRIBUTE = "context_path";
+    public static final String CONTEXT_PATH_ATTRIBUTE = "context_path";
 
     // Logback Setting Attribute
     //-------------------------------------------------------------------------------------------

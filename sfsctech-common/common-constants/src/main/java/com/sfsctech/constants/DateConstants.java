@@ -18,14 +18,14 @@ public class DateConstants {
 
     public enum DateType implements IEnum<Integer, String> {
 
-        SECONDS(7, "秒"),
-        MINUTE(6, "分"),
-        HOUR(5, "时"),
-        DAY(4, "日"),
-        WEEK(3, "周"),
-        QUARTER(2, "季"),
-        MONTH(1, "月"),
-        YEAR(0, "年");
+        Seconds(7, "秒"),
+        Minute(6, "分"),
+        Hour(5, "时"),
+        Day(4, "日"),
+        Week(3, "周"),
+        Quarter(2, "季"),
+        Month(1, "月"),
+        Year(0, "年");
 
         DateType(Integer key, String value) {
             this.key = key;
@@ -59,37 +59,37 @@ public class DateConstants {
         /**
          * 星期日
          */
-        SUNDAY(Calendar.SUNDAY, "星期日"),
+        Sunday(Calendar.SUNDAY, "星期日"),
 
         /**
          * 星期一
          */
-        MONDAY(Calendar.MONDAY, "星期一"),
+        Monday(Calendar.MONDAY, "星期一"),
 
         /**
          * 星期二
          */
-        TUESDAY(Calendar.TUESDAY, "星期二"),
+        Tuesday(Calendar.TUESDAY, "星期二"),
 
         /**
          * 星期三
          */
-        WEDNESDAY(Calendar.WEDNESDAY, "星期三"),
+        Wednesday(Calendar.WEDNESDAY, "星期三"),
 
         /**
          * 星期四
          */
-        THURSDAY(Calendar.THURSDAY, "星期四"),
+        Thursday(Calendar.THURSDAY, "星期四"),
 
         /**
          * 星期五
          */
-        FRIDAY(Calendar.FRIDAY, "星期五"),
+        Friday(Calendar.FRIDAY, "星期五"),
 
         /**
          * 星期六
          */
-        SATURDAY(Calendar.SATURDAY, "星期六");
+        Saturday(Calendar.SATURDAY, "星期六");
 
         Weeks(Integer key, String value) {
             this.key = key;
