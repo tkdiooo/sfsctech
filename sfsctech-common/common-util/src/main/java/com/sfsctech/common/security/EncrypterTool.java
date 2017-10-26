@@ -99,6 +99,6 @@ public class EncrypterTool {
     }
 
     public static void main(String[] args) {
-        System.out.println(encrypt(Security.Des3ECB,"shenwei"));
+        System.out.println(encrypt(Security.Des3ECB,"niyanling"));
     }
 }

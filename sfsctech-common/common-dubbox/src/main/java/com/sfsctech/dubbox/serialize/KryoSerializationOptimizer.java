@@ -4,6 +4,8 @@ import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
+import com.sfsctech.base.model.Column;
+import com.sfsctech.base.model.Order;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.ClassUtil;
@@ -30,6 +32,8 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         DubboConstants.addKryoSerializePackage("com.sfsctech.base.result");
         classes = new LinkedList<>(ClassUtil.getClasses(DubboConfig.getKryoSerializePackagePath()));
         classes.add(PagingInfo.class);
+        classes.add(Column.class);
+        classes.add(Order.class);
         classes.add(VerifyException.class);
         classes.add(BizException.class);
         classes.add(RpcConstants.class);

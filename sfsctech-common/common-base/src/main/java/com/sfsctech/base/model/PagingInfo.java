@@ -2,7 +2,6 @@ package com.sfsctech.base.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class PageInfo
@@ -53,6 +52,16 @@ public class PagingInfo<T> extends BaseDto {
      * com.github.pagehelper.Pageinfo 参数 当前页数
      */
     private int currentPage = 1;
+
+    /**
+     * 展示的列
+     */
+    private List<Column> columns;
+
+    /**
+     * 排序
+     */
+    private List<Order> order;
 
     public PagingInfo() {
     }
@@ -228,5 +237,21 @@ public class PagingInfo<T> extends BaseDto {
 
     public void setCondition(T condition) {
         this.condition = condition;
+    }
+
+    public List<Column> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<Column> columns) {
+        this.columns = columns;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
     }
 }
