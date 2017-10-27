@@ -1,6 +1,7 @@
 package com.sfsctech.base.model;
 
 import com.sfsctech.constants.LabelConstants;
+import org.apache.commons.collections.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -259,12 +260,14 @@ public class PagingInfo<T> extends BaseDto {
 
     public String getOrderByClause() {
         StringBuilder builder = new StringBuilder();
-        getOrder().forEach(order -> {
-            if (builder.length() > 0) {
-                builder.append(LabelConstants.COMMA);
-            }
-            builder.append(this.columns.get(order.getColumn()).getData()).append(LabelConstants.SPACE).append(order.getDir());
-        });
+        if (null != this.order) {
+            this.order.forEach(order -> {
+                if (builder.length() > 0) {
+                    builder.append(LabelConstants.COMMA);
+                }
+                builder.append(this.columns.get(order.getColumn()).getData()).append(LabelConstants.SPACE).append(order.getDir());
+            });
+        }
         return builder.toString();
     }
 }
