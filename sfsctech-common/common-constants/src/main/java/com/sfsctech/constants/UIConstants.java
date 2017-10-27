@@ -34,4 +34,26 @@ public class UIConstants {
         }
 
     }
+
+    public static class DataTable {
+
+        public static String getStatus(int status) {
+            switch (status) {
+                case 0:
+                    return "<span class='label label-danger'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+                case 1:
+                    return "<span class='label label-success'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+                case 2:
+                    return "<span class='label label-warning'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+                case 3:
+                    return "<span class='label label-primary'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+                case 4:
+                    return "<span class='label label-info'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+                case 5:
+                    return "<span class='label bg-purple'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
+            }
+            return "";
+        }
+
+    }
 }
