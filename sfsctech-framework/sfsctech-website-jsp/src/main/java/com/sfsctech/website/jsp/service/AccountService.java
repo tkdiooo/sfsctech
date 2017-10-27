@@ -1,6 +1,6 @@
 package com.sfsctech.website.jsp.service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
+//import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.common.util.RandomUtil;
@@ -20,7 +20,7 @@ import java.util.Date;
 @Service
 public class AccountService {
 
-    @Reference
+//    @Reference
     private SysAccountService accountService;
 
     public void batchSave() {
