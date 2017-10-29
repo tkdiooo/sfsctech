@@ -9,10 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.cglib.core.Converter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Class BeanUtil
@@ -346,5 +350,109 @@ public class BeanUtil extends BeanUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * the beanCopierMap
+     */
+    private static final ConcurrentMap<String, BeanCopier> beanCopierMap = new ConcurrentHashMap<>();
+
+
+    public static <T, S> T copyBeanForCglib(S source, Class<T> target) {
+        T ret = null;
+        if (source != null) {
+            try {
+                ret = target.newInstance();
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException("create class[" + target.getName() + "] instance error", e);
+            }
+            copyBeanForCglib(source, ret);
+        }
+        return ret;
+    }
+
+    public static <T, S> void copyBeanForCglib(S source, T target) {
+        if (source != null) {
+            BeanCopier copier = getBeanCopier(source.getClass(), target.getClass());
+            copier.copy(source, target, new DeepCopyConverter(target.getClass()));
+        }
+    }
+
+    public static <T, S> List<T> copyListForCglib(List<S> source, Class<T> target) {
+        if (ListUtil.isNotEmpty(source)) {
+            List<T> list = new ArrayList<>();
+            BeanCopier copier = getBeanCopier(source.get(0).getClass(), target);
+            DeepCopyConverter converter = new DeepCopyConverter(target);
+            source.forEach(s -> {
+                try {
+                    T t = target.newInstance();
+                    copier.copy(s, t, converter);
+                    list.add(t);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            return list;
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取BeanCopier
+     */
+    private static BeanCopier getBeanCopier(Class<?> source, Class<?> target) {
+        String beanCopierKey = generateBeanKey(source, target);
+        if (beanCopierMap.containsKey(beanCopierKey)) {
+            return beanCopierMap.get(beanCopierKey);
+        } else {
+            BeanCopier beanCopier = BeanCopier.create(source, target, true);
+            beanCopierMap.putIfAbsent(beanCopierKey, beanCopier);
+        }
+        return beanCopierMap.get(beanCopierKey);
+    }
+
+    /**
+     * 生成两个类的key
+     */
+    private static String generateBeanKey(Class<?> source, Class<?> target) {
+        return source.getName() + "@" + target.getName();
+    }
+
+    private static class DeepCopyConverter implements Converter {
+
+        /**
+         * The Target.
+         */
+        private Class<?> target;
+
+        /**
+         * Instantiates a new Deep copy converter.
+         *
+         * @param target the target
+         */
+        public DeepCopyConverter(Class<?> target) {
+            this.target = target;
+        }
+
+        @Override
+        public Object convert(Object value, Class targetClazz, Object methodName) {
+            if (value instanceof List) {
+                List values = (List) value;
+                List retList = new ArrayList<>(values.size());
+                for (final Object source : values) {
+                    String tempFieldName = methodName.toString().replace("set", "");
+                    String fieldName = tempFieldName.substring(0, 1).toLowerCase() + tempFieldName.substring(1);
+                    Class clazz = ClassUtil.getElementType(target, fieldName);
+                    retList.add(BeanUtil.copyBeanForCglib(source, clazz));
+                }
+                return retList;
+            } else if (value instanceof Map) {
+                // TODO 暂时用不到，后续有需要再补充
+            } else if (!ClassUtil.isPrimitive(targetClazz)) {
+                return BeanUtil.copyBeanForCglib(value, targetClazz);
+            }
+            return value;
+        }
     }
 }
