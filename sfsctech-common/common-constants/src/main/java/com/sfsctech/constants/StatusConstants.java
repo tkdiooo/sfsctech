@@ -55,34 +55,24 @@ public class StatusConstants {
     public enum Status implements IEnum<Integer, String> {
 
         /**
-         * 删除
+         * 已删除
          */
-        Delete(0, "删除"),
+        Delete(0, "已删除"),
 
         /**
          * 有效
          */
-        Valid(1, "有效"),
+        Valid(1, "有效的"),
 
         /**
-         * 禁用
+         * 已禁用
          */
-        Disable(2, "禁用"),
+        Disable(2, "已禁用"),
 
         /**
-         * 启用
+         * 已锁定
          */
-        Enabled(3, "启用"),
-
-        /**
-         * 锁定
-         */
-        Locked(4, "锁定"),
-
-        /**
-         * 解锁
-         */
-        UnLocked(5, "解锁");
+        Enabled(3, "已锁定");
 
         Status(int key, String value) {
             this.key = key;

@@ -2,6 +2,11 @@ package com.sfsctech.constants;
 
 import com.sfsctech.constants.inf.IEnum;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Class UIConstants
  *
@@ -32,28 +37,20 @@ public class UIConstants {
         public String getContent() {
             return value;
         }
-
     }
 
-    public static class DataTable {
+    private static String[] OPTIONS_CLASS = {"btn btn-danger", "btn btn-success", "btn btn-info", "btn btn-warning"};
 
-        public static String getStatus(int status) {
-            switch (status) {
-                case 0:
-                    return "<span class='label label-danger'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-                case 1:
-                    return "<span class='label label-success'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-                case 2:
-                    return "<span class='label label-warning'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-                case 3:
-                    return "<span class='label label-primary'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-                case 4:
-                    return "<span class='label label-info'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-                case 5:
-                    return "<span class='label bg-purple'>" + StatusConstants.Status.getValueByKey(status) + "</span>";
-            }
-            return "";
+    public static <K, V> List<Map<String, Object>> matchOptions(IEnum<K, V>... enums) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (IEnum<K, V> e : enums) {
+            Map<String, Object> options = new HashMap<>();
+            options.put("value", e.getCode());
+            options.put("text", e.getContent());
+            options.put("class", OPTIONS_CLASS[Integer.valueOf(e.getCode().toString())]);
+            list.add(options);
         }
-
+        return list;
     }
+
 }
