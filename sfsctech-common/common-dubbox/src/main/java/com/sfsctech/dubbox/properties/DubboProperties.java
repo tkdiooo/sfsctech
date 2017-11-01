@@ -74,6 +74,7 @@ public class DubboProperties {
 
     public static class Registry {
 
+        private String protocol;
         private String address;
         private boolean check;
         private boolean register;
@@ -81,6 +82,14 @@ public class DubboProperties {
         private int timeout;
 
         public Registry() {
+        }
+
+        public String getProtocol() {
+            return protocol;
+        }
+
+        public void setProtocol(String protocol) {
+            this.protocol = protocol;
         }
 
         public String getAddress() {

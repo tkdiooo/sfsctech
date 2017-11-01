@@ -61,6 +61,7 @@ public class DubboxConfigurer {
     @Bean
     public RegistryConfig registryConfig() {
         RegistryConfig config = new RegistryConfig();
+        config.setProtocol(properties.getRegistry().getProtocol());
         config.setAddress(properties.getRegistry().getAddress());
         config.setCheck(properties.getRegistry().isCheck());
         config.setRegister(properties.getRegistry().isRegister());

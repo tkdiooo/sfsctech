@@ -6,15 +6,15 @@
 
     <groupId>com.sfsctech.support</groupId>
     <artifactId>sfsctech-support</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <modules>
         <module>config-service</module>
         <module>static-resources</module>
     </modules>
 
     <properties>
-        <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
+        <sfsctech.common.version>1.1.0-SNAPSHOT</sfsctech.common.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>

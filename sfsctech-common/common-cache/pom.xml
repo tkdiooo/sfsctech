@@ -35,5 +35,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.0.pr3</version>
         </dependency>
+        <!--Common support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-constants</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 </project>

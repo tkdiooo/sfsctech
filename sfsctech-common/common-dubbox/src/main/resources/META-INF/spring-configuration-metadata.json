@@ -60,6 +60,12 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Application"
     },
     {
+      "name": "dubbo.registry.protocol",
+      "type": "java.lang.String",
+      "description": "zookeeper注册中心类型",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Registry"
+    },
+    {
       "name": "dubbo.registry.address",
       "type": "java.lang.String",
       "description": "zookeeper注册中心服务地址",
@@ -384,6 +390,23 @@
         },
         {
           "value": "servlet"
+        }
+      ]
+    },
+    {
+      "name": "dubbo.registry.protocol",
+      "values": [
+        {
+          "value": "zookeeper"
+        },
+        {
+          "value": "redis"
+        },
+        {
+          "value": "simple"
+        },
+        {
+          "value": "multicast"
         }
       ]
     }

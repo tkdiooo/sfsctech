@@ -3,8 +3,12 @@ package com.sfsctech.configurer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sfsctech.constants.LabelConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +19,12 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Class RedisConfigurer
@@ -28,6 +37,9 @@ import redis.clients.jedis.JedisPoolConfig;
 public class CacheConfigurer {
 
     private final Logger logger = LoggerFactory.getLogger(CacheConfigurer.class);
+
+//    @Autowired
+//    private RedisProperties redisProperties;
 
     @Bean
     @ConfigurationProperties(prefix = "spring.redis.pool")
@@ -70,13 +82,21 @@ public class CacheConfigurer {
         return redisTemplate;
     }
 
-//    /**
-//     * Redis 集群设置
-//     *
-//     * @return
-//     */
+    /**
+     * Redis 集群设置
+     *
+     * @return
+     */
 //    @Bean
-//    public JedisCluster JedisClusterFactory(@Value("${spring.redis.cluster.nodes}") Set<HostAndPort> nodes) {
-//        return new JedisCluster(nodes, getRedisConfig());
+//    public JedisCluster JedisClusterFactory() {
+//        System.out.println(redisProperties.getCluster().getNodes());
+//        Set<HostAndPort> set = new HashSet<>();
+//
+////        for (String ipPort : nodes.split(LabelConstants.COMMA)) {
+////            String[] ipPortPair = ipPort.split(LabelConstants.COLON);
+////            set.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
+////        }
+//
+//        return new JedisCluster(set, redisProperties.getTimeout(), redisProperties.getCluster().getMaxRedirects());
 //    }
 }
