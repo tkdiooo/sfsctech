@@ -50,7 +50,7 @@
     {
       "name": "dubbo.application.name",
       "type": "java.lang.String",
-      "description": "# 服务提供者名称",
+      "description": "服务提供者名称",
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Application"
     },
     {

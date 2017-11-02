@@ -1,0 +1,193 @@
+{
+  "groups": [
+    {
+      "sourceType": "com.sfsctech.configurer.CacheConfigurer",
+      "name": "spring.redis",
+      "sourceMethod": "jedisConnectionFactory(redis.clients.jedis.JedisPoolConfig)",
+      "type": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    },
+    {
+      "sourceType": "com.sfsctech.configurer.CacheConfigurer",
+      "name": "spring.redis.pool",
+      "sourceMethod": "jedisPoolConfig()",
+      "type": "redis.clients.jedis.JedisPoolConfig"
+    },
+    {
+      "name": "spring.redis",
+      "type": "com.sfsctech.cache.properties.CacheProperties",
+      "sourceType": "com.sfsctech.cache.properties.CacheProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.convert-pipeline-and-tx-results",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.database",
+      "type": "java.lang.Integer",
+      "description": "Redis数据库索引（默认为0）"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.host-name",
+      "type": "java.lang.String",
+      "description": "Redis服务器地址"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.password",
+      "type": "java.lang.String",
+      "description": "Redis服务器连接密码（默认为空）"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.pool-config",
+      "type": "redis.clients.jedis.JedisPoolConfig"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.block-when-exhausted",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.eviction-policy-class-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.fairness",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.jmx-enabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.jmx-name-base",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.jmx-name-prefix",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.lifo",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.max-idle",
+      "type": "java.lang.Integer",
+      "description": "连接池中的最大空闲连接"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.max-total",
+      "type": "java.lang.Integer",
+      "description": "连接池最大连接数（使用负值表示没有限制）"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.max-wait-millis",
+      "type": "java.lang.Long",
+      "description": "连接池最大阻塞等待时间（使用负值表示没有限制）"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.min-evictable-idle-time-millis",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.min-idle",
+      "type": "java.lang.Integer",
+      "description": "连接池中的最小空闲连接"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.num-tests-per-eviction-run",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.soft-min-evictable-idle-time-millis",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.test-on-borrow",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.test-on-create",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.test-on-return",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.test-while-idle",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "redis.clients.jedis.JedisPoolConfig",
+      "name": "spring.redis.pool.time-between-eviction-runs-millis",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.port",
+      "type": "java.lang.Integer",
+      "description": "Redis服务器连接端口"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.shard-info",
+      "type": "redis.clients.jedis.JedisShardInfo"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.timeout",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间（毫秒）"
+    },
+    {
+      "sourceType": "org.springframework.data.redis.connection.jedis.JedisConnectionFactory",
+      "name": "spring.redis.use-pool",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "spring.redis.protocol",
+      "type": "java.lang.String",
+      "description": "redis 连接协议",
+      "sourceType": "com.sfsctech.cache.properties.CacheProperties"
+    }
+  ],
+  "hints": [
+    {
+      "name": "spring.redis.protocol",
+      "values": [
+        {
+          "value": "singleton",
+          "description": "单独服务"
+        },
+        {
+          "value": "cluster",
+          "description": "集群服务"
+        }
+      ]
+    }
+  ]
+}

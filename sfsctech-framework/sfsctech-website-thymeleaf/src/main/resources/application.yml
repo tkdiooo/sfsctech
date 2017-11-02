@@ -23,11 +23,11 @@ server:
 #      domain:
       http-only: true
       max-age: 3600000
-  context-parameters:
+#  context-parameters:
     # logback配置文件服务地址
-    logback-config-location: http://172.16.225.98:8888/config-service/logback/framework/website
+#    logback-config-location: http://172.16.225.98:8888/logback/framework/website
     # logback是否显示WebAppRoot
-    logback-expose-webapp-root: true
+#    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
   thymeleaf:
@@ -77,7 +77,7 @@ website:
     verify-exclude-path: /**
   support:
     # 静态资源服务
-    static-resources: http://localhost:8080/static-resources
+    static-resources: http://localhost:8080
     # 首页路径
     welcome-file: /index
   session:

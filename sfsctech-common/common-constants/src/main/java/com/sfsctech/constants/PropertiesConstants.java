@@ -28,9 +28,9 @@ public class PropertiesConstants {
     public static final String WEBSITE_SERVICE_AUTHENTICATION = "website.session.authentication";
 
     /**
-     * Properties：website.csrf.open"
+     * Properties：spring.redis.protocol"
      */
-    public static final String WEBSITE_CSRF_OPEN = "website.csrf.open";
+    public static final String SPRING_REDIS_PROTOCOL = "spring.redis.protocol";
 
     /**
      * Properties：dubbo.protocol.single"

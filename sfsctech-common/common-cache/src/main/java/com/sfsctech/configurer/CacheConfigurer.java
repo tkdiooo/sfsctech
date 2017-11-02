@@ -3,16 +3,18 @@ package com.sfsctech.configurer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sfsctech.cache.condition.ClusterProtocolCondition;
+import com.sfsctech.cache.condition.SingleProtocolCondition;
 import com.sfsctech.constants.LabelConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -38,8 +40,8 @@ public class CacheConfigurer {
 
     private final Logger logger = LoggerFactory.getLogger(CacheConfigurer.class);
 
-//    @Autowired
-//    private RedisProperties redisProperties;
+    @Autowired
+    private RedisProperties redisProperties;
 
     @Bean
     @ConfigurationProperties(prefix = "spring.redis.pool")
@@ -68,6 +70,7 @@ public class CacheConfigurer {
 
 
     @Bean
+    @Conditional(SingleProtocolCondition.class)
     public RedisTemplate<String, ?> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
         RedisTemplate<String, ?> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
@@ -87,16 +90,14 @@ public class CacheConfigurer {
      *
      * @return
      */
-//    @Bean
-//    public JedisCluster JedisClusterFactory() {
-//        System.out.println(redisProperties.getCluster().getNodes());
-//        Set<HostAndPort> set = new HashSet<>();
-//
-////        for (String ipPort : nodes.split(LabelConstants.COMMA)) {
-////            String[] ipPortPair = ipPort.split(LabelConstants.COLON);
-////            set.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
-////        }
-//
-//        return new JedisCluster(set, redisProperties.getTimeout(), redisProperties.getCluster().getMaxRedirects());
-//    }
+    @Bean
+    @Conditional(ClusterProtocolCondition.class)
+    public JedisCluster JedisClusterFactory(JedisPoolConfig jedisPoolConfig) {
+        Set<HostAndPort> nodes = new HashSet<>();
+        redisProperties.getCluster().getNodes().forEach(node -> {
+            String[] ipPortPair = node.split(LabelConstants.COLON);
+            nodes.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
+        });
+        return new JedisCluster(nodes, jedisPoolConfig);
+    }
 }

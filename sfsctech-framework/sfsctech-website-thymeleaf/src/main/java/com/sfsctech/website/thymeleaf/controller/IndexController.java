@@ -3,6 +3,7 @@ package com.sfsctech.website.thymeleaf.controller;
 import com.sfsctech.common.cookie.Config;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.security.annotation.verify;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
 import com.sfsctech.website.thymeleaf.rpc.provider.AccountService;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class IndexController {
 
     @PostMapping("login")
     @ResponseBody
-    public ActionResult<UserInfo> login(ModelMap model, HttpServletRequest request, UserInfo userInfo) {
+    public ActionResult<UserInfo> login(ModelMap model, HttpServletRequest request, @verify UserInfo userInfo, UserInfo test) {
         System.out.println(model);
         System.out.println(request.getParameter("userName"));
         System.out.println(userInfo.getUserName());
