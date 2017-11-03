@@ -88,7 +88,6 @@ public class CacheConfigurer {
         return valueSerializer;
     }
 
-
     @Bean
     @Conditional(SingleProtocolCondition.class)
     public RedisTemplate<String, ?> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
