@@ -3,7 +3,7 @@ package com.sfsctech.framework.rpc.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.cache.redis.RedisProxy;
+import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.domain.TSysAccount;
@@ -38,7 +38,7 @@ public class SysAccountServiceProvider implements SysAccountService {
     private AccountTransactionalService transactionalService;
 
     @Autowired
-    private RedisProxy redis;
+    private CacheFactory factory;
 
     @Override
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
@@ -62,7 +62,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
-        System.out.println(redis.get("test_key"));
+        System.out.println(factory.getCacheClient().get("test_key"));
         logger.info("日志消息");
         PageInfo<TSysAccount> page = readService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());

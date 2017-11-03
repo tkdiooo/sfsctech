@@ -1,5 +1,6 @@
 package com.sfsctech.website.thymeleaf.controller;
 
+import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.cookie.Config;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.rpc.result.ActionResult;
@@ -33,8 +34,12 @@ public class IndexController {
     @Autowired
     private AccountService service;
 
+    @Autowired
+    private CacheFactory factory;
+
     @GetMapping("index")
     public String index(ModelMap model) {
+        System.out.println(factory.getCacheClient());
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName("account");
         userInfo.setPassword("password");

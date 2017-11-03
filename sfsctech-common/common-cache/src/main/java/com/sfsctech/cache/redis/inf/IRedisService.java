@@ -10,7 +10,7 @@ import com.sfsctech.cache.inf.ICacheService;
  */
 public interface IRedisService<K, V> extends ICacheService<K, V> {
 
-    boolean expire(K key, long expire);
+    Object expire(K key, int expire);
 
     long lpush(K key, V obj);
 

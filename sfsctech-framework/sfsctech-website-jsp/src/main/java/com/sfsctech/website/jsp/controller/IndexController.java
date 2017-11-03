@@ -1,20 +1,19 @@
 package com.sfsctech.website.jsp.controller;
 
 import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.cache.redis.RedisProxy;
+import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.framework.model.dto.SysAccountDto;
+import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.website.jsp.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Class IndexController
@@ -31,7 +30,7 @@ public class IndexController {
     private AccountService accountService;
 
     @Autowired
-    private RedisProxy redis;
+    private CacheFactory factory;
 
     @GetMapping("index.html")
     public String index() {
@@ -40,8 +39,8 @@ public class IndexController {
         model.setPassword("tk488");
         model.setInitpassword("1111");
         accountService.save(model);
-        redis.put("test_key", IndexController.class);
-        logger.info(String.valueOf(redis.get("test_key")));
+        factory.getCacheClient().put("test_key", IndexController.class);
+        logger.info(String.valueOf(factory.getCacheClient().get("test_key")));
         return "index";
     }
 

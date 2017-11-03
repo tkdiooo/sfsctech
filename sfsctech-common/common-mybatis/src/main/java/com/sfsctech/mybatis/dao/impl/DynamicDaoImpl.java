@@ -20,7 +20,7 @@ abstract class DynamicDaoImpl<T, PK extends Serializable, Example> extends MyBat
         super.setSqlSessionFactory(sessionFactory);
     }
 
-    @Autowired
+    @Autowired(required = false)
     private void initCacheFactory(CacheFactory cacheFactory) {
         super.setCacheClient(cacheFactory);
     }

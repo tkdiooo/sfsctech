@@ -1,7 +1,9 @@
 package com.sfsctech.cache.redis;
 
+import com.sfsctech.cache.condition.SingleProtocolCondition;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -16,13 +18,19 @@ import java.util.concurrent.TimeUnit;
  * @version Description:
  */
 @Component
+@Conditional(SingleProtocolCondition.class)
 public class RedisProxy implements IRedisService<String, Object> {
 
     @Autowired
     private RedisTemplate<String, ?> redisTemplate;
 
+    /**
+     * @param key    key
+     * @param expire expire
+     * @return boolean
+     */
     @Override
-    public boolean expire(String key, long expire) {
+    public Object expire(String key, int expire) {
         return redisTemplate.expire(key, expire, TimeUnit.SECONDS);
     }
 
@@ -74,8 +82,7 @@ public class RedisProxy implements IRedisService<String, Object> {
         return redisTemplate.execute((RedisCallback<Object>) connection -> {
             RedisSerializer keySlz = redisTemplate.getKeySerializer();
             RedisSerializer valueSlz = redisTemplate.getValueSerializer();
-            byte[] res = connection.lPop(keySlz.serialize(key));
-            return valueSlz.deserialize(res);
+            return valueSlz.deserialize(connection.lPop(keySlz.serialize(key)));
         });
     }
 
@@ -96,11 +103,13 @@ public class RedisProxy implements IRedisService<String, Object> {
     }
 
     @Override
+    @Deprecated
     public Object add(String key, Object value, Integer TTL) {
         return null;
     }
 
     @Override
+    @Deprecated
     public Object addTimeOut(String key, Object value, int timeout) {
         return null;
     }
@@ -115,11 +124,13 @@ public class RedisProxy implements IRedisService<String, Object> {
     }
 
     @Override
+    @Deprecated
     public Object replace(String key, Object value) {
         return null;
     }
 
     @Override
+    @Deprecated
     public boolean flushAll() {
         return false;
     }
