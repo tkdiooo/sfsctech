@@ -23,6 +23,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.HashSet;
@@ -107,11 +108,15 @@ public class CacheConfigurer {
     @Bean
     @Conditional(ClusterProtocolCondition.class)
     public JedisCluster jedisCluster(JedisPoolConfig jedisPoolConfig) {
+        JedisPool pool = new JedisPool();
         Set<HostAndPort> nodes = new HashSet<>();
         properties.getCluster().getNodes().forEach(node -> {
             String[] ipPortPair = node.split(LabelConstants.COLON);
             nodes.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
         });
-        return new JedisCluster(nodes, jedisPoolConfig);
+        // 连接超时
+        // 读取数据超时
+        // 出现异常最大重试次数
+        return new JedisCluster(nodes, 10000, 1000, 3, "redis123", jedisPoolConfig);
     }
 }
