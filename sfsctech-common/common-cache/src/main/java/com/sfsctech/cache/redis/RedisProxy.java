@@ -1,13 +1,9 @@
 package com.sfsctech.cache.redis;
 
-import com.sfsctech.cache.condition.SingleProtocolCondition;
 import com.sfsctech.cache.redis.inf.IRedisService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,12 +13,13 @@ import java.util.concurrent.TimeUnit;
  * @author 张麒 2017/6/15.
  * @version Description:
  */
-@Component
-@Conditional(SingleProtocolCondition.class)
 public class RedisProxy implements IRedisService<String, Object> {
 
-    @Autowired
     private RedisTemplate<String, ?> redisTemplate;
+
+    public RedisProxy(RedisTemplate<String, ?> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     /**
      * @param key    key

@@ -3,14 +3,17 @@ package com.sfsctech.configurer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.condition.CacheCondition;
 import com.sfsctech.cache.condition.ClusterProtocolCondition;
 import com.sfsctech.cache.condition.SingleProtocolCondition;
+import com.sfsctech.cache.properties.RedisProperties;
+import com.sfsctech.cache.redis.JedisProxy;
+import com.sfsctech.cache.redis.RedisProxy;
 import com.sfsctech.constants.LabelConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +26,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.HashSet;
@@ -56,13 +58,13 @@ public class CacheConfigurer {
     }
 
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
-        JedisConnectionFactory factory = new JedisConnectionFactory(jedisPoolConfig);
-        factory.setDatabase(properties.getDatabase());
-        factory.setHostName(properties.getHost());
-        factory.setPort(properties.getPort());
-        factory.setPassword(properties.getPassword());
-        factory.setTimeout(properties.getTimeout());
+    public JedisConnectionFactory jedisConnectionFactory() {
+        JedisConnectionFactory factory = new JedisConnectionFactory(jedisPoolConfig());
+        factory.setDatabase(properties.getSingle().getDatabase());
+        factory.setHostName(properties.getSingle().getHost());
+        factory.setPort(properties.getSingle().getPort());
+        factory.setPassword(properties.getSingle().getPassword());
+        factory.setTimeout(properties.getSingle().getTimeout());
         return factory;
     }
 
@@ -74,25 +76,24 @@ public class CacheConfigurer {
     }
 
     @Bean
-    public StringRedisSerializer stringRedisSerializer() {
-        return new StringRedisSerializer();
+    public CacheFactory cacheFactory() {
+        if ("single".equals(properties.getProtocol())) {
+            return new CacheFactory(new RedisProxy(redisTemplate()));
+        } else {
+            return new CacheFactory(new JedisProxy(jedisCluster(), stringRedisSerializer(), jackson2JsonRedisSerializer()));
+        }
     }
 
-    @Bean
-    public Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer() {
-        Jackson2JsonRedisSerializer<Object> valueSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        valueSerializer.setObjectMapper(om);
-        return valueSerializer;
-    }
-
+    /**
+     * Redis 单机
+     *
+     * @return RedisTemplate
+     */
     @Bean
     @Conditional(SingleProtocolCondition.class)
-    public RedisTemplate<String, ?> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+    public RedisTemplate<String, ?> redisTemplate() {
         RedisTemplate<String, ?> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        redisTemplate.setConnectionFactory(jedisConnectionFactory());
         redisTemplate.setKeySerializer(stringRedisSerializer());
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer());
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer());
@@ -100,22 +101,31 @@ public class CacheConfigurer {
     }
 
     /**
-     * Redis 集群设置
+     * Redis 集群
      *
-     * @return
+     * @return JedisCluster
      */
     @Bean
     @Conditional(ClusterProtocolCondition.class)
-    public JedisCluster jedisCluster(JedisPoolConfig jedisPoolConfig) {
-        JedisPool pool = new JedisPool();
+    public JedisCluster jedisCluster() {
         Set<HostAndPort> nodes = new HashSet<>();
         properties.getCluster().getNodes().forEach(node -> {
             String[] ipPortPair = node.split(LabelConstants.COLON);
             nodes.add(new HostAndPort(ipPortPair[0].trim(), Integer.valueOf(ipPortPair[1].trim())));
         });
-        // 连接超时
-        // 读取数据超时
-        // 出现异常最大重试次数
-        return new JedisCluster(nodes, 10000, 1000, 3, "redis123", jedisPoolConfig);
+        return new JedisCluster(nodes, properties.getCluster().getConnectionTimeout(), properties.getCluster().getSoTimeout(), properties.getCluster().getMaxAttempts(), properties.getCluster().getPassword(), jedisPoolConfig());
+    }
+
+    private StringRedisSerializer stringRedisSerializer() {
+        return new StringRedisSerializer();
+    }
+
+    private Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer() {
+        Jackson2JsonRedisSerializer<Object> valueSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        valueSerializer.setObjectMapper(om);
+        return valueSerializer;
     }
 }

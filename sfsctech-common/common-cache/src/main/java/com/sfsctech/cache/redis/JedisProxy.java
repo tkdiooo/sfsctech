@@ -1,12 +1,8 @@
 package com.sfsctech.cache.redis;
 
-import com.sfsctech.cache.condition.ClusterProtocolCondition;
 import com.sfsctech.cache.redis.inf.IRedisService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisCluster;
 
 /**
@@ -15,18 +11,19 @@ import redis.clients.jedis.JedisCluster;
  * @author 张麒 2017-11-3.
  * @version Description:
  */
-@Component
-@Conditional(ClusterProtocolCondition.class)
 public class JedisProxy implements IRedisService<String, Object> {
 
-    @Autowired
     private JedisCluster jedisCluster;
 
-    @Autowired
     private StringRedisSerializer keySerializer;
 
-    @Autowired
     private Jackson2JsonRedisSerializer<Object> valSerializer;
+
+    public JedisProxy(JedisCluster jedisCluster, StringRedisSerializer keySerializer, Jackson2JsonRedisSerializer<Object> valSerializer) {
+        this.jedisCluster = jedisCluster;
+        this.keySerializer = keySerializer;
+        this.valSerializer = valSerializer;
+    }
 
     /**
      * @param key    key

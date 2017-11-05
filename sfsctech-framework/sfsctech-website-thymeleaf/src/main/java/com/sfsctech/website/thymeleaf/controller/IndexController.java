@@ -39,7 +39,8 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(ModelMap model) {
-        System.out.println(factory.getCacheClient());
+        factory.getCacheClient().put("test", "abc");
+        System.out.println(factory.getCacheClient().get("test"));
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName("account");
         userInfo.setPassword("password");
@@ -48,6 +49,7 @@ public class IndexController {
         dto.setAccount("sdsada11111");
         dto.setPassword("sdsada11111");
         service.save(dto);
+        ;
         return "index";
     }
 
