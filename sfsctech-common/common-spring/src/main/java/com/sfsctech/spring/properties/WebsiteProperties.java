@@ -71,7 +71,7 @@ public class WebsiteProperties {
         private Set<String> verifyExcludePath;
         private Set<String> requiredVerifyPath;
 
-        public Csrf() {
+        Csrf() {
 
         }
 
@@ -120,7 +120,7 @@ public class WebsiteProperties {
         private String authentication;
         private Set<String> excludePath;
 
-        public Session() {
+        Session() {
         }
 
         public String getAuthentication() {

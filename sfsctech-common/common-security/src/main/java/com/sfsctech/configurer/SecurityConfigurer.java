@@ -3,6 +3,7 @@ package com.sfsctech.configurer;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.security.factory.HandlerMethodFactory;
+import com.sfsctech.security.filter.SecurityFilter;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
 import com.sfsctech.security.resolver.RequestAttributeResolver;
@@ -60,6 +61,9 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
         }
     }
 
+    /**
+     * 自定义HandlerMethodFactory，用自己的ResponseBody包装类替换掉框架的，达到返回Result的效果
+     */
     @Bean
     public HandlerMethodFactory HandlerMethodFactory() {
         return new HandlerMethodFactory();
@@ -67,8 +71,6 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
 
     /**
      * XSS过滤 - 不过滤静态资源、页面模板、和druid
-     *
-     * @return
      */
     @Bean
     public FilterRegistrationBean XSSFilter() {
@@ -76,6 +78,17 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("XSSFilter");
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return registration;
+    }
+
+    /**
+     * Security过滤 -
+     */
+    @Bean
+    public FilterRegistrationBean SecurityFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new SecurityFilter());
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+        registration.setName("SecurityFilter");
         return registration;
     }
 }

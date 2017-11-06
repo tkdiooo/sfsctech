@@ -23,6 +23,7 @@ public class ActionResult<T> extends BaseResult {
 
     public ActionResult() {
         super();
+        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
     }
 
     public ActionResult(Tips tips, String... params) {

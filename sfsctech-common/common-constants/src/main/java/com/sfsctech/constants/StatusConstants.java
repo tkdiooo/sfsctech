@@ -2,9 +2,8 @@ package com.sfsctech.constants;
 
 import com.sfsctech.constants.inf.IEnum;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class StatusConstants
@@ -104,6 +103,12 @@ public class StatusConstants {
 
         public static List<IEnum<Integer, String>> getOptions() {
             return options;
+        }
+
+        private static Map<Integer, String> columns = options.stream().collect(Collectors.toMap(IEnum::getCode, IEnum::getContent));
+
+        public static Map<Integer, String> getColumns() {
+            return columns;
         }
     }
 
