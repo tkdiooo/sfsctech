@@ -12,12 +12,6 @@
       "sourceMethod": "getSupport()"
     },
     {
-      "name": "website.csrf",
-      "type": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
-      "sourceMethod": "getCsrf()"
-    },
-    {
       "name": "website.session",
       "type": "com.sfsctech.spring.properties.WebsiteProperties$Session",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties",
@@ -41,43 +35,6 @@
       "type": "java.lang.String",
       "description": "网站欢迎页面地址",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
-    },
-    {
-      "name": "website.csrf.open",
-      "type": "java.lang.Boolean",
-      "description": "是否开启CSRF防御",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
-      "defaultValue": false
-    },
-    {
-      "name": "website.csrf.keep-pattern",
-      "type": "java.lang.String",
-      "description": "CSRF防御Token保持方式，为空默认HttpSession",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
-    },
-    {
-      "name": "website.csrf.intercept-exclude-path",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "CSRF防御拦截排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
-    },
-    {
-      "name": "website.csrf.verify-exclude-path",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "CSRF防御校验排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
-    },
-    {
-      "name": "website.csrf.required-verify-path",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "必须通过CSRF防御校验路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
-    },
-    {
-      "name": "website.session.authentication",
-      "type": "java.lang.String",
-      "description": "系统Session认证方式",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
     },
     {
       "name": "website.session.exclude-path",
@@ -117,32 +74,6 @@
     }
   ],
   "hints": [
-    {
-      "name": "website.csrf.keep-pattern",
-      "values": [
-        {
-          "value": "soa",
-          "description": "通过分布式服务保持Token"
-        },
-        {
-          "value": "cache",
-          "description": "通过缓存服务保持Token"
-        }
-      ]
-    },
-    {
-      "name": "website.session.authentication",
-      "values": [
-        {
-          "value": "session",
-          "description": "通过HttpSession认证信息"
-        },
-        {
-          "value": "sso",
-          "description": "通过SSO验证服务认证信息"
-        }
-      ]
-    },
     {
       "name": "server.tomcat.connector",
       "values": [

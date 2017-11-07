@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author 张麒 2017-11-6.
  * @version Description:
  */
-public class SecurityFilter implements Filter {
+public class DDOCFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {

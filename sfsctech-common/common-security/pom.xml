@@ -16,7 +16,7 @@
         <!-- sfsctech-common-spring support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-auth</artifactId>
+            <artifactId>common-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- sfsctech-common-cache support -->

@@ -310,20 +310,20 @@
     {
       "name": "website.sso.reference.lazy",
       "type": "java.lang.Boolean",
-      "description": "是否延迟加载默认true",
+      "description": "Dubbo服务是否延迟加载默认true",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Reference",
       "defaultValue": true
     },
     {
       "name": "website.sso.reference.version",
       "type": "java.lang.String",
-      "description": "消费服务的版本号",
+      "description": "Dubbo消费服务的版本号",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Reference"
     },
     {
       "name": "website.sso.reference.timeout",
       "type": "java.lang.Integer",
-      "description": "连接超时时间默认2000",
+      "description": "Dubbo服务连接超时时间默认2000",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Reference",
       "defaultValue": 2000
     },

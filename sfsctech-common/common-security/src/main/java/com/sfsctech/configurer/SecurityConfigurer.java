@@ -2,15 +2,19 @@ package com.sfsctech.configurer;
 
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.security.condition.DDOCCondition;
+import com.sfsctech.security.condition.XSSCondition;
 import com.sfsctech.security.factory.HandlerMethodFactory;
-import com.sfsctech.security.filter.SecurityFilter;
+import com.sfsctech.security.filter.DDOCFilter;
 import com.sfsctech.security.filter.XSSFilter;
 import com.sfsctech.security.interceptor.SecurityInterceptor;
+import com.sfsctech.security.properties.StartProperties;
 import com.sfsctech.security.resolver.RequestAttributeResolver;
-import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -26,10 +30,11 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
+@ComponentScan("com.sfsctech.security")
 public class SecurityConfigurer extends WebMvcConfigurerAdapter {
 
     @Autowired
-    private AppConfig appConfig;
+    private StartProperties properties;
 
     /**
      * 自定义参数解析器
@@ -49,10 +54,10 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if (appConfig.getWebsiteProperties().getCsrf().isOpen()) {
+        if (properties.getProperties().getOpenCsrf()) {
             SecurityInterceptor securityInterceptor = new SecurityInterceptor();
-            securityInterceptor.setExcludesPattern(appConfig.getWebsiteProperties().getCsrf().getVerifyExcludePath());
-            securityInterceptor.setVerifyPattern(appConfig.getWebsiteProperties().getCsrf().getRequiredVerifyPath());
+            securityInterceptor.setExcludesPattern(properties.getProperties().getCsrf().getVerifyExcludePath());
+            securityInterceptor.setVerifyPattern(properties.getProperties().getCsrf().getRequiredVerifyPath());
             // 多个拦截器组成一个拦截器链
             // addPathPatterns 用于添加拦截规则
             // excludePathPatterns 用户排除拦截
@@ -73,6 +78,7 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      * XSS过滤 - 不过滤静态资源、页面模板、和druid
      */
     @Bean
+    @Conditional(XSSCondition.class)
     public FilterRegistrationBean XSSFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
@@ -82,13 +88,14 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Security过滤 -
+     * DDOC过滤 -
      */
     @Bean
+    @Conditional(DDOCCondition.class)
     public FilterRegistrationBean SecurityFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new SecurityFilter());
+        FilterRegistrationBean registration = new FilterRegistrationBean(new DDOCFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("SecurityFilter");
+        registration.setName("DDOCFilter");
         return registration;
     }
 }

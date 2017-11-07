@@ -20,7 +20,7 @@ public class SecurityProperties {
     private Boolean openXss = true;
     private Boolean openCsrf = false;
     private final SecurityProperties.Csrf csrf;
-    private Boolean openSecurity = false;
+    private Boolean openDdoc= false;
     private final SecurityProperties.Ddos ddos;
 
     public SecurityProperties() {
@@ -48,16 +48,17 @@ public class SecurityProperties {
         return csrf;
     }
 
-    public Boolean getOpenSecurity() {
-        return openSecurity;
-    }
-
-    public void setOpenSecurity(Boolean openSecurity) {
-        this.openSecurity = openSecurity;
-    }
 
     public Ddos getDdos() {
         return ddos;
+    }
+
+    public Boolean getOpenDdoc() {
+        return openDdoc;
+    }
+
+    public void setOpenDdoc(Boolean openDdoc) {
+        this.openDdoc = openDdoc;
     }
 
     public static class Csrf {
@@ -104,17 +105,17 @@ public class SecurityProperties {
     }
 
     public static class Ddos {
-        private String accessControlAllowOrigin;
+        private Set<String> accessControlAllowOrigin;
 
         Ddos() {
 
         }
 
-        public String getAccessControlAllowOrigin() {
+        public Set<String> getAccessControlAllowOrigin() {
             return accessControlAllowOrigin;
         }
 
-        public void setAccessControlAllowOrigin(String accessControlAllowOrigin) {
+        public void setAccessControlAllowOrigin(Set<String> accessControlAllowOrigin) {
             this.accessControlAllowOrigin = accessControlAllowOrigin;
         }
     }

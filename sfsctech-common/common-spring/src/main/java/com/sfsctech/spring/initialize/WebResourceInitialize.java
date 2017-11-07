@@ -29,7 +29,11 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
     @Override
     public void run(String... args) {
         ServletContext servletContext = super.getWebApplicationContext().getServletContext();
+        // 静态资源
         servletContext.setAttribute(CommonConstants.STATIC_RESOURCE_ATTRIBUTE, config.getWebsiteProperties().getSupport().getStaticResources());
+        // ContextPath
         servletContext.setAttribute(CommonConstants.CONTEXT_PATH_ATTRIBUTE, config.getServerProperties().getContextPath());
+        // 网站域名
+        servletContext.setAttribute(CommonConstants.WEBSITE_DOMAIN_ATTRIBUTE, config.getServerProperties().getSession().getCookie().getDomain());
     }
 }

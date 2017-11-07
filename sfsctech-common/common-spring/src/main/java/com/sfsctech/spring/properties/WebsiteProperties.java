@@ -18,21 +18,15 @@ import java.util.Set;
 public class WebsiteProperties {
 
     private final WebsiteProperties.Support support;
-    private final WebsiteProperties.Csrf csrf;
     private final WebsiteProperties.Session session;
 
     public WebsiteProperties() {
         this.support = new WebsiteProperties.Support();
-        this.csrf = new WebsiteProperties.Csrf();
         this.session = new WebsiteProperties.Session();
     }
 
     public Support getSupport() {
         return support;
-    }
-
-    public Csrf getCsrf() {
-        return csrf;
     }
 
     public Session getSession() {
@@ -64,71 +58,10 @@ public class WebsiteProperties {
         }
     }
 
-    public static class Csrf {
-        private Boolean open = false;
-        private String keepPattern;
-        private Set<String> interceptExcludePath;
-        private Set<String> verifyExcludePath;
-        private Set<String> requiredVerifyPath;
-
-        Csrf() {
-
-        }
-
-        public Boolean isOpen() {
-            return open;
-        }
-
-        public void setOpen(Boolean open) {
-            this.open = open;
-        }
-
-        public String getKeepPattern() {
-            return keepPattern;
-        }
-
-        public void setKeepPattern(String keepPattern) {
-            this.keepPattern = keepPattern;
-        }
-
-        public Set<String> getInterceptExcludePath() {
-            return interceptExcludePath;
-        }
-
-        public void setInterceptExcludePath(Set<String> interceptExcludePath) {
-            this.interceptExcludePath = interceptExcludePath;
-        }
-
-        public Set<String> getVerifyExcludePath() {
-            return verifyExcludePath;
-        }
-
-        public void setVerifyExcludePath(Set<String> verifyExcludePath) {
-            this.verifyExcludePath = verifyExcludePath;
-        }
-
-        public Set<String> getRequiredVerifyPath() {
-            return requiredVerifyPath;
-        }
-
-        public void setRequiredVerifyPath(Set<String> requiredVerifyPath) {
-            this.requiredVerifyPath = requiredVerifyPath;
-        }
-    }
-
     public static class Session {
-        private String authentication;
         private Set<String> excludePath;
 
         Session() {
-        }
-
-        public String getAuthentication() {
-            return authentication;
-        }
-
-        public void setAuthentication(String authentication) {
-            this.authentication = authentication;
         }
 
         public Set<String> getExcludePath() {

@@ -72,12 +72,6 @@ dubbo:
     service-package: com.sfsctech.website.thymeleaf.rpc
 #common setting
 website:
-  csrf:
-    # csrf拦截排除路径
-#    intercept-exclude-path: /**
-    open: false
-    # csrf验证排除路径
-    verify-exclude-path: /**
   support:
     # 静态资源服务
     static-resources: http://localhost:8080
@@ -88,4 +82,10 @@ website:
     authentication: sso
     # session过滤排除路径
     exclude-path: /index, /login
+  security:
+    csrf:
+      # csrf拦截排除路径
+#     intercept-exclude-path: /**
+      # csrf验证排除路径
+      verify-exclude-path: /**
 

@@ -49,6 +49,11 @@ public class CommonConstants {
      */
     public static final String CONTEXT_PATH_ATTRIBUTE = "context_path";
 
+    /**
+     * 网站域名
+     */
+    public static final String WEBSITE_DOMAIN_ATTRIBUTE = "website_domain";
+
     // Logback Setting Attribute
     //-------------------------------------------------------------------------------------------
     /**
@@ -63,8 +68,6 @@ public class CommonConstants {
 
     // Authentication Attribute
     //-------------------------------------------------------------------------------------------
-    public static final String AUTHENTICATION_SSO = "sso";
-    public static final String AUTHENTICATION_SESSION = "session";
 
     // Common Attribute
     //-------------------------------------------------------------------------------------------

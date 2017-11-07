@@ -61,9 +61,8 @@ public class AppConfig {
 
     public Set<String> getSessionExcludePath() {
         if (ListUtil.isNotEmpty(websiteProperties.getSession().getExcludePath())) {
-            Set<String> excludes = websiteProperties.getSession().getExcludePath();
-            excludes.addAll(ExcludesConstants.SESSION_EXCLUDES_PATTERNS);
-            return excludes;
+            websiteProperties.getSession().getExcludePath().addAll(ExcludesConstants.SESSION_EXCLUDES_PATTERNS);
+            return websiteProperties.getSession().getExcludePath();
         } else {
             return null;
         }
@@ -74,15 +73,8 @@ public class AppConfig {
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + PropertiesConstants.SERVER_STATIC_PATH_PATTERN + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath) {
         // 项目ContextPath
         CommonConstants.CONTEXT_PATH = serverProperties.getContextPath();
-        // CSRF防御Token保持方式
-        if (StringUtil.isNotBlank(websiteProperties.getCsrf().getKeepPattern())) {
-            CommonConstants.CSRF_KEEP_PATTERN = websiteProperties.getCsrf().getKeepPattern();
-        }
         // 过滤器排除 - 项目视图模板
         ExcludesConstants.addFilterExcludes(getViewTemplate());
-        // CSRF防御拦截排除 - 路径
-        if (null != websiteProperties.getCsrf().getInterceptExcludePath())
-            ExcludesConstants.INTERCEPT_EXCLUDES_PATTERNS.addAll(websiteProperties.getCsrf().getInterceptExcludePath());
         // 项目静态资源路径
         if (StringUtil.isNotBlank(staticPath)) {
             // CSRF防御拦截排除 - 项目静态资源

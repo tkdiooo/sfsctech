@@ -10,11 +10,14 @@ import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
@@ -115,6 +118,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
             ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.NOT_FOUND));
             ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, (ExcludesConstants.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             container.addErrorPages(error401Page, error403Page, error404Page, error500Page);
+            if (container instanceof TomcatEmbeddedServletContainerFactory) {
+                ((TomcatEmbeddedServletContainerFactory) container)
+                        .addContextCustomizers((TomcatContextCustomizer) context -> context.setCookieProcessor(new LegacyCookieProcessor()));
+            }
         });
     }
 

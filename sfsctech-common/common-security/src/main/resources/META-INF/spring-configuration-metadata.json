@@ -20,94 +20,57 @@
   ],
   "properties": [
     {
-      "name": "website.support.static-resources",
-      "type": "java.lang.String",
-      "description": "静态资源服务地址",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
-    },
-    {
-      "name": "website.support.welcome-file",
-      "type": "java.lang.String",
-      "description": "网站欢迎页面地址",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
-    },
-    {
-      "name": "website.csrf.open",
+      "name": "website.security.open-xss",
       "type": "java.lang.Boolean",
-      "description": "是否开启CSRF防御",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf",
-      "defaultValue": false
+      "description": "是否打开XSS防御（默认true）",
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
     },
     {
-      "name": "website.csrf.keep-pattern",
+      "name": "website.security.open-csrf",
+      "type": "java.lang.Boolean",
+      "description": "是否打开CSRF防御（默认false）",
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
+    },
+    {
+      "name": "website.security.open-ddoc",
+      "type": "java.lang.Boolean",
+      "description": "是否打开DDOC防御（默认false）",
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
+    },
+    {
+      "name": "website.security.csrf.keep-pattern",
       "type": "java.lang.String",
       "description": "CSRF防御Token保持方式，为空默认HttpSession",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
     },
     {
-      "name": "website.csrf.intercept-exclude-path",
+      "name": "website.security.csrf.intercept-exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF防御拦截排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
     },
     {
-      "name": "website.csrf.verify-exclude-path",
+      "name": "website.security.csrf.verify-exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF防御校验排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
     },
     {
-      "name": "website.csrf.required-verify-path",
+      "name": "website.security.csrf.required-verify-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "必须通过CSRF防御校验路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Csrf"
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
     },
     {
-      "name": "website.session.authentication",
-      "type": "java.lang.String",
-      "description": "系统Session认证方式",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
-    },
-    {
-      "name": "website.session.exclude-path",
+      "name": "website.security.ddos.access-control-allow-origin",
       "type": "java.util.Set<java.lang.String>",
-      "description": "Session认证排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
-    },
-    {
-      "name": "server.tomcat.optimize",
-      "type": "java.lang.Boolean",
-      "description": "tomcat优化",
-      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
-    },
-    {
-      "name": "server.tomcat.connector",
-      "type": "java.lang.String",
-      "description": "tomcat连接器",
-      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
-    },
-    {
-      "name": "server.tomcat.connectionTimeout",
-      "type": "java.lang.Integer",
-      "description": "连接时间",
-      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
-    },
-    {
-      "name": "server.tomcat.maxKeepAliveRequests",
-      "type": "java.lang.Integer",
-      "description": "一次连接可以进行的HTTP请求的最大请求次数",
-      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
-    },
-    {
-      "name": "server.tomcat.keepAliveTimeout",
-      "type": "java.lang.Integer",
-      "description": "一次连接中的多次请求传输之间的时间",
-      "sourceType": "com.sfsctech.spring.properties.TomcatProperties"
+      "description": "跨域请求白名单",
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Ddos"
     }
   ],
   "hints": [
     {
-      "name": "website.csrf.keep-pattern",
+      "name": "website.security.csrf.keep-pattern",
       "values": [
         {
           "value": "soa",
@@ -116,272 +79,6 @@
         {
           "value": "cache",
           "description": "通过缓存服务保持Token"
-        }
-      ]
-    },
-    {
-      "name": "website.session.authentication",
-      "values": [
-        {
-          "value": "session",
-          "description": "通过HttpSession认证信息"
-        },
-        {
-          "value": "sso",
-          "description": "通过SSO验证服务认证信息"
-        }
-      ]
-    },
-    {
-      "name": "server.tomcat.connector",
-      "values": [
-        {
-          "value": "org.apache.coyote.http11.Http11AprProtocol",
-          "description": "tomcat连接器Http11AprProtocol"
-        },
-        {
-          "value": "org.apache.coyote.http11.Http11NioProtocol",
-          "description": "tomcat连接器Http11NioProtocol"
-        }
-      ]
-    },
-    {
-      "name": "liquibase.change-log",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.springframework.core.io.Resource"
-          }
-        }
-      ]
-    },
-    {
-      "name": "server.jsp-servlet.class-name",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "javax.servlet.http.HttpServlet"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.cache.jcache.provider",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "javax.cache.spi.CachingProvider"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.data.cassandra.schema-action",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.springframework.data.cassandra.config.SchemaAction"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.data.mongodb.field-naming-strategy",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "org.springframework.data.mapping.model.FieldNamingStrategy"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.data.neo4j.compiler",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "org.neo4j.ogm.compiler.Compiler"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.datasource.data",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "java.util.List<org.springframework.core.io.Resource>"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.datasource.driver-class-name",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "java.sql.Driver"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.datasource.schema",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "java.util.List<org.springframework.core.io.Resource>"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.datasource.xa.data-source-class-name",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "javax.sql.XADataSource"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.http.converters.preferred-json-mapper",
-      "values": [
-        {
-          "value": "gson"
-        },
-        {
-          "value": "jackson"
-        }
-      ],
-      "providers": [
-        {
-          "name": "any"
-        }
-      ]
-    },
-    {
-      "name": "spring.jmx.server",
-      "providers": [
-        {
-          "name": "spring-bean-reference",
-          "parameters": {
-            "target": "javax.management.MBeanServer"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.jpa.hibernate.naming.implicit-strategy",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "org.hibernate.boot.model.naming.ImplicitNamingStrategy"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.jpa.hibernate.naming.physical-strategy",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "org.hibernate.boot.model.naming.PhysicalNamingStrategy"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.jpa.hibernate.naming.strategy",
-      "providers": [
-        {
-          "name": "class-reference",
-          "parameters": {
-            "target": "org.hibernate.cfg.NamingStrategy"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.kafka.consumer.auto-offset-reset",
-      "values": [
-        {
-          "value": "earliest",
-          "description": "Automatically reset the offset to the earliest offset."
-        },
-        {
-          "value": "latest",
-          "description": "Automatically reset the offset to the latest offset."
-        },
-        {
-          "value": "none",
-          "description": "Throw exception to the consumer if no previous offset is found for the consumer's group."
-        },
-        {
-          "value": "exception",
-          "description": "Throw exception to the consumer."
-        }
-      ],
-      "providers": [
-        {
-          "name": "any"
-        }
-      ]
-    },
-    {
-      "name": "spring.kafka.consumer.key-deserializer",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.apache.kafka.common.serialization.Deserializer"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.kafka.consumer.value-deserializer",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.apache.kafka.common.serialization.Deserializer"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.kafka.producer.key-serializer",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.apache.kafka.common.serialization.Serializer"
-          }
-        }
-      ]
-    },
-    {
-      "name": "spring.kafka.producer.value-serializer",
-      "providers": [
-        {
-          "name": "handle-as",
-          "parameters": {
-            "target": "org.apache.kafka.common.serialization.Serializer"
-          }
         }
       ]
     }
