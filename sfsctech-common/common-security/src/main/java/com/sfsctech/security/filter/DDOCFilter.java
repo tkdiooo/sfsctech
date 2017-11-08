@@ -28,6 +28,7 @@ public class DDOCFilter implements Filter {
         String ip = HttpUtil.getRequestIP(request);
         // 跨域请求白名单
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
