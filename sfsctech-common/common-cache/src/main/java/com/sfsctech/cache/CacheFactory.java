@@ -4,6 +4,8 @@ import com.sfsctech.cache.inf.ICacheFactory;
 import com.sfsctech.cache.inf.ICacheService;
 import com.sfsctech.cache.redis.inf.IRedisService;
 
+import java.util.List;
+
 /**
  * Class CacheFactory
  *
@@ -21,5 +23,15 @@ public class CacheFactory implements ICacheFactory<String, Object> {
     @Override
     public ICacheService<String, Object> getCacheClient() {
         return cacheProxy;
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public <T> T get(String key) {
+        return (T) getCacheClient().get(key);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public <T> List<T> getList(String key) {
+        return (List<T>) getCacheClient().get(key);
     }
 }
