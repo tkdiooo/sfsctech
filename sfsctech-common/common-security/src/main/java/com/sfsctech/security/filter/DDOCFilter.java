@@ -27,8 +27,11 @@ public class DDOCFilter implements Filter {
         String uri = request.getRequestURI();
         String ip = HttpUtil.getRequestIP(request);
         // 跨域请求白名单
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "http://www.zzl.com");
+        // 请求Contetn-Type支持 application/json格式
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        // 跨域Cookies设置
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
