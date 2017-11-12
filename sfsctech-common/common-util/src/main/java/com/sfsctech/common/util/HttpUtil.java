@@ -17,6 +17,10 @@ public class HttpUtil {
         return request.getScheme() + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + request.getServerName() + LabelConstants.COLON + request.getServerPort() + request.getRequestURI() + (StringUtil.isBlank(request.getQueryString()) ? "" : (LabelConstants.QUESTION + request.getQueryString()));
     }
 
+    public static String getDomain(HttpServletRequest request) {
+        return request.getScheme() + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + request.getServerName();
+    }
+
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String ajaxParam = request.getParameter(CommonConstants.AJAX_TIME_FRESH);
         String ajaxAccept = request.getHeader(CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[0]);

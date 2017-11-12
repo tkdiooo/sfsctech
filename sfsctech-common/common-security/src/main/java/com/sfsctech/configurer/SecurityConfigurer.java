@@ -93,7 +93,9 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     @Conditional(DDOCCondition.class)
     public FilterRegistrationBean SecurityFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new DDOCFilter());
+        DDOCFilter filter = new DDOCFilter();
+        filter.setProperties(properties.getProperties());
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");
         return registration;

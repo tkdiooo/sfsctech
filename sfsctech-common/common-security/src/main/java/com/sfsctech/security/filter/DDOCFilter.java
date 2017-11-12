@@ -1,6 +1,7 @@
 package com.sfsctech.security.filter;
 
 import com.sfsctech.common.util.HttpUtil;
+import com.sfsctech.security.properties.SecurityProperties;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -15,28 +16,38 @@ import java.io.IOException;
  */
 public class DDOCFilter implements Filter {
 
+    private SecurityProperties properties;
+
     @Override
     public void init(FilterConfig filterConfig) {
-
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String uri = request.getRequestURI();
+        StringBuffer url = request.getRequestURL();
         String ip = HttpUtil.getRequestIP(request);
+        System.out.println(url);
+        System.out.println(HttpUtil.getDomain(request));
+        System.out.println(HttpUtil.getFullUrl(request));
+//        if (properties.getDdos().getAccessControlAllowOrigin().contains(ip)) {
         // 跨域请求白名单
-        response.setHeader("Access-Control-Allow-Origin", "http://www.zzl.com");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         // 请求Contetn-Type支持 application/json格式
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         // 跨域Cookies设置
         response.setHeader("Access-Control-Allow-Credentials", "true");
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
 
+    }
+
+    public void setProperties(SecurityProperties properties) {
+        this.properties = properties;
     }
 }
