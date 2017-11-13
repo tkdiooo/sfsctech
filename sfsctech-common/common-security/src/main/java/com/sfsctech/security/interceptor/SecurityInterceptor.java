@@ -1,7 +1,9 @@
 package com.sfsctech.security.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.I18NConstants;
@@ -9,11 +11,13 @@ import com.sfsctech.security.csrf.CSRFTokenManager;
 import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
 
@@ -78,12 +82,18 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-//        if (handler instanceof HandlerMethod) {
-//            HandlerMethod handlerMethod = (HandlerMethod) handler;
-//            Method method = handlerMethod.getMethod();
-//        }
         logger.info("postHandle：[" + request.getRequestURI() + "] ");
-        if (null != modelAndView && null != modelAndView.getModel()) {
+        Method method = null;
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            method = handlerMethod.getMethod();
+        }
+        // 如果是Ajax请求，返回类型是String，csrf参数设置至Header
+        if (HttpUtil.isAjaxRequest(request) && null != method && method.getReturnType() == String.class) {
+            response.setHeader(CSRFTokenManager.CSRF_TOKEN, JSON.toJSONString(CSRFTokenManager.generateCSRFToken(request, response)));
+        }
+        // 如果不是Ajax请求，返回类型是String，csrf参数设置至ModelAndView
+        else if (!HttpUtil.isAjaxRequest(request) && null != modelAndView && null != modelAndView.getModel()) {
             // 加密敏感参数
             Map<String, Object> model = modelAndView.getModel();
             for (String key : model.keySet()) {

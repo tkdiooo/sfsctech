@@ -28,17 +28,17 @@ public class DDOCFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         StringBuffer url = request.getRequestURL();
         String ip = HttpUtil.getRequestIP(request);
-        System.out.println(url);
-        System.out.println(HttpUtil.getDomain(request));
-        System.out.println(HttpUtil.getFullUrl(request));
-//        if (properties.getDdos().getAccessControlAllowOrigin().contains(ip)) {
-        // 跨域请求白名单
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        // 请求Contetn-Type支持 application/json格式
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        // 跨域Cookies设置
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-//        }
+        String domain = HttpUtil.getDomain(request);
+        System.out.println(ip);
+        System.out.println(domain);
+        if (properties.getDdos().getAccessControlAllowOrigin().contains(domain)) {
+            // 跨域请求白名单
+            response.setHeader("Access-Control-Allow-Origin", domain);
+            // 请求Contetn-Type支持 application/json格式
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            // 跨域Cookies设置
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
