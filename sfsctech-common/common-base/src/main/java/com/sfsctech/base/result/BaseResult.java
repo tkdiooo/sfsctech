@@ -65,6 +65,11 @@ public class BaseResult implements Serializable {
         this.messages = messages;
     }
 
+    public void setMessage(String messages) {
+        this.messages.clear();
+        this.addMessage(messages);
+    }
+
     public void addMessage(String message) {
         this.messages.add(message);
     }

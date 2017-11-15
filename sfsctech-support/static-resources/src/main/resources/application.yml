@@ -2,7 +2,6 @@
 server:
   port: 8080
   address: localhost
-  contextPath: /static-resources
   tomcat:
     uri-encoding: utf-8
 # Spring Settings

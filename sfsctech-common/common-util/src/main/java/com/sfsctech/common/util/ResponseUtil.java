@@ -1,8 +1,5 @@
 package com.sfsctech.common.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 

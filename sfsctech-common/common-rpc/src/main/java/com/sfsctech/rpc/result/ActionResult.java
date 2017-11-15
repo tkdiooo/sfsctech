@@ -76,4 +76,8 @@ public class ActionResult<T> extends BaseResult {
     public void addMessage(Tips tips, String... params) {
         super.addMessage(ResourceUtil.getMessage(tips, params));
     }
+
+    public void setMessage(Tips tips, String... params) {
+        super.setMessage(ResourceUtil.getMessage(tips, params));
+    }
 }
