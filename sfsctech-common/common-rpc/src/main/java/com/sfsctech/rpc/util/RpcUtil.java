@@ -1,7 +1,11 @@
 package com.sfsctech.rpc.util;
 
+import com.sfsctech.common.util.JsonUtil;
+import com.sfsctech.common.util.ListUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.rpc.result.ActionResult;
+import org.slf4j.Logger;
 
 /**
  * Class RpcUtil
@@ -10,6 +14,14 @@ import com.sfsctech.rpc.result.ActionResult;
  * @version Description:
  */
 public class RpcUtil {
+
+    public static <T> boolean logPrint(ActionResult<T> result, Logger logger) {
+        if (!result.isSuccess()) {
+            logger.error(JsonUtil.toJSONString(result.getStatus()));
+            logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+        }
+        return result.isSuccess();
+    }
 
 //    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
 //        ActionResult<T> ar = new ActionResult<>();

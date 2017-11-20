@@ -1,5 +1,6 @@
 package com.sfsctech.dubbox.condition;
 
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -15,6 +16,7 @@ public class MultipleProtocolCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        return !Boolean.valueOf(context.getEnvironment().getProperty(PropertiesConstants.DUBBO_PROTOCOL_SINGLE));
+        String single = context.getEnvironment().getProperty(PropertiesConstants.DUBBO_PROTOCOL_SINGLE);
+        return StringUtil.isNotBlank(single) && !Boolean.valueOf(single);
     }
 }
