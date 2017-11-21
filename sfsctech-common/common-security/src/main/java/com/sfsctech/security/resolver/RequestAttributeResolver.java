@@ -6,7 +6,7 @@ import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.ValidatorResult;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.rpc.util.ValidatorUtil;
-import com.sfsctech.security.annotation.verify;
+import com.sfsctech.security.annotation.Verify;
 import com.sfsctech.security.tools.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public class RequestAttributeResolver implements HandlerMethodArgumentResolver {
      * 检查参数是否需要验证
      */
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(verify.class);
+        return parameter.hasParameterAnnotation(Verify.class);
     }
 
     @Override
