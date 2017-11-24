@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
         prefix = "website.sso"
 )
 public class SSOProperties {
+    private String portalUrl;
     private String loginUrl;
     private String logoutUrl;
     private String checkUrl;
@@ -24,6 +25,14 @@ public class SSOProperties {
 
     public SSOProperties() {
         this.reference = new SSOProperties.Reference();
+    }
+
+    public String getPortalUrl() {
+        return portalUrl;
+    }
+
+    public void setPortalUrl(String portalUrl) {
+        this.portalUrl = portalUrl;
     }
 
     public String getLoginUrl() {

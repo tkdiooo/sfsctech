@@ -278,6 +278,12 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Rpc"
     },
     {
+      "name": "website.sso.portal-url",
+      "type": "java.lang.String",
+      "description": "门户首页路径",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
       "name": "website.sso.login-url",
       "type": "java.lang.String",
       "description": "SSO 登录路径",
