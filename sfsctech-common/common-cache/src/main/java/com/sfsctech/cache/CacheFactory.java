@@ -2,7 +2,6 @@ package com.sfsctech.cache;
 
 import com.sfsctech.cache.inf.ICacheFactory;
 import com.sfsctech.cache.inf.ICacheService;
-import com.sfsctech.cache.redis.inf.IRedisService;
 
 import java.util.List;
 
@@ -12,16 +11,16 @@ import java.util.List;
  * @author 张麒 2017/6/30.
  * @version Description:
  */
-public class CacheFactory implements ICacheFactory<String, Object> {
+public class CacheFactory<I extends ICacheService<String, Object>> implements ICacheFactory {
 
-    private IRedisService<String, Object> cacheProxy;
+    private I cacheProxy;
 
-    public CacheFactory(IRedisService<String, Object> cacheProxy) {
+    public CacheFactory(I cacheProxy) {
         this.cacheProxy = cacheProxy;
     }
 
     @Override
-    public ICacheService<String, Object> getCacheClient() {
+    public I getCacheClient() {
         return cacheProxy;
     }
 

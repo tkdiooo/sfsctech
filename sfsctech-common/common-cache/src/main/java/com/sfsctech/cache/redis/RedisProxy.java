@@ -84,6 +84,15 @@ public class RedisProxy implements IRedisService<String, Object> {
     }
 
     @Override
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public long ttl(String key) {
+        return redisTemplate.execute((RedisCallback<Long>) connection -> {
+            RedisSerializer keySlz = redisTemplate.getKeySerializer();
+            return connection.ttl(keySlz.serialize(key));
+        });
+    }
+
+    @Override
     public Object add(String key, Object value) {
         return put(key, value);
     }

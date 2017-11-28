@@ -17,4 +17,6 @@ public interface IRedisService<K, V> extends ICacheService<K, V> {
     long rpush(K key, V obj);
 
     Object lpop(K key);
+
+    long ttl(K key);
 }

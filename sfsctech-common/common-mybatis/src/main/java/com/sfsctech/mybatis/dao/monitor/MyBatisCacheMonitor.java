@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.cache.inf.ICacheFactory;
 import com.sfsctech.cache.inf.ICacheService;
-import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.constants.LabelConstants;
 
 /**
@@ -15,9 +14,9 @@ import com.sfsctech.constants.LabelConstants;
  */
 class MyBatisCacheMonitor<Example> {
 
-    private ICacheFactory<String, Object> cacheClient;
+    private ICacheFactory<ICacheService<String, Object>> cacheClient;
 
-    final void setCacheClient(ICacheFactory<String, Object> cacheClient) {
+    final void setCacheClient(ICacheFactory<ICacheService<String, Object>> cacheClient) {
         this.cacheClient = cacheClient;
     }
 

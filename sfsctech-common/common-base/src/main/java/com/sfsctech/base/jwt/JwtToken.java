@@ -18,6 +18,8 @@ public class JwtToken extends BaseDto {
     // jwt信息（根据盐值加密）
     @NotBlank
     private String jwt;
+    // 加密盐值
+    private String salt;
     // 加密盐值 - 缓存key（加密后）
     @NotBlank
     private String salt_CacheKey;
@@ -30,6 +32,14 @@ public class JwtToken extends BaseDto {
         this.jwt = jwt;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public String getSalt_CacheKey() {
         return salt_CacheKey;
     }
@@ -37,4 +47,5 @@ public class JwtToken extends BaseDto {
     public void setSalt_CacheKey(String salt_CacheKey) {
         this.salt_CacheKey = salt_CacheKey;
     }
+
 }

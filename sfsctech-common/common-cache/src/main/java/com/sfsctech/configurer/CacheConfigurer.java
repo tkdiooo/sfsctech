@@ -7,6 +7,7 @@ import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.condition.CacheCondition;
 import com.sfsctech.cache.condition.ClusterProtocolCondition;
 import com.sfsctech.cache.condition.SingleProtocolCondition;
+import com.sfsctech.cache.inf.ICacheService;
 import com.sfsctech.cache.properties.RedisProperties;
 import com.sfsctech.cache.redis.JedisProxy;
 import com.sfsctech.cache.redis.RedisProxy;
@@ -76,11 +77,11 @@ public class CacheConfigurer {
     }
 
     @Bean
-    public CacheFactory cacheFactory() {
+    public CacheFactory<ICacheService<String, Object>> cacheFactory() {
         if ("single".equals(properties.getProtocol())) {
-            return new CacheFactory(new RedisProxy(redisTemplate()));
+            return new CacheFactory<>(new RedisProxy(redisTemplate()));
         } else {
-            return new CacheFactory(new JedisProxy(jedisCluster(), stringRedisSerializer(), jackson2JsonRedisSerializer()));
+            return new CacheFactory<>(new JedisProxy(jedisCluster(), stringRedisSerializer(), jackson2JsonRedisSerializer()));
         }
     }
 

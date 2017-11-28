@@ -43,6 +43,12 @@
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
     },
     {
+      "name": "website.session.required-exclude-path",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "Session认证强制排除路径",
+      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
+    },
+    {
       "name": "server.tomcat.optimize",
       "type": "java.lang.Boolean",
       "description": "tomcat优化",

@@ -51,6 +51,11 @@ public class JedisProxy implements IRedisService<String, Object> {
     }
 
     @Override
+    public long ttl(String key) {
+        return jedisCluster.ttl(keySerializer.serialize(key));
+    }
+
+    @Override
     public Object put(String key, Object value) {
         return jedisCluster.set(keySerializer.serialize(key), valSerializer.serialize(value));
     }

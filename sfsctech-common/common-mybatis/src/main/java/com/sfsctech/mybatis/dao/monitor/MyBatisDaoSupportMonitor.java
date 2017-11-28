@@ -24,7 +24,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     private MyBatisCacheMonitor<Example> cacheMonitor = new MyBatisCacheMonitor<>();
 
-    protected final void setCacheClient(ICacheFactory<String, Object> cacheClient) {
+    protected final void setCacheClient(ICacheFactory<ICacheService<String, Object>> cacheClient) {
         cacheMonitor.setCacheClient(cacheClient);
     }
 

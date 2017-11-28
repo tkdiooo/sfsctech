@@ -6,12 +6,12 @@ package com.sfsctech.cache.inf;
  * @author 张麒 2017/6/29.
  * @version Description:
  */
-public interface ICacheFactory<K, V> {
+public interface ICacheFactory<T extends ICacheService> {
 
     /**
      * 获取Cache客户端
      *
      * @return
      */
-    ICacheService<K, V> getCacheClient();
+    T getCacheClient();
 }

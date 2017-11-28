@@ -3,10 +3,7 @@ package com.sfsctech.security.properties;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.ExcludesConstants;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.PropertiesConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
