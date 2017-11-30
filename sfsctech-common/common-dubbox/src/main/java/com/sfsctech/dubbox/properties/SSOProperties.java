@@ -1,5 +1,7 @@
 package com.sfsctech.dubbox.properties;
 
+import com.sfsctech.constants.SSOConstants.AuthProtocol;
+import com.sfsctech.constants.SSOConstants.AuthWay;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +23,12 @@ public class SSOProperties {
     private String registerUrl;
     private String forgetUrl;
 
+    private final SSOProperties.Authentication auth;
+
     private final SSOProperties.Reference reference;
 
     public SSOProperties() {
+        this.auth = new SSOProperties.Authentication();
         this.reference = new SSOProperties.Reference();
     }
 
@@ -75,8 +80,38 @@ public class SSOProperties {
         this.forgetUrl = forgetUrl;
     }
 
+    public Authentication getAuth() {
+        return auth;
+    }
+
     public Reference getReference() {
         return reference;
+    }
+
+
+    public static class Authentication {
+
+        private AuthProtocol protocol;
+        private AuthWay way;
+
+        Authentication() {
+        }
+
+        public AuthProtocol getProtocol() {
+            return protocol;
+        }
+
+        public void setProtocol(AuthProtocol protocol) {
+            this.protocol = protocol;
+        }
+
+        public AuthWay getWay() {
+            return way;
+        }
+
+        public void setWay(AuthWay way) {
+            this.way = way;
+        }
     }
 
     public static class Reference {
@@ -84,7 +119,7 @@ public class SSOProperties {
         private String version;
         private Integer timeout;
 
-        public Reference() {
+        Reference() {
         }
 
         public boolean isLazy() {

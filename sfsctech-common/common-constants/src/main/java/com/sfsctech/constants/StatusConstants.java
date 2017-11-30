@@ -112,49 +112,4 @@ public class StatusConstants {
         }
     }
 
-    /**
-     * Class Define
-     *
-     * @author 张麒 2016年3月28日
-     * @version Description：界限
-     */
-    public enum Define implements IEnum<Integer, String> {
-
-        /**
-         * 系统字典
-         */
-        SysDict(0, "系统级"),
-
-        /**
-         * 业务字典
-         */
-        BizDict(1, "业务级");
-
-        Define(Integer key, String value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        private Integer key;
-        private String value;
-
-        @Override
-        public Integer getCode() {
-            return key;
-        }
-
-        @Override
-        public String getContent() {
-            return value;
-        }
-
-        public static String getValueByKey(Integer key) {
-            return IEnum.findValue(values(), key);
-        }
-
-        public static Integer getKeyByValue(String value) {
-            return IEnum.findKey(values(), value);
-        }
-    }
-
 }

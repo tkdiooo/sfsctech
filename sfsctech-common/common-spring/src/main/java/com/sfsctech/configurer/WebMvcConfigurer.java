@@ -28,6 +28,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -44,6 +45,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
+@EnableAsync
 @ComponentScan("com.sfsctech.spring")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 

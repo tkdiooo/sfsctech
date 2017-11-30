@@ -299,6 +299,11 @@ public class LabelConstants {
     public static final String POUND = "#";
 
     /**
+     * ##
+     */
+    public static final String DOUBLE_POUND = "##";
+
+    /**
      * ?
      */
     public static final String QUESTION = "?";
