@@ -19,6 +19,10 @@ public class SessionInfo implements Serializable {
     public UserAuthData getUserAuthData() {
         return userAuthData;
     }
+    
+    public Map<String, Object> getAttribute() {
+        return attribute;
+    }
 
     public Object getAttribute(String key) {
         return attribute.get(key);
