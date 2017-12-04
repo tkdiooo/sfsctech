@@ -11,12 +11,14 @@ import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.ClassUtil;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.DubboConstants;
+import com.sfsctech.base.annotation.KryoSerializePackage;
 import com.sfsctech.dubbox.config.DubboConfig;
 import com.sfsctech.rpc.result.ActionResult;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Class KryoSerializationOptimizer
@@ -26,11 +28,21 @@ import java.util.List;
  */
 public class KryoSerializationOptimizer implements SerializationOptimizer {
 
-    private List<Class> classes;
+    private List<Class> classes = new LinkedList<>();
+
+    private void initSerializablePackage() {
+        DubboConstants.addKryoSerializePackage("com.sfsctech.base.result");
+        Set<Class<?>> set = ClassUtil.getClasses("com.sfsctech.serialize");
+        for (Class<?> cls : set) {
+            if (cls.isAnnotationPresent(KryoSerializePackage.class)) {
+                KryoSerializePackage ksp = cls.getAnnotation(KryoSerializePackage.class);
+                DubboConstants.addKryoSerializePackage(ksp.value());
+            }
+        }
+    }
 
     public KryoSerializationOptimizer() {
-        DubboConstants.addKryoSerializePackage("com.sfsctech.base.result");
-        classes = new LinkedList<>(ClassUtil.getClasses(DubboConfig.getKryoSerializePackagePath()));
+        this.initSerializablePackage();
         classes.add(PagingInfo.class);
         classes.add(Column.class);
         classes.add(Order.class);
@@ -41,6 +53,7 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         classes.add(UserAuthData.class);
         classes.add(ActionResult.class);
         classes.add(JwtToken.class);
+        classes.addAll(ClassUtil.getClasses(DubboConfig.getKryoSerializePackagePath()));
     }
 
     @Override
