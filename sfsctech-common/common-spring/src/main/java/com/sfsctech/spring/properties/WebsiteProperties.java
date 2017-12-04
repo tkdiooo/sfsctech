@@ -60,7 +60,6 @@ public class WebsiteProperties {
 
     public static class Session {
         private Set<String> excludePath;
-        private Set<String> requiredExcludePath;
 
         Session() {
         }
@@ -71,14 +70,6 @@ public class WebsiteProperties {
 
         public void setExcludePath(Set<String> excludePath) {
             this.excludePath = excludePath;
-        }
-
-        public Set<String> getRequiredExcludePath() {
-            return requiredExcludePath;
-        }
-
-        public void setRequiredExcludePath(Set<String> requiredExcludePath) {
-            this.requiredExcludePath = requiredExcludePath;
         }
     }
 

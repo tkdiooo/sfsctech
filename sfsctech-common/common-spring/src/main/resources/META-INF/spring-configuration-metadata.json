@@ -39,13 +39,7 @@
     {
       "name": "website.session.exclude-path",
       "type": "java.util.Set<java.lang.String>",
-      "description": "Session认证排除路径",
-      "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
-    },
-    {
-      "name": "website.session.required-exclude-path",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "Session认证强制排除路径",
+      "description": "Session排除校验路径",
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Session"
     },
     {
