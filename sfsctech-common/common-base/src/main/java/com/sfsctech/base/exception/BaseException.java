@@ -17,15 +17,20 @@ public abstract class BaseException extends RuntimeException {
     private String message;
     private String[] params = new String[0];
 
-    public BaseException() {
+    protected BaseException() {
     }
 
-    public BaseException(IEnum<String, String> tips, String... params) {
+    protected BaseException(IEnum<String, String> tips, String... params) {
         this.tips = tips;
         if (null != params) this.params = params;
     }
 
-    public BaseException(String message, String... params) {
+    protected BaseException(String message, String... params) {
+        this.message = message;
+        if (null != params) this.params = params;
+    }
+
+    protected BaseException(String message, Throwable cause, String... params) {
         this.message = message;
         if (null != params) this.params = params;
     }

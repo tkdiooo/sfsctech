@@ -85,7 +85,7 @@ public class DubboxConfigurer {
             if (StringUtil.isNotBlank(value.getServer()))
                 config.setServer(value.getServer());
             // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
-            if (properties.getProtocol().isKryo()) {
+            if (DubboProperties.SerializeOptimizer.Kryo.equals(properties.getProtocol().getOptimizer())) {
                 config.setSerialization(DubboConstants.SERIALIZE_KRYO);
                 config.setOptimizer(KryoSerializationOptimizer.class.getName());
             }
@@ -102,12 +102,12 @@ public class DubboxConfigurer {
     @Conditional(SingleProtocolCondition.class)
     public ProtocolConfig protocolConfig() {
         ProtocolConfig config = new ProtocolConfig();
-        config.setName(properties.getProtocol().getName());
-        config.setPort(properties.getProtocol().getPort());
-        if (StringUtil.isNotBlank(properties.getProtocol().getServer()))
-            config.setServer(properties.getProtocol().getServer());
+        config.setName(properties.getProtocol().getSingle().getName());
+        config.setPort(properties.getProtocol().getSingle().getPort());
+        if (StringUtil.isNotBlank(properties.getProtocol().getSingle().getServer()))
+            config.setServer(properties.getProtocol().getSingle().getServer());
         // Kryo序列化实现，需要注册接口SerializationOptimizer，添加需要序列化的类
-        if (properties.getProtocol().isKryo()) {
+        if (DubboProperties.SerializeOptimizer.Kryo.equals(properties.getProtocol().getOptimizer())) {
             config.setSerialization(DubboConstants.SERIALIZE_KRYO);
             config.setOptimizer(KryoSerializationOptimizer.class.getName());
         }

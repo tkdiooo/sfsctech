@@ -78,7 +78,7 @@ public class CacheConfigurer {
 
     @Bean
     public CacheFactory<ICacheService<String, Object>> cacheFactory() {
-        if ("single".equals(properties.getProtocol())) {
+        if (RedisProperties.Protocol.Single.equals(properties.getProtocol())) {
             return new CacheFactory<>(new RedisProxy(redisTemplate()));
         } else {
             return new CacheFactory<>(new JedisProxy(jedisCluster(), stringRedisSerializer(), jackson2JsonRedisSerializer()));

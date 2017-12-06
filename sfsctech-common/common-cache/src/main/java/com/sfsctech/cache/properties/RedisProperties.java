@@ -17,7 +17,12 @@ import java.util.List;
 )
 public class RedisProperties {
 
-    private String protocol;
+    // 协议
+    public enum Protocol {
+        Cluster, Single
+    }
+
+    private Protocol protocol;
 
     private final RedisProperties.Pool pool;
     private final RedisProperties.Single single;
@@ -29,11 +34,11 @@ public class RedisProperties {
         this.cluster = new RedisProperties.Cluster();
     }
 
-    public String getProtocol() {
+    public Protocol getProtocol() {
         return protocol;
     }
 
-    public void setProtocol(String protocol) {
+    public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
     }
 

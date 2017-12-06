@@ -36,14 +36,4 @@ public class SSOConstants {
     public static final String JWT_USER_AUTH_INFO = "jwt_user_auth_info";
     public static final String JWT_PERMIT_ATTRIBUTE = "jwt_permit_attribute";
 
-    // 校验协议
-    public enum AuthProtocol {
-        Http, Rpc
-    }
-
-    // 校验方式
-    public enum AuthWay {
-        Simple, Complex
-    }
-
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sfsctech-support</artifactId>
+        <groupId>com.sfsctech.support</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>spring-boot-starter-dubbox</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>1.9.3.RELEASE</version>
+        </dependency>
+        <!-- common-exception support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-logback support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-dubbox support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-security support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+    </dependencies>
+</project>

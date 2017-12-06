@@ -19,6 +19,16 @@ import java.util.Map;
 )
 public class DubboProperties {
 
+    // 协议配置
+    public enum Config {
+        Multiple, Single
+    }
+
+    // 序列化
+    public enum SerializeOptimizer {
+        Kryo
+    }
+
     private final DubboProperties.Application application;
     private final DubboProperties.Registry registry;
     private final DubboProperties.Protocol protocol;
@@ -52,7 +62,7 @@ public class DubboProperties {
         private String name;
         private String logger;
 
-        public Application() {
+        Application() {
         }
 
         public String getName() {
@@ -81,7 +91,7 @@ public class DubboProperties {
         private boolean subscribe;
         private int timeout;
 
-        public Registry() {
+        Registry() {
         }
 
         public String getProtocol() {
@@ -134,62 +144,77 @@ public class DubboProperties {
     }
 
     public static class Protocol {
-        private boolean kryo;
+        private SerializeOptimizer optimizer;
+        private Config config;
 
-        private String name;
-        private int port;
-        private String server;
+        private final Protocol.Single single;
+        private final Map<String, ProtocolConfig> multiple;
 
-        private Map<String, ProtocolConfig> multiple = new HashMap<>();
-
-        public Protocol() {
+        Protocol() {
+            this.single = new Single();
+            this.multiple = new HashMap<>();
         }
 
-        public boolean isKryo() {
-            return kryo;
+        public SerializeOptimizer getOptimizer() {
+            return optimizer;
         }
 
-        public void setKryo(boolean kryo) {
-            this.kryo = kryo;
+        public void setOptimizer(SerializeOptimizer optimizer) {
+            this.optimizer = optimizer;
         }
 
-        public String getName() {
-            return name;
+        public Config getConfig() {
+            return config;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setConfig(Config config) {
+            this.config = config;
         }
 
-        public int getPort() {
-            return port;
-        }
-
-        public void setPort(int port) {
-            this.port = port;
-        }
-
-        public String getServer() {
-            return server;
-        }
-
-        public void setServer(String server) {
-            this.server = server;
+        public Single getSingle() {
+            return single;
         }
 
         public Map<String, ProtocolConfig> getMultiple() {
             return multiple;
         }
 
-        public void setMultiple(Map<String, ProtocolConfig> multiple) {
-            this.multiple = multiple;
+        public static class Single {
+            private String name;
+            private int port;
+            private String server;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getPort() {
+                return port;
+            }
+
+            public void setPort(int port) {
+                this.port = port;
+            }
+
+            public String getServer() {
+                return server;
+            }
+
+            public void setServer(String server) {
+                this.server = server;
+            }
         }
+
     }
 
     public static class Rpc {
         private String servicePackage;
 
-        public Rpc() {
+        Rpc() {
 
         }
 

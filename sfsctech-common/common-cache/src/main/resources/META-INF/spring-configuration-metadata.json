@@ -27,7 +27,7 @@
   "properties": [
     {
       "name": "spring.redis.protocol",
-      "type": "java.lang.String",
+      "type": "com.sfsctech.cache.properties.RedisProperties.Protocol",
       "description": "redis 连接协议",
       "sourceType": "com.sfsctech.cache.properties.RedisProperties"
     },
@@ -127,11 +127,11 @@
       "name": "spring.redis.protocol",
       "values": [
         {
-          "value": "single",
+          "value": "Single",
           "description": "单机服务"
         },
         {
-          "value": "cluster",
+          "value": "Cluster",
           "description": "集群服务"
         }
       ]

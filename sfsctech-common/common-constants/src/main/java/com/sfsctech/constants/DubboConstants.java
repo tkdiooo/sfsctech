@@ -1,9 +1,5 @@
 package com.sfsctech.constants;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Class DubboConstants
  *
@@ -14,15 +10,7 @@ public class DubboConstants {
 
     public static final String SERIALIZE_KRYO = "kryo";
 
-    /**
-     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
-     */
-    public static Set<String> KRYO_SERIALIZE_PACKAGE = new HashSet<>();
+    public static final String BASE_KRYO_SERIALIZE_PATH = "com.sfsctech.base.result";
 
-    /**
-     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
-     */
-    public static void addKryoSerializePackage(String... kryoSerializePackage) {
-        KRYO_SERIALIZE_PACKAGE.addAll(Arrays.asList(kryoSerializePackage));
-    }
+    public static final String KRYO_SERIALIZE_PATH = "com.sfsctech.serialize";
 }

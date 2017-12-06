@@ -105,7 +105,6 @@ spring:
         # 合并多个DruidDataSource的监控数据
         useGlobalDataSourceStat: true
   redis:
-    protocol: single
     pool:
       # 连接池最大连接数（使用负值表示没有限制）
       max-active: 300
@@ -115,6 +114,7 @@ spring:
       max-idle: 100
       # 连接池中的最小空闲连接
       min-idle: 50
+    protocol: Single
     single:
       # Redis数据库索引（默认为0）
       database: 0
@@ -148,12 +148,11 @@ dubbo:
     # 注册中心请求超时时间(毫秒)
     timeout: 2000
   protocol:
-    # 是否使用kryo序列化
-    kryo: true
-    # 通信协议，默认dubbo
-    name: dubbo
-    # 协议端口，默认20880
-    port: 20880
+    config: Single
+    optimizer: Kryo
+    single:
+      name: dubbo
+      port: 20080
   rpc:
     service-package: com.sfsctech.framework.rpc
 #spring.cloud.config

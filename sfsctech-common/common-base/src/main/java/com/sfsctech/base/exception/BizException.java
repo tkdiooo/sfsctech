@@ -24,6 +24,10 @@ public class BizException extends BaseException {
         super(message, params);
     }
 
+    public BizException(String message, Throwable cause, String... params) {
+        super(message, cause, params);
+    }
+
     @Override
     public Throwable fillInStackTrace() {
         return this;

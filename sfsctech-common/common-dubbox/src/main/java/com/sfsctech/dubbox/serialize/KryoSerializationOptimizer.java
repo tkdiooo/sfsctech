@@ -1,6 +1,7 @@
 package com.sfsctech.dubbox.serialize;
 
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
+import com.sfsctech.base.annotation.KryoSerializePackage;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
@@ -9,16 +10,12 @@ import com.sfsctech.base.model.Order;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.ClassUtil;
-import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.DubboConstants;
-import com.sfsctech.base.annotation.KryoSerializePackage;
-import com.sfsctech.dubbox.config.DubboConfig;
+import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.rpc.result.ActionResult;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 /**
  * Class KryoSerializationOptimizer
@@ -29,20 +26,24 @@ import java.util.Set;
 public class KryoSerializationOptimizer implements SerializationOptimizer {
 
     private List<Class> classes = new LinkedList<>();
+    private LinkedHashMap<String, Set<Class<?>>> map = new LinkedHashMap<>();
 
     private void initSerializablePackage() {
-        DubboConstants.addKryoSerializePackage("com.sfsctech.base.result");
-        Set<Class<?>> set = ClassUtil.getClasses("com.sfsctech.serialize");
+        map.put(DubboConstants.BASE_KRYO_SERIALIZE_PATH, ClassUtil.getClasses(DubboConstants.BASE_KRYO_SERIALIZE_PATH));
+        // 获取当前需要加载的配置路径
+        Set<Class<?>> set = ClassUtil.getClasses(DubboConstants.KRYO_SERIALIZE_PATH);
         for (Class<?> cls : set) {
             if (cls.isAnnotationPresent(KryoSerializePackage.class)) {
                 KryoSerializePackage ksp = cls.getAnnotation(KryoSerializePackage.class);
-                DubboConstants.addKryoSerializePackage(ksp.value());
+                if (!map.containsKey(ksp.value())) {
+                    map.put(ksp.value(), ClassUtil.getClasses(ksp.value()));
+                }
             }
         }
     }
 
     public KryoSerializationOptimizer() {
-        this.initSerializablePackage();
+        initSerializablePackage();
         classes.add(PagingInfo.class);
         classes.add(Column.class);
         classes.add(Order.class);
@@ -53,7 +54,7 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         classes.add(UserAuthData.class);
         classes.add(ActionResult.class);
         classes.add(JwtToken.class);
-        classes.addAll(ClassUtil.getClasses(DubboConfig.getKryoSerializePackagePath()));
+        map.forEach((key, value) -> classes.addAll(value));
     }
 
     @Override

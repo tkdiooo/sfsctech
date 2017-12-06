@@ -38,9 +38,9 @@ public class PropertiesConstants {
     public static final String SPRING_REDIS_PROTOCOL = "spring.redis.protocol";
 
     /**
-     * Properties：dubbo.protocol.single"
+     * Properties：dubbo.protocol.config"
      */
-    public static final String DUBBO_PROTOCOL_SINGLE = "dubbo.protocol.single";
+    public static final String DUBBO_PROTOCOL_CONFIG = "dubbo.protocol.config";
 
     /**
      * Properties：dubbo.rpc.service-package"

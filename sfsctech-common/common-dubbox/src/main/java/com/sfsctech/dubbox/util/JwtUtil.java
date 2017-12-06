@@ -1,8 +1,9 @@
 package com.sfsctech.dubbox.util;
 
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.common.util.DateUtil;
-import com.sfsctech.dubbox.properties.JwtProperties;
 import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.dubbox.properties.JwtProperties;
 import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -55,25 +56,24 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | MissingClaimException | IncorrectClaimException e) {
             // 签名(Signature)验证失败
             if (e instanceof SignatureException) {
-                e.printStackTrace();
+                throw new BizException("jwt 签名(Signature)验证失败", e);
             }
             // jwt 解析错误
             else if (e instanceof MalformedJwtException) {
-                e.printStackTrace();
+                throw new BizException("jwt 解析错误", e);
             }
             // jwt 已经过期，在设置jwt的时候如果设置了过期时间，这里会自动判断jwt是否已经过期，如果过期则会抛出这个异常。
             else if (e instanceof ExpiredJwtException) {
-                e.printStackTrace();
+                throw new BizException("jwt 已经过期", e);
             }
             // 需要的声明不存在
             else if (e instanceof MissingClaimException) {
-                e.printStackTrace();
+                throw new BizException("jwt 需要的声明不存在", e);
             }
             // 载荷(Payload) 有错误
-            else if (e instanceof IncorrectClaimException) {
-                e.printStackTrace();
+            else {
+                throw new BizException("jwt 载荷(Payload) 有错误", e);
             }
-            return null;
         }
     }
 }

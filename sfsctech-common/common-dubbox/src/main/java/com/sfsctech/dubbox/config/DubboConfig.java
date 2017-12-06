@@ -12,16 +12,6 @@ import com.sfsctech.constants.LabelConstants;
  * @version Description:
  */
 public class DubboConfig {
-
-    // dubbo 属性
-    //-------------------------------------------------------------------------------------------
-    /**
-     * dubbo - kryo 需要序列化的类所在包路径，多个包名可以使用英文逗号分隔
-     */
-    public static String getKryoSerializePackagePath() {
-        return ListUtil.toString(DubboConstants.KRYO_SERIALIZE_PACKAGE, LabelConstants.COMMA);
-    }
-
     /**
      * dubbo - filter设置
      */

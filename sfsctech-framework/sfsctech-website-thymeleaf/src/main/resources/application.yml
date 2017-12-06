@@ -39,7 +39,7 @@ spring:
     view:
       suffix: .html
   redis:
-    protocol: single
+    protocol: Single
     host: 172.16.225.98
     port: 6379
     password: redis123

@@ -1,7 +1,5 @@
 package com.sfsctech.dubbox.properties;
 
-import com.sfsctech.constants.SSOConstants.AuthProtocol;
-import com.sfsctech.constants.SSOConstants.AuthWay;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +14,17 @@ import org.springframework.stereotype.Component;
         prefix = "website.sso"
 )
 public class SSOProperties {
+
+    // 校验协议
+    public enum AuthProtocol {
+        Http, Rpc
+    }
+
+    // 校验方式
+    public enum AuthWay {
+        Simple, Complex
+    }
+
     private String portalUrl;
     private String loginUrl;
     private String logoutUrl;
