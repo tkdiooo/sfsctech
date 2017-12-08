@@ -1,10 +1,10 @@
-package com.sfsctech.dubbox.util;
+package com.sfsctech.auth.util;
 
-import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.util.ThrowableUtil;
+import com.sfsctech.constants.SSOConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class JwtCookieUtil {
      * 根据Cookie获取JwtToken对象
      *
      * @param helper CookieHelper
-     * @return
+     * @return JwtToken
      */
     public static JwtToken getJwtTokenByCookie(CookieHelper helper) {
         String token = helper.getCookieValue(SSOConstants.COOKIE_TOKEN_NAME);

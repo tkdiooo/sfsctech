@@ -20,22 +20,10 @@
   ],
   "properties": [
     {
-      "name": "website.security.open-xss",
-      "type": "java.lang.Boolean",
-      "description": "是否打开XSS防御（默认true）",
-      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
-    },
-    {
-      "name": "website.security.open-csrf",
+      "name": "website.security.csrf.open",
       "type": "java.lang.Boolean",
       "description": "是否打开CSRF防御（默认false）",
-      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
-    },
-    {
-      "name": "website.security.open-ddoc",
-      "type": "java.lang.Boolean",
-      "description": "是否打开DDOC防御（默认false）",
-      "sourceType": "com.sfsctech.security.properties.SecurityProperties"
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
     },
     {
       "name": "website.security.csrf.keep-pattern",
@@ -60,6 +48,12 @@
       "type": "java.util.Set<java.lang.String>",
       "description": "必须通过CSRF防御校验路径",
       "sourceType": "com.sfsctech.security.properties.SecurityProperties$Csrf"
+    },
+    {
+      "name": "website.security.ddoc.open",
+      "type": "java.lang.Boolean",
+      "description": "是否打开DDOC防御（默认false）",
+      "sourceType": "com.sfsctech.security.properties.SecurityProperties$Ddos"
     },
     {
       "name": "website.security.ddos.access-control-allow-origin",

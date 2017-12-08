@@ -23,14 +23,9 @@ public class PropertiesConstants {
     public static final String SERVER_TOMCAT_OPTIMIZE = "server.tomcat.optimize";
 
     /**
-     * Properties：website.security.open-xss"
-     */
-    public static final String WEBSITE_SECURITY_OPEN_XSS = "website.security.open-xss";
-
-    /**
      * Properties：website.security.open-ddoc"
      */
-    public static final String WEBSITE_SECURITY_OPEN_DDOC = "website.security.open-ddoc";
+    public static final String WEBSITE_SECURITY_OPEN_DDOC = "website.security.ddoc.open";
 
     /**
      * Properties：spring.redis.protocol"

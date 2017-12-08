@@ -3,7 +3,6 @@ package com.sfsctech.configurer;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.security.condition.DDOCCondition;
-import com.sfsctech.security.condition.XSSCondition;
 import com.sfsctech.security.factory.HandlerMethodFactory;
 import com.sfsctech.security.filter.DDOCFilter;
 import com.sfsctech.security.filter.XSSFilter;
@@ -54,7 +53,7 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if (properties.getProperties().getOpenCsrf()) {
+        if (properties.getProperties().getCsrf().isOpen()) {
             SecurityInterceptor securityInterceptor = new SecurityInterceptor();
             securityInterceptor.setExcludesPattern(properties.getProperties().getCsrf().getVerifyExcludePath());
             securityInterceptor.setVerifyPattern(properties.getProperties().getCsrf().getRequiredVerifyPath());
@@ -78,7 +77,6 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      * XSS过滤 - 不过滤静态资源、页面模板、和druid
      */
     @Bean
-    @Conditional(XSSCondition.class)
     public FilterRegistrationBean XSSFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
@@ -92,7 +90,7 @@ public class SecurityConfigurer extends WebMvcConfigurerAdapter {
      */
     @Bean
     @Conditional(DDOCCondition.class)
-    public FilterRegistrationBean SecurityFilter() {
+    public FilterRegistrationBean DDOCFilter() {
         DDOCFilter filter = new DDOCFilter();
         filter.setProperties(properties.getProperties());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);

@@ -17,10 +17,7 @@ import java.util.Set;
 )
 public class SecurityProperties {
 
-    private Boolean openXss = true;
-    private Boolean openCsrf = false;
     private final SecurityProperties.Csrf csrf;
-    private Boolean openDdoc= false;
     private final SecurityProperties.Ddos ddos;
 
     public SecurityProperties() {
@@ -28,40 +25,16 @@ public class SecurityProperties {
         this.ddos = new SecurityProperties.Ddos();
     }
 
-    public Boolean getOpenXss() {
-        return openXss;
-    }
-
-    public void setOpenXss(Boolean openXss) {
-        this.openXss = openXss;
-    }
-
-    public Boolean getOpenCsrf() {
-        return openCsrf;
-    }
-
-    public void setOpenCsrf(Boolean openCsrf) {
-        this.openCsrf = openCsrf;
-    }
-
     public Csrf getCsrf() {
         return csrf;
     }
-
 
     public Ddos getDdos() {
         return ddos;
     }
 
-    public Boolean getOpenDdoc() {
-        return openDdoc;
-    }
-
-    public void setOpenDdoc(Boolean openDdoc) {
-        this.openDdoc = openDdoc;
-    }
-
     public static class Csrf {
+        private boolean open = false;
         private String keepPattern;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
@@ -69,6 +42,14 @@ public class SecurityProperties {
 
         Csrf() {
 
+        }
+
+        public boolean isOpen() {
+            return open;
+        }
+
+        public void setOpen(boolean open) {
+            this.open = open;
         }
 
         public String getKeepPattern() {
@@ -105,10 +86,19 @@ public class SecurityProperties {
     }
 
     public static class Ddos {
+        private boolean open = false;
         private Set<String> accessControlAllowOrigin;
 
         Ddos() {
 
+        }
+
+        public boolean isOpen() {
+            return open;
+        }
+
+        public void setOpen(boolean open) {
+            this.open = open;
         }
 
         public Set<String> getAccessControlAllowOrigin() {

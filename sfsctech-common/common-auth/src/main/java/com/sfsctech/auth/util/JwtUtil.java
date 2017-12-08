@@ -1,4 +1,4 @@
-package com.sfsctech.dubbox.util;
+package com.sfsctech.auth.util;
 
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.common.util.DateUtil;
@@ -25,9 +25,15 @@ public class JwtUtil {
 
     private static Key getKey() {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(salt);
-        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS512.getJcaName());
+        return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 
+    /**
+     * 生成Jwt信息
+     *
+     * @param claims Map
+     * @return java web token
+     */
     public static String generalJwt(Map<String, Object> claims) {
         long nowMillis = System.currentTimeMillis();
         //返回的字符串便是我们的jwt串了
@@ -46,6 +52,9 @@ public class JwtUtil {
 
     /**
      * 解密jwt
+     *
+     * @param jwt java web token
+     * @return Claims
      */
     public static Claims parseJWT(String jwt) {
         try {
@@ -56,23 +65,23 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | MissingClaimException | IncorrectClaimException e) {
             // 签名(Signature)验证失败
             if (e instanceof SignatureException) {
-                throw new BizException("jwt 签名(Signature)验证失败", e);
+                throw new BizException("Jwt验证错误：[签名(Signature)验证失败]");
             }
             // jwt 解析错误
             else if (e instanceof MalformedJwtException) {
-                throw new BizException("jwt 解析错误", e);
+                throw new BizException("Jwt验证错误：[jwt解析错误]");
             }
             // jwt 已经过期，在设置jwt的时候如果设置了过期时间，这里会自动判断jwt是否已经过期，如果过期则会抛出这个异常。
             else if (e instanceof ExpiredJwtException) {
-                throw new BizException("jwt 已经过期", e);
+                throw new BizException("Jwt验证错误：[jwt已经过期]");
             }
             // 需要的声明不存在
             else if (e instanceof MissingClaimException) {
-                throw new BizException("jwt 需要的声明不存在", e);
+                throw new BizException("Jwt验证错误：[Claims需要的声明不存在]");
             }
             // 载荷(Payload) 有错误
             else {
-                throw new BizException("jwt 载荷(Payload) 有错误", e);
+                throw new BizException("Jwt验证错误：[载荷(Payload) 有错误]");
             }
         }
     }

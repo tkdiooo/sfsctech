@@ -15,7 +15,7 @@ public class DDOCCondition implements Condition {
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        Boolean optimize = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SECURITY_OPEN_DDOC, Boolean.class);
-        return null != optimize;
+        Boolean bool = context.getEnvironment().getProperty(PropertiesConstants.WEBSITE_SECURITY_OPEN_DDOC, Boolean.class);
+        return null != bool && bool;
     }
 }

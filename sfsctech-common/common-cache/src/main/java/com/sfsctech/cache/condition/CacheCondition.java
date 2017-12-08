@@ -12,7 +12,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @version Description:
  */
 public class CacheCondition implements Condition {
-    
+
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         return null != context.getEnvironment().getProperty(PropertiesConstants.SPRING_REDIS_PROTOCOL);

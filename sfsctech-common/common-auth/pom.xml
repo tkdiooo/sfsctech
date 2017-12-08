@@ -13,10 +13,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-spring support -->
+        <!-- common-dubbox support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-spring</artifactId>
+            <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- Spring Boot -->
