@@ -23,6 +23,7 @@
         <module>common-cache</module>
         <module>common-security</module>
         <module>common-auth</module>
+        <module>common-saml</module>
     </modules>
 
     <properties>

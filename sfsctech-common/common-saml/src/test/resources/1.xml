@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+                     AssertionConsumerServiceURL="http://localhost:8080/webprofile-ref-project/sp/consumer"
+                     Destination="http://localhost:8080/webprofile-ref-project/idp/singleSignOnService"
+                     ID="_cfd202db46db5606cfc8982030f40d7b" IssueInstant="2017-12-13T05:35:41.514Z"
+                     ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" Version="2.0">
+    <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">TestSP</saml2:Issuer>
+    <saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"/>
+    <saml2p:RequestedAuthnContext Comparison="minimum">
+        <saml2:AuthnContextClassRef xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+            urn:oasis:names:tc:SAML:2.0:ac:classes:Password
+        </saml2:AuthnContextClassRef>
+    </saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>

@@ -1,9 +1,13 @@
 package com.sfsctech.rpc.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.parser.deserializer.EnumDeserializer;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
+import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 
@@ -21,6 +25,14 @@ public class RpcUtil {
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
         }
         return result.isSuccess();
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public static <T> ActionResult<T> parseActionResult(String json) {
+        ParserConfig config = ParserConfig.getGlobalInstance();
+        config.setAutoTypeSupport(true);
+        config.putDeserializer(RpcConstants.Status.class, new StatusDeserializer());
+        return (ActionResult<T>) JSON.parseObject(json, ActionResult.class, config);
     }
 
 //    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {

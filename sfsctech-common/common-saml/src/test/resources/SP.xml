@@ -1,0 +1,20 @@
+<md:EntityDescriptor entityID="urn:sp:nf:gennfssreps20" ID="bpajK-AhBDGUEVbNX9Xo7qPAx-8"
+                     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata">
+    <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:KeyDescriptor use="signing">
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <ds:X509Data>
+                    <ds:X509Certificate>MIICbTCCAdbbAwIB...lzopsjAfbE6KSwnxSBIW0og==</ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </md:KeyDescriptor>
+        <md:ArtifactResolutionService isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
+                                      Location="https://sphost/ftgw/Fas/nfExternal/GenNFSSRepS20/TEA/soap11" index="0"/>
+        <md:SingleLogoutService Location="https://sphost/ftgw/Fas/nfExternal/GenNFSSRepS20/TEA/logoutRequest"
+                                Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                                ResponseLocation="https://sphost/ftgw/Fas/nfExternal/GenNFSSRepS20/TEA/logoutResponse"/>
+        <md:AssertionConsumerService Location="https://sphost/ftgw/Fas/nfExternal/GenNFSSRepS20/TEA/consumer"
+                                     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+    </md:IDPSSODescriptor>
+    <md:ContactPerson contactType="administrative"/>
+</md:EntityDescriptor>
