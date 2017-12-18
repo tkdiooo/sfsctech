@@ -29,41 +29,30 @@ public enum Faction implements GsonEnum<Faction> {
     private int code;
     private String content;
 
+    //        @Override
+    public Integer getCode() {
+        return code;
+    }
+
+    //
 //        @Override
-//        public Integer getCode() {
-//            return code;
-//        }
-//
-//        @Override
-//        public String getContent() {
-//            return content;
-//        }
+    public String getContent() {
+        return content;
+    }
 
     @Override
-    public Faction deserialize(String jsonEnum) {
-        System.out.println(jsonEnum);
-        return Faction.parse(jsonEnum);
+    public Faction deserialize(int jsonEnum) {
+        for (Faction faction : values()) {
+            if (faction.code == jsonEnum) {
+                return faction;
+            }
+        }
+        return null;
     }
 
     @Override
     public String serialize() {
-        return "{" + this.code + ",+\"" + this.content + "\"}";
-    }
-    public static Faction parse(String faction) {
-        switch (faction) {
-//            case "无私派":
-//                return Faction.ABNEGATION;
-//            case "和平派":
-//                return Faction.AMITY;
-//            case "无畏派":
-//                return Faction.DAUNTLESS;
-//            case "诚实派":
-//                return Faction.CANDOR;
-//            case "博学派":
-//                return Faction.ERUDITE;
-            default:
-                return Faction.Successful;
-        }
+        return "{code:" + this.code + ",content:" + this.code + "}";
     }
 
 //    @Override

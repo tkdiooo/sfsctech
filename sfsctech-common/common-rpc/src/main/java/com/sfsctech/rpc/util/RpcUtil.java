@@ -45,31 +45,15 @@ public class RpcUtil {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
 //                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(Faction.Successful))
-//                .registerTypeAdapter(RpcConstants.Status.class, new GsonEnumTypeAdapter<RpcConstants.Status>() {
-//
-//                    @Override
-//                    public JsonElement serialize(RpcConstants.Status status, Type type, JsonSerializationContext jsonSerializationContext) {
-//                        return new JsonPrimitive(status.ordinal());
-//                    }
-//
-//                    @Override
-//                    public RpcConstants.Status deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-//                        System.out.println(1);
-//                        if (null != jsonElement) {
-//                            System.out.println(type);
-//                            return RpcConstants.Status.values()[jsonElement.getAsInt()];
-//                        }
-//                        return null;
-//                    }
-//                })
-//                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(RpcConstants.Status.Successful))
+                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(Faction.Failure))
+//                .registerTypeAdapter(RpcConstants.Status.class, new GsonEnumTypeAdapter<>(RpcConstants.Status.Successful))
                 .create();
         BaseResult result = new BaseResult();
         Person p1 = new Person("雷卡", Faction.Successful);
         System.out.println("调用 toString 方法：\n" + p1);
-        String jsonText = gson.toJson(p1);
+        String jsonText = com.sfsctech.rpc.util.JsonUtil.toJSONString(p1);
         System.out.println("将 person 转换成 json 字符串：\n" + jsonText);
+        System.out.println(com.sfsctech.rpc.util.JsonUtil.toJSONString(result));
 
         System.out.println("-------------------");
 

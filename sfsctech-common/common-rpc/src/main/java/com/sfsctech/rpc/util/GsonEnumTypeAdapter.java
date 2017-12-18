@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
  * @author 张麒 2017-12-18.
  * @version Description:
  */
-public class GsonEnumTypeAdapter<E> implements JsonSerializer<E>, JsonDeserializer<E> {
+public class GsonEnumTypeAdapter<E> implements JsonDeserializer<E> {
 
     private final GsonEnum<E> gsonEnum;
 
@@ -23,16 +23,8 @@ public class GsonEnumTypeAdapter<E> implements JsonSerializer<E>, JsonDeserializ
     public E deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         System.out.println(1);
         if (null != jsonElement) {
-            System.out.println(type);
-            return gsonEnum.deserialize(jsonElement.getAsString());
-        }
-        return null;
-    }
-
-    @Override
-    public JsonElement serialize(E e, Type type, JsonSerializationContext jsonSerializationContext) {
-        if (null != e && e instanceof GsonEnum) {
-            return new JsonPrimitive(((GsonEnum) e).serialize());
+            System.out.println(jsonElement.getAsJsonObject().get("code").getAsInt());
+            return gsonEnum.deserialize(jsonElement.getAsJsonObject().get("code").getAsInt());
         }
         return null;
     }

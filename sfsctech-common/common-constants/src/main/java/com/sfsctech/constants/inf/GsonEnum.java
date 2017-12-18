@@ -10,5 +10,6 @@ public interface GsonEnum<E> {
 
     String serialize();
 
-    E deserialize(String key);
+    E deserialize(int key);
+
 }

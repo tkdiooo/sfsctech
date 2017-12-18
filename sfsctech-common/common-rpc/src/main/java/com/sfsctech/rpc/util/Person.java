@@ -22,12 +22,19 @@ public class Person implements Serializable {
 
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", faction=" + faction +
-                '}';
+    public Faction getFaction() {
+        return faction;
     }
 
+    public void setFaction(Faction faction) {
+        this.faction = faction;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

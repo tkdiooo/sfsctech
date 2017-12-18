@@ -35,17 +35,17 @@ public class RpcConstants {
         private String content;
 
 //        @Override
-//        public Integer getCode() {
-//            return code;
-//        }
+        public Integer getCode() {
+            return code;
+        }
 //
 //        @Override
-//        public String getContent() {
-//            return content;
-//        }
+        public String getContent() {
+            return content;
+        }
 
         @Override
-        public Status deserialize(String jsonEnum) {
+        public Status deserialize(int jsonEnum) {
             System.out.println(jsonEnum);
             return Status.Failure;
         }
