@@ -3,13 +3,19 @@ package com.sfsctech.rpc.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.parser.deserializer.EnumDeserializer;
+import com.google.gson.*;
+import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.constants.inf.GsonEnum;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
+
+import java.lang.reflect.Type;
+import java.time.LocalDate;
 
 /**
  * Class RpcUtil
@@ -33,6 +39,42 @@ public class RpcUtil {
         config.setAutoTypeSupport(true);
         config.putDeserializer(RpcConstants.Status.class, new StatusDeserializer());
         return (ActionResult<T>) JSON.parseObject(json, ActionResult.class, config);
+    }
+
+    public static void main(String[] args) {
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+//                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(Faction.Successful))
+//                .registerTypeAdapter(RpcConstants.Status.class, new GsonEnumTypeAdapter<RpcConstants.Status>() {
+//
+//                    @Override
+//                    public JsonElement serialize(RpcConstants.Status status, Type type, JsonSerializationContext jsonSerializationContext) {
+//                        return new JsonPrimitive(status.ordinal());
+//                    }
+//
+//                    @Override
+//                    public RpcConstants.Status deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+//                        System.out.println(1);
+//                        if (null != jsonElement) {
+//                            System.out.println(type);
+//                            return RpcConstants.Status.values()[jsonElement.getAsInt()];
+//                        }
+//                        return null;
+//                    }
+//                })
+//                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(RpcConstants.Status.Successful))
+                .create();
+        BaseResult result = new BaseResult();
+        Person p1 = new Person("雷卡", Faction.Successful);
+        System.out.println("调用 toString 方法：\n" + p1);
+        String jsonText = gson.toJson(p1);
+        System.out.println("将 person 转换成 json 字符串：\n" + jsonText);
+
+        System.out.println("-------------------");
+
+        Person p2 = gson.fromJson(jsonText, Person.class);
+        System.out.println("根据 json 字符串生成 person 实例：\n" + p2);
     }
 
 //    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {

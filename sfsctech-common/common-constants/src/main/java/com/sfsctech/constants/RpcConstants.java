@@ -1,6 +1,7 @@
 package com.sfsctech.constants;
 
 
+import com.sfsctech.constants.inf.GsonEnum;
 import com.sfsctech.constants.inf.IEnum;
 
 /**
@@ -11,7 +12,7 @@ import com.sfsctech.constants.inf.IEnum;
  */
 public class RpcConstants {
 
-    public enum Status implements IEnum<Integer, String> {
+    public enum Status implements /*IEnum<Integer, String>,*/ GsonEnum<Status> {
 
         Successful,
         Failure(300, "操作失败"),
@@ -33,23 +34,34 @@ public class RpcConstants {
         private int code;
         private String content;
 
-        @Override
-        public Integer getCode() {
-            return code;
-        }
+//        @Override
+//        public Integer getCode() {
+//            return code;
+//        }
+//
+//        @Override
+//        public String getContent() {
+//            return content;
+//        }
 
         @Override
-        public String getContent() {
-            return content;
+        public Status deserialize(String jsonEnum) {
+            System.out.println(jsonEnum);
+            return Status.Failure;
         }
 
-        public static String getValueByKey(Integer key) {
-            return IEnum.findValue(values(), key);
+        @Override
+        public String serialize() {
+            return "{" + this.code + ",+\"" + this.content + "\"}";
         }
 
-        public static Integer getKeyByValue(String value) {
-            return IEnum.findKey(values(), value);
-        }
+//        public static String getValueByKey(Integer key) {
+//            return IEnum.findValue(values(), key);
+//        }
+//
+//        public static Integer getKeyByValue(String value) {
+//            return IEnum.findKey(values(), value);
+//        }
     }
 
     public enum ServiceStatus implements IEnum<Integer, String> {
