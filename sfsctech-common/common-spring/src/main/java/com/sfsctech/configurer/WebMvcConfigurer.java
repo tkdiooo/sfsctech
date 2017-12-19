@@ -154,7 +154,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Bean
     public SerializeConfig serializeConfig() {
         SerializeConfig serializeConfig = new SerializeConfig();
-        serializeConfig.configEnumAsJavaBean(RpcConstants.Status.class, RpcConstants.ServiceStatus.class);
+        serializeConfig.configEnumAsJavaBean(RpcConstants.Status.class);
         return serializeConfig;
     }
 

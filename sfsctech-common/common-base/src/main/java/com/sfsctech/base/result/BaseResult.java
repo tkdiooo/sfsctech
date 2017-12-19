@@ -1,8 +1,6 @@
 package com.sfsctech.base.result;
 
 import com.sfsctech.constants.RpcConstants.Status;
-import com.sfsctech.constants.inf.GsonEnum;
-import com.sfsctech.constants.inf.IEnum;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
@@ -25,7 +23,7 @@ public class BaseResult implements Serializable {
     /**
      * 响应状态
      */
-    protected GsonEnum status = Status.Successful;
+    protected Status status = Status.Successful;
     /**
      * 响应消息列表
      */
@@ -50,7 +48,7 @@ public class BaseResult implements Serializable {
         this.success = hasErrors;
     }
 
-    public GsonEnum getStatus() {
+    public Status getStatus() {
         return status;
     }
 

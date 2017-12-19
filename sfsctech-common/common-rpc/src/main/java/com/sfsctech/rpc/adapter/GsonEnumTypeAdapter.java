@@ -1,6 +1,9 @@
-package com.sfsctech.rpc.util;
+package com.sfsctech.rpc.adapter;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.sfsctech.constants.inf.GsonEnum;
 
 import java.lang.reflect.Type;
@@ -21,9 +24,7 @@ public class GsonEnumTypeAdapter<E> implements JsonDeserializer<E> {
 
     @Override
     public E deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        System.out.println(1);
         if (null != jsonElement) {
-            System.out.println(jsonElement.getAsJsonObject().get("code").getAsInt());
             return gsonEnum.deserialize(jsonElement.getAsJsonObject().get("code").getAsInt());
         }
         return null;

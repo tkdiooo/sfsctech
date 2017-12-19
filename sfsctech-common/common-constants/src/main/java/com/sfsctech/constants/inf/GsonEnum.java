@@ -8,8 +8,6 @@ package com.sfsctech.constants.inf;
  */
 public interface GsonEnum<E> {
 
-    String serialize();
-
-    E deserialize(int key);
+    E deserialize(int code);
 
 }

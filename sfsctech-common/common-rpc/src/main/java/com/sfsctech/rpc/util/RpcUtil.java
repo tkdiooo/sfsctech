@@ -1,21 +1,16 @@
 package com.sfsctech.rpc.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.parser.deserializer.EnumDeserializer;
-import com.google.gson.*;
-import com.sfsctech.base.result.BaseResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.inf.GsonEnum;
+import com.sfsctech.rpc.adapter.GsonEnumTypeAdapter;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 
 import java.lang.reflect.Type;
-import java.time.LocalDate;
 
 /**
  * Class RpcUtil
@@ -33,32 +28,27 @@ public class RpcUtil {
         return result.isSuccess();
     }
 
-    @SuppressWarnings({"unchecked"})
-    public static <T> ActionResult<T> parseActionResult(String json) {
-        ParserConfig config = ParserConfig.getGlobalInstance();
-        config.setAutoTypeSupport(true);
-        config.putDeserializer(RpcConstants.Status.class, new StatusDeserializer());
-        return (ActionResult<T>) JSON.parseObject(json, ActionResult.class, config);
+    public static <T, E> ActionResult<T> parseActionResult(String json, GsonEnum<E> gsonEnum, Type type) {
+        Gson gson = new GsonBuilder()
+                .serializeNulls()
+                .registerTypeAdapter(gsonEnum.getClass(), new GsonEnumTypeAdapter<>(gsonEnum))
+                .create();
+        return gson.fromJson(json, type);
     }
 
     public static void main(String[] args) {
-        Gson gson = new GsonBuilder()
-                .serializeNulls()
-//                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-                .registerTypeAdapter(Faction.class, new GsonEnumTypeAdapter<>(Faction.Failure))
-//                .registerTypeAdapter(RpcConstants.Status.class, new GsonEnumTypeAdapter<>(RpcConstants.Status.Successful))
-                .create();
-        BaseResult result = new BaseResult();
-        Person p1 = new Person("雷卡", Faction.Successful);
-        System.out.println("调用 toString 方法：\n" + p1);
-        String jsonText = com.sfsctech.rpc.util.JsonUtil.toJSONString(p1);
-        System.out.println("将 person 转换成 json 字符串：\n" + jsonText);
-        System.out.println(com.sfsctech.rpc.util.JsonUtil.toJSONString(result));
-
-        System.out.println("-------------------");
-
-        Person p2 = gson.fromJson(jsonText, Person.class);
-        System.out.println("根据 json 字符串生成 person 实例：\n" + p2);
+//        ActionResult result = new ActionResult();
+//        String jsonText = JsonUtil.toJSONString(result);
+//        System.out.println("将 person 转换成 json 字符串：\n" + jsonText);
+//
+//        System.out.println("-------------------");
+//
+//        String json = "{\"attachs\":{\"_csrf\":{\"parameterName\":\"KT__7jneScau7JFxmq5kjw\",\"token\":\"Dvo46H1b42XJddXVAXet7B\"}},\"dataSet\":[{\"content\":\"前端网站\",\"description\":\"\",\"guid\":\"BkQpsuqP77zR1N2piEXiaQ\",\"id\":20,\"number\":\"0001500001\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"后台管理\",\"description\":\"\",\"guid\":\"BMqrsGueGfWwqoqjxVkyHF\",\"id\":21,\"number\":\"0001500002\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"前端业务\",\"description\":\"\",\"guid\":\"BKHZekP87RjPpAiDygCwxa\",\"id\":22,\"number\":\"0001500003\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"后台业务\",\"description\":\"\",\"guid\":\"8YPaR5HFzJUgd2oQMW6zZ3\",\"id\":23,\"number\":\"0001500004\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1}],\"messages\":[\"操作成功\"],\"result\":null,\"status\":{\"code\":300,\"content\":\"操作成功\"},\"success\":true}";
+//
+//        ActionResult<DictionaryDto> p2 = RpcUtil.parseActionResult(json, RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
+//        }.getType());
+//        System.out.println("根据 json 字符串生成 person 实例：\n" + p2);
+//        new ArrayList<DictionaryDto>();
     }
 
 //    public static <T> ActionResult<T> sendRpcResult(boolean success, RpcConstants.ResponseCode responseCode, String... messages) {
