@@ -19,7 +19,7 @@ public class EncrypterTool {
     private static final Logger logger = LoggerFactory.getLogger(EncrypterTool.class);
 
     public enum Security {
-        Base64, Des3, Des3ECB, DEs3CBC, Md5, Aes
+        Base64, Des3, Des3ECB, DEs3CBC, Md5, Aes, AesCBC
     }
 
     /**
@@ -38,6 +38,8 @@ public class EncrypterTool {
             return Md5.encode(info);
         } else if (security.equals(Security.Aes)) {
             return Aes.encrypt(info);
+        } else if (security.equals(Security.AesCBC)) {
+            return Aes.encryptCBC(info);
         }
         return "";
     }
@@ -58,6 +60,8 @@ public class EncrypterTool {
             return info;
         } else if (security.equals(Security.Aes)) {
             return Aes.decrypt(info);
+        } else if (security.equals(Security.AesCBC)) {
+            return Aes.decryptCBC(info);
         }
         return "";
     }

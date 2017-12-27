@@ -1,10 +1,13 @@
 package com.sfsctech.common.security.aes;
 
-import com.sfsctech.common.util.HexUtil;
+import com.sfsctech.constants.LabelConstants;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
@@ -18,25 +21,49 @@ import java.security.SecureRandom;
 public class Aes {
 
     // 盐值
-    private static final String salt = "242DD6B633BB77C2A76FBDFE";
+    private static final String SALT = "242DD6B633BB77C2A76FBDFE";
+    // 16位盐值
+    private static final String CBC_SALT = "242D#6B6%3B&7@C!";
+    // 向量
+    private static final String CBC_IV = "K(R9304J@$O8K*17";
 
+    /**
+     * 默认盐值加密
+     *
+     * @param bef_aes 需要加密的数据
+     * @return aes加密数据
+     */
     public static String encrypt(String bef_aes) {
-        return encrypt(bef_aes, salt);
+        return encrypt(bef_aes, SALT);
     }
 
-    public static String encrypt(String bef_aes, String password) {
+    /**
+     * 自定义盐值加密
+     *
+     * @param bef_aes 需要加密的数据
+     * @param salt    自定义盐值
+     * @return aes加密数据
+     */
+    public static String encrypt(String bef_aes, String salt) {
         byte[] byteContent = null;
         try {
-            byteContent = bef_aes.getBytes("utf-8");
+            byteContent = bef_aes.getBytes(LabelConstants.UTF8);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return encrypt(byteContent, password);
+        return encrypt(byteContent, salt);
     }
 
-    public static String encrypt(byte[] content, String password) {
+    /**
+     * 自定义盐值加密
+     *
+     * @param content 需要加密的数据
+     * @param salt    自定义盐值
+     * @return aes加密数据
+     */
+    public static String encrypt(byte[] content, String salt) {
         try {
-            SecretKey secretKey = getKey(password);
+            SecretKey secretKey = getKey(salt);
             byte[] enCodeFormat = secretKey.getEncoded();
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             Cipher cipher = Cipher.getInstance("AES");// 创建密码器
@@ -49,18 +76,65 @@ public class Aes {
         return null;
     }
 
-    public static String decrypt(String aft_aes) {
-        return decrypt(aft_aes, salt);
+    /**
+     * 默认盐值/向量加密
+     *
+     * @param bef_aes 需要加密的数据
+     * @return aes加密数据
+     */
+    public static String encryptCBC(String bef_aes) {
+        return encryptCBC(bef_aes, CBC_SALT, CBC_IV.getBytes());
     }
 
-    public static String decrypt(String aft_aes, String password) {
+    /**
+     * 自定义盐值/向量加密
+     *
+     * @param bef_aes 需要加密的数据
+     * @param salt    自定义盐值
+     * @param iv      自定义向量
+     * @return aes加密数据
+     */
+    public static String encryptCBC(String bef_aes, String salt, byte[] iv) {
+        try {
+            SecretKey secretKey = getKey(salt);
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");// 创建密码器
+            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));// 初始化
+            byte[] result = cipher.doFinal(bef_aes.getBytes(LabelConstants.UTF8));
+            return new BASE64Encoder().encode(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 默认盐值解密
+     *
+     * @param aft_aes 需要解密的数据
+     * @return aes解密数据
+     */
+    public static String decrypt(String aft_aes) {
+        return decrypt(aft_aes, SALT);
+    }
+
+    /**
+     * 自定义盐值解密
+     *
+     * @param aft_aes 需要解密的数据
+     * @param salt    盐值
+     * @return aes解密数据
+     */
+    public static String decrypt(String aft_aes, String salt) {
         try {
             byte[] content = parseHexStr2Byte(aft_aes);
-            SecretKey secretKey = getKey(password);
+            SecretKey secretKey = getKey(salt);
             byte[] enCodeFormat = secretKey.getEncoded();
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             Cipher cipher = Cipher.getInstance("AES");// 创建密码器
             cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
+            assert content != null;
             byte[] result = cipher.doFinal(content);
             return new String(result);
         } catch (Exception e) {
@@ -69,7 +143,41 @@ public class Aes {
         return null;
     }
 
-    public static String parseByte2HexStr(byte buf[]) {
+    /**
+     * 默认盐值解密
+     *
+     * @param aft_aes 需要解密的数据
+     * @return aes解密数据
+     */
+    public static String decryptCBC(String aft_aes) {
+        return decryptCBC(aft_aes, CBC_SALT, CBC_IV.getBytes());
+    }
+
+    /**
+     * 自定义盐值解密
+     *
+     * @param aft_aes 需要解密的数据
+     * @param salt    盐值
+     * @return aes解密数据
+     */
+    public static String decryptCBC(String aft_aes, String salt, byte[] iv) {
+        try {
+            byte[] content = new BASE64Decoder().decodeBuffer(aft_aes);
+            SecretKey secretKey = getKey(salt);
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");// 创建密码器
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));// 初始化
+            assert content != null;
+            byte[] result = cipher.doFinal(content);
+            return new String(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String parseByte2HexStr(byte buf[]) {
         StringBuilder sb = new StringBuilder();
         for (byte aBuf : buf) {
             String hex = Integer.toHexString(aBuf & 0xFF);
@@ -81,7 +189,7 @@ public class Aes {
         return sb.toString();
     }
 
-    public static byte[] parseHexStr2Byte(String hexStr) {
+    private static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1)
             return null;
         byte[] result = new byte[hexStr.length() / 2];
@@ -92,7 +200,7 @@ public class Aes {
         return result;
     }
 
-    public static SecretKey getKey(String strKey) {
+    private static SecretKey getKey(String strKey) {
         try {
             KeyGenerator _generator = KeyGenerator.getInstance("AES");
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
@@ -105,17 +213,28 @@ public class Aes {
     }
 
     public static void main(String[] args) {
-        String content = "tes发的时刻开房大厦fkldsfjslkdjfsd8538432-942jldskds fds jffld!@#$%^&*()_t";
-        String password = "12345678";
-        // 加密
-        System.out.println("加密前：" + content);
-        String s = encrypt(content, password);
-        System.out.println("加密后：" + s);
-        System.out.println("加密后：" + HexUtil.toHexString(s.getBytes()));
-        // 解密
-
-        String s1 = decrypt(s, password);
-        System.out.println("解密后：" + s1);
+//        String content = "tes发的时刻开房大厦fkldsfjslkdjfsd8538432-942jldskds fds jffld!@#$%^&*()_t";
+//        String password = "12345678";
+//        // 加密
+//        System.out.println("加密前：" + content);
+//        String s = encrypt(content, password);
+//        System.out.println("加密后：" + s);
+//        System.out.println("加密后：" + HexUtil.toHexString(s.getBytes()));
+//        // 解密
+//
+//        String s1 = decrypt(s, password);
+//        System.out.println("解密后：" + s1);
+//        String content = "PartnerCode=AonHewitt&OrganizationCode=efesco&UserId=001&UserName=FordTestUser&Service=AonSSo&Timestamp=" + System.currentTimeMillis();
+//        System.out.println("明文：" + content);
+//        System.out.println("密文：" + encryptCBC(content));
+//        System.out.println("密钥：" + CBC_SALT);
+//        System.out.println("向量：{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}");
+//
+//        System.out.println(new String(new byte[]{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}));
+//        System.out.println(decryptCBC(encryptCBC(content)));
+//        String t = encryptCBC(content, "D%H@6przcRAs7@#3", new byte[]{0x48, 0x45, 0x4c, 0x4c, 0x4f, 0x57, 0x4f, 0x52, 0x4c, 0x44, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36});
+//        System.out.println(t);
+//        System.out.println(decryptCBC(t, "D%H@6przcRAs7@#3", new byte[]{0x48, 0x45, 0x4c, 0x4c, 0x4f, 0x57, 0x4f, 0x52, 0x4c, 0x44, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36}));
     }
 
 }
