@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Cipher;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -45,9 +46,13 @@ public class CredentialTool {
      * @return PublicKey
      */
     public static PublicKey getPubKeyByCer(String cerPath) throws Exception {
+        FileInputStream in = new FileInputStream(cerPath);
+        return getPubKeyByInputStream(in);
+    }
+
+    public static PublicKey getPubKeyByInputStream(InputStream in) throws Exception {
         //实例化证书工厂
         CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-        FileInputStream in = new FileInputStream(cerPath);
         Certificate certificate = certificateFactory.generateCertificate(in);
         in.close();
         return certificate.getPublicKey();

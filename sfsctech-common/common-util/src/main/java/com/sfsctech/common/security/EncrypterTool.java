@@ -103,6 +103,6 @@ public class EncrypterTool {
     }
 
     public static void main(String[] args) {
-        System.out.println(encrypt(Security.Des3ECB,"wuping>"));
+        System.out.println(encrypt(Security.Des3ECB,"wangjunjie"));
     }
 }
