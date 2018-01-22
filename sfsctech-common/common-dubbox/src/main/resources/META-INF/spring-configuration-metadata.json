@@ -194,6 +194,12 @@
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Authentication"
     },
     {
+      "name": "website.sso.auth.item-type",
+      "type": "com.sfsctech.constants.SSOProperties.ItemType",
+      "description": "项目类型",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Authentication"
+    },
+    {
       "name": "website.sso.reference.lazy",
       "type": "java.lang.Boolean",
       "description": "Dubbo服务是否延迟加载默认true",
@@ -339,6 +345,19 @@
         {
           "value": "Complex",
           "description": "复杂校验用户认证，用于有复杂权限信息的后台管理系统"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.item-type",
+      "values": [
+        {
+          "value": "Platform",
+          "description": "平台项目"
+        },
+        {
+          "value": "Server",
+          "description": "服务项目"
         }
       ]
     }

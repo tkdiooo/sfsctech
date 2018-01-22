@@ -25,6 +25,11 @@ public class SSOProperties {
         Simple, Complex
     }
 
+    // 项目类型
+    public enum ItemType {
+        Platform, Server
+    }
+
     private String portalUrl;
     private String loginUrl;
     private String logoutUrl;
@@ -102,6 +107,7 @@ public class SSOProperties {
 
         private AuthProtocol protocol;
         private AuthWay way;
+        private ItemType itemType;
 
         Authentication() {
         }
@@ -120,6 +126,14 @@ public class SSOProperties {
 
         public void setWay(AuthWay way) {
             this.way = way;
+        }
+
+        public ItemType getItemType() {
+            return itemType;
+        }
+
+        public void setItemType(ItemType itemType) {
+            this.itemType = itemType;
         }
     }
 
