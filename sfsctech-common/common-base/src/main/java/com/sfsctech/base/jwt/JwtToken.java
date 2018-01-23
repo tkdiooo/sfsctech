@@ -3,8 +3,6 @@ package com.sfsctech.base.jwt;
 import com.sfsctech.base.model.BaseDto;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.io.Serializable;
-
 /**
  * Class JwtToken
  *
