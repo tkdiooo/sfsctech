@@ -50,7 +50,6 @@ public class Cn2SpellUtil {
             } else {
                 pinyinName.append(aNameChar);
             }
-            pinyinName.append(",");
         }
         return pinyinName.toString();
     }
