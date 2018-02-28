@@ -24,6 +24,7 @@
         <module>common-security</module>
         <module>common-auth</module>
         <module>common-saml</module>
+        <module>common-database</module>
     </modules>
 
     <properties>
