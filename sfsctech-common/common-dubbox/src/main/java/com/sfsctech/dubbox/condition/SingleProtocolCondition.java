@@ -1,5 +1,6 @@
 package com.sfsctech.dubbox.condition;
 
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.dubbox.properties.DubboProperties;
 import org.springframework.context.annotation.Condition;
@@ -17,6 +18,6 @@ public class SingleProtocolCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String config = context.getEnvironment().getProperty(PropertiesConstants.DUBBO_PROTOCOL_CONFIG);
-        return null != config && DubboProperties.Config.Single.name().equals(config);
+        return StringUtil.isNotBlank(config) && DubboProperties.Config.Single.name().equals(config);
     }
 }

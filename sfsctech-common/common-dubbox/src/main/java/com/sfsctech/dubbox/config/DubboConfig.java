@@ -15,7 +15,7 @@ public class DubboConfig {
     /**
      * dubbo - filter设置
      */
-    private static String[] FILTERS = {"-exception", "ExceptionHandler"};
+    private static String[] FILTERS = {"-exception", "HystrixHandler", "ExceptionHandler"};
 
     public static String getFILTERS() {
         return ArrayUtil.toString(FILTERS, LabelConstants.COMMA);
