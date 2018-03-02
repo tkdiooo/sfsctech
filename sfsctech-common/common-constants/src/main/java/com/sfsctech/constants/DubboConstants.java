@@ -13,4 +13,7 @@ public class DubboConstants {
     public static final String BASE_KRYO_SERIALIZE_PATH = "com.sfsctech.base.result";
 
     public static final String KRYO_SERIALIZE_PATH = "com.sfsctech.serialize";
+
+    public static final String HYSTRIX_CONCURRENCY = "Concurrency";
+
 }

@@ -1,6 +1,7 @@
 package com.sfsctech.dubbox.properties;
 
 import com.alibaba.dubbo.config.ProtocolConfig;
+import com.netflix.hystrix.HystrixCommandProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -213,6 +214,7 @@ public class DubboProperties {
 
     public static class Rpc {
         private String servicePackage;
+        private Integer concurrency;
 
         Rpc() {
 
@@ -224,6 +226,14 @@ public class DubboProperties {
 
         public void setServicePackage(String servicePackage) {
             this.servicePackage = servicePackage;
+        }
+
+        public Integer getConcurrency() {
+            return concurrency;
+        }
+
+        public void setConcurrency(Integer concurrency) {
+            this.concurrency = concurrency;
         }
     }
 }

@@ -6,6 +6,7 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
 import com.netflix.hystrix.*;
+import com.sfsctech.constants.DubboConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +29,6 @@ public class DubboHystrixCommand extends HystrixCommand<Result> {
     private Invocation invocation;
 
     public DubboHystrixCommand(Invoker invoker, Invocation invocation) {
-
-//                                // 使用信号量隔离的方式
-//                                .withExecutionIsolationStrategy(HystrixCommandProperties.ExecutionIsolationStrategy.SEMAPHORE)
-//                                // 信号量阈值 默认:10
-//                                .withExecutionIsolationSemaphoreMaxConcurrentRequests(invoker.getUrl().getParameter(HystrixConstants.CONCURRENCY_KEY, HystrixConstants.DEFAULT_MAX_CONCURRENCY))
         super(
                 // 组名使用模块名称
                 Setter.withGroupKey(
@@ -60,7 +56,7 @@ public class DubboHystrixCommand extends HystrixCommand<Result> {
                         // 线程池策略时的配置
                         .andThreadPoolPropertiesDefaults(HystrixThreadPoolProperties.Setter()
                                 // 线程数量
-                                .withCoreSize(getThreadPoolCoreSize(invoker.getUrl()))));
+                                .withCoreSize(getConcurrency(invoker.getUrl()))));
         this.invoker = invoker;
         this.invocation = invocation;
     }
@@ -71,11 +67,11 @@ public class DubboHystrixCommand extends HystrixCommand<Result> {
      * @param url
      * @return
      */
-    private static int getThreadPoolCoreSize(URL url) {
+    private static int getConcurrency(URL url) {
         if (url != null) {
-            int size = url.getParameter("ThreadPoolCoreSize", DEFAULT_THREADPOOL_CORE_SIZE);
+            int size = url.getParameter(DubboConstants.HYSTRIX_CONCURRENCY, DEFAULT_THREADPOOL_CORE_SIZE);
             if (logger.isDebugEnabled()) {
-                logger.debug("ThreadPoolCoreSize:" + size);
+                logger.debug(DubboConstants.HYSTRIX_CONCURRENCY + ":" + size);
             }
             return size;
         }

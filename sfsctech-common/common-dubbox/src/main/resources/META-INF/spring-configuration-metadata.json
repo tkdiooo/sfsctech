@@ -146,6 +146,12 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Rpc"
     },
     {
+      "name": "dubbo.rpc.concurrency",
+      "type": "java.lang.Integer",
+      "description": "熔断策略：并发量",
+      "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Rpc"
+    },
+    {
       "name": "website.sso.portal-url",
       "type": "java.lang.String",
       "description": "门户首页路径",

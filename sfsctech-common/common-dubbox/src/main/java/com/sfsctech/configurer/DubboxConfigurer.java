@@ -25,6 +25,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class DubboxConfigurer
  *
@@ -139,6 +142,9 @@ public class DubboxConfigurer {
     public ProviderConfig providerConfig() {
         ProviderConfig config = new ProviderConfig();
         config.setFilter(DubboConfig.getFILTERS());
+        Map<String, String> params = new HashMap<>();
+        params.put(DubboConstants.HYSTRIX_CONCURRENCY, properties.getRpc().getConcurrency().toString());
+        config.setParameters(params);
         logger.info("dubbo 添加filter：" + config.toString());
         return config;
     }
