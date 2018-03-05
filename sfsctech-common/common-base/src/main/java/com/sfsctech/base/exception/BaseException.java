@@ -14,24 +14,25 @@ public abstract class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private IEnum<String, String> tips;
-    private String message;
     private String[] params = new String[0];
 
     protected BaseException() {
+        super();
     }
 
     protected BaseException(IEnum<String, String> tips, String... params) {
+        super();
         this.tips = tips;
         if (null != params) this.params = params;
     }
 
     protected BaseException(String message, String... params) {
-        this.message = message;
+        super(message);
         if (null != params) this.params = params;
     }
 
     protected BaseException(String message, Throwable cause, String... params) {
-        this.message = message;
+        super(message, cause);
         if (null != params) this.params = params;
     }
 
@@ -45,12 +46,8 @@ public abstract class BaseException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        if (params.length > 0) return MessageFormat.format(this.message, (Object[]) this.params);
-        else return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+        if (params.length > 0) return MessageFormat.format(super.getMessage(), (Object[]) this.params);
+        else return super.getMessage();
     }
 
     public String[] getParams() {

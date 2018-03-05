@@ -2,6 +2,7 @@ package com.sfsctech.configurer;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.exception.BizException;
+import com.sfsctech.base.exception.RpcException;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
@@ -40,9 +41,19 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      * 业务异常捕获
      */
     @ExceptionHandler(BizException.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) throws Exception {
+    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
         BaseResult result = new BaseResult(false, Status.Failure, ThrowableUtil.getRootMessage(e));
         logger.info("业务异常捕获：" + result.getMessages());
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * RPC异常捕获
+     */
+    @ExceptionHandler(RpcException.class)
+    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
+        BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ThrowableUtil.getRootMessage(e));
+        logger.info("RPC异常捕获：" + result.getMessages() + "--" + e.getCause().toString());
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -50,7 +61,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      * 校验异常捕获
      */
     @ExceptionHandler(VerifyException.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) throws Exception {
+    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) {
         BaseResult result = new BaseResult(false, Status.Failure, ThrowableUtil.getRootMessage(e));
         result.addAttach(CommonConstants.MESSAGES_DETAILS, e.getResult());
         logger.warn("校验异常捕获：" + result.getMessages());
@@ -62,7 +73,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(value = {NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ModelAndView handle404Error(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
+    public ModelAndView handle404Error(HttpServletRequest request, HttpServletResponse response, Exception e) {
         JSONObject json = new JSONObject();
         json.put("message", ThrowableUtil.getRootMessage(e));
         json.put("request ip", HttpUtil.getRequestIP(request));
@@ -75,7 +86,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      * 文件上传异常捕获
      */
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException e) throws Exception {
+    public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException e) {
         logger.warn("文件上传异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
         BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, multipart.getMaxFileSize()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);

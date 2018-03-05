@@ -6,12 +6,10 @@ import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcResult;
 import com.netflix.hystrix.*;
+import com.sfsctech.base.exception.RpcException;
 import com.sfsctech.constants.DubboConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class DubboHystrixCommand
@@ -86,16 +84,10 @@ public class DubboHystrixCommand extends HystrixCommand<Result> {
 
     @Override
     protected Result getFallback() {
-        Map<String, Object> map = new HashMap<>();
-        System.out.println(executionResult.isResponseSemaphoreRejected());
+        // TODO 缺少通知监测系统代码
         if (executionResult.isResponseSemaphoreRejected()) {
-            System.out.println("1");
-//            map.put("resultCode", DHAPCode.COM_FLOW_OVERRUN.getCode());
-//            map.put("resultMsg", DHAPCode.COM_FLOW_OVERRUN.getMsg());
-            return new RpcResult(map);
+            return new RpcResult(new RpcException("Rpc流关闭异常", executionResult.getExecutionException()));
         }
-//        map.put("resultCode", DHAPCode.COM_SERVER_ERROR.getCode());
-//        map.put("resultMsg", DHAPCode.COM_SERVER_ERROR.getMsg());
-        return new RpcResult(map);
+        return new RpcResult(new RpcException("Rpc熔断器开启拦截", executionResult.getExecutionException()));
     }
 }
