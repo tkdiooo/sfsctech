@@ -1,6 +1,10 @@
 package com.sfsctech.database.model;
 
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.JDBCConstants;
+import com.sfsctech.constants.LabelConstants;
+
+import java.io.Serializable;
 
 /**
  * Class DBConfigModel
@@ -8,7 +12,9 @@ import com.sfsctech.constants.JDBCConstants;
  * @author 张麒 2018-2-28.
  * @version Description:
  */
-public class DBConfigModel {
+public class DBConfigModel implements Serializable {
+
+    private static final long serialVersionUID = 105523604446308585L;
 
     private String driver;
     private String serverip;
@@ -79,6 +85,10 @@ public class DBConfigModel {
     }
 
     public String getUrl() {
-        return String.format(getDataSource().getUrl(), this.serverip, this.port, this.database);
+        if (StringUtil.isNotBlank(this.database)) {
+            return String.format(getDataSource().getUrl(), this.serverip, this.port, this.database);
+        } else {
+            return String.format(StringUtil.substringBeforeLast(getDataSource().getUrl(), LabelConstants.FORWARD_SLASH), this.serverip, this.port);
+        }
     }
 }

@@ -103,11 +103,11 @@ public class SSOFilter extends BaseFilter {
             }
             String form_url = request.getHeader("Referer");
             // 上次路径不为空，并且不是门户路径，并且项目类型是平台类型
-            if (StringUtil.isNotBlank(form_url) && !SingletonUtil.getSSOProperties().getPortalUrl().contains(requestURI) && SingletonUtil.getSSOProperties().getAuth().getItemType().equals(SSOProperties.ItemType.Platform)) {
+            if (StringUtil.isNotBlank(form_url) && !SingletonUtil.getSSOProperties().getPortalUrl().contains(requestURI) && SSOProperties.ItemType.Platform.equals(SingletonUtil.getSSOProperties().getAuth().getItemType())) {
                 form_url = SingletonUtil.getSSOProperties().getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
             }
             // 上次路径不为空，并且不是门户路径，并且项目类型是服务类型
-            else if (StringUtil.isNotBlank(form_url) && !SingletonUtil.getSSOProperties().getPortalUrl().contains(requestURI) && SingletonUtil.getSSOProperties().getAuth().getItemType().equals(SSOProperties.ItemType.Server)) {
+            else if (StringUtil.isNotBlank(form_url) && !SingletonUtil.getSSOProperties().getPortalUrl().contains(requestURI) && SSOProperties.ItemType.Server.equals(SingletonUtil.getSSOProperties().getAuth().getItemType())) {
                 form_url = SingletonUtil.getSSOProperties().getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, SingletonUtil.getSSOProperties().getPortalUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + form_url);
             }
             // 上次路径为空或者是门户路径

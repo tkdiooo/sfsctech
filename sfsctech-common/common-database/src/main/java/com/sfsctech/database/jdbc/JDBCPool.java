@@ -17,7 +17,7 @@ public class JDBCPool {
 
     private static Map<String, JdbcTemplate> JDBC_TEMPLATE = new HashMap<>();
 
-    protected JdbcTemplate getJdbcTemplate(DBConfigModel configModel) {
+    public static JdbcTemplate getJdbcTemplate(DBConfigModel configModel) {
         if (!JDBC_TEMPLATE.containsKey(configModel.getUrl())) {
             DruidDataSource ds = new DruidDataSource();
             ds.setDriverClassName(configModel.getDataSource().getDriver());

@@ -7,6 +7,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 /**
+ * 中文转换拼音
  * Class Cn2SpellUtil
  *
  * @author 张麒 2018-2-2.
@@ -14,6 +15,12 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class Cn2SpellUtil {
 
+    /**
+     * 只转换首字母
+     *
+     * @param chines
+     * @return
+     */
     public static String converterToFirstSpell(String chines) {
         StringBuilder pinyinName = new StringBuilder();
         char[] nameChar = chines.toCharArray();
@@ -34,6 +41,12 @@ public class Cn2SpellUtil {
         return pinyinName.toString();
     }
 
+    /**
+     * 全部转换
+     *
+     * @param chines
+     * @return
+     */
     public static String converterToSpell(String chines) {
         StringBuilder pinyinName = new StringBuilder();
         char[] nameChar = chines.toCharArray();

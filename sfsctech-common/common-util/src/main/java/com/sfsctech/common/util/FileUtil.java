@@ -120,6 +120,18 @@ public class FileUtil extends FileUtils {
     }
 
     /**
+     * 读取文件内容
+     *
+     * @param path File Address
+     * @return File Content
+     * @throws IOException
+     */
+    public static List<String> readFileToLines(String path) throws IOException {
+        Assert.isNotBlank(path, "文件路径为空");
+        return readLines(new File(path), getFileEncoding(path));
+    }
+
+    /**
      * 获取当前Class物理路径
      *
      * @return File Address
