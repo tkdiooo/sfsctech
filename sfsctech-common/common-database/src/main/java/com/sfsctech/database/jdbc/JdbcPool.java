@@ -13,7 +13,7 @@ import java.util.Map;
  * @author 张麒 2018-2-28.
  * @version Description:
  */
-public class JDBCPool {
+public class JdbcPool {
 
     private static Map<String, JdbcTemplate> JDBC_TEMPLATE = new HashMap<>();
 

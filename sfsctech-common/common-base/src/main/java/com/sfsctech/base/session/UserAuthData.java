@@ -5,8 +5,6 @@ import com.sfsctech.constants.VerifyConstants;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.util.Map;
-
 /**
  * Class UserAuthData
  *

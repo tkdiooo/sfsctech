@@ -91,4 +91,8 @@ public class DBConfigModel implements Serializable {
             return String.format(StringUtil.substringBeforeLast(getDataSource().getUrl(), LabelConstants.FORWARD_SLASH), this.serverip, this.port);
         }
     }
+
+    public String descTable(String tableName) {
+        return String.format(getDataSource().descTable(), this.database, tableName);
+    }
 }
