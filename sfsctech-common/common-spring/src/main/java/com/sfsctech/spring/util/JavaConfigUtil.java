@@ -4,6 +4,7 @@ import com.sfsctech.common.util.ByteSizeUtil;
 import com.sfsctech.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.MultipartProperties;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -28,8 +29,16 @@ public class JavaConfigUtil {
         ServletRegistrationBean registration = new ServletRegistrationBean(servlet);
         registration.addInitParameter("defaultHtmlEscape", LabelConstants.TRUE);
         // 上传文件配置
-        MultipartConfigElement multipartConfigElement = new MultipartConfigElement(multipart.getLocation(), ByteSizeUtil.parseBytesSize(multipart.getMaxFileSize()), ByteSizeUtil.parseBytesSize(multipart.getMaxRequestSize()), Integer.valueOf(multipart.getFileSizeThreshold()));
-        registration.setMultipartConfig(multipartConfigElement);
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 文件上传路径
+        factory.setLocation(multipart.getLocation());
+        // 单个文件大小
+        factory.setMaxFileSize(multipart.getMaxFileSize());
+        // 批量文件总大小
+        factory.setMaxRequestSize(multipart.getMaxRequestSize());
+        // 文件写入磁盘的阈值
+        factory.setFileSizeThreshold(multipart.getFileSizeThreshold());
+        registration.setMultipartConfig(factory.createMultipartConfig());
         return registration;
     }
 }
