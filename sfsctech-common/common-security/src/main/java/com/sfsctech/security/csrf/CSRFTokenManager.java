@@ -2,6 +2,7 @@ package com.sfsctech.security.csrf;
 
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.SpringContextUtil;
@@ -22,6 +23,9 @@ public class CSRFTokenManager {
 
     public static final String CSRF_TOKEN = "_csrf";
 
+    @SuppressWarnings({"unchecked"})
+    private static CacheFactory<IRedisService<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
+
     public static CSRFToken generateCSRFToken(HttpServletRequest request, HttpServletResponse response) {
         CSRFToken token = new CSRFToken();
         // Session保持
@@ -34,7 +38,6 @@ public class CSRFTokenManager {
         }
         // Cache保持
         else if (CommonConstants.CSRF_KEEP_PATTERN.equals(CommonConstants.CSRF_KEEP_PATTERN_CACHE)) {
-            CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
             String key = UUIDUtil.base64Uuid();
             factory.getCacheClient().add(key, token);
             CookieHelper helper = CookieHelper.getInstance(request, response);
@@ -59,8 +62,7 @@ public class CSRFTokenManager {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             String key = helper.getCookieValue(CSRF_TOKEN);
             if (StringUtil.isNotBlank(key)) {
-                CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
-                token = (CSRFToken) factory.getCacheClient().get(EncrypterTool.decrypt(EncrypterTool.Security.Aes, key));
+                token = factory.get(EncrypterTool.decrypt(EncrypterTool.Security.Aes, key));
             }
         }
         if (null != token) {
@@ -87,7 +89,6 @@ public class CSRFTokenManager {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             String key = helper.getCookieValue(CSRF_TOKEN);
             if (StringUtil.isNotBlank(key)) {
-                CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
                 factory.getCacheClient().remove(EncrypterTool.decrypt(EncrypterTool.Security.Aes, key));
             }
         }

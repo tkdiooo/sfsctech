@@ -61,6 +61,11 @@ public class PatternConstants {
         NegativeFloat("negative_float", "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$", "负浮点数"),
 
         /**
+         * 不包含中文字符
+         */
+        NotZH("not_zh", "[^\\u4e00-\\u9fa5]", "不包含中文字符"),
+
+        /**
          * 中文字符
          */
         ZHWord("zh_word", "[\\u4e00-\\u9fa5]", "中文字符"),

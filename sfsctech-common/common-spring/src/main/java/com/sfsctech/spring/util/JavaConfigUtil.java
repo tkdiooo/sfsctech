@@ -30,7 +30,7 @@ public class JavaConfigUtil {
         registration.addInitParameter("defaultHtmlEscape", LabelConstants.TRUE);
         // 上传文件配置
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        // 文件上传路径
+        // 文件上传临时路径
         factory.setLocation(multipart.getLocation());
         // 单个文件大小
         factory.setMaxFileSize(multipart.getMaxFileSize());
