@@ -12,6 +12,7 @@ import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.RpcConstants.Status;
 import com.sfsctech.exception.handler.BaseExceptionHandler;
+import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.MultipartProperties;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -71,7 +73,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     /**
      * 404异常捕获
      */
-    @ExceptionHandler(value = {NoHandlerFoundException.class})
+    @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handle404Error(HttpServletRequest request, HttpServletResponse response, Exception e) {
         JSONObject json = new JSONObject();
@@ -85,8 +87,8 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     /**
      * 文件上传异常捕获
      */
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MaxUploadSizeExceededException e) {
+    @ExceptionHandler({MultipartException.class})
+    public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MultipartException e) {
         logger.warn("文件上传异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
         BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload, multipart.getMaxFileSize()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
