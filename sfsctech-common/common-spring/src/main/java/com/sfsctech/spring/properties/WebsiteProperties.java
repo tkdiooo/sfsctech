@@ -3,6 +3,8 @@ package com.sfsctech.spring.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,8 +39,10 @@ public class WebsiteProperties {
 
         private String staticResources;
         private String welcomeFile;
+        private final Map<String, String> uploadPath;
 
         public Support() {
+            uploadPath = new HashMap<>();
         }
 
         public String getStaticResources() {
@@ -55,6 +59,10 @@ public class WebsiteProperties {
 
         public void setWelcomeFile(String welcomeFile) {
             this.welcomeFile = welcomeFile;
+        }
+
+        public Map<String, String> getUploadPath() {
+            return uploadPath;
         }
     }
 

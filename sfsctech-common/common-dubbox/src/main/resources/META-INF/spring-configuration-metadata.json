@@ -135,7 +135,7 @@
     },
     {
       "name": "dubbo.protocol.multiple",
-      "type": "java.util.Map<java.lang.String,com.alibaba.dubbo.multiple.ProtocolConfig>",
+      "type": "java.util.Map<java.lang.String, com.alibaba.dubbo.multiple.ProtocolConfig>",
       "description": "dubbo 多协议配置",
       "sourceType": "java.util.Map<java.lang.String,com.alibaba.dubbo.multiple.ProtocolConfig>"
     },

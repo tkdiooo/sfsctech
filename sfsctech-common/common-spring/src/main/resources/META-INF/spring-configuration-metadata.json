@@ -37,6 +37,12 @@
       "sourceType": "com.sfsctech.spring.properties.WebsiteProperties$Support"
     },
     {
+      "name": "website.support.uploadPath",
+      "type": "java.util.Map<java.lang.String, java.lang.String>",
+      "description": "上传文件路径",
+      "sourceType": "java.util.Map<java.lang.String, java.lang.String>"
+    },
+    {
       "name": "website.session.exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "Session排除校验路径",
