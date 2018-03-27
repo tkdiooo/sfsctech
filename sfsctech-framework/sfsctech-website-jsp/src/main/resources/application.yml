@@ -5,7 +5,6 @@ server:
   context-path: /jspdemo
   tomcat:
     uri-encoding: utf-8
-
   # logback config service setting
   context-parameters:
     logback-config-location: http://172.16.225.98:8888/logback/framework/website

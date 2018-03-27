@@ -18,17 +18,17 @@ public class PatternConstants {
         /**
          * 英文、数字、下划线
          */
-        Word("word", "\\w+", "英文/数字/下划线"),
+        Word("word", "\\\\w+", "英文/数字/下划线"),
 
         /**
          * 英文/特殊字符
          */
-        CommonWord("common_word", "[a-zA-Z0-9_.^%&',;=?$\\x22]*$", "英文/特殊字符"),
+        CommonWord("common_word", "[a-zA-Z0-9_.^%&',;=?$\\\\x22]*$", "英文/特殊字符"),
 
         /**
          * 双字节字符
          */
-        DoubleCharacter("double_character", "[^\\x00-\\xff]", "双字节字符"),
+        DoubleCharacter("double_character", "[^\\\\x00-\\\\xff]", "双字节字符"),
 
         /**
          * 数字
@@ -38,37 +38,37 @@ public class PatternConstants {
         /**
          * 整数
          */
-        Integer("integer", "^-?[1-9]\\d*$", "整数"),
+        Integer("integer", "^-?[1-9]\\\\d*$", "整数"),
 
         /**
          * 正整数
          */
-        PositiveInteger("positive_integer", "^[1-9]\\d*$", "正整数"),
+        PositiveInteger("positive_integer", "^[1-9]\\\\d*$", "正整数"),
 
         /**
          * 负整数
          */
-        NegativeInteger("negative_integer", "^-[1-9]\\d*$", "负整数"),
+        NegativeInteger("negative_integer", "^-[1-9]\\\\d*$", "负整数"),
 
         /**
          * 正浮点数
          */
-        PositiveFloat("positive_float", "^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$", "正浮点数"),
+        PositiveFloat("positive_float", "^[1-9]\\\\d*\\\\.\\\\d*|0\\\\.\\\\d*[1-9]\\\\d*$", "正浮点数"),
 
         /**
          * 负浮点数
          */
-        NegativeFloat("negative_float", "^-[1-9]\\d*\\.\\d*|-0\\.\\d*[1-9]\\d*$", "负浮点数"),
+        NegativeFloat("negative_float", "^-[1-9]\\\\d*\\\\.\\\\d*|-0\\\\.\\\\d*[1-9]\\\\d*$", "负浮点数"),
 
         /**
          * 不包含中文字符
          */
-        NotZH("not_zh", "[^\\u4e00-\\u9fa5]", "不包含中文字符"),
+        NotZH("not_zh", "[^\\\\u4e00-\\\\u9fa5]", "不包含中文字符"),
 
         /**
          * 中文字符
          */
-        ZHWord("zh_word", "[\\u4e00-\\u9fa5]", "中文字符"),
+        ZHWord("zh_word", "[\\\\u4e00-\\\\u9fa5]", "中文字符"),
 
         /**
          * 中文数字
@@ -83,17 +83,17 @@ public class PatternConstants {
         /**
          * 电话号码（国内）
          */
-        Phone("phone", "\\d{3}-\\d{8}|\\d{4}-\\{7,8}", "电话号码（国内）"),
+        Phone("phone", "\\\\d{3}-\\\\d{8}|\\\\d{4}-\\\\{7,8}", "电话号码（国内）"),
 
         /**
          * 邮政编码
          */
-        ZipCode("zip_code", "\\d{3}-\\d{8}|\\d{4}-\\{7,8}", "邮政编码"),
+        ZipCode("zip_code", "\\\\d{3}-\\\\d{8}|\\\\d{4}-\\\\{7,8}", "邮政编码"),
 
         /**
          * 身份证
          */
-        IDCard("id_card", "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$", "身份证"),
+        IDCard("id_card", "^(\\\\d{6})(\\\\d{4})(\\\\d{2})(\\\\d{2})(\\\\d{3})([0-9]|X)$", "身份证"),
 
         /**
          * 日期（yyyy-MM-dd）
@@ -108,7 +108,7 @@ public class PatternConstants {
         /**
          * Email
          */
-        Email("email", "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?", "Email");
+        Email("email", "[\\\\w!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[\\\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\\\w](?:[\\\\w-]*[\\\\w])?\\\\.)+[\\\\w](?:[\\\\w-]*[\\\\w])?", "Email");
 
         Pattern(String key, String pattern, String value) {
             this.key = key;
