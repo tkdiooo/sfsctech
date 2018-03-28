@@ -134,16 +134,17 @@ public class PatternConstants {
             return pattern;
         }
 
-        public static String getPatternByKey(String key) {
-            String value = null;
+        public static Pattern getPatternByKey(String key) {
+            Pattern value = null;
             for (Pattern pattern : values()) {
                 if (key.equals(pattern.getCode())) {
-                    value = pattern.getPattern();
+                    value = pattern;
                     break;
                 }
             }
             return value;
         }
+
 
         private static List<IEnum<String, String>> options = new ArrayList<>(Arrays.asList(values()));
 

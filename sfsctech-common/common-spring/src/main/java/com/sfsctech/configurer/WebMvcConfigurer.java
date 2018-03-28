@@ -5,9 +5,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.constants.CommonConstants;
+import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.spring.properties.AppConfig;
 import com.sfsctech.spring.util.JavaConfigUtil;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
@@ -27,7 +27,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -36,6 +39,8 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,7 +94,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        super.configureMessageConverters(converters);
+        converters.add(new ByteArrayHttpMessageConverter());
+
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(
@@ -100,6 +106,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         fastJsonConfig.setSerializeConfig(serializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
         converters.add(fastConverter);
+        super.configureMessageConverters(converters);
     }
 
     /**
