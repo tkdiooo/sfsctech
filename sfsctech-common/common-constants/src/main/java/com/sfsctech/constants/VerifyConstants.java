@@ -8,25 +8,25 @@ package com.sfsctech.constants;
  */
 public class VerifyConstants {
 
-    public static final String NotNull = "{hibernate.validator.notnull}";
-    public static final String NotBlank = "{hibernate.validator.notblank}";
-    public static final String NotEmpty = "{hibernate.validator.notempty}";
+    public static final String Null = "{javax.validation.constraints.Null.message}";
+    public static final String NotNull = "{javax.validation.constraints.NotNull.message}";
+    public static final String NotBlank = "{org.hibernate.validator.constraints.NotBlank.message}";
+    public static final String NotEmpty = "{org.hibernate.validator.constraints.NotEmpty.message}";
 
-    public static final String AssertTrue = "{hibernate.validator.asserttrue}";
-    public static final String AssertFalse = "{hibernate.validator.assertfalse}";
+    public static final String AssertTrue = "{javax.validation.constraints.AssertTrue.message}";
+    public static final String AssertFalse = "{javax.validation.constraints.AssertFalse.message}";
 
-    public static final String Min = "{hibernate.validator.min}";
-    public static final String Max = "{hibernate.validator.max}";
-    public static final String DecimalMin = "{hibernate.validator.decimalmin}";
-    public static final String DecimalMax = "{hibernate.validator.decimalmax}";
-    public static final String Digits = "{hibernate.validator.digits}";
+    public static final String Min = "{javax.validation.constraints.Min.message}";
+    public static final String Max = "{javax.validation.constraints.Max.message}";
+    public static final String DecimalMin = "{javax.validation.constraints.DecimalMin.message}";
+    public static final String DecimalMax = "{javax.validation.constraints.DecimalMax.message}";
+    public static final String Digits = "{javax.validation.constraints.Digits.message}";
 
-    public static final String Size = "{hibernate.validator.size}";
-    public static final String Length = "{hibernate.validator.length}";
-    public static final String Range = "{hibernate.validator.range}";
+    public static final String Size = "{javax.validation.constraints.Size.message}";
+    public static final String Length = "{org.hibernate.validator.constraints.Length.message}";
+    public static final String Range = "{org.hibernate.validator.constraints.Range.message}";
 
-    public static final String Past = "{hibernate.validator.past}";
-    public static final String Future = "{hibernate.validator.future}";
+    public static final String Past = "{javax.validation.constraints.Past.message}";
+    public static final String Future = "{javax.validation.constraints.Future.message}";
 
-    public static final String Email = "{hibernate.validator.email}";
 }
