@@ -75,6 +75,8 @@ public class SSOFilter extends BaseFilter {
 
                             // 更新token
                             JwtCookieUtil.updateJwtToken(helper, jt);
+                            // 设置session
+                            request.getSession().setAttribute(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
                             chain.doFilter(request, response);
                             return;
                         } catch (BizException e) {

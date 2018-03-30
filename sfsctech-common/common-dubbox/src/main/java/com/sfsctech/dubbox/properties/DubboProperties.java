@@ -214,7 +214,7 @@ public class DubboProperties {
 
     public static class Rpc {
         private String servicePackage;
-        private Integer concurrency;
+        private Integer concurrency = 40;
 
         Rpc() {
 
