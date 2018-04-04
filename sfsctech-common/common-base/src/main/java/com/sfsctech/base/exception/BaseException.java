@@ -1,5 +1,6 @@
 package com.sfsctech.base.exception;
 
+import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.inf.IEnum;
 
 import java.text.MessageFormat;
@@ -15,6 +16,7 @@ public abstract class BaseException extends RuntimeException {
 
     private IEnum<String, String> tips;
     private String[] params = new String[0];
+    private String viewName = CommonConstants.VIEW_500;
 
     protected BaseException() {
         super();
@@ -60,5 +62,13 @@ public abstract class BaseException extends RuntimeException {
 
     public void addParams(String param) {
         this.params[params.length] = param;
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 }

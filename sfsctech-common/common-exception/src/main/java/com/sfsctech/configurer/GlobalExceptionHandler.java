@@ -7,6 +7,7 @@ import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.BaseResult;
 import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ResourceUtil;
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.util.ThrowableUtil;
 import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.I18NConstants;
@@ -44,7 +45,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
         BaseResult result = new BaseResult(false, Status.Failure, ThrowableUtil.getRootMessage(e));
         logger.info("业务异常捕获：" + result.getMessages());
-        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -54,7 +55,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
         BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ThrowableUtil.getRootMessage(e));
         logger.info("RPC异常捕获：" + result.getMessages() + "--" + e.getCause().toString());
-        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+        return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**

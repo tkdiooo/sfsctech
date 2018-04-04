@@ -1,13 +1,16 @@
 package com.sfsctech.base.model;
 
+import java.io.Serializable;
+
 /**
  * Class Order
  *
  * @author 张麒 2017/10/26.
  * @version Description:
  */
-public class Order {
+public class Order implements Serializable {
 
+    private static final long serialVersionUID = 5187015103480060291L;
     private int column;
     private String dir;
 
