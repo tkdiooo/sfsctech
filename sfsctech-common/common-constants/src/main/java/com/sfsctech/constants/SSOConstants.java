@@ -30,6 +30,8 @@ public class SSOConstants {
     public static final String COOKIE_SALT_CACHE_KEY_NAME = "uams_tok_cac_na";
     // Session参数名称
     public static final String CONST_UAMS_ASSERTION = "const_uams_assertion";
+    // SSO验证参数名称
+    public static final String UAMS_CHECK_PARAM_NAME = "uams_check_param";
     // session 过期
     public static final String SESSION_TIME_OUT = "timeout";
 

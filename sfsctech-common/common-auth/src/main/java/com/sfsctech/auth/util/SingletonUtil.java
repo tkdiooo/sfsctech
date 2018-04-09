@@ -2,7 +2,7 @@ package com.sfsctech.auth.util;
 
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.sfsctech.auth.inf.VerifyService;
-import com.sfsctech.auth.properties.AuthProperties;
+import com.sfsctech.auth.properties.AuthConfig;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.SpringContextUtil;
@@ -10,6 +10,7 @@ import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.spring.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Class VerifyUtil
@@ -55,14 +56,25 @@ public class SingletonUtil {
         return factory;
     }
 
-    private static AuthProperties authProperties;
+    private static AuthConfig authConfig;
 
-    public static AuthProperties getAuthProperties() {
-        if (null == authProperties)
-            synchronized (AuthProperties.class) {
-                if (null == authProperties)
-                    authProperties = SpringContextUtil.getBean(AuthProperties.class);
+    public static AuthConfig getAuthConfig() {
+        if (null == authConfig)
+            synchronized (AuthConfig.class) {
+                if (null == authConfig)
+                    authConfig = SpringContextUtil.getBean(AuthConfig.class);
             }
-        return authProperties;
+        return authConfig;
+    }
+
+    private static RestTemplate restTemplate;
+
+    public static RestTemplate getRestTemplate() {
+        if (null == restTemplate)
+            synchronized (RestTemplate.class) {
+                if (null == restTemplate)
+                    restTemplate = SpringContextUtil.getBean(RestTemplate.class);
+            }
+        return restTemplate;
     }
 }

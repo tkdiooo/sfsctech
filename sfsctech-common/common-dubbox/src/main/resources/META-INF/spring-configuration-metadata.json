@@ -152,9 +152,15 @@
       "sourceType": "com.sfsctech.dubbox.properties.DubboProperties$Rpc"
     },
     {
-      "name": "website.sso.portal-url",
+      "name": "website.sso.domain",
       "type": "java.lang.String",
-      "description": "门户首页路径",
+      "description": "系统域名",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.home-page",
+      "type": "java.lang.String",
+      "description": "系统首页",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
     },
     {
@@ -186,6 +192,12 @@
       "type": "java.lang.String",
       "description": "SSO 密码找回路径",
       "sourceType": "com.sfsctech.dubbox.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.auth.type",
+      "type": "com.sfsctech.constants.SSOProperties.AuthType",
+      "description": "登录校验类型",
+      "sourceType": "com.sfsctech.dubbox.properties.SSOProperties$Authentication"
     },
     {
       "name": "website.sso.auth.protocol",
@@ -358,12 +370,33 @@
       "name": "website.sso.auth.item-type",
       "values": [
         {
-          "value": "Platform",
-          "description": "平台项目"
+          "value": "BackendSystem",
+          "description": "后端系统"
         },
         {
-          "value": "Server",
-          "description": "服务项目"
+          "value": "FrontendSystem",
+          "description": "前端系统"
+        },
+        {
+          "value": "FrameService",
+          "description": "Frame服务"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.type",
+      "values": [
+        {
+          "value": "BackendSystem",
+          "description": "后端系统"
+        },
+        {
+          "value": "FrontendSystem",
+          "description": "前端系统"
+        },
+        {
+          "value": "FrameService",
+          "description": "Frame服务"
         }
       ]
     }

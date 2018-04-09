@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @PropertySource("classpath:/auth.properties")
 @ConfigurationProperties(prefix = "session")
-public class AuthProperties {
+public class AuthConfig {
 
     private Integer expiration;
 

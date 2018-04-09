@@ -4,9 +4,8 @@ import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.sfsctech.auth.filter.SSOFilter;
-import com.sfsctech.auth.filter.SessionFilter;
 import com.sfsctech.auth.inf.VerifyService;
-import com.sfsctech.auth.properties.AuthProperties;
+import com.sfsctech.auth.properties.AuthConfig;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.spring.properties.AppConfig;
@@ -25,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackageClasses = AppConfig.class)
-@EnableConfigurationProperties(AuthProperties.class)
+@EnableConfigurationProperties(AuthConfig.class)
 public class AuthConfigurer {
 
     @Autowired
@@ -38,15 +37,15 @@ public class AuthConfigurer {
     private RegistryConfig registryConfig;
 
 //    @Bean
-    public FilterRegistrationBean SessionFilter() {
-        SessionFilter filter = new SessionFilter();
-        // Session认证排除路径
-        filter.setExcludesPattern(appConfig.getSessionExcludePath());
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("SessionFilter");
-        return registration;
-    }
+//    public FilterRegistrationBean SessionFilter() {
+//        SessionFilter filter = new SessionFilter();
+//        // Session认证排除路径
+//        filter.setExcludesPattern(appConfig.getSessionExcludePath());
+//        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+//        registration.setName("SessionFilter");
+//        return registration;
+//    }
 
     @Bean
     public FilterRegistrationBean SSOFilter() {

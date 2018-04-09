@@ -27,10 +27,13 @@ public class SSOProperties {
 
     // 项目类型
     public enum ItemType {
-        Platform, Server
+        BackendSystem,
+        FrontendSystem,
+        FrameService
     }
 
-    private String portalUrl;
+    private String domain;
+    private String homePage;
     private String loginUrl;
     private String logoutUrl;
     private String checkUrl;
@@ -46,12 +49,20 @@ public class SSOProperties {
         this.reference = new SSOProperties.Reference();
     }
 
-    public String getPortalUrl() {
-        return portalUrl;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setPortalUrl(String portalUrl) {
-        this.portalUrl = portalUrl;
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
     }
 
     public String getLoginUrl() {
@@ -105,8 +116,8 @@ public class SSOProperties {
 
     public static class Authentication {
 
-        private AuthProtocol protocol;
-        private AuthWay way;
+        private AuthProtocol protocol = AuthProtocol.Rpc;
+        private AuthWay way = AuthWay.Simple;
         private ItemType itemType;
 
         Authentication() {
