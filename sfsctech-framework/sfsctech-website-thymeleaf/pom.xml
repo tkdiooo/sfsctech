@@ -40,25 +40,25 @@
             <artifactId>sfsctech-framework-interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!-- sfsctech-common-dubbox support-->
+        <!-- common-dubbox support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-exception support-->
+        <!-- common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-logback support-->
+        <!-- common-logback support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-security support-->
+        <!-- common-security support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-security</artifactId>

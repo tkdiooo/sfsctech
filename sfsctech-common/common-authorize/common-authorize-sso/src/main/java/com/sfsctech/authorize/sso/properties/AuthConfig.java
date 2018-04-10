@@ -1,0 +1,32 @@
+package com.sfsctech.authorize.sso.properties;
+
+import com.sfsctech.authorize.base.util.JwtUtil;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+/**
+ * Class AuthProperties
+ *
+ * @author 张麒 2017-12-4.
+ * @version Description:
+ */
+@Component
+@PropertySource("classpath:/auth.properties")
+@ConfigurationProperties(prefix = "session")
+public class AuthConfig {
+
+    private Integer expiration;
+
+    public Integer getExpiration() {
+        return expiration;
+    }
+
+    public void setExpiration(Integer expiration) {
+        if (null != JwtUtil.config.getExpiration() && null == this.expiration) {
+            this.expiration = JwtUtil.config.getExpiration().intValue();
+        } else if (null == this.expiration) {
+            this.expiration = expiration;
+        }
+    }
+}

@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sfsctech.common</groupId>
-    <artifactId>sfsctech-common</artifactId>
+    <artifactId>common-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.1.0-SNAPSHOT</version>
 
     <modules>
+        <module>common-authorize</module>
         <module>common-base</module>
         <module>common-constants</module>
         <module>common-dubbox</module>
@@ -22,7 +23,6 @@
         <module>common-util</module>
         <module>common-cache</module>
         <module>common-security</module>
-        <module>common-auth</module>
         <module>common-saml</module>
         <module>common-database</module>
     </modules>

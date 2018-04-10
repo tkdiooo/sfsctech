@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.sfsctech.configurer.WebMvcConfigurer,\
+com.sfsctech.configurer.CacheConfigurer,\
+com.sfsctech.configurer.DubboxConfigurer,\
+com.sfsctech.configurer.SSOConfigurer

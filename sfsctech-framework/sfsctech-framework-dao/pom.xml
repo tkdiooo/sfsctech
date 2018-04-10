@@ -19,7 +19,7 @@
             <artifactId>sfsctech-framework-model</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!-- sfsctech-common-mybatis support-->
+        <!-- common-mybatis support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-mybatis</artifactId>
