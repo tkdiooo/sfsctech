@@ -1,6 +1,8 @@
 package com.sfsctech.authorize.sso.properties;
 
+import com.sfsctech.authorize.base.properties.JwtProperties;
 import com.sfsctech.authorize.base.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "session")
 public class AuthConfig {
 
+    @Autowired
+    private JwtProperties config;
+
     private Integer expiration;
 
     public Integer getExpiration() {
@@ -23,8 +28,8 @@ public class AuthConfig {
     }
 
     public void setExpiration(Integer expiration) {
-        if (null != JwtUtil.config.getExpiration() && null == this.expiration) {
-            this.expiration = JwtUtil.config.getExpiration().intValue();
+        if (null != config.getExpiration() && null == this.expiration) {
+            this.expiration = config.getExpiration().intValue();
         } else if (null == this.expiration) {
             this.expiration = expiration;
         }

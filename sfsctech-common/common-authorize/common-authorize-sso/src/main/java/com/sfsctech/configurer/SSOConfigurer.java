@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.sfsctech.authorize.base.inf.VerifyService;
+import com.sfsctech.authorize.base.properties.JwtProperties;
 import com.sfsctech.authorize.sso.filter.SSOFilter;
 import com.sfsctech.authorize.sso.properties.AuthConfig;
 import com.sfsctech.constants.LabelConstants;
@@ -23,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = {AppConfig.class, SSOProperties.class})
+@ComponentScan(basePackageClasses = {AppConfig.class, SSOProperties.class, JwtProperties.class})
 @EnableConfigurationProperties(AuthConfig.class)
 public class SSOConfigurer {
 

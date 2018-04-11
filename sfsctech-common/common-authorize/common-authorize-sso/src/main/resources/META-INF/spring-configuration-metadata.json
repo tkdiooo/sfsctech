@@ -16,11 +16,6 @@
       "type": "com.sfsctech.authorize.sso.properties.SSOProperties$Reference",
       "sourceType": "com.sfsctech.authorize.sso.properties.SSOProperties",
       "sourceMethod": "getReference()"
-    },
-    {
-      "name": "website.sso.jwt",
-      "type": "com.sfsctech.authorize.base.properties.JwtProperties",
-      "sourceType": "com.sfsctech.authorize.base.properties.JwtProperties"
     }
   ],
   "properties": [
@@ -109,24 +104,6 @@
       "description": "Dubbo服务连接超时时间默认2000",
       "sourceType": "com.sfsctech.authorize.sso.properties.SSOProperties$Reference",
       "defaultValue": 2000
-    },
-    {
-      "name": "website.sso.jwt.subject",
-      "type": "java.lang.String",
-      "description": "jwt 主题",
-      "sourceType": "com.sfsctech.authorize.base.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.issuer",
-      "type": "java.lang.String",
-      "description": "jwt 发行方",
-      "sourceType": "com.sfsctech.authorize.base.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.expiration",
-      "type": "java.lang.Long",
-      "description": "jwt 保持时间",
-      "sourceType": "com.sfsctech.authorize.base.properties.JwtProperties"
     }
   ],
   "hints": [
