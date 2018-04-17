@@ -5,13 +5,9 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.mybatis.datasource.ReadWriteDataSource;
-import com.sfsctech.mybatis.datasource.aop.ReadWriteAdvice;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -72,68 +68,6 @@ public class MyBatisConfigurer {
     @Primary
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dynamicDatasource());
-    }
-
-    /**
-     * 定义通知实现类
-     *
-     * @return ReadWriteAdvice
-     */
-    @Bean
-    public ReadWriteAdvice readWriteAdvice() {
-        return new ReadWriteAdvice();
-    }
-
-//    /**
-//     * 定义通过名称匹配的切面
-//     *
-//     * @return NameMatchMethodPointcutAdvisor
-//     */
-//    @Bean
-//    public NameMatchMethodPointcutAdvisor readWriteAdvisor() {
-//        NameMatchMethodPointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
-//        advisor.setAdvice(readWriteAdvice());
-//        advisor.setMappedName("*");
-//        return advisor;
-//    }
-
-    /**
-     * 定义切点（类配置了com.sfsctech.mybatis.annotation.DataSource注解）
-     *
-     * @return AnnotationMatchingPointcut
-     */
-    @Bean
-    public AnnotationMatchingPointcut annotationMatchingPointcut() {
-        return new AnnotationMatchingPointcut(com.sfsctech.mybatis.annotation.DataSource.class);
-    }
-
-    /**
-     * 定义默认切点通知
-     *
-     * @return DefaultPointcutAdvisor
-     */
-    @Bean
-    public DefaultPointcutAdvisor defaultPointcutAdvisor() {
-        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-        advisor.setPointcut(annotationMatchingPointcut());
-        advisor.setAdvice(readWriteAdvice());
-        return advisor;
-    }
-
-    /**
-     * 定义代理
-     *
-     * @return BeanNameAutoProxyCreator
-     */
-    @Bean
-    public BeanNameAutoProxyCreator beanNameAutoProxyCreator() {
-        BeanNameAutoProxyCreator autoProxyCreator = new BeanNameAutoProxyCreator();
-        autoProxyCreator.setProxyTargetClass(true);
-        // 需要增强的类
-        autoProxyCreator.setBeanNames("*ServiceImpl");
-        // 设置通知
-        autoProxyCreator.setInterceptorNames("defaultPointcutAdvisor");
-        return autoProxyCreator;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.sfsctech.mybatis.datasource;
 
 import com.alibaba.fastjson.JSON;
 import com.sfsctech.common.tools.Assert;
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.mybatis.consistenthash.Node;
 import com.sfsctech.mybatis.consistenthash.RoundRobinWeight;
 import com.sfsctech.mybatis.datasource.support.DBType;
@@ -77,9 +78,11 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
 
     @Override
     public Connection getConnection() throws SQLException {
-        DBType dbtype = DbTypeHolder.getDbType();
-        if (dbtype == DBType.READ) {
+        if (DbTypeHolder.getDbType() == DBType.READ) {
             Connection conn = getReadConnection();
+            if (conn != null) return conn;
+        } else if (StringUtil.isNotBlank(DbTypeHolder.getDbName())) {
+            Connection conn = getReadConnection(DbTypeHolder.getDbName());
             if (conn != null) return conn;
         }
         return getWriteDataSource().getConnection();
@@ -99,9 +102,8 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
      * 获取读连接
      *
      * @return Connection
-     * @throws SQLException
      */
-    public Connection getReadConnection() throws SQLException {
+    public Connection getReadConnection() {
         DataSourceWrap dsw = getReadDataSource();
         try {
             if (dsw != null) {
@@ -113,6 +115,27 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
             return getReadConnection();
         }
         return null;
+    }
+
+    /**
+     * 获取读连接
+     *
+     * @return Connection
+     */
+    public Connection getReadConnection(String dbName) {
+        Assert.notNull(this.resolvedReadDataSources, "Read dataSource router not initialized");
+        DataSource dataSource = this.resolvedReadDataSources.get(dbName);
+        if (dataSource == null && (this.lenientFallback)) {
+            return getReadConnection();
+        }
+        DataSourceWrap dsw = new DataSourceWrap(dbName, dataSource);
+        try {
+            return dsw.getDataSource().getConnection();
+        } catch (Exception e) {
+            RoundRobinWeight.removeNode(new Node(dbName));
+            new Thread(new RecoveryDataSourceThread(dsw)).start();
+            return getReadConnection();
+        }
     }
 
     /**

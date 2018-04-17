@@ -16,4 +16,6 @@ import java.lang.annotation.*;
 @Inherited
 public @interface DataSource {
     DBType value() default DBType.WRITE;
+
+    String name() default "";
 }
