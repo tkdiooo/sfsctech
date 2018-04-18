@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.io.IOException;
  * @version Description:
  */
 @Controller
+@RequestMapping("logback")
 public class Subversion {
 
     public final Logger logger = LoggerFactory.getLogger(Subversion.class);

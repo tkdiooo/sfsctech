@@ -1,6 +1,9 @@
 server:
   port: 8888
+#  address: 172.16.225.99
 spring:
+  application:
+    name: config-server
   # config svn
   profiles:
     active: subversion
@@ -8,9 +11,12 @@ spring:
     config:
       server:
         svn:
-          uri: https://pc-20131011xrrb/svn/service-config/
-          username: tkdiooo
+          uri: svn://172.16.225.98/repositories/service-config/
+          username: admin
           password: 4880300
+#          uri: https://pc-20131011xrrb/svn/service-config/
+#          username: tkdiooo
+#          password: 4880300
         # config git
 #        git:
 #          uri: https://github.com/tkdiooo/config.git
@@ -18,4 +24,4 @@ spring:
 
 logback:
   file:
-    space: D:\logback
+    space: /opt/logback

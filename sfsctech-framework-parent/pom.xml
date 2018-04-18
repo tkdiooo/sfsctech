@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>1.5.2.RELEASE</spring.boot.version>
-        <spring.version>4.3.7.RELEASE</spring.version>
+        <spring.version>4.3.16.RELEASE</spring.version>
         <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.0.4</thymeleaf-layout-dialect.version>
         <java.version>1.8</java.version>
@@ -92,7 +92,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-config-client</artifactId>
-                <version>1.2.2.RELEASE</version>
+                <version>1.4.3.RELEASE</version>
             </dependency>
             <!-- Test -->
             <dependency>
