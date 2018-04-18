@@ -1,6 +1,7 @@
 package com.sfsctech.configurer;
 
 import com.sfsctech.authorize.base.properties.JwtProperties;
+import com.sfsctech.authorize.base.properties.SSOProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@ComponentScan(basePackageClasses = JwtProperties.class)
+@ComponentScan(basePackageClasses = {SSOProperties.class, JwtProperties.class})
 public class AuthConfigurer {
 
 }

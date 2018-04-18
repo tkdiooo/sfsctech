@@ -3,7 +3,7 @@ package com.sfsctech.authorize.sso.util;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.sfsctech.authorize.base.inf.VerifyService;
 import com.sfsctech.authorize.sso.properties.AuthConfig;
-import com.sfsctech.authorize.sso.properties.SSOProperties;
+import com.sfsctech.authorize.base.properties.SSOProperties;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.SpringContextUtil;

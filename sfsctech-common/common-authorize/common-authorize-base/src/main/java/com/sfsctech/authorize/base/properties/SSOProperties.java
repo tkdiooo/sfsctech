@@ -1,4 +1,4 @@
-package com.sfsctech.authorize.sso.properties;
+package com.sfsctech.authorize.base.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

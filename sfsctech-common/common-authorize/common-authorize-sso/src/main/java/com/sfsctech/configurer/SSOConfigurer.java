@@ -8,7 +8,7 @@ import com.sfsctech.authorize.base.properties.JwtProperties;
 import com.sfsctech.authorize.sso.filter.SSOFilter;
 import com.sfsctech.authorize.sso.properties.AuthConfig;
 import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.authorize.sso.properties.SSOProperties;
+import com.sfsctech.authorize.base.properties.SSOProperties;
 import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

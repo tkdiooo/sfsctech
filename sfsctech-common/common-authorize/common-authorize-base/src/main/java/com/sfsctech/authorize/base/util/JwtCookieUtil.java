@@ -1,4 +1,4 @@
-package com.sfsctech.authorize.sso.util;
+package com.sfsctech.authorize.base.util;
 
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.common.cookie.CookieHelper;
