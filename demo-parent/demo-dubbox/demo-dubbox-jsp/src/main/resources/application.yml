@@ -1,0 +1,71 @@
+#server setting
+server:
+  port: 8081
+  address: localhost
+  context-path: /jspdemo
+  tomcat:
+    uri-encoding: utf-8
+  # logback config service setting
+  context-parameters:
+    logback-config-location: http://172.16.225.98:8888/logback/framework/website
+    logback-expose-webapp-root: true
+  # jsp development setting
+  jsp-servlet:
+    init-parameters:
+      development: true
+#spring mvc setting
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  # 指定静态资源处理路径
+    static-path-pattern: /static/**
+  redis:
+      host-name: 172.16.225.98
+      port: 6379
+      password: redis123
+      pool:
+        max-total: 300
+        max-wait-millis: 10000
+        max-idle: 100
+        min-idle: 50
+#common setting
+website:
+  # 网站支持
+  support:
+    # 静态资源服务
+    static-resources: http://localhost:8080
+    welcome-file: /index.html
+#  session:
+#    authentication: sso
+#    exclude-path: /index.html
+#  csrf:
+#    verify-exclude-path:
+#    intercept-exclude-path:
+#dubbo setting
+#dubbo:
+#  application:
+#    #服务消费名称信息
+#    name: dubbo_consumer
+#    #日志适配
+#    logger: slf4j
+#  registry:
+#    #zookeeper注册中心服务地址
+#    address: zookeeper://172.16.225.98:2181
+#    #注册中心不存在时，是否报错
+#    check: false
+#    #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
+#    register: true
+#    #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
+#    subscribe: true
+#    #注册中心请求超时时间(毫秒)
+#    timeout: 2000
+#  rpc:
+#    service-package: com.sfsctech.website.jsp.service
+
+#spring.cloud.config
+#--spring.cloud.config.name=jsp
+#--spring.cloud.config.profile=deve
+#--spring.cloud.config.label=config
+#--spring.cloud.config.uri=http://localhost:8888
