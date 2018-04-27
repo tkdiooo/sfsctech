@@ -1,11 +1,14 @@
 package com.sfsctech.mybatis.dao.monitor;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.cache.inf.ICacheFactory;
 import com.sfsctech.cache.inf.ICacheService;
 import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.mybatis.dao.IBaseDao;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -22,14 +25,38 @@ import java.util.Map;
  */
 public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Example> extends SqlSessionDaoSupport implements IBaseDao<T, PK, Example> {
 
-    private MyBatisCacheMonitor<Example> cacheMonitor = new MyBatisCacheMonitor<>();
+    private ICacheFactory<ICacheService<String, Object>> cacheClient;
 
-    protected final void setCacheClient(ICacheFactory<ICacheService<String, Object>> cacheClient) {
-        cacheMonitor.setCacheClient(cacheClient);
+    protected void setCacheFactory(ICacheFactory<ICacheService<String, Object>> cacheClient) {
+        this.cacheClient = cacheClient;
     }
 
-    protected final ICacheService<String, Object> getCacheClient() {
-        return cacheMonitor.getCacheClient();
+    protected ICacheService<String, Object> getCacheClient() {
+        return this.cacheClient.getCacheClient();
+    }
+
+    private String getCacheKey(String namespace, String key) {
+        return namespace + LabelConstants.UNDERLINE + key;
+    }
+
+    private String getCacheKey(String namespace, Example example) {
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(example);
+        JSONArray jsonArray = jsonObject.getJSONArray("oredCriteria").getJSONObject(0).getJSONArray("allCriteria");
+        for (Object json : jsonArray) {
+            JSONObject jo = (JSONObject) json;
+            if (jo.getString("condition").startsWith("Guid")) {
+                return getCacheKey(namespace, jo.getString("value"));
+            }
+        }
+        return "";
+    }
+
+    private void putTimeOut(String namespace, String cacheKey, Object value, int timeOut) {
+        try {
+            getCacheClient().putTimeOut(getCacheKey(namespace, cacheKey), value, timeOut);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -45,11 +72,11 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     @SuppressWarnings("unchecked")
     public T selectByPrimaryKeyForCache(PK key) {
-        Object model = getCacheClient().get(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
+        Object model = getCacheClient().get(getCacheKey(getNamespace(), String.valueOf(key)));
         if (null != model) return (T) model;
         else {
             T t = this.selectByPrimaryKey(key);
-            cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), t, 60 * 10);
+            putTimeOut(getNamespace(), String.valueOf(key), t, 60 * 10);
             return t;
         }
     }
@@ -61,7 +88,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int deleteByPrimaryKeyForCache(PK key) {
-        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), String.valueOf(key)));
+        getCacheClient().remove(getCacheKey(getNamespace(), String.valueOf(key)));
         return this.deleteByPrimaryKey(key);
     }
 
@@ -72,7 +99,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int deleteByExampleForCache(Example example) {
-        getCacheClient().remove(cacheMonitor.getCacheKey(getNamespace(), example));
+        getCacheClient().remove(getCacheKey(getNamespace(), example));
         return this.deleteByExample(example);
     }
 
@@ -85,7 +112,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int insertForCache(T model) {
         Integer key = this.insert(model);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -98,7 +125,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int insertSelectiveForCache(T model) {
         Integer key = this.insertSelective(model);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -118,7 +145,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int updateByExampleSelectiveForCache(T model, Example example) {
         Integer key = this.updateByExampleSelective(model, example);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -133,7 +160,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int updateByExampleForCache(T model, Example example) {
         Integer key = this.updateByExample(model, example);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -145,7 +172,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int updateByPrimaryKeySelectiveForCache(T model) {
         Integer key = this.updateByPrimaryKeySelective(model);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 
@@ -157,7 +184,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
     @Override
     public int updateByPrimaryKeyForCache(T model) {
         Integer key = this.updateByPrimaryKey(model);
-        cacheMonitor.putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
+        putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
 

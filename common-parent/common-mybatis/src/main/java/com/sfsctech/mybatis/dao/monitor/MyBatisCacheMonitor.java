@@ -12,11 +12,12 @@ import com.sfsctech.constants.LabelConstants;
  * @author 张麒 2017/6/29.
  * @version Description:
  */
+@Deprecated
 class MyBatisCacheMonitor<Example> {
 
     private ICacheFactory<ICacheService<String, Object>> cacheClient;
 
-    final void setCacheClient(ICacheFactory<ICacheService<String, Object>> cacheClient) {
+    final void setCacheFactory(ICacheFactory<ICacheService<String, Object>> cacheClient) {
         this.cacheClient = cacheClient;
     }
 
