@@ -17,6 +17,11 @@
     <modules>
         <module>demo-cloud-eureka</module>
         <module>demo-cloud-zuul</module>
+        <module>demo-cloud-ribbon</module>
+        <module>demo-cloud-client</module>
+        <module>demo-cloud-Feign</module>
+        <module>demo-cloud-hystrix</module>
+        <module>demo-cloud-turbine</module>
     </modules>
 
     <properties>
@@ -80,7 +85,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Dalston.RC1</version>
+                <version>Dalston.SR5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -97,6 +102,11 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-eureka</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-eureka-server</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
@@ -105,10 +115,34 @@
                 <artifactId>spring-cloud-starter-zuul</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-ribbon -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-ribbon</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-feign</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-hystrix</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-turbine</artifactId>
+                <version>${spring.cloud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix-turbine</artifactId>
                 <version>${spring.cloud.version}</version>
             </dependency>
             <!-- Spring boot -->
@@ -127,12 +161,27 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
             <!-- Test -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring.boot.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>1.3.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-context</artifactId>
+                <version>1.3.3.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.ow2.asm</groupId>

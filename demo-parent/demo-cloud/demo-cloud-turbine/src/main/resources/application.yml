@@ -1,0 +1,11 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:10002/eureka/
+server:
+  port: 8767
+spring:
+  application:
+    name: cloud-turbine
+turbine:
+  app-config: cloud-hystrix, cloud-feign
