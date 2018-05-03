@@ -7,3 +7,5 @@ server:
 spring:
   application:
     name: cloud-client
+  zipkin:
+    base-url: http://localhost:8769

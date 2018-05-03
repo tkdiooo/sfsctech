@@ -11,7 +11,7 @@
 
     <modules>
         <module>framework-cloud-parent</module>
-        <module>framework-dubbox-parent</module>
+        <module>sfsctech-framework-parent</module>
     </modules>
 
 </project>
