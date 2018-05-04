@@ -1,6 +1,5 @@
 server:
   port: 8888
-#  address: 172.16.225.99
 spring:
   application:
     name: config-server

@@ -30,6 +30,11 @@
             <artifactId>common-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
