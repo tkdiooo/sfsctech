@@ -16,4 +16,6 @@ public interface IndexService {
 
     @GetMapping("index")
     String index(@RequestParam("name") String name);
+
+
 }

@@ -25,6 +25,8 @@
         <module>common-security</module>
         <module>common-saml</module>
         <module>common-database</module>
+        <module>common-net</module>
+        <module>common-net-base</module>
     </modules>
 
     <properties>

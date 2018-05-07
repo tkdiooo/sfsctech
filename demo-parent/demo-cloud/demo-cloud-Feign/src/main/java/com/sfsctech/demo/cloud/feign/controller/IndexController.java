@@ -1,6 +1,9 @@
 package com.sfsctech.demo.cloud.feign.controller;
 
 import com.sfsctech.demo.cloud.feign.service.IndexService;
+import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
+import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
+import com.sfsctech.demo.cloud.inf.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +21,14 @@ public class IndexController {
     @Autowired
     private IndexService service;
 
+    @Autowired
+    private ClientService clientService;
+
     @GetMapping("index")
     public String index(@RequestParam String name) {
-        return service.index(name);
+        CheckBindingReq cbReq = new CheckBindingReq();
+        cbReq.setBuCode(name);
+        CheckBindingRes res= clientService.checkBinding(cbReq);
+        return res.getGroupId();
     }
 }

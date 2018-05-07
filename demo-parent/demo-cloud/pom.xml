@@ -23,6 +23,7 @@
         <module>demo-cloud-hystrix</module>
         <module>demo-cloud-turbine</module>
         <module>demo-cloud-zipkin</module>
+        <module>demo-cloud-interface</module>
     </modules>
 
 </project>
