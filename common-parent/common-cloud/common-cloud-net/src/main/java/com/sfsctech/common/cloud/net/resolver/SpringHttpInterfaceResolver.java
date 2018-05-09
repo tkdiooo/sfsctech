@@ -3,82 +3,74 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.bestv.common.net.resolver;
+package com.sfsctech.common.cloud.net.resolver;
 
-import com.bestv.common.lang.request.BaseRequest;
-import com.bestv.common.net.annotation.CommonNets;
-import com.bestv.common.net.domain.CommonServicePointInfo;
-import com.bestv.common.net.domain.InterfaceInfo;
-import com.bestv.common.net.domain.ServicePointInfo;
-import com.bestv.common.net.ex.ArgumentStyleNotAllowException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import com.sfsctech.common.cloud.net.annotation.CloudService;
+import com.sfsctech.common.cloud.net.domain.ServiceInterface;
+import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
     private static final String SERVICE_POINT_PREFIX = "http://";
     private static final String SERVICE_PATH_SEP = "/";
 
 
-    public InterfaceInfo parse(Class sourceInterfaceInfo) {
-        if (sourceInterfaceInfo == null) {
+    public ServiceInterface parse(Class interfaceClass) {
+        if (interfaceClass == null) {
             return null;
-        } else {
-            InterfaceInfo interfaceInfo = new InterfaceInfo();
-            interfaceInfo.setInterfaceClass(sourceInterfaceInfo);
-            interfaceInfo.setAppName(this.getAppName(sourceInterfaceInfo));
-            interfaceInfo.setServicePointInfos(this.getServicePointInfos(sourceInterfaceInfo));
-            return interfaceInfo;
         }
+        ServiceInterface interfaceInfo = new ServiceInterface();
+        interfaceInfo.setInterfaceClass(interfaceClass);
+        interfaceInfo.setAppName(this.getAppName(interfaceClass));
+        interfaceInfo.setServiceInterfacePoint(this.getServiceInterfacePoint(interfaceClass));
+        return interfaceInfo;
     }
 
-    private List<ServicePointInfo> getServicePointInfos(Class sourceInterfaceInfo) {
-        List<ServicePointInfo> servicePointInfos = new ArrayList<>();
-        String appName = this.getAppName(sourceInterfaceInfo);
-        Method[] var4 = sourceInterfaceInfo.getDeclaredMethods();
-        int var5 = var4.length;
-
-        for(int var6 = 0; var6 < var5; ++var6) {
-            Method service = var4[var6];
-            Class[] argumentTypes = service.getParameterTypes();
+    private List<ServiceInterfacePoint> getServiceInterfacePoint(Class interfaceClass) {
+        List<ServiceInterfacePoint> servicePointInfos = new ArrayList<>();
+        String appName = this.getAppName(interfaceClass);
+        Method[] methods = interfaceClass.getDeclaredMethods();
+        for (Method method : methods) {
+            Class[] argumentTypes = method.getParameterTypes();
             if (argumentTypes.length != 1) {
-                throw new ArgumentStyleNotAllowException(sourceInterfaceInfo, service);
+                throw new ArgumentStyleNotAllowException(interfaceClass, method);
             }
 
             Class argumentType = argumentTypes[0];
             if (!BaseRequest.class.isAssignableFrom(argumentType)) {
-                throw new ArgumentStyleNotAllowException(sourceInterfaceInfo, service);
+                throw new ArgumentStyleNotAllowException(interfaceClass, method);
             }
 
             ServicePointInfo servicePointInfo = new CommonServicePointInfo();
-            servicePointInfo.setInterfaceClass(sourceInterfaceInfo);
+            servicePointInfo.setInterfaceClass(interfaceClass);
             servicePointInfo.setServiceClientPoint(service);
             servicePointInfo.setArgumentType(argumentType);
             servicePointInfo.setResultType(service.getReturnType());
-            servicePointInfo.setServiceServerPoint(this.buildServicePoint(appName, this.getServiceRootPath(sourceInterfaceInfo), this.getServiceRelativePath(service)));
+            servicePointInfo.setServiceServerPoint(this.buildServicePoint(appName, this.getServiceRootPath(interfaceClass), this.getServiceRelativePath(service)));
             servicePointInfos.add(servicePointInfo);
         }
 
         return servicePointInfos;
     }
 
-    private String getAppName(Class sourceInterfaceInfo) {
-        String appName = null;
-        if (sourceInterfaceInfo.isAnnotationPresent(CommonNets.class)) {
-            CommonNets commonNetAnnotation = (CommonNets)sourceInterfaceInfo.getAnnotation(CommonNets.class);
-            appName = commonNetAnnotation.appName();
+    private String getAppName(Class interfaceClass) {
+        if (interfaceClass.isAnnotationPresent(CloudService.class)) {
+            CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
+            return annotation.value();
         }
-
-        return appName;
+        return "";
     }
 
     private String getServiceRootPath(Class sourceInterfaceInfo) {
         String serviceRootPath = null;
         if (sourceInterfaceInfo.isAnnotationPresent(RequestMapping.class)) {
-            RequestMapping requestMappingAnnotation = (RequestMapping)sourceInterfaceInfo.getAnnotation(RequestMapping.class);
+            RequestMapping requestMappingAnnotation = (RequestMapping) sourceInterfaceInfo.getAnnotation(RequestMapping.class);
             serviceRootPath = this.getRequestMappingPath(requestMappingAnnotation);
         }
 
@@ -88,10 +80,10 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
     private String getServiceRelativePath(Method service) {
         String serviceRelativePath = null;
         if (service.isAnnotationPresent(RequestMapping.class)) {
-            RequestMapping requestMappingAnnotation = (RequestMapping)service.getAnnotation(RequestMapping.class);
+            RequestMapping requestMappingAnnotation = (RequestMapping) service.getAnnotation(RequestMapping.class);
             serviceRelativePath = this.getRequestMappingPath(requestMappingAnnotation);
         } else if (service.isAnnotationPresent(PostMapping.class)) {
-            PostMapping postMappingAnnotation = (PostMapping)service.getAnnotation(PostMapping.class);
+            PostMapping postMappingAnnotation = (PostMapping) service.getAnnotation(PostMapping.class);
             serviceRelativePath = this.getPostMappingPath(postMappingAnnotation);
         }
 

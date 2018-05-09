@@ -12,7 +12,7 @@ public abstract class ServicePointInfo {
     protected Class interfaceClass;
     protected Method serviceClientPoint;
     protected String serviceServerPoint;
-    protected Class resultType;
+    protected Class<?> resultType;
     protected Class argumentType;
 
     public ServicePointInfo() {
@@ -42,11 +42,11 @@ public abstract class ServicePointInfo {
         this.serviceServerPoint = serviceServerPoint;
     }
 
-    public Class getResultType() {
+    public Class<?> getResultType() {
         return this.resultType;
     }
 
-    public void setResultType(Class resultType) {
+    public void setResultType(Class<?> resultType) {
         this.resultType = resultType;
     }
 

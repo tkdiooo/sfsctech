@@ -1,12 +1,7 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
+package com.sfsctech.common.cloud.net.config;
 
-package com.bestv.common.net.config;
-
-import com.bestv.common.net.execute.factory.InterfaceProxyFactory;
-import com.bestv.common.net.execute.factory.http.SpringHttpInterfaceProxyFactory;
+import com.sfsctech.common.cloud.net.execute.factory.InterfaceProxyFactory;
+import com.sfsctech.common.cloud.net.execute.factory.http.SpringHttpInterfaceProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,22 +9,21 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * Class InterfaceProxyFactoryConfiguration
  * 接口代理工厂配置
+ *
+ * @author 张麒 2018-5-9.
+ * @version Description:
  */
 @Configuration
-@Import({RestTemplateConfiguration.class})
+//@Import({RestTemplateConfiguration.class})
 public class InterfaceProxyFactoryConfiguration {
 
-    @Autowired
+    //    @Autowired
     private RestTemplate httpClient;
-
-    public InterfaceProxyFactoryConfiguration() {
-    }
 
     /**
      * 创建接口代理工厂
-     *
-     * @return
      */
     @Bean
     public InterfaceProxyFactory getInterfaceProxyFactory() {

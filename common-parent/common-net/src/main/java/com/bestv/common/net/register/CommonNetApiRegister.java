@@ -23,6 +23,7 @@ public class CommonNetApiRegister implements ImportBeanDefinitionRegistrar, Reso
     public CommonNetApiRegister() {
     }
 
+    @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
         if (annotationMetadata.hasAnnotation(SCAN_ANNOTATION_CLASS.getName())) {
             String[] basePackages = (String[]) annotationMetadata.getAnnotationAttributes(SCAN_ANNOTATION_CLASS.getName()).get("basePackages");
@@ -36,6 +37,7 @@ public class CommonNetApiRegister implements ImportBeanDefinitionRegistrar, Reso
         }
     }
 
+    @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }

@@ -3,40 +3,17 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.bestv.common.net.execute.handler;
+package com.sfsctech.common.cloud.net.execute.handler;
 
-import com.bestv.common.dto.EnvContext;
-import com.bestv.common.dto.TraceInfo;
-import com.bestv.common.lang.request.BaseRequest;
-import com.bestv.common.lang.result.BaseResult;
-import com.bestv.common.net.domain.InterfaceInfo;
-import com.bestv.common.net.domain.ServicePointInfo;
-import com.bestv.common.net.ex.HttpExecuteErrorException;
-import com.bestv.common.net.ex.InterfaceInfoInValidException;
-import com.bestv.common.net.log.CommonNetLogger;
-import com.bestv.common.net.log.LoggerTypeEnum;
-import com.bestv.common.net.log.factory.CommonNetLoggerFactory;
-import com.bestv.common.net.log.factory.GenericCommonNetLoggerFactory;
-import com.bestv.common.net.trace.CommonTraceInfoGenerator;
-import com.bestv.common.net.trace.TraceInfoGenerator;
-import com.bestv.common.net.trace.TraceInfoHolder;
+import com.sfsctech.common.cloud.net.domain.ServiceInterface;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import java.util.*;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
@@ -46,7 +23,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     private final HttpHeaders httpHeaders;
     private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
 
-    public SpringHttpInterfaceExecuteHandler(InterfaceInfo interfaceInfo, RestTemplate httpClient) {
+    public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
         this.checkInterfaceInfoValid(interfaceInfo);
         this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
         this.methodInterfaceInfoMap = this.convertToClientPointInterfaceInfoMap(interfaceInfo.getServicePointInfos());
@@ -56,7 +33,6 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
 
     /**
      * 执行代理方法
-     *
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {

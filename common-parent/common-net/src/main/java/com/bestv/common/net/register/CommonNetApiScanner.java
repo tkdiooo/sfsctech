@@ -40,11 +40,7 @@ public class CommonNetApiScanner extends ClassPathBeanDefinitionScanner {
     }
 
     public void registerIncludeFilters() {
-        this.addIncludeFilter(new TypeFilter() {
-            public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
-                return metadataReader.getClassMetadata().isInterface();
-            }
-        });
+        this.addIncludeFilter((metadataReader, metadataReaderFactory) -> metadataReader.getClassMetadata().isInterface());
     }
 
     private void processBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitions) {

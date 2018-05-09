@@ -7,7 +7,7 @@
     <groupId>com.sfsctech.common</groupId>
     <artifactId>common-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <modules>
         <module>common-authorize</module>
@@ -27,12 +27,16 @@
         <module>common-database</module>
         <module>common-net</module>
         <module>common-net-base</module>
+        <module>common-cloud</module>
+        <module>common-core</module>
+        <module>common-support</module>
     </modules>
 
     <properties>
-        <sfsctech.common.version>1.1.0-SNAPSHOT</sfsctech.common.version>
+        <sfsctech.common.version>2.0.0-SNAPSHOT</sfsctech.common.version>
         <spring.version>4.3.16.RELEASE</spring.version>
         <spring.boot.version>1.5.12.RELEASE</spring.boot.version>
+        <spring.cloud.version>Dalston.SR5</spring.cloud.version>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <repository.url>http://172.16.225.98:8081</repository.url>
