@@ -1,10 +1,3 @@
-/**
- * @ClassName: UserSessionHolder
- * @Description: TODO(这里用一句话描述这个类的作用)
- * @author A18ccms a18ccms_gmail_com
- * @date 2015年8月19日 下午5:43:41
- */
-
 package com.sfsctech.base.session;
 
 

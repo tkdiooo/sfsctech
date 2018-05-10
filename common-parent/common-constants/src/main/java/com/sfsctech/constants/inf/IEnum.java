@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.sfsctech.constants.inf;
 
 /**

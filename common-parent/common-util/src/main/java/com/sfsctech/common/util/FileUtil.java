@@ -1,8 +1,7 @@
 package com.sfsctech.common.util;
 
-import com.sfsctech.base.exception.BizException;
-import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.common.tools.Assert;
+import com.sfsctech.constants.LabelConstants;
 import org.apache.commons.io.FileUtils;
 
 import javax.imageio.ImageIO;

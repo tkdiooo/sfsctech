@@ -6,6 +6,7 @@
 package com.sfsctech.common.cloud.net.execute.handler;
 
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
+import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
@@ -18,7 +19,7 @@ import java.util.*;
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
     private final CommonNetLogger logger;
-    private Map<Method, ServicePointInfo> methodInterfaceInfoMap;
+    private Map<Method, ServiceInterface> methodInterfaceInfoMap;
     private RestTemplate httpClient;
     private final HttpHeaders httpHeaders;
     private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
@@ -26,7 +27,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
         this.checkInterfaceInfoValid(interfaceInfo);
         this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
-        this.methodInterfaceInfoMap = this.convertToClientPointInterfaceInfoMap(interfaceInfo.getServicePointInfos());
+        this.methodInterfaceInfoMap = this.convertToClientPointInterfaceInfoMap(interfaceInfo.getServiceInterfacePoint());
         this.httpClient = httpClient;
         this.httpHeaders = this.buildCommonHttpHeaders();
     }
@@ -83,20 +84,22 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
         return headers;
     }
 
-    private Map<Method, ServicePointInfo> convertToClientPointInterfaceInfoMap(List<ServicePointInfo> servicePointInfos) {
-        if (CollectionUtils.isEmpty(servicePointInfos)) {
-            return null;
-        } else {
-            Map<Method, ServicePointInfo> methodInterfaceInfoMap = new HashMap();
-            Iterator var3 = servicePointInfos.iterator();
+    private Map<Method, ServiceInterface> convertToClientPointInterfaceInfoMap(List<ServiceInterfacePoint> points) {
+        if (CollectionUtils.isNotEmpty(points)) {
+            Map<Method, ServiceInterface> methodMap = new HashMap<>();
+            points.forEach(point -> {
+
+            });
+            Iterator var3 = points.iterator();
 
             while (var3.hasNext()) {
                 ServicePointInfo servicePointInfo = (ServicePointInfo) var3.next();
-                methodInterfaceInfoMap.put(servicePointInfo.getServiceClientPoint(), servicePointInfo);
+                methodMap.put(servicePointInfo.getServiceClientPoint(), servicePointInfo);
             }
             // 返回一个不可增删的map
-            return Collections.unmodifiableMap(methodInterfaceInfoMap);
+            return Collections.unmodifiableMap(methodMap);
         }
+        return null;
     }
 
     private void checkInterfaceInfoValid(InterfaceInfo interfaceInfo) {

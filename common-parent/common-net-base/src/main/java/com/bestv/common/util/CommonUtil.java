@@ -8,6 +8,7 @@ package com.bestv.common.util;
 import com.bestv.common.dto.Node;
 import com.bestv.common.lang.enums.BaseEnum;
 import com.bestv.common.lang.enums.Brace;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.net.InetAddress;
@@ -24,6 +25,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,11 +46,7 @@ public final class CommonUtil {
     }
 
     public static List<Class> getClassesUnderPackage(String packageName) {
-        return getClassesUnderPackage(packageName, Collections.singletonList(new ClassFilter() {
-            public boolean reject(Class clazz) {
-                return false;
-            }
-        }));
+        return getClassesUnderPackage(packageName, Collections.singletonList(clazz -> false));
     }
 
     public static List<Class> getClassesUnderPackage(String packageName, List<ClassFilter> classFilters) {
@@ -58,46 +56,46 @@ public final class CommonUtil {
         try {
             Enumeration urls = Thread.currentThread().getContextClassLoader().getResources(packageUrl);
 
-            while(true) {
+            while (true) {
                 label61:
-                while(true) {
+                while (true) {
                     URL url;
                     do {
                         if (!urls.hasMoreElements()) {
                             return classes;
                         }
 
-                        url = (URL)urls.nextElement();
-                    } while(url == null);
+                        url = (URL) urls.nextElement();
+                    } while (url == null);
 
                     String protocol = url.getProtocol();
                     if (StringUtils.equals(protocol, "file")) {
                         String packagePath = url.getPath().replaceAll("%20", "");
                         addClass(classes, packagePath, packageName, classFilters);
                     } else if (StringUtils.equals(protocol, "jar")) {
-                        JarURLConnection jarURLConnection = (JarURLConnection)url.openConnection();
+                        JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
                         if (jarURLConnection != null) {
                             JarFile jarFile = jarURLConnection.getJarFile();
                             Enumeration jarEntryEnumeration = jarFile.entries();
 
-                            while(true) {
+                            while (true) {
                                 String jarEntryName;
                                 do {
                                     if (!jarEntryEnumeration.hasMoreElements()) {
                                         continue label61;
                                     }
 
-                                    JarEntry jarEntry = (JarEntry)jarEntryEnumeration.nextElement();
+                                    JarEntry jarEntry = (JarEntry) jarEntryEnumeration.nextElement();
                                     jarEntryName = jarEntry.getName();
-                                } while(!jarEntryName.endsWith(".class"));
+                                } while (!jarEntryName.endsWith(".class"));
 
                                 String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(46)).replaceAll("/", ".");
                                 Class clazz = Class.forName(className);
                                 boolean reject = false;
                                 Iterator var15 = classFilters.iterator();
 
-                                while(var15.hasNext()) {
-                                    ClassFilter classFilter = (ClassFilter)var15.next();
+                                while (var15.hasNext()) {
+                                    ClassFilter classFilter = (ClassFilter) var15.next();
                                     if (classFilter != null && classFilter.reject(clazz)) {
                                         reject = true;
                                         break;
@@ -122,7 +120,7 @@ public final class CommonUtil {
         byte[] var2 = inetAddress.getAddress();
         int var3 = var2.length;
 
-        for(int var4 = 0; var4 < var3; ++var4) {
+        for (int var4 = 0; var4 < var3; ++var4) {
             byte b = var2[var4];
             int value = b & 255;
             value = (value + 256) % 256;
@@ -139,15 +137,15 @@ public final class CommonUtil {
     }
 
     public static <T extends BaseEnum> T getByCode(String code, Class<? extends T> enumClass) {
-        Map<String, BaseEnum> classEnumsMap = (Map)BASE_ENUM_CACHE.get(enumClass);
+        Map<String, BaseEnum> classEnumsMap = BASE_ENUM_CACHE.get(enumClass);
         if (classEnumsMap == null) {
-             classEnumsMap = new HashMap();
-            BaseEnum[] classEnums = (BaseEnum[])enumClass.getEnumConstants();
+            classEnumsMap = new HashMap<>();
+            BaseEnum[] classEnums = enumClass.getEnumConstants();
             if (classEnums != null && classEnums.length > 0) {
                 BaseEnum[] var4 = classEnums;
                 int var5 = classEnums.length;
 
-                for(int var6 = 0; var6 < var5; ++var6) {
+                for (int var6 = 0; var6 < var5; ++var6) {
                     BaseEnum baseEnum = var4[var6];
                     classEnumsMap.put(baseEnum.getCode(), baseEnum);
                 }
@@ -157,7 +155,7 @@ public final class CommonUtil {
             BASE_ENUM_CACHE.putIfAbsent(enumClass, classEnumsMap);
         }
 
-        return (T)classEnumsMap.get(code);
+        return (T) classEnumsMap.get(code);
     }
 
     public static String nodeToJsonString(Node node, Map<String, Object> cacheMap, boolean needFormat) {
@@ -199,9 +197,9 @@ public final class CommonUtil {
 
             Iterator var6 = node.getChildNodes().iterator();
 
-            while(var6.hasNext()) {
-                Entry<String, Node> entry = (Entry)var6.next();
-                stringBuilder.append(nodeToJsonStringWithOutBrace((Node)entry.getValue(), cacheMap, needFormat)).append(",");
+            while (var6.hasNext()) {
+                Entry<String, Node> entry = (Entry) var6.next();
+                stringBuilder.append(nodeToJsonStringWithOutBrace((Node) entry.getValue(), cacheMap, needFormat)).append(",");
             }
 
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -232,7 +230,7 @@ public final class CommonUtil {
                 File[] var5 = files;
                 int var6 = files.length;
 
-                for(int var7 = 0; var7 < var6; ++var7) {
+                for (int var7 = 0; var7 < var6; ++var7) {
                     File file = var5[var7];
                     String fileName = file.getName();
                     String className;
@@ -255,8 +253,8 @@ public final class CommonUtil {
                             boolean reject = false;
                             Iterator var13 = classFilters.iterator();
 
-                            while(var13.hasNext()) {
-                                ClassFilter classFilter = (ClassFilter)var13.next();
+                            while (var13.hasNext()) {
+                                ClassFilter classFilter = (ClassFilter) var13.next();
                                 if (classFilter != null && classFilter.reject(clazz)) {
                                     reject = true;
                                     break;

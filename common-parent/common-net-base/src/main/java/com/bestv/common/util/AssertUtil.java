@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class AssertUtil {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AssertUtil.class);
     private static Constructor<? extends CommonException> constructor;
     private static final Integer ERROR_STACK_DEPTH = 5;
@@ -52,7 +53,7 @@ public final class AssertUtil {
 
             CommonException exception;
             try {
-                exception = (CommonException)constructor.newInstance(commonErrorCode, extraMessage);
+                exception = constructor.newInstance(commonErrorCode, extraMessage);
                 regularStackTraceElements(exception);
             } catch (Exception var7) {
                 LOGGER.error("创建异常对象错误", var7);
@@ -119,7 +120,7 @@ public final class AssertUtil {
         String exceptionClassName = null;
 
         try {
-            exceptionClassName = (String)CommonConfig.getProperty(ConfigKeyEnum.ASSERTUTIL_EXCEPTION_CLASS_NAME);
+            exceptionClassName = CommonConfig.getProperty(ConfigKeyEnum.ASSERTUTIL_EXCEPTION_CLASS_NAME);
             Class exceptionClass;
             if (StringUtils.isNotBlank(exceptionClassName)) {
                 exceptionClass = Class.forName(exceptionClassName);

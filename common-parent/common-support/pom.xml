@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-support</artifactId>
-
+    <packaging>pom</packaging>
+    <modules>
+        <module>common-support-util</module>
+    </modules>
 
 </project>
