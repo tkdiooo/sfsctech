@@ -1,0 +1,140 @@
+{
+  "groups": [
+    {
+      "name": "spring.redis",
+      "type": "com.sfsctech.common.core.cache.properties.RedisProperties",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties"
+    },
+    {
+      "name": "spring.redis.pool",
+      "type": "com.sfsctech.common.core.cache.properties.RedisProperties$Pool",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties",
+      "sourceMethod": "getPool()"
+    },
+    {
+      "name": "spring.redis.single",
+      "type": "com.sfsctech.common.core.cache.properties.RedisProperties$Single",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties",
+      "sourceMethod": "getSingle()"
+    },
+    {
+      "name": "spring.redis.cluster",
+      "type": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties",
+      "sourceMethod": "getCluster()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.redis.protocol",
+      "type": "com.sfsctech.common.core.cache.properties.RedisProperties.Protocol",
+      "description": "redis 连接协议",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties"
+    },
+    {
+      "name": "spring.redis.single.database",
+      "type": "java.lang.Integer",
+      "description": "Redis数据库索引（默认为0）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Single"
+    },
+    {
+      "name": "spring.redis.single.host",
+      "type": "java.lang.String",
+      "description": "Redis服务地址",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Single"
+    },
+    {
+      "name": "spring.redis.single.port",
+      "type": "java.lang.Integer",
+      "description": "Redis服务端口",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Single"
+    },
+    {
+      "name": "spring.redis.single.password",
+      "type": "java.lang.String",
+      "description": "Redis服务器连接密码（默认为空）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Single"
+    },
+    {
+      "name": "spring.redis.single.timeout",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间（毫秒）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Single"
+    },
+    {
+      "name": "spring.redis.pool.max-active",
+      "type": "java.lang.Integer",
+      "description": "连接池最大连接数（使用负值表示没有限制）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Pool"
+    },
+    {
+      "name": "spring.redis.pool.max-wait",
+      "type": "java.lang.Integer",
+      "description": "连接池最大阻塞等待时间（使用负值表示没有限制）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Pool"
+    },
+    {
+      "name": "spring.redis.pool.max-idle",
+      "type": "java.lang.Integer",
+      "description": "连接池中的最大空闲连接",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Pool"
+    },
+    {
+      "name": "spring.redis.pool.min-idle",
+      "type": "java.lang.Integer",
+      "description": "连接池中的最小空闲连接",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Pool"
+    },
+    {
+      "name": "spring.redis.cluster.nodes",
+      "type": "java.util.List<String>",
+      "description": "redis集群主机（格式：IP:PORT,）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    },
+    {
+      "name": "spring.redis.cluster.connectionTimeout",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间（毫秒）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    },
+    {
+      "name": "spring.redis.cluster.soTimeout",
+      "type": "java.lang.Integer",
+      "description": "读取数据超时时间（毫秒）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    },
+    {
+      "name": "spring.redis.cluster.maxAttempts",
+      "type": "java.lang.Integer",
+      "description": "出现异常最大重试次数",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    },
+    {
+      "name": "spring.redis.cluster.password",
+      "type": "java.lang.String",
+      "description": "Redis服务器连接密码（默认为空）",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    },
+    {
+      "name": "spring.redis.cluster.maxRedirects",
+      "type": "java.lang.Integer",
+      "description": "最大重定向数",
+      "sourceType": "com.sfsctech.common.core.cache.properties.RedisProperties$Cluster"
+    }
+  ],
+  "hints": [
+    {
+      "name": "spring.redis.protocol",
+      "values": [
+        {
+          "value": "Single",
+          "description": "单机服务"
+        },
+        {
+          "value": "Cluster",
+          "description": "集群服务"
+        }
+      ]
+    }
+  ]
+}

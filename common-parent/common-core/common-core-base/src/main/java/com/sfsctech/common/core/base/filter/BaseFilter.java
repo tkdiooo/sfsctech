@@ -31,12 +31,11 @@ public abstract class BaseFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String requestURI = ((HttpServletRequest) request).getRequestURI();
         // 全局默认filter校验排除（静态资源、页面模板、Spring默认错误页面、druid分析页面）
-        // TODO
-//        if (ExcludesConstants.isExclusion(requestURI)) {
+        if (FilterHandler.isExclusion(requestURI)) {
             chain.doFilter(request, response);
-//        } else {
-//            doHandler(request, response, chain);
-//        }
+        } else {
+            doHandler(request, response, chain);
+        }
     }
 
     @Override

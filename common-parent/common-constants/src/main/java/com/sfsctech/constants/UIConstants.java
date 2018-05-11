@@ -2,11 +2,6 @@ package com.sfsctech.constants;
 
 import com.sfsctech.constants.inf.IEnum;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Class UIConstants
  *

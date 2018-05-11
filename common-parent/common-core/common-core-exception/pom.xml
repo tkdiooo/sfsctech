@@ -13,9 +13,19 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-support-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

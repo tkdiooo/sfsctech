@@ -31,7 +31,7 @@ public abstract class BaseExceptionHandler {
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
         if (StringUtil.isBlank(ret_url)) {
             ret_url = CommonConstants.CONTEXT_PATH;
-        }
+        }request.getSession();
         result.addAttach("url", ret_url);
         if (HttpUtil.isAjaxRequest(request)) {
             return handleAjaxError(response, result, status);

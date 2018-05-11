@@ -1,7 +1,7 @@
 package com.sfsctech.common.core.exception.enums;
 
-import com.sfsctech.common.core.base.ex.enums.ExceptionLevelEnum;
 import com.sfsctech.common.core.base.ex.ExceptionTips;
+import com.sfsctech.common.core.base.ex.enums.ExceptionLevelEnum;
 import com.sfsctech.common.core.base.ex.enums.ExceptionTypeEnum;
 
 /**

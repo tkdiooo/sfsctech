@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>common-support-util</module>
+        <module>common-support-tools</module>
+        <module>common-support-saml</module>
     </modules>
 
 </project>

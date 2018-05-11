@@ -1,7 +1,7 @@
 package com.sfsctech.common.core.exception.enums;
 
-import com.sfsctech.common.core.base.ex.enums.ExceptionLevelEnum;
 import com.sfsctech.common.core.base.ex.ExceptionTips;
+import com.sfsctech.common.core.base.ex.enums.ExceptionLevelEnum;
 import com.sfsctech.common.core.base.ex.enums.ExceptionTypeEnum;
 
 /**
@@ -10,14 +10,15 @@ import com.sfsctech.common.core.base.ex.enums.ExceptionTypeEnum;
  * @author 张麒 2018-5-10.
  * @version Description:
  */
+// TODO 验证消息需要补全
 public enum VerifyExceptionTipsEnum implements ExceptionTips<String, String> {
 
-    LoginWrong("00001", "账号或密码错误", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    LoginUnrepeatable("00002", "当前账号已经登录，不能重复登录", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    AccountNoExist("00003", "账号不存在", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    AccountRemove("00004", "账号已被删除", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    AccountDisabled("00005", "账号已被禁用", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    AccountLocked("00006", "账号已被锁定", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    LoginWrong("tips.login.wrong", "账号或密码错误", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    LoginUnrepeatable("tips.login.unrepeatable", "当前账号已经登录，不能重复登录", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    AccountNoExist("tips.login.account.noexist", "账号不存在", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    AccountRemove("tips.login.account.remove", "账号已被删除", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    AccountDisabled("tips.login.account.disabled", "账号已被禁用", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    AccountLocked("tips.login.account.locked", "账号已被锁定", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
     ParameterWrong("00007", "参数验证失败", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn);
 
     private String code;

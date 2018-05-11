@@ -17,6 +17,6 @@ public class ClusterProtocolCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String protocol = context.getEnvironment().getProperty(PropertiesConstants.SPRING_REDIS_PROTOCOL);
-        return null != protocol && RedisProperties.Protocol.Cluster.name().equals(protocol);
+        return RedisProperties.Protocol.Cluster.name().equals(protocol);
     }
 }

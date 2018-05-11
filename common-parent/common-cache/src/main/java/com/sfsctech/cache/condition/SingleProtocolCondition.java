@@ -17,6 +17,6 @@ public class SingleProtocolCondition implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String protocol = context.getEnvironment().getProperty(PropertiesConstants.SPRING_REDIS_PROTOCOL);
-        return null != protocol && RedisProperties.Protocol.Single.name().equals(protocol);
+        return RedisProperties.Protocol.Single.name().equals(protocol);
     }
 }

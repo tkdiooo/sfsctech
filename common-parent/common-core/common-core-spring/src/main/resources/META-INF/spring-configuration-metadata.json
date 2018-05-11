@@ -1,0 +1,56 @@
+{
+  "groups": [
+    {
+      "name": "server.tomcat",
+      "type": "com.sfsctech.common.core.spring.properties.TomcatProperties",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "server.tomcat.optimize",
+      "type": "java.lang.Boolean",
+      "description": "tomcat优化",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.connector",
+      "type": "java.lang.String",
+      "description": "tomcat连接器",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.connectionTimeout",
+      "type": "java.lang.Integer",
+      "description": "连接时间",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.maxKeepAliveRequests",
+      "type": "java.lang.Integer",
+      "description": "一次连接可以进行的HTTP请求的最大请求次数",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    },
+    {
+      "name": "server.tomcat.keepAliveTimeout",
+      "type": "java.lang.Integer",
+      "description": "一次连接中的多次请求传输之间的时间",
+      "sourceType": "com.sfsctech.common.core.spring.properties.TomcatProperties"
+    }
+  ],
+  "hints": [
+    {
+      "name": "server.tomcat.connector",
+      "values": [
+        {
+          "value": "org.apache.coyote.http11.Http11AprProtocol",
+          "description": "tomcat连接器Http11AprProtocol"
+        },
+        {
+          "value": "org.apache.coyote.http11.Http11NioProtocol",
+          "description": "tomcat连接器Http11NioProtocol"
+        }
+      ]
+    }
+  ]
+}
