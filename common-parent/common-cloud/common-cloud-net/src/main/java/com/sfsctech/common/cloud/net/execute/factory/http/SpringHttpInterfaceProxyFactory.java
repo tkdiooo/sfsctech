@@ -30,12 +30,16 @@ public class SpringHttpInterfaceProxyFactory implements InterfaceProxyFactory {
         this.httpClient = httpClient;
     }
 
+    /**
+     * 创建代理
+     */
+    @Override
     @SuppressWarnings("unchecked")
-    public <T> T createProxy(Class<T> interfaceType) {
-        ServiceInterface interfaceInfo = this.interfaceResolver.parse(interfaceType);
-        LOGGER.info("{} parsing the success.", interfaceType.getName());
+    public <T> T createProxy(Class<T> cls) {
+        ServiceInterface interfaceInfo = this.interfaceResolver.parse(cls);
+        LOGGER.info("{} parsing the success.", cls.getName());
         ExecuteHandler executeHandler = new SpringHttpInterfaceExecuteHandler(interfaceInfo, this.httpClient);
         LOGGER.info("{} execute handler initialize success.", interfaceInfo.getInterfaceClass().getName());
-        return (T) Proxy.newProxyInstance(interfaceType.getClassLoader(), new Class[]{interfaceType}, executeHandler);
+        return (T) Proxy.newProxyInstance(cls.getClassLoader(), new Class[]{cls}, executeHandler);
     }
 }

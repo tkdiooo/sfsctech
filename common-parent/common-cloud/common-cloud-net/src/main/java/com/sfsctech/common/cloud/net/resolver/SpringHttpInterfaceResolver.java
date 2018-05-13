@@ -8,6 +8,8 @@ package com.sfsctech.common.cloud.net.resolver;
 import com.sfsctech.common.cloud.net.annotation.CloudService;
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
+import com.sfsctech.common.cloud.net.ex.ParameterLengthException;
+import com.sfsctech.common.cloud.net.ex.ParameterStyleException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,11 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
     private static final String SERVICE_POINT_PREFIX = "http://";
     private static final String SERVICE_PATH_SEP = "/";
 
-
+    /**
+     *
+     * @param interfaceClass
+     * @return
+     */
     public ServiceInterface parse(Class interfaceClass) {
         if (interfaceClass == null) {
             return null;
@@ -39,12 +45,12 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
         for (Method method : methods) {
             Class[] argumentTypes = method.getParameterTypes();
             if (argumentTypes.length != 1) {
-                throw new ArgumentStyleNotAllowException(interfaceClass, method);
+                throw new ParameterLengthException(interfaceClass, method);
             }
 
             Class argumentType = argumentTypes[0];
             if (!BaseRequest.class.isAssignableFrom(argumentType)) {
-                throw new ArgumentStyleNotAllowException(interfaceClass, method);
+                throw new ParameterStyleException(interfaceClass, method);
             }
 
             ServicePointInfo servicePointInfo = new CommonServicePointInfo();

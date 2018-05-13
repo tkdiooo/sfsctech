@@ -30,6 +30,7 @@
         <module>common-cloud</module>
         <module>common-core</module>
         <module>common-support</module>
+        <module>common-data</module>
     </modules>
 
     <properties>
