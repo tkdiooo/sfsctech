@@ -7,8 +7,13 @@ package com.sfsctech.common.cloud.net.execute.handler;
 
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
+import com.sfsctech.common.cloud.net.ex.HttpExecuteErrorException;
+import com.sfsctech.common.core.base.domain.dto.BaseDto;
+import com.sfsctech.common.core.base.domain.dto.EnvContext;
+import com.sfsctech.common.core.base.domain.dto.TraceInfo;
+import com.sfsctech.common.core.rpc.result.ActionResult;
+import com.sfsctech.common.support.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,19 +22,19 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
-    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
-    private final CommonNetLogger logger;
-    private Map<Method, ServiceInterface> methodInterfaceInfoMap;
+    //    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
+//    private final CommonNetLogger logger;
+    private Map<Method, ServiceInterfacePoint> pointMap;
     private RestTemplate httpClient;
     private final HttpHeaders httpHeaders;
-    private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
+//    private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
 
     public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
-        this.checkInterfaceInfoValid(interfaceInfo);
-        this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
-        this.methodInterfaceInfoMap = this.convertToClientPointInterfaceInfoMap(interfaceInfo.getServiceInterfacePoint());
+        checkInterface(interfaceInfo);
+//        this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
+        this.pointMap = convertToClientPointMap(interfaceInfo.getServiceInterfacePoint());
         this.httpClient = httpClient;
-        this.httpHeaders = this.buildCommonHttpHeaders();
+        this.httpHeaders = buildCommonHttpHeaders();
     }
 
     /**
@@ -37,42 +42,42 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
-        ServicePointInfo servicePointInfo = this.methodInterfaceInfoMap.get(method);
-        BaseRequest request = (BaseRequest) args[0];
+        ServiceInterfacePoint servicePointInfo = pointMap.get(method);
+        BaseDto request = (BaseDto) args[0];
         EnvContext envContext = request.getEnvContext();
         if (envContext == null) {
             envContext = new EnvContext();
             request.setEnvContext(envContext);
         }
 
-        TraceInfo traceInfo = TraceInfoHolder.get();
-        if (traceInfo == null) {
-            traceInfo = this.traceInfoGenerator.generate();
-            TraceInfoHolder.set(traceInfo);
-        }
-
-        TraceInfo stableTraceInfo = new TraceInfo();
-        stableTraceInfo.setTraceId(traceInfo.getTraceId());
-        stableTraceInfo.setSpanId(traceInfo.getSpanId());
-        traceInfo = this.traceInfoGenerator.generate(traceInfo);
-        envContext.setTraceInfo(traceInfo);
-        TraceInfoHolder.set(traceInfo);
-        this.logger.logRequest(request);
-        HttpEntity httpEntity = new HttpEntity(request, this.httpHeaders);
-        ResponseEntity responseEntity = this.httpClient.postForEntity(servicePointInfo.getServiceServerPoint(), httpEntity, servicePointInfo.getResultType());
+//        TraceInfo traceInfo = TraceInfoHolder.get();
+//        if (traceInfo == null) {
+//            traceInfo = traceInfoGenerator.generate();
+//            TraceInfoHolder.set(traceInfo);
+//        }
+//
+//        TraceInfo stableTraceInfo = new TraceInfo();
+//        stableTraceInfo.setTraceId(traceInfo.getTraceId());
+//        stableTraceInfo.setSpanId(traceInfo.getSpanId());
+//        traceInfo = traceInfoGenerator.generate(traceInfo);
+//        envContext.setTraceInfo(traceInfo);
+//        TraceInfoHolder.set(traceInfo);
+//        logger.logRequest(request);
+        HttpEntity httpEntity = new HttpEntity(request, httpHeaders);
+        ResponseEntity responseEntity = httpClient.postForEntity(servicePointInfo.getServiceUrl(), httpEntity, servicePointInfo.getResult());
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
-            this.logger.warn(responseEntity.toString());
+//            logger.warn(responseEntity.toString());
             throw new HttpExecuteErrorException(httpEntity);
         } else {
-            BaseResult result = (BaseResult) responseEntity.getBody();
+            ActionResult result = (ActionResult) responseEntity.getBody();
             EnvContext resultEnvContext = result.getEnvContext();
             if (resultEnvContext == null) {
                 resultEnvContext = new EnvContext();
                 result.setEnvContext(resultEnvContext);
             }
 
-            resultEnvContext.setTraceInfo(stableTraceInfo);
-            this.logger.logResult(result);
+//            resultEnvContext.setTraceInfo(stableTraceInfo);
+//            logger.logResult(result);
             return result;
         }
     }
@@ -84,73 +89,41 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
         return headers;
     }
 
-    private Map<Method, ServiceInterface> convertToClientPointInterfaceInfoMap(List<ServiceInterfacePoint> points) {
+    private Map<Method, ServiceInterfacePoint> convertToClientPointMap(List<ServiceInterfacePoint> points) {
         if (CollectionUtils.isNotEmpty(points)) {
-            Map<Method, ServiceInterface> methodMap = new HashMap<>();
-            points.forEach(point -> {
-
-            });
-            Iterator var3 = points.iterator();
-
-            while (var3.hasNext()) {
-                ServicePointInfo servicePointInfo = (ServicePointInfo) var3.next();
-                methodMap.put(servicePointInfo.getServiceClientPoint(), servicePointInfo);
-            }
+            Map<Method, ServiceInterfacePoint> map = new HashMap<>();
+            points.forEach(point -> map.put(point.getMethod(), point));
             // 返回一个不可增删的map
-            return Collections.unmodifiableMap(methodMap);
+            return Collections.unmodifiableMap(map);
         }
         return null;
     }
 
-    private void checkInterfaceInfoValid(InterfaceInfo interfaceInfo) {
-        // 验证接口代理对象是否为空
-        this.checkObjectNotEmpty(interfaceInfo);
-        // 验证接口appname是否为空
-        this.checkObjectNotEmpty(interfaceInfo.getAppName());
+    /**
+     * 验证接口
+     */
+    private void checkInterface(ServiceInterface serviceInterface) {
         // 验证接口class是否为空
-        this.checkObjectNotEmpty(interfaceInfo.getInterfaceClass());
-        if (CollectionUtils.isNotEmpty(interfaceInfo.getServicePointInfos())) {
-            this.checkServicePointInfosValid(interfaceInfo.getServicePointInfos());
-        }
-
-    }
-
-    private void checkServicePointInfosValid(List<ServicePointInfo> servicePointInfos) {
-        if (!CollectionUtils.isEmpty(servicePointInfos)) {
-            Class interfaceClass = null;
-            Iterator var3 = servicePointInfos.iterator();
-
-            while (var3.hasNext()) {
-                ServicePointInfo servicePointInfo = (ServicePointInfo) var3.next();
-                this.checkObjectNotEmpty(servicePointInfo);
-                this.checkObjectNotEmpty(servicePointInfo.getInterfaceClass());
-                this.checkObjectNotEmpty(servicePointInfo.getResultType());
-                this.checkObjectNotEmpty(servicePointInfo.getServiceClientPoint());
-                this.checkObjectNotEmpty(servicePointInfo.getServiceServerPoint());
-                this.checkObjectNotEmpty(servicePointInfo.getArgumentType());
-                if (!BaseRequest.class.isAssignableFrom(servicePointInfo.getArgumentType())) {
-                    throw new InterfaceInfoInValidException();
-                }
-
-                if (!BaseResult.class.isAssignableFrom(servicePointInfo.getResultType())) {
-                    throw new InterfaceInfoInValidException();
-                }
-
-                if (interfaceClass == null) {
-                    interfaceClass = servicePointInfo.getInterfaceClass();
-                } else if (interfaceClass != servicePointInfo.getInterfaceClass()) {
-                    throw new InterfaceInfoInValidException();
-                }
-            }
-
+        AssertUtil.notNull(serviceInterface.getInterfaceClass(), ServiceInterface.class.getName() + "接口信息错误，InterfaceClass不能为空");
+        // 验证接口appname是否为空
+        AssertUtil.isNotBlank(serviceInterface.getAppName(), serviceInterface.getInterfaceClass().getName() + "接口信息错误，AppName不能为空");
+        if (CollectionUtils.isNotEmpty(serviceInterface.getServiceInterfacePoint())) {
+            checkInterfacePoints(serviceInterface.getServiceInterfacePoint());
         }
     }
 
-    private void checkObjectNotEmpty(Object object) {
-        if (object == null) {
-            throw new InterfaceInfoInValidException();
-        } else if (object instanceof String && StringUtils.isBlank((CharSequence) object)) {
-            throw new InterfaceInfoInValidException();
+    /**
+     * 验证接口方法
+     */
+    private void checkInterfacePoints(List<ServiceInterfacePoint> interfacePoints) {
+        if (!CollectionUtils.isEmpty(interfacePoints)) {
+            interfacePoints.forEach(point -> {
+                AssertUtil.notNull(point.getMethod(), "接口信息不合法，方法对象method为空");
+                AssertUtil.notNull(point.getResult(), "接口信息不合法，方法返回结果为空");
+                AssertUtil.notNull(point.getParams(), "接口信息不合法，方法参数为空");
+                AssertUtil.notNull(point.getServiceUrl(), "接口信息不合法，服务Url为空");
+            });
         }
     }
+
 }

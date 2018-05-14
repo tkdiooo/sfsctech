@@ -16,5 +16,5 @@ import com.sfsctech.common.cloud.net.domain.ServiceInterface;
  */
 public interface InterfaceResolver<T> {
 
-    ServiceInterface parse(T var1);
+    ServiceInterface parse(T t);
 }

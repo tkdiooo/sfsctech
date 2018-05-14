@@ -8,7 +8,7 @@ package com.sfsctech.common.cloud.net.ex;
 public class AppNameNotExistsException extends RuntimeException {
     private static final long serialVersionUID = -6470366905349548468L;
 
-    public AppNameNotExistsException(Class sourceInterfaceInfo) {
-        super("接口" + sourceInterfaceInfo.getName() + "的appName不存在, 请在该接口上打上CommonNet注解并配置appName");
+    public AppNameNotExistsException(Class interfaceClass) {
+        super("接口" + interfaceClass.getName() + "的appName不存在, 请在该接口上打上CloudService注解并配置appName");
     }
 }

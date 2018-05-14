@@ -8,9 +8,12 @@ package com.sfsctech.common.cloud.net.resolver;
 import com.sfsctech.common.cloud.net.annotation.CloudService;
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
-import com.sfsctech.common.cloud.net.ex.ParameterLengthException;
-import com.sfsctech.common.cloud.net.ex.ParameterStyleException;
-import org.apache.commons.lang3.StringUtils;
+import com.sfsctech.common.cloud.net.ex.AppNameNotExistsException;
+import com.sfsctech.common.cloud.net.ex.InterfaceMethodException;
+import com.sfsctech.common.core.base.constants.LabelConstants;
+import com.sfsctech.common.core.base.domain.dto.BaseDto;
+import com.sfsctech.common.core.rpc.result.ActionResult;
+import com.sfsctech.common.support.util.StringUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,13 +23,7 @@ import java.util.List;
 
 public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
     private static final String SERVICE_POINT_PREFIX = "http://";
-    private static final String SERVICE_PATH_SEP = "/";
 
-    /**
-     *
-     * @param interfaceClass
-     * @return
-     */
     public ServiceInterface parse(Class interfaceClass) {
         if (interfaceClass == null) {
             return null;
@@ -34,109 +31,92 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
         ServiceInterface interfaceInfo = new ServiceInterface();
         interfaceInfo.setInterfaceClass(interfaceClass);
         interfaceInfo.setAppName(this.getAppName(interfaceClass));
-        interfaceInfo.setServiceInterfacePoint(this.getServiceInterfacePoint(interfaceClass));
+        interfaceInfo.setServiceInterfacePoint(this.buildServiceInterfacePoint(interfaceClass));
         return interfaceInfo;
     }
 
-    private List<ServiceInterfacePoint> getServiceInterfacePoint(Class interfaceClass) {
-        List<ServiceInterfacePoint> servicePointInfos = new ArrayList<>();
-        String appName = this.getAppName(interfaceClass);
+    private List<ServiceInterfacePoint> buildServiceInterfacePoint(Class interfaceClass) {
+        List<ServiceInterfacePoint> interfacePoints = new ArrayList<>();
         Method[] methods = interfaceClass.getDeclaredMethods();
         for (Method method : methods) {
-            Class[] argumentTypes = method.getParameterTypes();
-            if (argumentTypes.length != 1) {
-                throw new ParameterLengthException(interfaceClass, method);
+            Class[] parameterTypes = method.getParameterTypes();
+            if (parameterTypes.length != 1) {
+                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能有一个对象");
             }
 
-            Class argumentType = argumentTypes[0];
-            if (!BaseRequest.class.isAssignableFrom(argumentType)) {
-                throw new ParameterStyleException(interfaceClass, method);
+            Class parameterType = parameterTypes[0];
+            if (!BaseDto.class.isAssignableFrom(parameterType)) {
+                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能是一个继承了" + BaseDto.class.getName() + "类的对象");
             }
 
-            ServicePointInfo servicePointInfo = new CommonServicePointInfo();
-            servicePointInfo.setInterfaceClass(interfaceClass);
-            servicePointInfo.setServiceClientPoint(service);
-            servicePointInfo.setArgumentType(argumentType);
-            servicePointInfo.setResultType(service.getReturnType());
-            servicePointInfo.setServiceServerPoint(this.buildServicePoint(appName, this.getServiceRootPath(interfaceClass), this.getServiceRelativePath(service)));
-            servicePointInfos.add(servicePointInfo);
+            if (!ActionResult.class.equals(method.getReturnType())) {
+                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的返回结果定义, 正确的返回结果只能是" + ActionResult.class.getName() + "类的对象");
+            }
+
+            ServiceInterfacePoint servicePointInfo = new ServiceInterfacePoint();
+            servicePointInfo.setMethod(method);
+            servicePointInfo.setParams(parameterType);
+            servicePointInfo.setResult(method.getReturnType());
+            servicePointInfo.setServiceUrl(this.buildServicePoint(interfaceClass, method));
+            interfacePoints.add(servicePointInfo);
         }
 
-        return servicePointInfos;
+        return interfacePoints;
+    }
+
+
+    private String buildServicePoint(Class interfaceClass, Method method) {
+        return SERVICE_POINT_PREFIX + getAppName(interfaceClass) + LabelConstants.FORWARD_SLASH + getServiceRootPath(interfaceClass) + LabelConstants.FORWARD_SLASH + getServiceRelativePath(method);
     }
 
     private String getAppName(Class interfaceClass) {
-        if (interfaceClass.isAnnotationPresent(CloudService.class)) {
-            CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
-            return annotation.value();
+        if (!interfaceClass.isAnnotationPresent(CloudService.class)) {
+            throw new AppNameNotExistsException(interfaceClass);
+        }
+        CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
+        // TODO
+        if (StringUtil.isNotBlank(annotation.appName())) {
+
+        }
+        return annotation.value();
+    }
+
+    private String getServiceRootPath(Class interfaceClass) {
+        if (interfaceClass.isAnnotationPresent(RequestMapping.class)) {
+            RequestMapping requestMappingAnnotation = (RequestMapping) interfaceClass.getAnnotation(RequestMapping.class);
+            return getRequestMappingPath(requestMappingAnnotation);
         }
         return "";
     }
 
-    private String getServiceRootPath(Class sourceInterfaceInfo) {
-        String serviceRootPath = null;
-        if (sourceInterfaceInfo.isAnnotationPresent(RequestMapping.class)) {
-            RequestMapping requestMappingAnnotation = (RequestMapping) sourceInterfaceInfo.getAnnotation(RequestMapping.class);
-            serviceRootPath = this.getRequestMappingPath(requestMappingAnnotation);
-        }
-
-        return serviceRootPath;
-    }
-
-    private String getServiceRelativePath(Method service) {
-        String serviceRelativePath = null;
-        if (service.isAnnotationPresent(RequestMapping.class)) {
-            RequestMapping requestMappingAnnotation = (RequestMapping) service.getAnnotation(RequestMapping.class);
-            serviceRelativePath = this.getRequestMappingPath(requestMappingAnnotation);
-        } else if (service.isAnnotationPresent(PostMapping.class)) {
-            PostMapping postMappingAnnotation = (PostMapping) service.getAnnotation(PostMapping.class);
-            serviceRelativePath = this.getPostMappingPath(postMappingAnnotation);
-        }
-
-        if (StringUtils.isBlank(serviceRelativePath)) {
-            serviceRelativePath = service.getName();
-        }
-
-        return serviceRelativePath;
-    }
-
-    private String buildServicePoint(String appName, String serviceRootPath, String relativePath) {
-        if (StringUtils.isBlank(serviceRootPath)) {
-            serviceRootPath = "";
-        }
-
-        if (StringUtils.isBlank(relativePath)) {
-            relativePath = "";
-        }
-
-        StringBuilder servicePoint = new StringBuilder("http://");
-        servicePoint.append(appName).append("/").append(serviceRootPath).append("/").append(relativePath);
-        return servicePoint.toString();
-    }
-
-    private String getRequestMappingPath(RequestMapping requestMappingAnnotation) {
-        if (requestMappingAnnotation == null) {
-            return null;
+    private String getServiceRelativePath(Method method) {
+        if (method.isAnnotationPresent(RequestMapping.class)) {
+            RequestMapping requestMappingAnnotation = method.getAnnotation(RequestMapping.class);
+            return getRequestMappingPath(requestMappingAnnotation);
+        } else if (method.isAnnotationPresent(PostMapping.class)) {
+            PostMapping postMappingAnnotation = method.getAnnotation(PostMapping.class);
+            return getPostMappingPath(postMappingAnnotation);
         } else {
-            String[] serviceRootPaths = requestMappingAnnotation.path();
-            if (serviceRootPaths.length == 0) {
-                serviceRootPaths = requestMappingAnnotation.value();
-            }
-
-            return serviceRootPaths[0];
+            return method.getName();
         }
     }
 
-    private String getPostMappingPath(PostMapping postMappingAnnotation) {
-        if (postMappingAnnotation == null) {
-            return null;
-        } else {
-            String[] serviceRootPaths = postMappingAnnotation.path();
-            if (serviceRootPaths.length == 0) {
-                serviceRootPaths = postMappingAnnotation.value();
-            }
-
-            return serviceRootPaths[0];
+    private String getRequestMappingPath(RequestMapping requestMapping) {
+        if (null != requestMapping) {
+            if (requestMapping.path().length == 0)
+                return requestMapping.value()[0];
+            return requestMapping.path()[0];
         }
+        return "";
+    }
+
+    private String getPostMappingPath(PostMapping postMapping) {
+        if (null != postMapping) {
+            if (postMapping.path().length == 0) {
+                return postMapping.value()[0];
+            }
+            return postMapping.path()[0];
+        }
+        return "";
     }
 }

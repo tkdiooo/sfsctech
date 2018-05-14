@@ -1,6 +1,7 @@
 package com.sfsctech.common.core.base.domain.result;
 
 import com.sfsctech.common.core.base.constants.RpcConstants.Status;
+import com.sfsctech.common.core.base.domain.dto.BaseDto;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
@@ -12,10 +13,9 @@ import java.util.*;
  * @author 张麒 2017/3/21.
  * @version Description:
  */
-public class BaseResult implements Serializable {
+public class BaseResult extends BaseDto {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -8243241537328556858L;
     /**
      * 响应状态
      */

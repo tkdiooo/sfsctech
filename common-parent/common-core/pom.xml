@@ -22,6 +22,7 @@
         <module>common-core-spring</module>
         <module>common-core-web</module>
         <module>common-core-rpc</module>
+        <module>common-core-rest</module>
     </modules>
 
 

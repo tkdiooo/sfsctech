@@ -1,4 +1,4 @@
-package com.sfsctech.common.core.web.config;
+package com.sfsctech.common.core.rest.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-public class RestConfig {
+public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {

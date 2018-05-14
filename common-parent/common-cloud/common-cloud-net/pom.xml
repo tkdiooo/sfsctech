@@ -25,6 +25,11 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-rpc</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

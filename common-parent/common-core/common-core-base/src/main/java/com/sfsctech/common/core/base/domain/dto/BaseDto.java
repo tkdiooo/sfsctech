@@ -15,6 +15,16 @@ public abstract class BaseDto implements IBaseDto, Serializable {
 
     private static final long serialVersionUID = 8799994997210907041L;
 
+    private EnvContext envContext;
+
+    public EnvContext getEnvContext() {
+        return this.envContext;
+    }
+
+    public void setEnvContext(EnvContext envContext) {
+        this.envContext = envContext;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

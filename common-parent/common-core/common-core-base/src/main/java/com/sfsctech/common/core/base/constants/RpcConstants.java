@@ -57,12 +57,12 @@ public class RpcConstants {
             return null;
         }
 
-//        public static String getValueByKey(Integer key) {
-//            return IEnum.findValue(values(), key);
-//        }
-//
-//        public static Integer getKeyByValue(String value) {
-//            return IEnum.findKey(values(), value);
-//        }
+        public static String getValueByKey(Integer key) {
+            return BaseEnum.findValue(values(), key);
+        }
+
+        public static Integer getKeyByValue(String value) {
+            return BaseEnum.findKey(values(), value);
+        }
     }
 }

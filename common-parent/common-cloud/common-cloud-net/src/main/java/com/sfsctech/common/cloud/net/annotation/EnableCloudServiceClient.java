@@ -8,6 +8,7 @@ package com.sfsctech.common.cloud.net.annotation;
  */
 
 import com.sfsctech.common.cloud.net.config.InterfaceProxyFactoryConfiguration;
+import com.sfsctech.common.cloud.net.register.CloudServiceRegister;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -18,6 +19,10 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({InterfaceProxyFactoryConfiguration.class})//, LogConfiguration.class, TraceConfiguration.class})
+@Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class})
+//, LogConfiguration.class, TraceConfiguration.class})
 public @interface EnableCloudServiceClient {
+
+    String[] basePackages() default {};
+
 }
