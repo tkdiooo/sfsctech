@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.common.core.base.constants.LabelConstants;
 import com.sfsctech.common.core.base.filter.FilterHandler;
+import com.sfsctech.common.core.rest.config.RestTemplateFactoryConfig;
 import com.sfsctech.common.core.spring.config.SpringConfig;
 import com.sfsctech.common.core.web.cookie.Config;
 import com.sfsctech.common.core.web.initialize.PropertiesInitialize;
@@ -46,7 +47,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({SpringConfig.class, MultipartProperties.class, WebResourceInitialize.class, WebsiteProperties.class, PropertiesInitialize.class})
+@Import({SpringConfig.class, RestTemplateFactoryConfig.class, MultipartProperties.class, WebResourceInitialize.class, WebsiteProperties.class, PropertiesInitialize.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(WebConfig.class);

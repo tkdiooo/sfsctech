@@ -22,6 +22,11 @@
             <artifactId>common-core-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-rest</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

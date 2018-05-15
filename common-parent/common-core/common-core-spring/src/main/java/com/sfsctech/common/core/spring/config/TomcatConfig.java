@@ -2,11 +2,11 @@ package com.sfsctech.common.core.spring.config;
 
 import com.sfsctech.common.core.spring.condition.TomcatCondition;
 import com.sfsctech.common.core.spring.properties.TomcatProperties;
-import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.apache.coyote.http11.Http11AprProtocol;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
@@ -23,25 +23,24 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
+// TODO
 @Conditional(TomcatCondition.class)
+@ConditionalOnProperty(name = "synchronize", havingValue = "true")
 @Import({ServerProperties.class, TomcatProperties.class})
 public class TomcatConfig {
 
     @Autowired
     private ServerProperties serverProperties;
 
-    @Autowired
-    private TomcatProperties properties;
-
     @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
+    public EmbeddedServletContainerFactory servletContainer(TomcatProperties properties) {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
         factory.setProtocol(properties.getConnector());
         TomcatConnectorCustomizer connectorCustomizer = connector -> {
             if (properties.getConnector().endsWith("Http11AprProtocol")) {
-                initHttp11AprProtocol(connector);
+                setConfig((Http11AprProtocol) connector.getProtocolHandler(), properties);
             } else {
-                initHttp11NioProtocol(connector);
+                setConfig((Http11NioProtocol) connector.getProtocolHandler(), properties);
             }
         };
         // 解析含有中文名的文件的url
@@ -52,18 +51,7 @@ public class TomcatConfig {
         return factory;
     }
 
-    private void initHttp11AprProtocol(Connector connector) {
-        Http11AprProtocol protocol = (Http11AprProtocol) connector.getProtocolHandler();
-        setConfig(protocol);
-    }
-
-
-    private void initHttp11NioProtocol(Connector connector) {
-        Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-        setConfig(protocol);
-    }
-
-    private void setConfig(AbstractHttp11Protocol protocol) {
+    private void setConfig(AbstractHttp11Protocol protocol, TomcatProperties properties) {
         // 设置最大连接数
         if (serverProperties.getTomcat().getMaxConnections() > 0)
             protocol.setMaxConnections(serverProperties.getTomcat().getMaxConnections());
