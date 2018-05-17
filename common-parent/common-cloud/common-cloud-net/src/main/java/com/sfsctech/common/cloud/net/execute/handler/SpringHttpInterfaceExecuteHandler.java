@@ -5,6 +5,16 @@
 
 package com.sfsctech.common.cloud.net.execute.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.bestv.common.dto.TraceInfo;
+import com.bestv.common.lang.request.BaseRequest;
+import com.bestv.common.net.log.CommonNetLogger;
+import com.bestv.common.net.log.LoggerTypeEnum;
+import com.bestv.common.net.log.factory.CommonNetLoggerFactory;
+import com.bestv.common.net.log.factory.GenericCommonNetLoggerFactory;
+import com.bestv.common.net.trace.CommonTraceInfoGenerator;
+import com.bestv.common.net.trace.TraceInfoGenerator;
+import com.bestv.common.net.trace.TraceInfoHolder;
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.common.cloud.net.ex.HttpExecuteErrorException;
@@ -13,6 +23,8 @@ import com.sfsctech.common.core.base.domain.dto.EnvContext;
 import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.common.support.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -25,16 +37,18 @@ import java.util.List;
 import java.util.Map;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
-    //    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
-//    private final CommonNetLogger logger;
+    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
+    private final CommonNetLogger logger;
     private Map<Method, ServiceInterfacePoint> pointMap;
     private RestTemplate httpClient;
     private final HttpHeaders httpHeaders;
-//    private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
+    private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
+
+    private final Logger loggers = LoggerFactory.getLogger(SpringHttpInterfaceExecuteHandler.class);
 
     public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
         checkInterface(interfaceInfo);
-//        this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
+        this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
         this.pointMap = convertToClientPointMap(interfaceInfo.getServiceInterfacePoint());
         this.httpClient = httpClient;
         this.httpHeaders = buildCommonHttpHeaders();
@@ -53,24 +67,26 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
             request.setEnvContext(envContext);
         }
 
-//        TraceInfo traceInfo = TraceInfoHolder.get();
-//        if (traceInfo == null) {
-//            traceInfo = traceInfoGenerator.generate();
-//            TraceInfoHolder.set(traceInfo);
-//        }
-//
-//        TraceInfo stableTraceInfo = new TraceInfo();
-//        stableTraceInfo.setTraceId(traceInfo.getTraceId());
-//        stableTraceInfo.setSpanId(traceInfo.getSpanId());
-//        traceInfo = traceInfoGenerator.generate(traceInfo);
-//        envContext.setTraceInfo(traceInfo);
-//        TraceInfoHolder.set(traceInfo);
-//        logger.logRequest(request);
+        TraceInfo traceInfo = TraceInfoHolder.get();
+        if (traceInfo == null) {
+            traceInfo = traceInfoGenerator.generate();
+            TraceInfoHolder.set(traceInfo);
+        }
+        BaseRequest br = new BaseRequest();
+        br.setEnvContext(new com.bestv.common.dto.EnvContext());
+        TraceInfo stableTraceInfo = new TraceInfo();
+        stableTraceInfo.setTraceId(traceInfo.getTraceId());
+        stableTraceInfo.setSpanId(traceInfo.getSpanId());
+        traceInfo = traceInfoGenerator.generate(traceInfo);
+        br.getEnvContext().setTraceInfo(traceInfo);
+        TraceInfoHolder.set(traceInfo);
+        loggers.info(JSON.toJSONString(request));
+        logger.logRequest(br);
         ParameterizedTypeReference<ActionResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
         HttpEntity<BaseDto> httpEntity = new HttpEntity<>(request, httpHeaders);
         ResponseEntity<ActionResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
-//            logger.warn(responseEntity.toString());
+            logger.warn(responseEntity.toString());
             throw new HttpExecuteErrorException(httpEntity);
         } else {
             ActionResult result = responseEntity.getBody();

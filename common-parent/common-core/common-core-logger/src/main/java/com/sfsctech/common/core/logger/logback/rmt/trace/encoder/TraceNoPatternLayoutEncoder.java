@@ -3,8 +3,10 @@ package com.sfsctech.common.core.logger.logback.rmt.trace.encoder;
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.pattern.PatternLayoutEncoderBase;
+import com.sfsctech.common.core.logger.logback.core.pattern.TraceConverter;
 import com.sfsctech.common.core.logger.logback.rmt.trace.layout.TraceNoPatternLayout;
 import com.sfsctech.common.core.logger.logback.rmt.util.PushUtil;
+import com.sfsctech.common.support.util.StringUtil;
 
 /**
  * Class TraceNoPatternLayoutEncoder
@@ -22,6 +24,9 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
     private String topic;
 
     public void start() {
+        if (StringUtil.isNotBlank(zfcode)) {
+            TraceConverter.appName = zfcode;
+        }
         if (pushUtil == null && synchToMDC) {
             pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName, topic);
         }

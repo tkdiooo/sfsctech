@@ -24,8 +24,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-support-util</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>

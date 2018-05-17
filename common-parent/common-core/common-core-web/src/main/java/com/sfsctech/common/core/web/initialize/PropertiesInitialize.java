@@ -3,7 +3,6 @@ package com.sfsctech.common.core.web.initialize;
 import com.sfsctech.common.core.base.constants.LabelConstants;
 import com.sfsctech.common.core.base.constants.WebsiteConstants;
 import com.sfsctech.common.core.base.filter.FilterHandler;
-import com.sfsctech.common.core.web.properties.WebsiteProperties;
 import com.sfsctech.common.support.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

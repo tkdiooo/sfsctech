@@ -7,8 +7,8 @@ server:
 spring:
   application:
     name: cloud-feign
-#  zipkin:
-#    base-url: http://localhost:8769
+  zipkin:
+    base-url: http://localhost:8769
 ##开启feign开关
 feign:
   hystrix:
