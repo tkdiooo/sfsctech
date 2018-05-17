@@ -4,7 +4,7 @@ import com.sfsctech.common.cloud.net.execute.factory.InterfaceProxyFactory;
 import com.sfsctech.common.cloud.net.execute.factory.http.SpringHttpInterfaceProxyFactory;
 import com.sfsctech.common.core.rest.config.RestTemplateFactoryConfig;
 import com.sfsctech.common.core.rest.factory.RestTemplateFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -21,14 +21,17 @@ import org.springframework.web.client.RestTemplate;
 @Import({RestTemplateFactoryConfig.class})
 public class InterfaceProxyFactoryConfiguration {
 
-    @Autowired
-    private RestTemplateFactory restTemplateFactory;
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate(RestTemplateFactory restTemplateFactory) {
+        return restTemplateFactory.buildPoolRest();
+    }
 
     /**
      * 创建接口代理工厂
      */
     @Bean
-    public InterfaceProxyFactory getInterfaceProxyFactory() {
-        return new SpringHttpInterfaceProxyFactory(restTemplateFactory.buildPoolRest());
+    public InterfaceProxyFactory getInterfaceProxyFactory(RestTemplate restTemplate) {
+        return new SpringHttpInterfaceProxyFactory(restTemplate);
     }
 }

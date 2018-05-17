@@ -14,8 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-spring</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

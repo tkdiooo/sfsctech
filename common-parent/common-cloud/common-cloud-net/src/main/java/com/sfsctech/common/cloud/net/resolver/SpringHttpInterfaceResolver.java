@@ -52,11 +52,10 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
             if (!ActionResult.class.equals(method.getReturnType())) {
                 throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的返回结果定义, 正确的返回结果只能是" + ActionResult.class.getName() + "类的对象");
             }
-
             ServiceInterfacePoint servicePointInfo = new ServiceInterfacePoint();
             servicePointInfo.setMethod(method);
             servicePointInfo.setParams(parameterType);
-            servicePointInfo.setResult(method.getReturnType());
+            servicePointInfo.setResult(method.getGenericReturnType());
             servicePointInfo.setServiceUrl(this.buildServicePoint(interfaceClass, method));
             interfacePoints.add(servicePointInfo);
         }

@@ -10,16 +10,19 @@ import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.common.cloud.net.ex.HttpExecuteErrorException;
 import com.sfsctech.common.core.base.domain.dto.BaseDto;
 import com.sfsctech.common.core.base.domain.dto.EnvContext;
-import com.sfsctech.common.core.base.domain.dto.TraceInfo;
 import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.common.support.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     //    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
@@ -63,13 +66,14 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
 //        envContext.setTraceInfo(traceInfo);
 //        TraceInfoHolder.set(traceInfo);
 //        logger.logRequest(request);
-        HttpEntity httpEntity = new HttpEntity(request, httpHeaders);
-        ResponseEntity responseEntity = httpClient.postForEntity(servicePointInfo.getServiceUrl(), httpEntity, servicePointInfo.getResult());
+        ParameterizedTypeReference<ActionResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
+        HttpEntity<BaseDto> httpEntity = new HttpEntity<>(request, httpHeaders);
+        ResponseEntity<ActionResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
 //            logger.warn(responseEntity.toString());
             throw new HttpExecuteErrorException(httpEntity);
         } else {
-            ActionResult result = (ActionResult) responseEntity.getBody();
+            ActionResult result = responseEntity.getBody();
             EnvContext resultEnvContext = result.getEnvContext();
             if (resultEnvContext == null) {
                 resultEnvContext = new EnvContext();

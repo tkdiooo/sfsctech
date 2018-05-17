@@ -1,6 +1,6 @@
 package com.sfsctech.common.support.util;
 
-import com.alibaba.fastjson.JSON;
+import com.sfsctech.common.core.base.json.FastJson;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -13,10 +13,10 @@ import java.io.IOException;
  */
 public class ResponseUtil {
 
-    public static void writeJson(String json, HttpServletResponse response) throws IOException {
+    public static void writeJson(Object jsonObject, HttpServletResponse response) throws IOException {
         response.setContentType("application/json; charset=UTF-8");
         setNoCacheHeaders(response);
-        response.getWriter().write(json);
+        response.getWriter().write(FastJson.toJSONString(jsonObject));
         response.getWriter().flush();
         response.getWriter().close();
     }

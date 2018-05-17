@@ -1,5 +1,6 @@
 package com.sfsctech.common.core.rest.factory;
 
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.common.core.rest.properties.RestProperties;
 import com.sfsctech.common.core.rest.util.UTF8PatcherForHttpClient;
 import org.apache.http.config.Registry;
@@ -38,9 +39,11 @@ import javax.net.ssl.SSLContext;
 public class CommonRestTemplateFactory implements RestTemplateFactory {
 
     private RestProperties properties;
+    private FastJsonHttpMessageConverter converter;
 
-    public CommonRestTemplateFactory(RestProperties properties) {
+    public CommonRestTemplateFactory(RestProperties properties, FastJsonHttpMessageConverter converter) {
         this.properties = properties;
+        this.converter = converter;
     }
 
     public RestTemplate buildSimpleRest() {
@@ -48,7 +51,7 @@ public class CommonRestTemplateFactory implements RestTemplateFactory {
         factory.setConnectionRequestTimeout(properties.getConnectionRequestTimeout());
         factory.setConnectTimeout(properties.getConnectionTimeout());
         factory.setReadTimeout(properties.getReadTimeout());
-        return UTF8PatcherForHttpClient.patch(new RestTemplate(factory));
+        return UTF8PatcherForHttpClient.patch(new RestTemplate(factory), converter);
     }
 
     public RestTemplate buildPoolRest() {
@@ -74,7 +77,7 @@ public class CommonRestTemplateFactory implements RestTemplateFactory {
             factory.setConnectionRequestTimeout(properties.getConnectionRequestTimeout());
             factory.setConnectTimeout(properties.getConnectionTimeout());
             factory.setReadTimeout(properties.getReadTimeout());
-            return UTF8PatcherForHttpClient.patch(new RestTemplate(factory));
+            return UTF8PatcherForHttpClient.patch(new RestTemplate(factory), converter);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +104,7 @@ public class CommonRestTemplateFactory implements RestTemplateFactory {
             factory.setConnectionRequestTimeout(properties.getConnectionRequestTimeout());
             factory.setConnectTimeout(properties.getConnectionTimeout());
             factory.setReadTimeout(properties.getReadTimeout());
-            return new AsyncRestTemplate(factory, UTF8PatcherForHttpClient.patch(new RestTemplate(factory)));
+            return new AsyncRestTemplate(factory, UTF8PatcherForHttpClient.patch(new RestTemplate(factory), converter));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

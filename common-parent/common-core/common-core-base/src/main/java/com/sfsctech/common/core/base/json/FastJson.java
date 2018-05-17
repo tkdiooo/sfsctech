@@ -1,8 +1,9 @@
-package com.sfsctech.common.core.spring.util;
+package com.sfsctech.common.core.base.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.sfsctech.common.core.base.constants.RpcConstants;
 
 /**
  * Class JsonUtil
@@ -10,11 +11,20 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  * @author 张麒 2017/9/1.
  * @version Description:
  */
-public class JsonUtil {
+public class FastJson {
 
-    private static SerializeConfig config = SpringContextUtil.getBean(SerializeConfig.class);
+    private static final SerializeConfig config;
+
+    static {
+        config = new SerializeConfig();
+        config.configEnumAsJavaBean(RpcConstants.Status.class);
+    }
 
     public static String toJSONString(Object object) {
         return JSON.toJSONString(object, config, SerializerFeature.WriteDateUseDateFormat);
+    }
+
+    public static SerializeConfig getSerializeConfig(){
+        return config;
     }
 }

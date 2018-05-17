@@ -1,10 +1,10 @@
 package com.sfsctech.common.core.base.domain.result;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.sfsctech.common.core.base.constants.RpcConstants.Status;
 import com.sfsctech.common.core.base.domain.dto.BaseDto;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -48,10 +48,22 @@ public class BaseResult extends BaseDto {
         this.success = hasErrors;
     }
 
+    @JSONField(name = "statusCode")
+    public int getStatusCode() {
+        return status.getCode();
+    }
+
+    @JSONField(name = "statusCode")
+    public void setStatusCode(int code) {
+        this.status = Status.getEnum(code);
+    }
+
+    @JSONField(deserialize = false)
     public Status getStatus() {
         return status;
     }
 
+    @JSONField(deserialize = false)
     public void setStatus(Status status) {
         this.status = status;
     }

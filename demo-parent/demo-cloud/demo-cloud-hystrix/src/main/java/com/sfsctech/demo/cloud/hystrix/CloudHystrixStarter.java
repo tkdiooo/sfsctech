@@ -1,5 +1,6 @@
 package com.sfsctech.demo.cloud.hystrix;
 
+import com.sfsctech.common.cloud.net.annotation.EnableCloudServiceClient;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableHystrixDashboard
+@EnableCloudServiceClient(basePackages = {"com.sfsctech.demo.cloud.inf.service"})
 public class CloudHystrixStarter {
 
     @Bean

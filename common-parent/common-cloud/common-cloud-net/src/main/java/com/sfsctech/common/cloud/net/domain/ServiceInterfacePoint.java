@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 /**
  * Class ServiceInterfacePoint
@@ -14,8 +15,8 @@ import java.lang.reflect.Method;
 public class ServiceInterfacePoint {
     // 接口方法
     private Method method;
-    // 返回对象
-    private Class<?> result;
+    // 返回类型
+    private Type result;
     // 参数对象
     private Class params;
     // 服务路径
@@ -29,11 +30,11 @@ public class ServiceInterfacePoint {
         this.method = method;
     }
 
-    public Class<?> getResult() {
+    public Type getResult() {
         return result;
     }
 
-    public void setResult(Class<?> result) {
+    public void setResult(Type result) {
         this.result = result;
     }
 

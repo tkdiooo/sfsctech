@@ -1,9 +1,11 @@
 package com.sfsctech.common.core.spring.config;
 
-import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.common.core.base.constants.CommonConstants;
 import com.sfsctech.common.core.base.constants.LabelConstants;
-import com.sfsctech.common.core.base.constants.RpcConstants;
+import com.sfsctech.common.core.base.json.FastJson;
 import com.sfsctech.common.core.spring.util.SpringContextUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -23,7 +25,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @version Description:
  */
 @Configuration
-// TODO
 @Import(SpringContextUtil.class)
 public class SpringConfig {
 
@@ -43,17 +44,18 @@ public class SpringConfig {
         return validator;
     }
 
-    /**
-     * FastJson Enum处理
-     *
-     * @return
-     */
     @Bean
-    @SuppressWarnings("unchecked")
-    public SerializeConfig serializeConfig() {
-        SerializeConfig serializeConfig = new SerializeConfig();
-        serializeConfig.configEnumAsJavaBean(RpcConstants.Status.class);
-        return serializeConfig;
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.QuoteFieldNames,
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.WriteMapNullValue
+        );
+        fastJsonConfig.setSerializeConfig(FastJson.getSerializeConfig());
+        fastConverter.setFastJsonConfig(fastJsonConfig);
+        return fastConverter;
     }
 
     /**

@@ -1,8 +1,5 @@
 package com.sfsctech.common.core.web.config;
 
-import com.alibaba.fastjson.serializer.SerializeConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.common.core.base.constants.LabelConstants;
 import com.sfsctech.common.core.base.filter.FilterHandler;
@@ -16,7 +13,6 @@ import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.MultipartProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
@@ -53,7 +49,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(WebConfig.class);
 
     @Autowired
-    private SerializeConfig serializeConfig;
+    private FastJsonHttpMessageConverter fastJsonConverter;
 
     @Autowired
     private Validator validator;
@@ -94,17 +90,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new ByteArrayHttpMessageConverter());
-
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(
-                SerializerFeature.QuoteFieldNames,
-                SerializerFeature.WriteDateUseDateFormat,
-                SerializerFeature.WriteMapNullValue
-        );
-        fastJsonConfig.setSerializeConfig(serializeConfig);
-        fastConverter.setFastJsonConfig(fastJsonConfig);
-        converters.add(fastConverter);
+        converters.add(fastJsonConverter);
         super.configureMessageConverters(converters);
     }
 

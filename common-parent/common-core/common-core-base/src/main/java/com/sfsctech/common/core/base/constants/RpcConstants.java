@@ -2,7 +2,8 @@ package com.sfsctech.common.core.base.constants;
 
 
 import com.sfsctech.common.core.base.enums.BaseEnum;
-import com.sfsctech.common.core.base.enums.GsonEnum;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Class RpcConstants
@@ -12,7 +13,7 @@ import com.sfsctech.common.core.base.enums.GsonEnum;
  */
 public class RpcConstants {
 
-    public enum Status implements BaseEnum<Integer, String>, GsonEnum<Status> {
+    public enum Status implements BaseEnum<Integer, String> {
 
         Successful,
         Failure(300, "操作失败"),
@@ -48,13 +49,12 @@ public class RpcConstants {
         }
 
         @Override
-        public Status deserialize(int code) {
-            for (Status status : values()) {
-                if (status.code == code) {
-                    return status;
-                }
-            }
-            return null;
+        public String toString() {
+            return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("name", "ordinal").toString();
+        }
+
+        public static Status getEnum(Integer code) {
+            return (Status) BaseEnum.getByCode(values(), code);
         }
 
         public static String getValueByKey(Integer key) {

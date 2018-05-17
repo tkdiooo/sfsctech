@@ -1,5 +1,6 @@
 package com.sfsctech.demo.cloud.feign.controller;
 
+import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.demo.cloud.feign.service.IndexService;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
@@ -28,7 +29,7 @@ public class IndexController {
     public String index(@RequestParam String name) {
         CheckBindingReq cbReq = new CheckBindingReq();
         cbReq.setBuCode(name);
-        CheckBindingRes res= clientService.checkBinding(cbReq);
-        return res.getGroupId();
+        ActionResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
+        return result.getResult().getGroupId();
     }
 }

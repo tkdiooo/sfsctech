@@ -18,8 +18,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface CloudService {
 
+    @AliasFor("appName")
     String value() default "";
 
     @AliasFor("value")
-    String appName();
+    String appName() default "";
 }

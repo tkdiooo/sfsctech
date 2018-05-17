@@ -27,6 +27,6 @@ public abstract class BaseDto implements IBaseDto, Serializable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+        return (new ToStringBuilder(this)).append(ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)).toString();
     }
 }

@@ -1,6 +1,10 @@
 package com.sfsctech.demo.cloud.hystrix.controller;
 
+import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.demo.cloud.hystrix.service.IndexService;
+import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
+import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
+import com.sfsctech.demo.cloud.inf.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +22,14 @@ public class IndexController {
     @Autowired
     IndexService service;
 
+    @Autowired
+    private ClientService clientService;
+
     @GetMapping("index")
     public String index(@RequestParam String name) {
-        return service.index(name);
+        CheckBindingReq cbReq = new CheckBindingReq();
+        cbReq.setBuCode(name);
+        ActionResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
+        return result.getResult().getGroupId();
     }
 }

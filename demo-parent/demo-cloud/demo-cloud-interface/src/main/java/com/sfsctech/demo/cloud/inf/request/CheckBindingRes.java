@@ -1,6 +1,5 @@
 package com.sfsctech.demo.cloud.inf.request;
 
-import com.bestv.common.lang.result.BaseResult;
 
 /**
  * 检查是否绑定结果类
@@ -8,7 +7,7 @@ import com.bestv.common.lang.result.BaseResult;
  * @author: huangsheng
  * @date: 2017/11/2
  */
-public class CheckBindingRes extends BaseResult {
+public class CheckBindingRes {
 
     /**
      * 是否绑定
@@ -19,6 +18,8 @@ public class CheckBindingRes extends BaseResult {
      * groupId
      */
     private String groupId;
+
+    private CheckBindingReq req;
 
     /**
      * Gets group id.
@@ -54,5 +55,13 @@ public class CheckBindingRes extends BaseResult {
      */
     public void setBinding(boolean binding) {
         this.binding = binding;
+    }
+
+    public CheckBindingReq getReq() {
+        return req;
+    }
+
+    public void setReq(CheckBindingReq req) {
+        this.req = req;
     }
 }

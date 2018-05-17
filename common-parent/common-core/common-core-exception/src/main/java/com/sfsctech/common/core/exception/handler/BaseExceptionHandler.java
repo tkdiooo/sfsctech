@@ -2,7 +2,6 @@ package com.sfsctech.common.core.exception.handler;
 
 import com.sfsctech.common.core.base.constants.WebsiteConstants;
 import com.sfsctech.common.core.base.domain.result.BaseResult;
-import com.sfsctech.common.core.spring.util.JsonUtil;
 import com.sfsctech.common.support.util.HttpUtil;
 import com.sfsctech.common.support.util.ResponseUtil;
 import com.sfsctech.common.support.util.StringUtil;
@@ -50,7 +49,7 @@ public abstract class BaseExceptionHandler {
     private ModelAndView handleAjaxError(HttpServletResponse response, BaseResult result, HttpStatus status) {
         response.setStatus(status.value());
         try {
-            ResponseUtil.writeJson(JsonUtil.toJSONString(result), response);
+            ResponseUtil.writeJson(result, response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

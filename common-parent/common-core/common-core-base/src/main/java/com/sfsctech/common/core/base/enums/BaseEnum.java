@@ -12,6 +12,19 @@ public interface BaseEnum<K, V> {
 
     V getDescription();
 
+    String toString();
+
+    static <K, V> BaseEnum<K, V> getByCode(BaseEnum<K, V>[] enums, K key) {
+        BaseEnum<K, V> value = null;
+        for (BaseEnum<K, V> e : enums) {
+            if (key == e.getCode() || key.equals(e.getCode())) {
+                value = e;
+                break;
+            }
+        }
+        return value;
+    }
+
     static <K, V> V findValue(BaseEnum<K, V>[] enums, K key) {
         V value = null;
         for (BaseEnum<K, V> e : enums) {
