@@ -5,23 +5,15 @@
 
 package com.sfsctech.common.cloud.net.execute.handler;
 
-import com.alibaba.fastjson.JSON;
-import com.bestv.common.dto.TraceInfo;
-import com.bestv.common.lang.request.BaseRequest;
-import com.bestv.common.net.log.CommonNetLogger;
-import com.bestv.common.net.log.LoggerTypeEnum;
-import com.bestv.common.net.log.factory.CommonNetLoggerFactory;
-import com.bestv.common.net.log.factory.GenericCommonNetLoggerFactory;
-import com.bestv.common.net.trace.CommonTraceInfoGenerator;
-import com.bestv.common.net.trace.TraceInfoGenerator;
-import com.bestv.common.net.trace.TraceInfoHolder;
 import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.common.cloud.net.ex.HttpExecuteErrorException;
 import com.sfsctech.common.core.base.domain.dto.BaseDto;
 import com.sfsctech.common.core.base.domain.dto.EnvContext;
+import com.sfsctech.common.core.logger.util.TraceNoUtil;
 import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.common.support.util.AssertUtil;
+import com.sfsctech.common.support.util.HttpUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,18 +29,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
-    private static final CommonNetLoggerFactory<Class> LOGGER_FACTORY = new GenericCommonNetLoggerFactory();
-    private final CommonNetLogger logger;
     private Map<Method, ServiceInterfacePoint> pointMap;
     private RestTemplate httpClient;
     private final HttpHeaders httpHeaders;
-    private final TraceInfoGenerator traceInfoGenerator = new CommonTraceInfoGenerator();
 
-    private final Logger loggers = LoggerFactory.getLogger(SpringHttpInterfaceExecuteHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(SpringHttpInterfaceExecuteHandler.class);
 
     public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
         checkInterface(interfaceInfo);
-        this.logger = LOGGER_FACTORY.getLogger(interfaceInfo.getInterfaceClass(), LoggerTypeEnum.CLIENT);
         this.pointMap = convertToClientPointMap(interfaceInfo.getServiceInterfacePoint());
         this.httpClient = httpClient;
         this.httpHeaders = buildCommonHttpHeaders();
@@ -61,27 +49,16 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     public Object invoke(Object proxy, Method method, Object[] args) {
         ServiceInterfacePoint servicePointInfo = pointMap.get(method);
         BaseDto request = (BaseDto) args[0];
-        EnvContext envContext = request.getEnvContext();
-        if (envContext == null) {
-            envContext = new EnvContext();
-            request.setEnvContext(envContext);
+        if (request.getEnvContext() == null) {
+            request.setEnvContext(new EnvContext());
         }
+        // 日志编号
+        request.getEnvContext().setTraceNo(TraceNoUtil.getTraceNo());
+        // 调用IP
+        request.getEnvContext().setIpAddress(HttpUtil.getServerIp());
 
-        TraceInfo traceInfo = TraceInfoHolder.get();
-        if (traceInfo == null) {
-            traceInfo = traceInfoGenerator.generate();
-            TraceInfoHolder.set(traceInfo);
-        }
-        BaseRequest br = new BaseRequest();
-        br.setEnvContext(new com.bestv.common.dto.EnvContext());
-        TraceInfo stableTraceInfo = new TraceInfo();
-        stableTraceInfo.setTraceId(traceInfo.getTraceId());
-        stableTraceInfo.setSpanId(traceInfo.getSpanId());
-        traceInfo = traceInfoGenerator.generate(traceInfo);
-        br.getEnvContext().setTraceInfo(traceInfo);
-        TraceInfoHolder.set(traceInfo);
-        loggers.info(JSON.toJSONString(request));
-        logger.logRequest(br);
+        logger.info(request.toString());
+
         ParameterizedTypeReference<ActionResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
         HttpEntity<BaseDto> httpEntity = new HttpEntity<>(request, httpHeaders);
         ResponseEntity<ActionResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
@@ -90,14 +67,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
             throw new HttpExecuteErrorException(httpEntity);
         } else {
             ActionResult result = responseEntity.getBody();
-            EnvContext resultEnvContext = result.getEnvContext();
-            if (resultEnvContext == null) {
-                resultEnvContext = new EnvContext();
-                result.setEnvContext(resultEnvContext);
-            }
-
-//            resultEnvContext.setTraceInfo(stableTraceInfo);
-//            logger.logResult(result);
+            logger.info(result.toString());
             return result;
         }
     }

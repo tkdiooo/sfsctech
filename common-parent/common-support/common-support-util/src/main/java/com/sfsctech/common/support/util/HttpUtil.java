@@ -6,6 +6,7 @@ import com.sfsctech.common.core.base.constants.LabelConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Class HttpUtil
@@ -32,6 +33,18 @@ public class HttpUtil {
         String ajaxAccept = request.getHeader(CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[0]);
         String ajaxHeader = request.getHeader(CommonConstants.AJAX_HEADER_CONTENT_TYPE[0]);
         return StringUtil.hasText(ajaxParam) || CommonConstants.AJAX_ACCEPT_CONTENT_TYPE[1].equalsIgnoreCase(ajaxAccept) || (StringUtil.isNotBlank(ajaxHeader) && CommonConstants.AJAX_HEADER_CONTENT_TYPE[1].equalsIgnoreCase(ajaxHeader));
+    }
+
+    /**
+     * 获取服务器IP地址
+     */
+    public static String getServerIp() {
+        try {
+            return convert2IPAdress(InetAddress.getLocalHost());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     /**

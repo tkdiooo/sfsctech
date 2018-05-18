@@ -7,7 +7,7 @@
     <property name="filepath" value="/opt/logs/"/>
     <!-- kafka路径-->
     <property name="brokerList" value="172.16.225.98:9092"/>
-    <property name="appName" value="cloud-feign"/>
+    <property name="appName" value="cloud-client"/>
     <property name="topic" value="website"/>
 
     <!-- 控制台输出 -->

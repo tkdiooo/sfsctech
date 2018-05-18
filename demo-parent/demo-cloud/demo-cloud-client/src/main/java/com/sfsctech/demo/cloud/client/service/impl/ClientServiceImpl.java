@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
     public ActionResult<CheckBindingRes> checkBinding(@RequestBody CheckBindingReq checkBindingReq) {
         CheckBindingRes res = new CheckBindingRes();
         res.setGroupId(checkBindingReq.getBuCode() + ":ClientService");
-        res.setReq(checkBindingReq);
+        res.setReq(new CheckBindingReq());
         ActionResult<CheckBindingRes> result = new ActionResult<>(res);
         result.setStatus(RpcConstants.Status.Failure);
         loggers.info(JSON.toJSONString(result));

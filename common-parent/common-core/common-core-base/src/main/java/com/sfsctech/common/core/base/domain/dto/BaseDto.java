@@ -1,5 +1,6 @@
 package com.sfsctech.common.core.base.domain.dto;
 
+import com.sfsctech.common.core.base.json.FastJson;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -27,6 +28,6 @@ public abstract class BaseDto implements IBaseDto, Serializable {
 
     @Override
     public String toString() {
-        return (new ToStringBuilder(this)).append(ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)).toString();
+        return (new ToStringBuilder(this)).append(FastJson.toJSONString(this)).toString();
     }
 }
