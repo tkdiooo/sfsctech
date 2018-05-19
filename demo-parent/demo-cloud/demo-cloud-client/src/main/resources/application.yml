@@ -9,3 +9,5 @@ spring:
     name: cloud-client
   zipkin:
     base-url: http://localhost:8769
+logging:
+  path: D:/opt/logs

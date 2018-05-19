@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class, LogbackConfig.class})
+@Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class})
 //, LogConfiguration.class, TraceConfiguration.class})
 public @interface EnableCloudServiceClient {
 

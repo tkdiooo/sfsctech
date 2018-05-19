@@ -1,6 +1,5 @@
 package com.sfsctech.demo.cloud.client;
 
-import com.sfsctech.common.core.logger.config.LogbackConfig;
 import com.sfsctech.common.core.spring.config.SpringConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import({SpringConfig.class, LogbackConfig.class})
+@Import({SpringConfig.class})
 public class CloudClientStarter {
 
     public static void main(String[] args) {

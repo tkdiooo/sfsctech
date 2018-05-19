@@ -30,9 +30,4 @@ public class TraceNoFilter extends BaseFilter {
             TraceNoUtil.clearTraceNo();
         }
     }
-
-    @Override
-    public void destroy() {
-        System.out.println("sdsdsd");
-    }
 }

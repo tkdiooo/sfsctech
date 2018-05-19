@@ -19,7 +19,7 @@ import org.springframework.core.Ordered;
 public class LogbackConfig {
 
     /**
-     * 注册logback rmt监听
+     * Http注册logback
      *
      * @return
      */
@@ -35,6 +35,7 @@ public class LogbackConfig {
      *
      * @return
      */
+    // TODO 该方案只适合dubbox项目，cloud项目有自己的解决方案，需要把相关代码移植到dubbox模块下
     @Bean
     public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
