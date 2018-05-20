@@ -29,8 +29,7 @@
 
     <!-- 只写本地文件，level>=INFO -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy
-                class="com.sfsctech.common.core.logger.logback.rolling.PatchedSizeAndTimeBasedRollingPolicy">
+        <rollingPolicy class="com.sfsctech.common.core.logger.logback.rolling.PatchedSizeAndTimeBasedRollingPolicy">
             <FileNamePattern>${logPath}/${appName}/log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxFileSize>10MB</MaxFileSize>
             <MaxHistory>365</MaxHistory>
@@ -67,6 +66,35 @@
             </providers>
         </encoder>
     </appender>-->
+
+    <!-- 为logstash输出的JSON格式的Appender -->
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.226.133:9250</destination>
+        <!-- 日志输出编码 -->
+        <encoder
+                class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                        "severity": "%level",
+                        "service": "${springAppName:-}",
+                        "trace": "%X{X-B3-TraceId:-}",
+                        "span": "%X{X-B3-SpanId:-}",
+                        "exportable": "%X{X-Span-Export:-}",
+                        "pid": "${PID:-}",
+                        "thread": "%thread",
+                        "class": "%logger{40}",
+                        "rest": "%message"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
