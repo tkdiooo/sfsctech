@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.sfsctech.common.core.base.constants.LabelConstants;
+import com.sfsctech.common.core.cache.config.CacheConfig;
 import com.sfsctech.common.data.mybatis.datasource.ReadWriteDataSource;
 import com.sfsctech.common.data.mybatis.datasource.aspect.DynamicDataSourceAspect;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,7 +35,8 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper"})
-@Import(DynamicDataSourceAspect.class)
+@Import({DynamicDataSourceAspect.class, CacheConfig.class})
+// TODO 需要服务端注解配置加载
 public class MyBatisConfig {
 
     @Bean(name = "masterDatasource")

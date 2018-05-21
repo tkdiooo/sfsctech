@@ -9,7 +9,6 @@ package com.sfsctech.common.cloud.net.annotation;
 
 import com.sfsctech.common.cloud.net.config.InterfaceProxyFactoryConfiguration;
 import com.sfsctech.common.cloud.net.register.CloudServiceRegister;
-import com.sfsctech.common.core.logger.config.LogbackConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -17,11 +16,11 @@ import java.lang.annotation.*;
 /**
  * 开启代理
  */
+// TODO 需要单独剥离出来，作为网站、服务项目统一使用
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class})
-//, LogConfiguration.class, TraceConfiguration.class})
 public @interface EnableCloudServiceClient {
 
     String[] basePackages() default {};

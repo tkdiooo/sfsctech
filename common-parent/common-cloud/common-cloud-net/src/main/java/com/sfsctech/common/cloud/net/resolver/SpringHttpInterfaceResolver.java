@@ -73,11 +73,8 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
             throw new AppNameNotExistsException(interfaceClass);
         }
         CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
-        // TODO
-        if (StringUtil.isNotBlank(annotation.appName())) {
-
-        }
-        return annotation.value();
+        if (StringUtil.isNotBlank(annotation.appName())) return annotation.appName();
+        else return annotation.value();
     }
 
     private String getServiceRootPath(Class interfaceClass) {

@@ -2,6 +2,8 @@ package com.sfsctech.common.core.security.config;
 
 import com.sfsctech.common.core.base.constants.LabelConstants;
 import com.sfsctech.common.core.base.filter.FilterHandler;
+import com.sfsctech.common.core.exception.controller.GlobalErrorController;
+import com.sfsctech.common.core.exception.controller.GlobalExceptionHandler;
 import com.sfsctech.common.core.security.condition.DDOCCondition;
 import com.sfsctech.common.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.common.core.security.filter.DDOCFilter;
@@ -29,7 +31,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import(StartProperties.class)
+@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class})
 public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     @Autowired

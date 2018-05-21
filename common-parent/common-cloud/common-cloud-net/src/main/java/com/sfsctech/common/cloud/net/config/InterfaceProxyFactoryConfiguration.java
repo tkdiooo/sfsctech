@@ -4,6 +4,7 @@ import com.sfsctech.common.cloud.net.execute.factory.InterfaceProxyFactory;
 import com.sfsctech.common.cloud.net.execute.factory.http.SpringHttpInterfaceProxyFactory;
 import com.sfsctech.common.core.rest.config.RestTemplateFactoryConfig;
 import com.sfsctech.common.core.rest.factory.RestTemplateFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ public class InterfaceProxyFactoryConfiguration {
 
     @Bean
     @LoadBalanced
+    @ConditionalOnMissingBean(RestTemplate.class)
     public RestTemplate restTemplate(RestTemplateFactory restTemplateFactory) {
         return restTemplateFactory.buildPoolRest();
     }

@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "error")
-@EnableConfigurationProperties({ServerProperties.class})
+@Import({ServerProperties.class})
 public class GlobalErrorController implements ErrorController {
 
     private ErrorAttributes errorAttributes;

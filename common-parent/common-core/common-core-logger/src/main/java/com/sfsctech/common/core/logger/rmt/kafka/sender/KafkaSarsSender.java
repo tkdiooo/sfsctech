@@ -1,6 +1,5 @@
 package com.sfsctech.common.core.logger.rmt.kafka.sender;
 
-import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.common.core.logger.util.NetUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -22,7 +21,7 @@ import java.util.Random;
 public class KafkaSarsSender {
 
     private static final Random random = new Random();
-    private Producer<String, String> producer = null;
+    private Producer<String, String> producer;
     private String localHost;
     private String zfcode;
     private String fileName;
@@ -39,13 +38,17 @@ public class KafkaSarsSender {
 
     public void push(String text) {
         String ip = "random_key_" + random.nextInt(1024);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("zfcode", zfcode);
-        jsonObject.put("log", text);
-        jsonObject.put("ip", localHost);
-        jsonObject.put("fileName", fileName);
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, ip, jsonObject.toJSONString());
-        producer.send(producerRecord);
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("zfcode", zfcode);
+//        jsonObject.put("log", text);
+//        jsonObject.put("ip", localHost);
+//        jsonObject.put("fileName", fileName);
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, ip, text);
+        this.producer.send(producerRecord);
+    }
+
+    public void close() {
+        this.producer.close();
     }
 
     private Producer<String, String> initKafkaProducer(String brokerList) {
@@ -60,5 +63,10 @@ public class KafkaSarsSender {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 //        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, CustomPartitioner.class.getName());
         return new KafkaProducer<>(props);
+    }
+
+    @Override
+    public String toString() {
+        return "{zfcode:" + this.zfcode + ",ip:" + this.localHost + ",topic:" + this.topic + ",fileName:" + this.fileName + "}";
     }
 }

@@ -25,7 +25,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @version Description:
  */
 @Configuration
-@Import(SpringContextUtil.class)
+@Import({SpringContextUtil.class, TomcatConfig.class})
 public class SpringConfig {
 
     private final Logger logger = LoggerFactory.getLogger(SpringConfig.class);

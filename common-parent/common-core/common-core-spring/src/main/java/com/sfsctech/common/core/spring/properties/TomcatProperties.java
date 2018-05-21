@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 )
 public class TomcatProperties {
 
-    private boolean optimize;
     private String connector;
     private Integer maxKeepAliveRequests;
     private Integer connectionTimeout;
@@ -23,14 +22,6 @@ public class TomcatProperties {
 
     public TomcatProperties() {
 
-    }
-
-    public boolean isOptimize() {
-        return optimize;
-    }
-
-    public void setOptimize(boolean optimize) {
-        this.optimize = optimize;
     }
 
     public String getConnector() {

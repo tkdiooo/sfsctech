@@ -2,7 +2,6 @@ package com.sfsctech.common.core.base.domain.dto;
 
 import com.sfsctech.common.core.base.json.FastJson;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 
@@ -15,16 +14,6 @@ import java.io.Serializable;
 public abstract class BaseDto implements IBaseDto, Serializable {
 
     private static final long serialVersionUID = 8799994997210907041L;
-
-    private EnvContext envContext;
-
-    public EnvContext getEnvContext() {
-        return this.envContext;
-    }
-
-    public void setEnvContext(EnvContext envContext) {
-        this.envContext = envContext;
-    }
 
     @Override
     public String toString() {

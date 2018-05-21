@@ -10,6 +10,7 @@ import org.slf4j.MDC;
  * @author 张麒 2017/6/8.
  * @version Description:
  */
+// TODO 迁移至dubbox
 public class TraceNoUtil {
 
     /**

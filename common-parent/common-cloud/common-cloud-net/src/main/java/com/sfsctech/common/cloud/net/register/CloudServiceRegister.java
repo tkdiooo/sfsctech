@@ -15,6 +15,7 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * 接口注册
  */
+// TODO 多service注册
 public class CloudServiceRegister implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
     private ResourceLoader resourceLoader;
     private static final Class SCAN_ANNOTATION_CLASS = EnableCloudServiceClient.class;

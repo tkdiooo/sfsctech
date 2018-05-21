@@ -43,7 +43,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({SpringConfig.class, RestTemplateFactoryConfig.class, MultipartProperties.class, WebResourceInitialize.class, WebsiteProperties.class, PropertiesInitialize.class})
+@Import({RestTemplateFactoryConfig.class, MultipartProperties.class, WebResourceInitialize.class, WebsiteProperties.class, PropertiesInitialize.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(WebConfig.class);

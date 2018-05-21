@@ -1,0 +1,46 @@
+{
+  "groups": [
+    {
+      "name": "spring.rest",
+      "type": "com.sfsctech.common.core.rest.properties.RestProperties",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.rest.simple",
+      "type": "java.lang.Boolean",
+      "description": "是否开启简单的RestTemplate"
+    },
+    {
+      "name": "spring.rest.connection-request-timeout",
+      "type": "java.lang.Integer",
+      "description": "连接池获取连接超时时间",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    },
+    {
+      "name": "spring.rest.max-total",
+      "type": "java.lang.Integer",
+      "description": "连接池最大连接数",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    },
+    {
+      "name": "spring.rest.connection-timeout",
+      "type": "java.lang.Integer",
+      "description": "连接超时时间",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    },
+    {
+      "name": "spring.rest.read-timeout",
+      "type": "java.lang.Integer",
+      "description": "读取超时时间",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    },
+    {
+      "name": "spring.rest.max-per-route",
+      "type": "java.lang.Integer",
+      "description": "路由的最大连接数",
+      "sourceType": "com.sfsctech.common.core.rest.properties.RestProperties"
+    }
+  ]
+}

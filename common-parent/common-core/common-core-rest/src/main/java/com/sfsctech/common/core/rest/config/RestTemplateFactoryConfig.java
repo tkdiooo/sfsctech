@@ -27,8 +27,7 @@ public class RestTemplateFactoryConfig {
     }
 
     @Bean
-    // TODO
-    @ConditionalOnProperty(name = "synchronize", havingValue = "true")
+    @ConditionalOnProperty(name = "spring.rest.simple", havingValue = "true")
     public RestTemplate restTemplate(RestTemplateFactory factory) {
         return factory.buildSimpleRest();
     }

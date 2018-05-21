@@ -9,11 +9,8 @@ import com.sfsctech.common.cloud.net.domain.ServiceInterface;
 import com.sfsctech.common.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.common.cloud.net.ex.HttpExecuteErrorException;
 import com.sfsctech.common.core.base.domain.dto.BaseDto;
-import com.sfsctech.common.core.base.domain.dto.EnvContext;
-import com.sfsctech.common.core.logger.util.TraceNoUtil;
 import com.sfsctech.common.core.rpc.result.ActionResult;
 import com.sfsctech.common.support.util.AssertUtil;
-import com.sfsctech.common.support.util.HttpUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +46,6 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     public Object invoke(Object proxy, Method method, Object[] args) {
         ServiceInterfacePoint servicePointInfo = pointMap.get(method);
         BaseDto request = (BaseDto) args[0];
-        if (request.getEnvContext() == null) {
-            request.setEnvContext(new EnvContext());
-        }
-        // 日志编号
-        request.getEnvContext().setTraceNo(TraceNoUtil.getTraceNo());
-        // 调用IP
-        request.getEnvContext().setIpAddress(HttpUtil.getServerIp());
 
         logger.info(request.toString());
 

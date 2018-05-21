@@ -28,7 +28,7 @@ public class NetUtil {
                 inetAddresses = networkInterface.getInetAddresses();
                 while (inetAddresses.hasMoreElements()) {
                     inetAddress = inetAddresses.nextElement();
-                    if (inetAddress != null && inetAddress instanceof Inet4Address && !"127.0.0.1".equals(inetAddress.getHostAddress())) { // IPV4
+                    if (inetAddress instanceof Inet4Address && !"127.0.0.1".equals(inetAddress.getHostAddress())) { // IPV4
                         ip = inetAddress.getHostAddress();
                         ipList.add(ip);
                     }

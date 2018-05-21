@@ -2,6 +2,8 @@ package com.sfsctech.common.core.logger.util;
 
 
 import com.sfsctech.common.core.logger.rmt.kafka.sender.KafkaSarsSender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -14,9 +16,13 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class PushUtil extends Thread {
 
-    private BlockingQueue<String> logQueue;
+    private static final Logger logger = LoggerFactory.getLogger(PushUtil.class);
+
     private static PushUtil push;
+
+    private BlockingQueue<String> logQueue;
     private KafkaSarsSender kafka;
+    private boolean isRun = true;
 
     private PushUtil(LinkedBlockingQueue<String> linkedBlockingQueue) {
         logQueue = linkedBlockingQueue;
@@ -28,6 +34,7 @@ public class PushUtil extends Thread {
         push = new PushUtil(new LinkedBlockingQueue<>());
         push.kafka = new KafkaSarsSender(serverUrl, zfcode, fileName, topic);
         push.start();
+        logger.info("PushUtil initialize succeed[" + push.kafka.toString() + "]");
         return push;
     }
 
@@ -35,13 +42,20 @@ public class PushUtil extends Thread {
         logQueue.offer(txt);
     }
 
+    public void close() {
+        this.isRun = false;
+        logger.info("PushUtil Ready to stop");
+    }
+
     public void run() {
-        while (true) {
+        while (isRun) {
             try {
                 kafka.push(logQueue.take());
             } catch (Exception e) {
-                System.out.println("kafka connect error >> " + e.getMessage());
+                logger.error("kafka connect error >> " + e.getMessage());
             }
         }
+        kafka.close();
+        logger.info("PushUtil Stop success");
     }
 }

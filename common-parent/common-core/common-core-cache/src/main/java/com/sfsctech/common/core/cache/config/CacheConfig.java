@@ -39,7 +39,6 @@ import java.util.Set;
  */
 @Configuration
 @Conditional(CacheCondition.class)
-// TODO 需要验证是否可行
 @Import(RedisProperties.class)
 public class CacheConfig {
 

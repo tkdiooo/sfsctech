@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
  * @version Description:
  */
 @Component
-// TODO
-@ConfigurationProperties(
-        prefix = "server.tomcat"
-)
+@ConfigurationProperties(prefix = "spring.rest")
 public class RestProperties {
+
     private int connectionRequestTimeout = 3000;
     private int connectionTimeout = 3000;
     private int readTimeout = 3000;

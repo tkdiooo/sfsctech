@@ -23,13 +23,15 @@ public class TraceNoPatternLayoutEncoder extends PatternLayoutEncoderBase<ILoggi
     private String fileName;
     private String topic;
 
+    @Override
     public void start() {
-        if (StringUtil.isNotBlank(zfcode)) {
-            TraceConverter.appName = zfcode;
-        }
-        if (pushUtil == null && synchToMDC) {
-            pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName, topic);
-        }
+//        if (StringUtil.isNotBlank(zfcode)) {
+//            TraceConverter.appName = zfcode;
+//        }
+//        if (pushUtil == null && synchToMDC) {
+//            pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName, topic);
+//        }
+        // 异常信息处理
         PatternLayout patternLayout = new TraceNoPatternLayout();
         patternLayout.setContext(context);
         patternLayout.setPattern(getPattern());

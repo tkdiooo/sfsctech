@@ -14,6 +14,7 @@ import org.springframework.boot.logging.logback.ColorConverter;
  * @author 张麒 2017/6/8.
  * @version Description:
  */
+// TODO 迁移至dubbox
 public class TraceNoPatternLayout extends PatternLayout {
 
     static {

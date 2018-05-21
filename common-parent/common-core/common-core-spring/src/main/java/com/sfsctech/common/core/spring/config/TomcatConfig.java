@@ -1,6 +1,5 @@
 package com.sfsctech.common.core.spring.config;
 
-import com.sfsctech.common.core.spring.condition.TomcatCondition;
 import com.sfsctech.common.core.spring.properties.TomcatProperties;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.apache.coyote.http11.Http11AprProtocol;
@@ -12,7 +11,6 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -23,9 +21,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-// TODO
-@Conditional(TomcatCondition.class)
-@ConditionalOnProperty(name = "synchronize", havingValue = "true")
+@ConditionalOnProperty(name = "server.tomcat.optimize", havingValue = "true")
 @Import({ServerProperties.class, TomcatProperties.class})
 public class TomcatConfig {
 
