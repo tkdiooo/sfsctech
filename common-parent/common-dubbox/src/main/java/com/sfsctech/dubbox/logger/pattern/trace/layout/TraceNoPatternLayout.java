@@ -1,10 +1,10 @@
-package com.sfsctech.common.core.logger.logback.pattern.trace.layout;
+package com.sfsctech.dubbox.logger.pattern.trace.layout;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import com.sfsctech.common.core.base.constants.LabelConstants;
-import com.sfsctech.common.core.logger.logback.pattern.converter.TraceConverter;
-import com.sfsctech.common.core.logger.util.TraceNoUtil;
+import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.dubbox.logger.pattern.converter.TraceConverter;
+import com.sfsctech.dubbox.logger.pattern.trace.util.TraceNoUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.logging.logback.ColorConverter;
 
@@ -14,7 +14,6 @@ import org.springframework.boot.logging.logback.ColorConverter;
  * @author 张麒 2017/6/8.
  * @version Description:
  */
-// TODO 迁移至dubbox
 public class TraceNoPatternLayout extends PatternLayout {
 
     static {
@@ -22,7 +21,6 @@ public class TraceNoPatternLayout extends PatternLayout {
         defaultConverterMap.put("clr", ColorConverter.class.getName());
     }
 
-    // TODO 字符串替换性能优化
     @Override
     public String doLayout(ILoggingEvent event) {
         String msg = super.doLayout(event);

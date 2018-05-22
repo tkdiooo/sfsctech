@@ -1,9 +1,10 @@
-package com.sfsctech.common.core.logger.filter;
+package com.sfsctech.dubbox.logger.filter;
 
 
-import com.sfsctech.common.core.base.filter.BaseFilter;
-import com.sfsctech.common.core.logger.util.TraceNoUtil;
-import com.sfsctech.common.support.util.HttpUtil;
+
+import com.sfsctech.base.filter.BaseFilter;
+import com.sfsctech.common.util.HttpUtil;
+import com.sfsctech.dubbox.logger.pattern.trace.util.TraceNoUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

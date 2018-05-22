@@ -1,4 +1,4 @@
-package com.sfsctech.configurer;
+package com.sfsctech.dubbox.config;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
@@ -13,17 +13,16 @@ import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.PropertiesConstants;
 import com.sfsctech.dubbox.condition.MultipleProtocolCondition;
 import com.sfsctech.dubbox.condition.SingleProtocolCondition;
-import com.sfsctech.dubbox.config.DubboConfig;
+import com.sfsctech.dubbox.logger.filter.TraceNoFilter;
 import com.sfsctech.dubbox.properties.DubboProperties;
 import com.sfsctech.dubbox.serialize.KryoSerializationOptimizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.*;
+import org.springframework.core.Ordered;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +34,10 @@ import java.util.Map;
  * @version Description:
  */
 @Configuration
-@ComponentScan("com.sfsctech.dubbox")
-public class DubboxConfigurer {
+@Import(DubboProperties.class)
+public class DubboxConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(DubboxConfigurer.class);
+    private static final Logger logger = LoggerFactory.getLogger(DubboxConfig.class);
 
     @Autowired
     private DubboProperties properties;
@@ -141,7 +140,7 @@ public class DubboxConfigurer {
     @Bean
     public ProviderConfig providerConfig() {
         ProviderConfig config = new ProviderConfig();
-        config.setFilter(DubboConfig.getFILTERS());
+        config.setFilter("-exception,HystrixHandler,ExceptionHandler");
         Map<String, String> params = new HashMap<>();
         params.put(DubboConstants.HYSTRIX_CONCURRENCY, properties.getRpc().getConcurrency().toString());
         config.setParameters(params);
@@ -164,4 +163,20 @@ public class DubboxConfigurer {
         logger.info("dubbo 注解配置服务：" + config.toString());
         return config;
     }
+
+
+    /**
+     * 日志跟踪 - 不过滤静态资源、页面模板、和druid
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean filterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+        registration.setName("traceNoFilter");
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return registration;
+    }
+
 }
