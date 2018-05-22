@@ -11,6 +11,7 @@
 
     <artifactId>common-data</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>common-data-jdbc</module>
         <module>common-data-mybatis</module>

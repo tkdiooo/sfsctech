@@ -1,7 +1,7 @@
 package com.sfsctech.framework.inf;
 
-import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
 /**

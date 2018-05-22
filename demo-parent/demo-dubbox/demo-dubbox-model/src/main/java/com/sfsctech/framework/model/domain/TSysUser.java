@@ -1,6 +1,7 @@
 package com.sfsctech.framework.model.domain;
 
-import com.sfsctech.base.model.BaseDto;
+
+import com.sfsctech.core.base.domain.dto.BaseDto;
 
 import java.util.Date;
 

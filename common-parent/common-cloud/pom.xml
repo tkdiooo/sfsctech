@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>common-cloud-net</module>
+        <module>common-cloud-sso</module>
     </modules>
 
 

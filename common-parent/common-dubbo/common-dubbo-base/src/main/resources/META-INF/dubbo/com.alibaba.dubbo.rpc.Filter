@@ -1,0 +1,2 @@
+HystrixHandler=com.sfsctech.dubbo.base.filter.HystrixFilter
+ExceptionHandler=com.sfsctech.dubbo.base.filter.ExceptionFilter

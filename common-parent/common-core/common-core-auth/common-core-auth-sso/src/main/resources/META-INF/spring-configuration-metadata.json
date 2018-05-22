@@ -1,0 +1,194 @@
+{
+  "groups": [
+    {
+      "name": "website.sso",
+      "type": "com.sfsctech.core.auth.sso.properties.SSOProperties",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.auth",
+      "type": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "website.sso.reference",
+      "type": "com.sfsctech.core.auth.sso.properties.SSOProperties$Reference",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties",
+      "sourceMethod": "getReference()"
+    },
+    {
+      "name": "website.sso.jwt",
+      "type": "com.sfsctech.core.auth.sso.properties.JwtProperties",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "website.sso.domain",
+      "type": "java.lang.String",
+      "description": "系统域名",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.home-page",
+      "type": "java.lang.String",
+      "description": "系统首页",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.login-url",
+      "type": "java.lang.String",
+      "description": "SSO 登录路径",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.logout-url",
+      "type": "java.lang.String",
+      "description": "SSO 登出路径",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.check-url",
+      "type": "java.lang.String",
+      "description": "SSO Session校验路径",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.register-url",
+      "type": "java.lang.String",
+      "description": "SSO 用户注册路径",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.forget-url",
+      "type": "java.lang.String",
+      "description": "SSO 密码找回路径",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.auth.type",
+      "type": "com.sfsctech.constants.SSOProperties.AuthType",
+      "description": "登录校验类型",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
+    },
+    {
+      "name": "website.sso.auth.protocol",
+      "type": "com.sfsctech.constants.SSOProperties.AuthProtocol",
+      "description": "单点登录校验协议",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
+    },
+    {
+      "name": "website.sso.auth.way",
+      "type": "com.sfsctech.constants.SSOProperties.AuthWay",
+      "description": "单点登录校验方式",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
+    },
+    {
+      "name": "website.sso.auth.item-type",
+      "type": "com.sfsctech.constants.SSOProperties.ItemType",
+      "description": "项目类型",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
+    },
+    {
+      "name": "website.sso.reference.lazy",
+      "type": "java.lang.Boolean",
+      "description": "Dubbo服务是否延迟加载默认true",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Reference",
+      "defaultValue": true
+    },
+    {
+      "name": "website.sso.reference.version",
+      "type": "java.lang.String",
+      "description": "Dubbo消费服务的版本号",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Reference"
+    },
+    {
+      "name": "website.sso.reference.timeout",
+      "type": "java.lang.Integer",
+      "description": "Dubbo服务连接超时时间默认2000",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Reference",
+      "defaultValue": 2000
+    },
+    {
+      "name": "website.sso.jwt.subject",
+      "type": "java.lang.String",
+      "description": "jwt 主题",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "jwt 发行方",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "jwt 保持时间",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.JwtProperties"
+    }
+  ],
+  "hints": [
+    {
+      "name": "website.sso.auth.protocol",
+      "values": [
+        {
+          "value": "Http",
+          "description": "通过Http校验用户认证"
+        },
+        {
+          "value": "Rpc",
+          "description": "通过Rpc校验用户认证"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.way",
+      "values": [
+        {
+          "value": "Simple",
+          "description": "简单校验用户认证，用于高性能要求，无权限信息获取的前端网站"
+        },
+        {
+          "value": "Complex",
+          "description": "复杂校验用户认证，用于有复杂权限信息的后台管理系统"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.item-type",
+      "values": [
+        {
+          "value": "BackendSystem",
+          "description": "后端系统"
+        },
+        {
+          "value": "FrontendSystem",
+          "description": "前端系统"
+        },
+        {
+          "value": "FrameService",
+          "description": "Frame服务"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.type",
+      "values": [
+        {
+          "value": "BackendSystem",
+          "description": "后端系统"
+        },
+        {
+          "value": "FrontendSystem",
+          "description": "前端系统"
+        },
+        {
+          "value": "FrameService",
+          "description": "Frame服务"
+        }
+      ]
+    }
+  ]
+}

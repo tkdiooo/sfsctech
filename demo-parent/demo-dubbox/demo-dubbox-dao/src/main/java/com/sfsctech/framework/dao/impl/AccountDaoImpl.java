@@ -1,10 +1,10 @@
 package com.sfsctech.framework.dao.impl;
 
+import com.sfsctech.data.mybatis.annotation.Namespace;
+import com.sfsctech.data.mybatis.dao.impl.BaseDaoImpl;
 import com.sfsctech.framework.dao.AccountDao;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;
-import com.sfsctech.mybatis.dao.impl.BaseDaoImpl;
-import com.sfsctech.mybatis.annotation.Namespace;
 import org.springframework.stereotype.Repository;
 
 /**

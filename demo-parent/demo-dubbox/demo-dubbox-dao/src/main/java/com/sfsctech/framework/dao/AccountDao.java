@@ -1,8 +1,8 @@
 package com.sfsctech.framework.dao;
 
+import com.sfsctech.data.mybatis.dao.IBaseDao;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.domain.TSysAccountExample;
-import com.sfsctech.mybatis.dao.IBaseDao;
 
 /**
  * Class AccountDao

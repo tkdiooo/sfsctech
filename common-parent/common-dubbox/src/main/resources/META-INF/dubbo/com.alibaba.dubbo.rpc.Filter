@@ -1,2 +1,0 @@
-HystrixHandler=com.sfsctech.dubbox.filter.HystrixFilter
-ExceptionHandler=com.sfsctech.dubbox.filter.ExceptionFilter

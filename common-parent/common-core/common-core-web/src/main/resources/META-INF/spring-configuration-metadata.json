@@ -2,19 +2,19 @@
   "groups": [
     {
       "name": "website",
-      "type": "com.sfsctech.common.core.web.properties.WebsiteProperties",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties"
+      "type": "com.sfsctech.core.web.properties.WebsiteProperties",
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties"
     },
     {
       "name": "website.support",
-      "type": "com.sfsctech.common.core.web.properties.WebsiteProperties$Support",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties",
+      "type": "com.sfsctech.core.web.properties.WebsiteProperties$Support",
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties",
       "sourceMethod": "getSupport()"
     },
     {
       "name": "website.session",
-      "type": "com.sfsctech.common.core.web.properties.WebsiteProperties$Session",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties",
+      "type": "com.sfsctech.core.web.properties.WebsiteProperties$Session",
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties",
       "sourceMethod": "getSession()"
     }
   ],
@@ -23,13 +23,13 @@
       "name": "website.support.static-resources",
       "type": "java.lang.String",
       "description": "静态资源服务地址",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties$Support"
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties$Support"
     },
     {
       "name": "website.support.welcome-file",
       "type": "java.lang.String",
       "description": "网站欢迎页面地址",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties$Support"
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties$Support"
     },
     {
       "name": "website.support.uploadPath",
@@ -41,7 +41,7 @@
       "name": "website.session.exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "Session排除校验路径",
-      "sourceType": "com.sfsctech.common.core.web.properties.WebsiteProperties$Session"
+      "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties$Session"
     }
   ]
 }

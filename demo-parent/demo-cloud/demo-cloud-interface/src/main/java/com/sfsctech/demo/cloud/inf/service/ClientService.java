@@ -1,7 +1,7 @@
 package com.sfsctech.demo.cloud.inf.service;
 
-import com.sfsctech.common.cloud.net.annotation.CloudService;
-import com.sfsctech.common.core.rpc.result.ActionResult;
+import com.sfsctech.cloud.net.annotation.CloudService;
+import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
 import org.springframework.web.bind.annotation.RequestBody;

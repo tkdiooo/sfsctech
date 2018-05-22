@@ -27,7 +27,7 @@
 
     <!-- Appender to log to file -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="com.sfsctech.common.core.logger.logback.rolling.PatchedSizeAndTimeBasedRollingPolicy">
+        <rollingPolicy class="com.sfsctech.core.logger.logback.rolling.PatchedSizeAndTimeBasedRollingPolicy">
             <FileNamePattern>${logPath}/${appName}/log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxFileSize>10MB</MaxFileSize>
             <MaxHistory>365</MaxHistory>
@@ -50,7 +50,7 @@
     <property name="topic" value="website"/><!--topic -->
 
     <!-- Appender to log to Kafka -->
-    <appender name="RMT" class="com.sfsctech.common.core.logger.rmt.kafka.appender.KafkaAppender">
+    <appender name="RMT" class="com.sfsctech.core.logger.rmt.kafka.appender.KafkaAppender">
         <topic>${topic}</topic><!--topic//-->
         <zfcode>${zfcode}</zfcode><!--远程同步参数：项目编号-->
         <fileName>${fileName}</fileName><!--远程同步参数：同步过去的文件名称-->

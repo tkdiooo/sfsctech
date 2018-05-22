@@ -1,7 +1,7 @@
 package com.sfsctech.framework.service.read;
 
 import com.github.pagehelper.PageInfo;
-import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.core.base.domain.model.PagingInfo;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 

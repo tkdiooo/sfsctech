@@ -1,6 +1,6 @@
 package com.sfsctech.demo.cloud.inf.request;
 
-import com.sfsctech.common.core.base.domain.dto.BaseDto;
+import com.sfsctech.core.base.domain.dto.BaseDto;
 
 /**
  * 检查是否绑定参数类

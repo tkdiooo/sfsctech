@@ -10,27 +10,11 @@
     <version>2.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>common-authorize</module>
-        <module>common-base</module>
-        <module>common-constants</module>
-        <module>common-dubbox</module>
-        <module>common-exception</module>
-        <module>common-logback</module>
-        <module>common-mybatis</module>
-        <module>common-rpc</module>
-        <module>common-spring</module>
-        <module>common-tools</module>
-        <module>common-util</module>
-        <module>common-cache</module>
-        <module>common-security</module>
-        <module>common-saml</module>
-        <module>common-database</module>
-        <module>common-net</module>
-        <module>common-net-base</module>
         <module>common-cloud</module>
         <module>common-core</module>
-        <module>common-support</module>
         <module>common-data</module>
+        <module>common-dubbo</module>
+        <module>common-support</module>
     </modules>
 
     <properties>
