@@ -11,47 +11,86 @@ import java.util.List;
  * @author 张麒 2017-11-2.
  * @version Description:
  */
-@Component
 @ConfigurationProperties(
-        prefix = "spring.redis"
+        prefix = "redis"
 )
 public class RedisProperties {
 
-    // 协议
-    public enum Protocol {
-        Cluster, Single
-    }
-
-    private Protocol protocol;
-
-    private final RedisProperties.Pool pool;
-    private final RedisProperties.Single single;
-    private final RedisProperties.Cluster cluster;
+    private int database = 0;
+    private String host = "localhost";
+    private String password;
+    private int port = 6379;
+    private int timeout;
+    private boolean ssl;
+    private RedisProperties.Pool pool;
+    private RedisProperties.Cluster cluster;
 
     public RedisProperties() {
-        this.pool = new RedisProperties.Pool();
-        this.single = new RedisProperties.Single();
-        this.cluster = new RedisProperties.Cluster();
     }
 
-    public Protocol getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(Protocol protocol) {
-        this.protocol = protocol;
-    }
-
-    public Pool getPool() {
+    public RedisProperties.Pool getPool() {
         return pool;
     }
 
-    public Single getSingle() {
-        return single;
+
+    public void setPool(RedisProperties.Pool pool) {
+        this.pool = pool;
     }
 
-    public Cluster getCluster() {
+    public RedisProperties.Cluster getCluster() {
         return cluster;
+    }
+
+    public void setCluster(RedisProperties.Cluster cluster) {
+        this.cluster = cluster;
+    }
+
+    public int getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(int database) {
+        this.database = database;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public boolean isSsl() {
+        return ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
     }
 
     public static class Pool {
@@ -96,65 +135,9 @@ public class RedisProperties {
         }
     }
 
-    public static class Single {
-        private int database = 0;
-        private String host = "localhost";
-        private String password;
-        private int port = 6379;
-        private int timeout;
-
-        Single() {
-        }
-
-        public int getDatabase() {
-            return database;
-        }
-
-        public void setDatabase(int database) {
-            this.database = database;
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public void setHost(String host) {
-            this.host = host;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public int getPort() {
-            return port;
-        }
-
-        public void setPort(int port) {
-            this.port = port;
-        }
-
-        public int getTimeout() {
-            return timeout;
-        }
-
-        public void setTimeout(int timeout) {
-            this.timeout = timeout;
-        }
-    }
-
-
     public static class Cluster {
         private List<String> nodes;
         private Integer maxRedirects = 5;
-        private Integer connectionTimeout;
-        private Integer soTimeout;
-        private Integer maxAttempts;
-        private String password;
 
         Cluster() {
         }
@@ -173,38 +156,6 @@ public class RedisProperties {
 
         public void setMaxRedirects(Integer maxRedirects) {
             this.maxRedirects = maxRedirects;
-        }
-
-        public Integer getConnectionTimeout() {
-            return connectionTimeout;
-        }
-
-        public void setConnectionTimeout(Integer connectionTimeout) {
-            this.connectionTimeout = connectionTimeout;
-        }
-
-        public Integer getSoTimeout() {
-            return soTimeout;
-        }
-
-        public void setSoTimeout(Integer soTimeout) {
-            this.soTimeout = soTimeout;
-        }
-
-        public Integer getMaxAttempts() {
-            return maxAttempts;
-        }
-
-        public void setMaxAttempts(Integer maxAttempts) {
-            this.maxAttempts = maxAttempts;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
         }
     }
 }
