@@ -61,16 +61,4 @@ public class ResourceUtil {
     public static String getMessage(String code, Locale locale, String... params) {
         return getMessageSource().getMessage(code, params, locale == null ? LocaleContextHolder.getLocale() : locale);
     }
-
-    /**
-     * 根据枚举接口获取messages
-     *
-     * @param eu
-     * @param params
-     * @param <K>
-     * @return
-     */
-    public static <K> String getMessage(BaseEnum<K, String> eu, String... params) {
-        return getMessage(eu.getDescription(), params);
-    }
 }

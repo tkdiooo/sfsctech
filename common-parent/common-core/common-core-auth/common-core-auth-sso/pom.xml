@@ -13,19 +13,26 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- common-authorize-base support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-auth-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-rpc</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
         </dependency>
     </dependencies>
-
 
 </project>

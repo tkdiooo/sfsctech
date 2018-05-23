@@ -16,47 +16,49 @@ import java.util.Set;
         prefix = "website.security"
 )
 public class SecurityProperties {
+    // 协议
+    public enum KeepPattern {
+        Session, Cache
+    }
 
-    private final SecurityProperties.Csrf csrf;
-    private final SecurityProperties.Ddos ddos;
+    private SecurityProperties.Ddos ddos;
+    private SecurityProperties.Csrf csrf;
 
     public SecurityProperties() {
-        this.csrf = new SecurityProperties.Csrf();
-        this.ddos = new SecurityProperties.Ddos();
     }
 
     public Csrf getCsrf() {
         return csrf;
     }
 
+    public void setCsrf(Csrf csrf) {
+        this.csrf = csrf;
+    }
+
     public Ddos getDdos() {
         return ddos;
     }
 
+
+    public void setDdos(Ddos ddos) {
+        this.ddos = ddos;
+    }
+
     public static class Csrf {
-        private boolean open = false;
-        private String keepPattern;
+        private KeepPattern keepPattern = KeepPattern.Session;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
         private Set<String> requiredVerifyPath;
 
-        Csrf() {
+        public Csrf() {
 
         }
 
-        public boolean isOpen() {
-            return open;
-        }
-
-        public void setOpen(boolean open) {
-            this.open = open;
-        }
-
-        public String getKeepPattern() {
+        public KeepPattern getKeepPattern() {
             return keepPattern;
         }
 
-        public void setKeepPattern(String keepPattern) {
+        public void setKeepPattern(KeepPattern keepPattern) {
             this.keepPattern = keepPattern;
         }
 
@@ -86,19 +88,11 @@ public class SecurityProperties {
     }
 
     public static class Ddos {
-        private boolean open = false;
+
         private Set<String> accessControlAllowOrigin;
 
-        Ddos() {
+        public Ddos() {
 
-        }
-
-        public boolean isOpen() {
-            return open;
-        }
-
-        public void setOpen(boolean open) {
-            this.open = open;
         }
 
         public Set<String> getAccessControlAllowOrigin() {

@@ -1,5 +1,6 @@
 package com.sfsctech.website.thymeleaf;
 
+import com.sfsctech.dubbo.starter.annotation.EnableDubboConsumeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,8 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author 张麒 2017/7/25.
  * @version Description:
  */
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.sfsctech.framework", "com.sfsctech.website.thymeleaf", "com.sfsctech.configurer"})
+@EnableDubboConsumeService
 public class WebRunner {
 
     public static void main(String[] args) {

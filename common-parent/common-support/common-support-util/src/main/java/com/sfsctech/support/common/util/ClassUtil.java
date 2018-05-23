@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ClassUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.JarURLConnection;
@@ -66,13 +67,25 @@ public class ClassUtil extends ClassUtils {
         }
     }
 
+    public static Set<Class<?>> getClassesByEndsWith(final String basePackage, final String endsWith) {
+        return getClasses(basePackage, endsWith, null);
+    }
+
+    public static Set<Class<?>> getClassesByAnnotation(final String basePackage, final Class<Annotation> annotation) {
+        return getClasses(basePackage, null, annotation);
+    }
+
+    public static Set<Class<?>> getClasses(final String basePackage) {
+        return getClasses(basePackage, null, null);
+    }
+
     /**
      * 从包package中获取所有的Class
      *
      * @param basePackage
      * @return
      */
-    public static Set<Class<?>> getClasses(final String basePackage) {
+    private static Set<Class<?>> getClasses(final String basePackage, String endsWith, Class<Annotation> annotation) {
         // 第一个class类的集合
         Set<Class<?>> classes = new LinkedHashSet<>();
         if (StringUtil.isBlank(basePackage)) {
@@ -95,7 +108,7 @@ public class ClassUtil extends ClassUtils {
                         // 获取包的物理路径
                         String filePath = URLDecoder.decode(url.getFile(), LabelConstants.UTF8);
                         // 以文件的方式扫描整个包下的文件 并添加到集合中
-                        findAndAddClassesInPackageByFile(packageName, filePath, classes);
+                        findAndAddClassesInPackageByFile(packageName, filePath, classes, endsWith, annotation);
                     }
                     // 如果是jar包文件
                     else if ("jar".equals(protocol)) {
@@ -116,6 +129,7 @@ public class ClassUtil extends ClassUtils {
                                     // 获取后面的字符串
                                     name = name.substring(1);
                                 }
+                                System.out.println("jar::::" + name);
                                 // 如果前半部分和定义的包名相同
                                 if (name.startsWith(packageDirName)) {
                                     int index = name.lastIndexOf(LabelConstants.FORWARD_SLASH.charAt(0));
@@ -154,7 +168,7 @@ public class ClassUtil extends ClassUtils {
     /**
      * 以文件的形式来获取包下的所有Class
      */
-    private static void findAndAddClassesInPackageByFile(String packageName, String filePath, Set<Class<?>> classes) {
+    private static void findAndAddClassesInPackageByFile(String packageName, String filePath, Set<Class<?>> classes, String endsWith, Class<Annotation> annotation) {
         // 获取此包的目录 建立一个File
         File dir = new File(filePath);
         // 如果不存在或者 也不是目录就直接返回
@@ -170,18 +184,31 @@ public class ClassUtil extends ClassUtils {
             for (File file : dirfiles) {
                 // 如果是目录 则继续扫描
                 if (file.isDirectory()) {
-                    findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), classes);
-                }
-                // 如果是java类文件
-                else {
+                    findAndAddClassesInPackageByFile(packageName + "." + file.getName(), file.getAbsolutePath(), classes, endsWith, annotation);
+                } else {
                     // 去掉后面的.class 只留下类名
                     String className = file.getName().substring(0, file.getName().length() - 6);
                     try {
-                        classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
+                        // 所有Class
+                        if (annotation == null && StringUtil.isBlank(endsWith)) {
+                            classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
+                        }
+                        // 包结尾匹配
+                        else if (StringUtil.isNotBlank(endsWith) && filePath.contains(LabelConstants.BACK_SLASH + endsWith)) {
+                            classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
+                        }
+                        // 注解匹配
+                        else if (null != annotation) {
+                            Class cls = Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className);
+                            if (cls.isAnnotationPresent(annotation)) {
+                                classes.add(cls);
+                            }
+                        }
                     } catch (ClassNotFoundException e) {
                         // log.error("添加用户自定义视图类错误 找不到此类的.class文件");
                         e.printStackTrace();
                     }
+
                 }
             }
         }

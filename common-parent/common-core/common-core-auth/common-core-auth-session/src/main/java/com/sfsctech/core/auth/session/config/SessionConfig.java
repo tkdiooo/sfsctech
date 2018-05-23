@@ -1,7 +1,7 @@
 package com.sfsctech.core.auth.session.config;
 
 import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.core.auth.base.config.AuthConfig;
+import com.sfsctech.core.auth.base.config.AuthFilterConfig;
 import com.sfsctech.core.auth.session.filter.SessionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,21 +16,21 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-@Import(AuthConfig.class)
+@Import(AuthFilterConfig.class)
 public class SessionConfig {
 
     @Autowired
-    private AuthConfig authConfig;
+    private AuthFilterConfig filterConfig;
 
     @Bean
     public FilterRegistrationBean SessionFilter() {
         SessionFilter filter = new SessionFilter();
         // Session认证排除路径
-        filter.setExcludesPattern(authConfig.getSessionExcludePath());
+        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SessionFilter");
-        registration.addInitParameter("welcomeFile", authConfig.getWelcomeFile());
+        registration.addInitParameter("welcomeFile", filterConfig.getWelcomeFile());
         return registration;
     }
 

@@ -19,7 +19,9 @@ public enum VerifyExceptionTipsEnum implements ExceptionTips<String, String> {
     AccountRemove("tips.login.account.remove", "账号已被删除", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
     AccountDisabled("tips.login.account.disabled", "账号已被禁用", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
     AccountLocked("tips.login.account.locked", "账号已被锁定", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
-    ParameterWrong("00007", "参数验证失败", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn);
+    CsrfWrong("tips.csrf.wrong", "Csrf请求拦截", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
+    CsrfError("tips.csrf.error", "Csrf攻击拦截", ExceptionTypeEnum.System, ExceptionLevelEnum.Error),
+    ParameterWrong("tips.exception.validator", "数据校验错误", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn);
 
     private String code;
     private String description;

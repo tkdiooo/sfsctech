@@ -20,40 +20,28 @@
   ],
   "properties": [
     {
-      "name": "website.security.csrf.open",
-      "type": "java.lang.Boolean",
-      "description": "是否打开CSRF防御（默认false）",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
-    },
-    {
       "name": "website.security.csrf.keep-pattern",
-      "type": "java.lang.String",
-      "description": "CSRF防御Token保持方式，为空默认HttpSession",
+      "type": "com.sfsctech.core.security.properties.SecurityProperties.KeepPattern",
+      "description": "CSRF跟踪方式，为空默认HttpSession",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
     },
     {
       "name": "website.security.csrf.intercept-exclude-path",
       "type": "java.util.Set<java.lang.String>",
-      "description": "CSRF防御拦截排除路径",
+      "description": "CSRF拦截排除路径",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
     },
     {
       "name": "website.security.csrf.verify-exclude-path",
       "type": "java.util.Set<java.lang.String>",
-      "description": "CSRF防御校验排除路径",
+      "description": "CSRF校验排除路径",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
     },
     {
       "name": "website.security.csrf.required-verify-path",
       "type": "java.util.Set<java.lang.String>",
-      "description": "必须通过CSRF防御校验路径",
+      "description": "CSRF强制校验路径",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
-    },
-    {
-      "name": "website.security.ddoc.open",
-      "type": "java.lang.Boolean",
-      "description": "是否打开DDOC防御（默认false）",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Ddos"
     },
     {
       "name": "website.security.ddos.access-control-allow-origin",
@@ -67,12 +55,12 @@
       "name": "website.security.csrf.keep-pattern",
       "values": [
         {
-          "value": "soa",
-          "description": "通过分布式服务保持Token"
+          "value": "Session",
+          "description": "通过会话跟踪Token"
         },
         {
-          "value": "cache",
-          "description": "通过缓存服务保持Token"
+          "value": "Cache",
+          "description": "通过缓存跟踪Token"
         }
       ]
     }

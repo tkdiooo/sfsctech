@@ -38,8 +38,8 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
+cache:
   redis:
-    protocol: Single
     host: 172.16.225.98
     port: 6379
     password: redis123
@@ -48,8 +48,6 @@ spring:
       max-idle: 100
       min-idle: 50
       max-active: 300
-    cluster:
-      nodes: 172.16.225.98:6379
 #dubbo setting
 dubbo:
   application:
@@ -79,7 +77,7 @@ website:
     welcome-file: /index
   session:
     # session认证模式
-    authentication: sso
+#    authentication: sso
     # session过滤排除路径
     exclude-path: /index, /login
   security:

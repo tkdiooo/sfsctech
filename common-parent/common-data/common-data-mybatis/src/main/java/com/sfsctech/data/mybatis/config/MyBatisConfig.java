@@ -36,7 +36,6 @@ import java.util.Map;
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper"})
 @Import({DynamicDataSourceAspect.class, CacheConfig.class})
-// TODO 需要服务端注解配置加载
 public class MyBatisConfig {
 
     @Bean(name = "masterDatasource")

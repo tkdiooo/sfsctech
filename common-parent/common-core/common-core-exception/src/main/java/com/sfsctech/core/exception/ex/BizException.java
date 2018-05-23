@@ -17,8 +17,8 @@ public class BizException extends GenericException {
         super();
     }
 
-    public BizException(ExceptionTips<?, String> tips, String... params) {
-        super(tips, params);
+    public BizException(ExceptionTips<String, String> tips) {
+        super(tips);
     }
 
     public BizException(String message, String... params) {

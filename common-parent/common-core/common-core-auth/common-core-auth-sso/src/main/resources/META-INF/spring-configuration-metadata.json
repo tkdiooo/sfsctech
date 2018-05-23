@@ -67,18 +67,6 @@
       "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties"
     },
     {
-      "name": "website.sso.auth.type",
-      "type": "com.sfsctech.constants.SSOProperties.AuthType",
-      "description": "登录校验类型",
-      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
-    },
-    {
-      "name": "website.sso.auth.protocol",
-      "type": "com.sfsctech.constants.SSOProperties.AuthProtocol",
-      "description": "单点登录校验协议",
-      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
-    },
-    {
       "name": "website.sso.auth.way",
       "type": "com.sfsctech.constants.SSOProperties.AuthWay",
       "description": "单点登录校验方式",
@@ -131,19 +119,6 @@
   ],
   "hints": [
     {
-      "name": "website.sso.auth.protocol",
-      "values": [
-        {
-          "value": "Http",
-          "description": "通过Http校验用户认证"
-        },
-        {
-          "value": "Rpc",
-          "description": "通过Rpc校验用户认证"
-        }
-      ]
-    },
-    {
       "name": "website.sso.auth.way",
       "values": [
         {
@@ -158,23 +133,6 @@
     },
     {
       "name": "website.sso.auth.item-type",
-      "values": [
-        {
-          "value": "BackendSystem",
-          "description": "后端系统"
-        },
-        {
-          "value": "FrontendSystem",
-          "description": "前端系统"
-        },
-        {
-          "value": "FrameService",
-          "description": "Frame服务"
-        }
-      ]
-    },
-    {
-      "name": "website.sso.auth.type",
       "values": [
         {
           "value": "BackendSystem",

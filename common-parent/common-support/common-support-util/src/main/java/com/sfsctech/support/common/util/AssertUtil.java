@@ -16,9 +16,9 @@ import java.util.Map;
 
 public final class AssertUtil {
 
-    public static void isTrue(boolean value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isTrue(boolean value, ExceptionTips<String, String> tips, String... messages) {
         if (!value) {
-            String extraMessage = null;
+            String extraMessage;
             if (messages.length > 0) {
                 if (messages.length == 1 && StringUtil.isNotBlank(messages[0])) {
                     extraMessage = messages[0];
@@ -28,40 +28,42 @@ public final class AssertUtil {
                     System.arraycopy(messages, 1, messageParams, 0, messageParams.length);
                     extraMessage = MessageFormat.format(messagePattern, (Object[]) messageParams);
                 }
+                throw new GenericException(extraMessage);
+            } else {
+                throw new GenericException(tips);
             }
-            throw new GenericException(tips, extraMessage);
         }
     }
 
-    public static void isBlank(String value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isBlank(String value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(StringUtil.isBlank(value), tips, messages);
     }
 
-    public static void isNotBlank(String value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isNotBlank(String value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(StringUtil.isNotBlank(value), tips, messages);
     }
 
-    public static void isEmpty(Collection value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isEmpty(Collection value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(ListUtil.isEmpty(value), tips, messages);
     }
 
-    public static void isNotEmpty(Collection value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isNotEmpty(Collection value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(ListUtil.isNotEmpty(value), tips, messages);
     }
 
-    public static void isNotNull(Object value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isNotNull(Object value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(value != null, tips, messages);
     }
 
-    public static void isNull(Object value, ExceptionTips<?, String> tips, String... messages) {
+    public static void isNull(Object value, ExceptionTips<String, String> tips, String... messages) {
         isTrue(value == null, tips, messages);
     }
 
-    public static void isEnumCodeValid(String enumCode, Class<? extends BaseEnum> enumClass, ExceptionTips<?, String> tips, String... messages) {
+    public static void isEnumCodeValid(String enumCode, Class<? extends BaseEnum> enumClass, ExceptionTips<String, String> tips, String... messages) {
         isNotNull(EnumUtil.getByCode(enumCode, enumClass), tips, messages);
     }
 
-    public static void sizeEq(Collection collection, int size, ExceptionTips<?, String> tips, String... messages) {
+    public static void sizeEq(Collection collection, int size, ExceptionTips<String, String> tips, String... messages) {
         isNotNull(collection, tips, "集合对象为null");
         isTrue(collection.size() == size, tips, messages);
     }

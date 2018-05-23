@@ -15,11 +15,6 @@ import org.springframework.stereotype.Component;
 )
 public class SSOProperties {
 
-    // 校验协议
-    public enum AuthProtocol {
-        Http, Rpc
-    }
-
     // 校验方式
     public enum AuthWay {
         Simple, Complex
@@ -116,19 +111,10 @@ public class SSOProperties {
 
     public static class Authentication {
 
-        private AuthProtocol protocol = AuthProtocol.Rpc;
         private AuthWay way = AuthWay.Simple;
         private ItemType itemType;
 
         Authentication() {
-        }
-
-        public AuthProtocol getProtocol() {
-            return protocol;
-        }
-
-        public void setProtocol(AuthProtocol protocol) {
-            this.protocol = protocol;
         }
 
         public AuthWay getWay() {

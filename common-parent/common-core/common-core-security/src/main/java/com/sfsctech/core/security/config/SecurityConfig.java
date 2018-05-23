@@ -4,7 +4,6 @@ import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
-import com.sfsctech.core.security.condition.DDOCCondition;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
@@ -14,7 +13,6 @@ import com.sfsctech.core.security.resolver.RequestAttributeResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
@@ -55,13 +53,15 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if (properties.getProperties().getCsrf().isOpen()) {
+        if (null != properties.getProperties().getCsrf()) {
             SecurityInterceptor securityInterceptor = new SecurityInterceptor();
-            securityInterceptor.setExcludesPattern(properties.getProperties().getCsrf().getVerifyExcludePath());
-            securityInterceptor.setVerifyPattern(properties.getProperties().getCsrf().getRequiredVerifyPath());
+            // 验证排除
+            securityInterceptor.setVerifyExcludePath(properties.getProperties().getCsrf().getVerifyExcludePath());
+            // 强制验证路径
+            securityInterceptor.setRequiredVerifyPath(properties.getProperties().getCsrf().getRequiredVerifyPath());
             // 多个拦截器组成一个拦截器链
             // addPathPatterns 用于添加拦截规则
-            // excludePathPatterns 用户排除拦截
+            // excludePathPatterns 用户拦截排除
             registry.addInterceptor(securityInterceptor).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(FilterHandler.getCSRFExcludes());
             super.addInterceptors(registry);
         }
@@ -91,7 +91,6 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      * DDOC过滤 -
      */
     @Bean
-    @Conditional(DDOCCondition.class)
     public FilterRegistrationBean DDOCFilter() {
         DDOCFilter filter = new DDOCFilter();
         filter.setProperties(properties.getProperties());

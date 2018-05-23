@@ -6,7 +6,7 @@ package com.sfsctech.core.base.ex;
  * @author 张麒 2018-5-10.
  * @version Description:
  */
-public interface BaseException<T extends ExceptionTips> {
+public interface BaseException<T extends ExceptionTips<String, String>> {
 
     T getTips();
 

@@ -1,9 +1,8 @@
 package com.sfsctech.website.jsp.controller;
 
-import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
-import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.website.jsp.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +28,8 @@ public class IndexController {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private CacheFactory factory;
+//    @Autowired
+//    private CacheFactory factory;
 
     @GetMapping("index.html")
     public String index() {
@@ -39,8 +38,8 @@ public class IndexController {
         model.setPassword("tk488");
         model.setInitpassword("1111");
         accountService.save(model);
-        factory.getCacheClient().put("test_key", IndexController.class);
-        logger.info(String.valueOf(factory.getCacheClient().get("test_key")));
+//        factory.getCacheClient().put("test_key", IndexController.class);
+//        logger.info(String.valueOf(factory.getCacheClient().get("test_key")));
         return "index";
     }
 

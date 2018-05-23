@@ -2,7 +2,6 @@ package com.sfsctech.support.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.core.base.constants.CommonConstants;
-import com.sfsctech.core.base.ex.GenericException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -91,16 +90,11 @@ public class ThrowableUtil {
      * @return Root Message
      */
     public static String getRootMessage(Throwable e, String defaults) {
-        String msg;
-        if (e instanceof GenericException) {
-            msg = e.getMessage();
-        } else {
-            Throwable t = getRootCause(e);
-            if (t == null) {
-                return defaults;
-            }
-            msg = t.toString();
+        Throwable t = getRootCause(e);
+        if (t == null) {
+            return defaults;
         }
+        String msg = t.toString();
         return StringUtil.isEmpty(msg) ? defaults : msg;
     }
 

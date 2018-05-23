@@ -7,6 +7,7 @@ import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.domain.model.PagingInfo;
 import com.sfsctech.core.base.domain.result.ValidatorResult;
 import com.sfsctech.core.base.ex.BaseException;
+import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
 import com.sfsctech.core.spring.util.ValidatorUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;
 import com.sfsctech.core.exception.ex.VerifyException;
@@ -44,8 +45,7 @@ public class ExceptionFilter implements Filter {
                                 "service：" + invoker.getInterface().getName() + ", " +
                                 "method：" + invocation.getMethodName() + ", " +
                                 "exception: " + VerifyException.class.getName() + ": " + result.getMessages() + "}");
-                        // TODO
-//                        return new RpcResult(new VerifyException(I18NConstants.Tips.ExceptionValidator, result));
+                        return new RpcResult(new VerifyException(VerifyExceptionTipsEnum.ParameterWrong, result));
                     }
                 }
             }

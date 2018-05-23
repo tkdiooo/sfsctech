@@ -1,10 +1,10 @@
 package com.sfsctech.website.thymeleaf.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.dto.SysAccountDto;
-import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

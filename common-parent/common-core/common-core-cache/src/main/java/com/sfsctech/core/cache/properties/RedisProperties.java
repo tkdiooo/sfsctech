@@ -1,7 +1,6 @@
 package com.sfsctech.core.cache.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @version Description:
  */
 @ConfigurationProperties(
-        prefix = "redis"
+        prefix = "cache.redis"
 )
 public class RedisProperties {
 
@@ -20,33 +19,16 @@ public class RedisProperties {
     private String host = "localhost";
     private String password;
     private int port = 6379;
-    private int timeout;
     private boolean ssl;
+    private int timeout;
     private RedisProperties.Pool pool;
     private RedisProperties.Cluster cluster;
 
     public RedisProperties() {
     }
 
-    public RedisProperties.Pool getPool() {
-        return pool;
-    }
-
-
-    public void setPool(RedisProperties.Pool pool) {
-        this.pool = pool;
-    }
-
-    public RedisProperties.Cluster getCluster() {
-        return cluster;
-    }
-
-    public void setCluster(RedisProperties.Cluster cluster) {
-        this.cluster = cluster;
-    }
-
     public int getDatabase() {
-        return database;
+        return this.database;
     }
 
     public void setDatabase(int database) {
@@ -54,7 +36,7 @@ public class RedisProperties {
     }
 
     public String getHost() {
-        return host;
+        return this.host;
     }
 
     public void setHost(String host) {
@@ -62,7 +44,7 @@ public class RedisProperties {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -70,27 +52,67 @@ public class RedisProperties {
     }
 
     public int getPort() {
-        return port;
+        return this.port;
     }
 
     public void setPort(int port) {
         this.port = port;
     }
 
-    public int getTimeout() {
-        return timeout;
+    public boolean isSsl() {
+        return this.ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
     }
 
     public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
 
-    public boolean isSsl() {
-        return ssl;
+    public int getTimeout() {
+        return this.timeout;
     }
 
-    public void setSsl(boolean ssl) {
-        this.ssl = ssl;
+    public RedisProperties.Pool getPool() {
+        return this.pool;
+    }
+
+    public void setPool(RedisProperties.Pool pool) {
+        this.pool = pool;
+    }
+
+    public RedisProperties.Cluster getCluster() {
+        return this.cluster;
+    }
+
+    public void setCluster(RedisProperties.Cluster cluster) {
+        this.cluster = cluster;
+    }
+
+    public static class Cluster {
+        private List<String> nodes;
+        private Integer maxRedirects;
+
+        public Cluster() {
+        }
+
+        public List<String> getNodes() {
+            return this.nodes;
+        }
+
+        public void setNodes(List<String> nodes) {
+            this.nodes = nodes;
+        }
+
+        public Integer getMaxRedirects() {
+            return this.maxRedirects;
+        }
+
+        public void setMaxRedirects(Integer maxRedirects) {
+            this.maxRedirects = maxRedirects;
+        }
     }
 
     public static class Pool {
@@ -99,7 +121,7 @@ public class RedisProperties {
         private int maxActive = 8;
         private int maxWait = -1;
 
-        Pool() {
+        public Pool() {
         }
 
         public int getMaxIdle() {
@@ -132,30 +154,6 @@ public class RedisProperties {
 
         public void setMaxWait(int maxWait) {
             this.maxWait = maxWait;
-        }
-    }
-
-    public static class Cluster {
-        private List<String> nodes;
-        private Integer maxRedirects = 5;
-
-        Cluster() {
-        }
-
-        public List<String> getNodes() {
-            return this.nodes;
-        }
-
-        public void setNodes(List<String> nodes) {
-            this.nodes = nodes;
-        }
-
-        public Integer getMaxRedirects() {
-            return this.maxRedirects;
-        }
-
-        public void setMaxRedirects(Integer maxRedirects) {
-            this.maxRedirects = maxRedirects;
         }
     }
 }

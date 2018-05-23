@@ -1,0 +1,31 @@
+package com.sfsctech.core.auth.sso.inf;
+
+
+import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.rpc.result.ActionResult;
+
+/**
+ * Class VerifyService
+ *
+ * @author 张麒 2017/10/13.
+ * @version Description:
+ */
+public interface VerifyService {
+
+    /**
+     * 简单Session校验：只校验token是否存在
+     *
+     * @param jt JwtToken
+     * @return ActionResult&lt;JwtToken&gt;
+     */
+    ActionResult<JwtToken> simpleVerify(JwtToken jt);
+
+    /**
+     * 复杂Session检验：校验token包含的数据，以及更新数据版本
+     *
+     * @param jt JwtToken
+     * @return ActionResult&lt;JwtToken&gt;
+     */
+    ActionResult<JwtToken> complexVerify(JwtToken jt);
+
+}

@@ -10,6 +10,7 @@ import redis.clients.jedis.JedisCluster;
  * @author 张麒 2017-11-3.
  * @version Description:
  */
+@Deprecated
 public class JedisCacheClient implements RedisProxy<String, Object> {
 
     private JedisCluster jedisCluster;

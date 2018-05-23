@@ -161,7 +161,7 @@ public class I18NConstants {
 
         @Override
         public String getCode() {
-            return "";
+            return value;
         }
 
         @Override

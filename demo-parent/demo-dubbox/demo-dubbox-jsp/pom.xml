@@ -42,19 +42,19 @@
         <!-- common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-exception</artifactId>
+            <artifactId>common-core-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- common-logback support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
+            <artifactId>common-core-logger</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- common-cache support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
+            <artifactId>common-core-cache</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- jstl support -->

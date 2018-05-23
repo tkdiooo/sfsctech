@@ -10,6 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common-dubbo-sso</artifactId>
+    <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbo-base</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

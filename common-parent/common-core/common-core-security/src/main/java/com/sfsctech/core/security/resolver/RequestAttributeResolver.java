@@ -2,8 +2,12 @@ package com.sfsctech.core.security.resolver;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sfsctech.core.base.domain.result.ValidatorResult;
+import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
+import com.sfsctech.core.exception.ex.VerifyException;
 import com.sfsctech.core.security.annotation.Verify;
 import com.sfsctech.core.security.tools.SecurityUtil;
+import com.sfsctech.core.spring.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -44,11 +48,11 @@ public class RequestAttributeResolver implements HandlerMethodArgumentResolver {
         });
         logger.info("请求地址：" + parameter.getMethod().getDeclaringClass() + "." + parameter.getMethod().getName() + "()，参数解析：" + jo.toJSONString());
         Object o = JSON.parseObject(jo.toJSONString(), parameter.getParameterType());
-        // TODO
-//        ValidatorResult result = ValidatorUtil.validate(o);
-//        if (result.hasErrors()) {
-//            throw new VerifyException(I18NConstants.Tips.ExceptionValidator, result);
-//        }
+        
+        ValidatorResult result = ValidatorUtil.validate(o);
+        if (result.hasErrors()) {
+            throw new VerifyException(VerifyExceptionTipsEnum.ParameterWrong, result);
+        }
         // 解密敏感参数
         SecurityUtil.Decrypt(o);
         return o;

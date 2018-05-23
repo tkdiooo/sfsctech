@@ -13,56 +13,30 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- spring-cloud-config-client -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
-        <!-- Thymeleaf -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <!-- business -->
         <dependency>
             <groupId>com.sfsctech.demo.dubbox</groupId>
             <artifactId>demo-dubbox-interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!-- common-dubbox support-->
+        <!-- Thymeleaf -->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-dubbox</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <!-- common-exception support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-exception</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-dubbo-starter-consume</artifactId>
+            <version>1.0.0</version>
         </dependency>
-        <!-- common-logback support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
-        <!-- common-security support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-security</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

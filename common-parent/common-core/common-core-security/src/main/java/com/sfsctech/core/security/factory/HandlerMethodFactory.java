@@ -22,7 +22,7 @@ public class HandlerMethodFactory implements InitializingBean {
     private RequestMappingHandlerAdapter adapter;
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         List<HandlerMethodReturnValueHandler> returnValueHandlers = adapter.getReturnValueHandlers();
         List<HandlerMethodReturnValueHandler> handlers = Lists.newArrayList(returnValueHandlers);
         decorateHandlers(handlers);

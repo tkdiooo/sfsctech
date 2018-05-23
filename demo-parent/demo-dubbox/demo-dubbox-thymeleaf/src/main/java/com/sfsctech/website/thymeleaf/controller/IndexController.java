@@ -1,9 +1,9 @@
 package com.sfsctech.website.thymeleaf.controller;
 
-import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.security.annotation.Verify;
 import com.sfsctech.framework.model.dto.SysAccountDto;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.security.annotation.Verify;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
 import com.sfsctech.website.thymeleaf.rpc.provider.AccountService;
 import org.slf4j.Logger;
@@ -48,7 +48,6 @@ public class IndexController {
         dto.setAccount("sdsada11111");
         dto.setPassword("sdsada11111");
         service.save(dto);
-        ;
         return "index";
     }
 

@@ -10,11 +10,11 @@ import java.text.MessageFormat;
  * @author 张麒 2017/5/5.
  * @version Description:
  */
-public class GenericException extends RuntimeException implements BaseException<ExceptionTips<?, String>> {
+public class GenericException extends RuntimeException implements BaseException<ExceptionTips<String, String>> {
 
     private static final long serialVersionUID = -3700435164531898375L;
 
-    private ExceptionTips<?, String> tips;
+    private ExceptionTips<String, String> tips;
     private String[] params = new String[0];
     private String viewName = CommonConstants.VIEW_500;
 
@@ -22,10 +22,9 @@ public class GenericException extends RuntimeException implements BaseException<
         super();
     }
 
-    public GenericException(ExceptionTips<?, String> tips, String... params) {
+    public GenericException(ExceptionTips<String, String> tips) {
         super();
         this.tips = tips;
-        if (null != params) this.params = params;
     }
 
     public GenericException(String message, String... params) {
@@ -39,18 +38,20 @@ public class GenericException extends RuntimeException implements BaseException<
     }
 
     @Override
-    public ExceptionTips<?, String> getTips() {
+    public ExceptionTips<String, String> getTips() {
         return tips;
     }
 
     @Override
-    public void setTips(ExceptionTips<?, String> tips) {
+    public void setTips(ExceptionTips<String, String> tips) {
         this.tips = tips;
     }
 
     @Override
     public String getMessage() {
         if (params.length > 0) return MessageFormat.format(super.getMessage(), (Object[]) this.params);
+        else if (null != this.tips)
+            return "{message:" + tips.getDescription() + ",level:" + tips.getLevel().getDescription() + ",type:" + tips.getType().getDescription() + "}";
         else return super.getMessage();
     }
 

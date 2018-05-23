@@ -20,17 +20,17 @@ public class VerifyException extends GenericException {
         super();
     }
 
-    public VerifyException(ExceptionTips tips, String... params) {
-        super(tips, params);
+    public VerifyException(ExceptionTips<String, String> tips) {
+        super(tips);
+    }
+
+    public VerifyException(ExceptionTips<String, String> tips, ValidatorResult result) {
+        super(tips);
+        this.result = result;
     }
 
     public VerifyException(String message, String... params) {
         super(message, params);
-    }
-
-    public VerifyException(ExceptionTips tips, ValidatorResult result, String... params) {
-        super(tips, params);
-        this.result = result;
     }
 
     public VerifyException(String message, ValidatorResult result, String... params) {

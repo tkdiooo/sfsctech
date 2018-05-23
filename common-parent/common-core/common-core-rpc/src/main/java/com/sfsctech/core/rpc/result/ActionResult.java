@@ -3,7 +3,6 @@ package com.sfsctech.core.rpc.result;
 
 import com.sfsctech.core.base.domain.result.BaseResult;
 import com.sfsctech.core.spring.constants.I18NConstants.Tips;
-import com.sfsctech.core.spring.util.ResourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,36 +21,40 @@ public class ActionResult<T> extends BaseResult {
 
     private T result;
 
+    private Tips tips = Tips.OperateSuccess;
+
+    private String[] params;
+
     public ActionResult() {
         super();
-        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
     }
 
     public ActionResult(Tips tips, String... params) {
         super();
-        super.addMessage(ResourceUtil.getMessage(tips, params));
+        this.tips = tips;
+        this.params = params;
     }
 
     public ActionResult(T result, Tips tips, String... params) {
         super();
-        super.addMessage(ResourceUtil.getMessage(tips, params));
         this.result = result;
+        this.tips = tips;
+        this.params = params;
     }
 
     public ActionResult(List<T> dataSet, Tips tips, String... params) {
         super();
-        super.addMessage(ResourceUtil.getMessage(tips, params));
         this.dataSet = dataSet;
+        this.tips = tips;
+        this.params = params;
     }
 
     public ActionResult(T result) {
         super();
-        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
         this.result = result;
     }
 
     public ActionResult(List<T> dataSet) {
-        super.addMessage(ResourceUtil.getMessage(Tips.OperateSuccess));
         this.dataSet = dataSet;
     }
 
@@ -74,11 +77,19 @@ public class ActionResult<T> extends BaseResult {
         this.result = result;
     }
 
-    public void addMessage(Tips tips, String... params) {
-        super.addMessage(ResourceUtil.getMessage(tips, params));
+    public Tips getTips() {
+        return tips;
     }
 
-    public void setMessage(Tips tips, String... params) {
-        super.setMessage(ResourceUtil.getMessage(tips, params));
+    public void setTips(Tips tips) {
+        this.tips = tips;
+    }
+
+    public String[] getParams() {
+        return params;
+    }
+
+    public void setParams(String[] params) {
+        this.params = params;
     }
 }

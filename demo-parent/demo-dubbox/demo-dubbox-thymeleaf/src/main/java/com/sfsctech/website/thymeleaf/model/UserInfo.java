@@ -1,8 +1,9 @@
 package com.sfsctech.website.thymeleaf.model;
 
-import com.sfsctech.base.model.BaseDto;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.security.annotation.Encrypt;
+
+import com.sfsctech.core.base.domain.dto.BaseDto;
+import com.sfsctech.core.security.annotation.Encrypt;
+import com.sfsctech.support.common.security.EncrypterTool;
 
 /**
  * Class UserInfo
@@ -10,7 +11,7 @@ import com.sfsctech.security.annotation.Encrypt;
  * @author 张麒 2017/7/26.
  * @version Description:
  */
-public class UserInfo extends BaseDto{
+public class UserInfo extends BaseDto {
 
     private static final long serialVersionUID = 4750509479154620098L;
     @Encrypt

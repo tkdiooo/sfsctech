@@ -18,7 +18,7 @@ import java.util.Set;
  */
 @Configuration
 @Import(WebsiteProperties.class)
-public class AuthConfig {
+public class AuthFilterConfig {
 
     @Autowired
     private WebsiteProperties websiteProperties;

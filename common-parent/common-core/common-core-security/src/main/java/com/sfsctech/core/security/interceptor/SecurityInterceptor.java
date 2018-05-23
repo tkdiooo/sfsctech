@@ -3,6 +3,8 @@ package com.sfsctech.core.security.interceptor;
 import com.alibaba.fastjson.JSON;
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.filter.FilterHandler;
+import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
+import com.sfsctech.core.exception.ex.VerifyException;
 import com.sfsctech.core.security.csrf.CSRFTokenManager;
 import com.sfsctech.core.security.tools.SecurityUtil;
 import com.sfsctech.support.common.util.HttpUtil;
@@ -29,16 +31,16 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
 
-    private Set<String> excludesPattern;
+    private Set<String> verifyExcludePath;
 
-    private Set<String> verifyPattern;
+    private Set<String> requiredVerifyPath;
 
-    public void setExcludesPattern(Set<String> excludesPattern) {
-        this.excludesPattern = excludesPattern;
+    public void setVerifyExcludePath(Set<String> verifyExcludePath) {
+        this.verifyExcludePath = verifyExcludePath;
     }
 
-    public void setVerifyPattern(Set<String> verifyPattern) {
-        this.verifyPattern = verifyPattern;
+    public void setRequiredVerifyPath(Set<String> requiredVerifyPath) {
+        this.requiredVerifyPath = requiredVerifyPath;
     }
 
     /**
@@ -48,25 +50,22 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      * @param response
      * @param handler
      * @return
-     * @throws Exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 //        if (handler instanceof HandlerMethod) {
 //            HandlerMethod handlerMethod = (HandlerMethod) handler;
 //            Method method = handlerMethod.getMethod();
 //        }
         String requestURI = request.getRequestURI();
-        boolean excludes = FilterHandler.isExclusion(requestURI, excludesPattern);
-        boolean verify = FilterHandler.isExclusion(requestURI, verifyPattern);
-        logger.info("exclusion：[" + excludes + "] request uri：[" + requestURI + "] ");
+        boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
+        boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
+        logger.info("exclusion：[" + verify + "] request uri：[" + requestURI + "] ");
         // 当前请求路径是否需要验证 && Csrf防御验证
-        if ((!excludes || verify) && CSRFTokenManager.isValidCSRFToken(request, response)) {
+        if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
             logger.warn("CSRF attack intercept");
-            // TODO
-//            throw new BizException(I18NConstants.Tips.Exception403);
+            throw new VerifyException(VerifyExceptionTipsEnum.CsrfWrong);
         }
-        // 只有返回true才会继续向下执行，返回false取消当前请求
         return true;
     }
 

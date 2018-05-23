@@ -17,8 +17,8 @@ public class RpcException extends GenericException {
         super();
     }
 
-    public RpcException(ExceptionTips tips, String... params) {
-        super(tips, params);
+    public RpcException(ExceptionTips<String, String> tips) {
+        super(tips);
     }
 
     public RpcException(String message, String... params) {

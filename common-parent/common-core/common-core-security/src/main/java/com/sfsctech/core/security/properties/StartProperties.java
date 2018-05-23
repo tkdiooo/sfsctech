@@ -25,12 +25,7 @@ public class StartProperties {
 
     @Autowired
     public void attribute() {
-        // CSRF防御Token保持方式
-        // TODO
-        if (StringUtil.isNotBlank(properties.getCsrf().getKeepPattern())) {
-//            CommonConstants.CSRF_KEEP_PATTERN = properties.getCsrf().getKeepPattern();
-        }
-        // CSRF防御拦截排除 - 路径
+        // CSRF 拦截排除路径
         if (null != properties.getCsrf().getInterceptExcludePath())
             FilterHandler.INTERCEPT_EXCLUDES_PATTERNS.addAll(properties.getCsrf().getInterceptExcludePath());
     }
