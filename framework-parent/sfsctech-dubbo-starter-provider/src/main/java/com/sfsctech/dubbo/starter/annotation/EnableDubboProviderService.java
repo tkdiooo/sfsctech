@@ -8,7 +8,6 @@ package com.sfsctech.dubbo.starter.annotation;
  */
 
 import com.sfsctech.core.logger.config.LogbackConfig;
-import com.sfsctech.core.security.config.SecurityConfig;
 import com.sfsctech.data.mybatis.config.MyBatisConfig;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +18,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({MyBatisConfig.class, SecurityConfig.class, DubboxConfig.class, LogbackConfig.class})
+@Import({MyBatisConfig.class, DubboxConfig.class, LogbackConfig.class})
 @SpringBootApplication
 public @interface EnableDubboProviderService {
 

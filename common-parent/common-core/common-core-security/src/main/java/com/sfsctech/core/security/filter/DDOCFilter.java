@@ -5,6 +5,7 @@ import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.support.common.util.HttpUtil;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,9 +16,14 @@ import java.io.IOException;
  * @author 张麒 2017-11-6.
  * @version Description:
  */
+@WebFilter
 public class DDOCFilter implements Filter {
 
-    private SecurityProperties properties;
+    private SecurityProperties.Ddos ddos;
+
+    public DDOCFilter(SecurityProperties.Ddos ddos) {
+        this.ddos = ddos;
+    }
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -30,25 +36,19 @@ public class DDOCFilter implements Filter {
         StringBuffer url = request.getRequestURL();
         String ip = HttpUtil.getRequestIP(request);
         String domain = HttpUtil.getDomain(request);
-        System.out.println(ip);
-        System.out.println(domain);
-//        if (properties.getDdos().getAccessControlAllowOrigin().contains(domain)) {
-//            // 跨域请求白名单
-//            response.setHeader("Access-Control-Allow-Origin", domain);
-//            // 请求Contetn-Type支持 application/json格式
-//            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//            // 跨域Cookies设置
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
-//        }
+        if (ddos.getAccessControlAllowOrigin().contains(domain)) {
+            // 跨域请求白名单
+            response.setHeader("Access-Control-Allow-Origin", domain);
+            // 请求Contetn-Type支持 application/json格式
+            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            // 跨域Cookies设置
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
 
-    }
-
-    public void setProperties(SecurityProperties properties) {
-        this.properties = properties;
     }
 }

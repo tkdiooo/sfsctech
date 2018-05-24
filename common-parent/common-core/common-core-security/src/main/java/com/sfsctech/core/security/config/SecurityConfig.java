@@ -69,7 +69,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 自定义HandlerMethodFactory，用自己的ResponseBody包装类替换掉框架的，达到返回Result的效果
-     */
+     */// TODO 添加只有开启csrf后才加载
     @Bean
     public HandlerMethodFactory HandlerMethodFactory() {
         return new HandlerMethodFactory();
@@ -89,11 +89,11 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     /**
      * DDOC过滤 -
+     * // TODO 还需要继续完善，加载条件
      */
     @Bean
     public FilterRegistrationBean DDOCFilter() {
-        DDOCFilter filter = new DDOCFilter();
-        filter.setProperties(properties.getProperties());
+        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDdos());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");
