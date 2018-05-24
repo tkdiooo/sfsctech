@@ -3,11 +3,11 @@ package com.sfsctech.cloud.net.resolver;
 import com.sfsctech.cloud.net.annotation.CloudService;
 import com.sfsctech.cloud.net.domain.ServiceInterface;
 import com.sfsctech.cloud.net.domain.ServiceInterfacePoint;
-import com.sfsctech.cloud.net.ex.InterfaceMethodException;
 import com.sfsctech.cloud.net.ex.AppNameNotExistsException;
+import com.sfsctech.cloud.net.ex.InterfaceMethodException;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +44,8 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
                 throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能是一个继承了" + BaseDto.class.getName() + "类的对象");
             }
 
-            if (!ActionResult.class.equals(method.getReturnType())) {
-                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的返回结果定义, 正确的返回结果只能是" + ActionResult.class.getName() + "类的对象");
+            if (!RpcResult.class.equals(method.getReturnType())) {
+                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的返回结果定义, 正确的返回结果只能是" + RpcResult.class.getName() + "类的对象");
             }
             ServiceInterfacePoint servicePointInfo = new ServiceInterfacePoint();
             servicePointInfo.setMethod(method);

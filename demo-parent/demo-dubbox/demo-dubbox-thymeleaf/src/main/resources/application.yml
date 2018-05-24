@@ -40,7 +40,8 @@ spring:
       suffix: .html
 cache:
   redis:
-    host: 172.16.225.98
+#    host: 172.16.225.98:
+    host: 172.16.228.43
     port: 6379
     password: redis123
     pool:

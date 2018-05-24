@@ -1,7 +1,7 @@
 package com.sfsctech.core.spring.constants;
 
 
-import com.sfsctech.core.base.enums.BaseEnum;
+import com.sfsctech.core.base.enums.TipsEnum;
 
 /**
  * I18N Constants
@@ -11,7 +11,7 @@ import com.sfsctech.core.base.enums.BaseEnum;
  */
 public class I18NConstants {
 
-    public enum Tips implements BaseEnum<String, String> {
+    public enum Tips implements TipsEnum<String, String> {
 
         /**
          * 系统错误，请稍后再尝试

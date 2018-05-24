@@ -42,7 +42,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(BizException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
         logger.info("业务异常捕获：" + e.getMessage());
-        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        BaseResult result = new BaseResult(Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
         return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(RpcException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
         logger.info("RPC异常捕获：" + e.getMessage() + "--" + e.getCause().toString());
-        BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        BaseResult result = new BaseResult(Status.PayloadTooLarge, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
         return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(VerifyException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) {
         logger.warn("校验异常捕获：" + e.getMessage());
-        BaseResult result = new BaseResult(false, Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        BaseResult result = new BaseResult(Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
         result.addAttach(CommonConstants.MESSAGES_DETAILS, e.getResult());
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handle404Error(HttpServletRequest request, HttpServletResponse response, Exception e) {
         logger.warn("404异常捕获：{message:" + ThrowableUtil.getRootMessage(e) + ",ip:" + HttpUtil.getRequestIP(request) + "}");
-        BaseResult result = new BaseResult(false, Status.NotFound, ResourceUtil.getMessage(I18NConstants.Tips.Exception404.getCode(), request.getLocale()));
+        BaseResult result = new BaseResult(Status.NotFound, ResourceUtil.getMessage(I18NConstants.Tips.Exception404.getCode(), request.getLocale()));
         return handleError(request, response, result, CommonConstants.VIEW_404, HttpStatus.NOT_FOUND);
     }
 
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler({MultipartException.class})
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MultipartException e) {
         logger.warn("文件上传异常捕获：" + ThrowableUtil.getStackTraceMessage(e));
-        BaseResult result = new BaseResult(false, Status.PayloadTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload.getCode(), request.getLocale(), multipart.getMaxFileSize()));
+        BaseResult result = new BaseResult(Status.PayloadTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload.getCode(), request.getLocale(), multipart.getMaxFileSize()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -94,7 +94,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
         logger.error("系统异常捕获：" + ThrowableUtil.getStackTraceMessage(e), e);
-        BaseResult result = new BaseResult(false, Status.ServerError, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService.getCode(), request.getLocale()));
+        BaseResult result = new BaseResult(Status.ServerError, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService.getCode(), request.getLocale()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

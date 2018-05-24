@@ -18,7 +18,7 @@ import java.util.Date;
 @Service
 public class AccountService {
 
-    @Reference
+//    @Reference
     private SysAccountService accountService;
 
     public ActionResult<SysAccountDto> save(SysAccountDto model) {

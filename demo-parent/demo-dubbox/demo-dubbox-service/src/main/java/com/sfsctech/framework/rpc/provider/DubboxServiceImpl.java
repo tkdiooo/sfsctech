@@ -26,9 +26,7 @@ public class DubboxServiceImpl implements DubboxService {
         for (String param : params) {
             System.out.println(param);
         }
-        ActionResult<TSysAccount> result = new ActionResult<>();
-        result.setDataSet(readService.find());
-        return new ActionResult();
+        return ActionResult.forSuccess();
     }
 
 }

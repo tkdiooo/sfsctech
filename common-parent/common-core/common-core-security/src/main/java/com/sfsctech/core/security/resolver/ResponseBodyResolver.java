@@ -38,10 +38,6 @@ public class ResponseBodyResolver implements HandlerMethodReturnValueHandler {
             HttpServletResponse response = (HttpServletResponse) webRequest.getNativeResponse();
             ActionResult result = (ActionResult) returnValue;
             result.addAttach(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request, response));
-            // 国际化提示
-            if (null != result.getTips() && result.getMessages().size() == 0) {
-                result.setMessage(ResourceUtil.getMessage(result.getTips().getCode(), request.getLocale(), result.getParams()));
-            }
         }
         delegate.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
     }

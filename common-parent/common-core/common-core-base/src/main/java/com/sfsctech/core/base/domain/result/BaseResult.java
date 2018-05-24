@@ -1,8 +1,8 @@
 package com.sfsctech.core.base.domain.result;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.domain.dto.BaseDto;
+import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class BaseResult extends BaseDto {
     /**
      * 响应状态
      */
-    protected RpcConstants.Status status = RpcConstants.Status.Successful;
+    protected StatusEnum<Integer, String> status = RpcConstants.Status.Successful;
     /**
      * 响应消息列表
      */
@@ -32,11 +32,11 @@ public class BaseResult extends BaseDto {
     public BaseResult() {
     }
 
-    public BaseResult(boolean success, RpcConstants.Status status, String... messages) {
-        this.success = success;
+    public BaseResult(StatusEnum<Integer, String> status, String... messages) {
+        this.success = status.getSuccessful();
         this.status = status;
         if (ArrayUtils.isNotEmpty(messages)) {
-            this.messages.addAll(Arrays.asList(messages));
+            addMessages(messages);
         }
     }
 
@@ -48,23 +48,23 @@ public class BaseResult extends BaseDto {
         this.success = hasErrors;
     }
 
-    @JSONField(name = "statusCode")
-    public int getStatusCode() {
-        return status.getCode();
-    }
+//    @JSONField(name = "statusCode")
+//    public int getStatusCode() {
+//        return status.getCode();
+//    }
+//
+//    @JSONField(name = "statusCode")
+//    public void setStatusCode(int code) {
+//        this.status = BaseEnum.getByCode(this.status, code);
+//    }
 
-    @JSONField(name = "statusCode")
-    public void setStatusCode(int code) {
-        this.status = RpcConstants.Status.getEnum(code);
-    }
-
-    @JSONField(deserialize = false)
-    public RpcConstants.Status getStatus() {
+    //    @JSONField(deserialize = false)
+    public StatusEnum<Integer, String> getStatus() {
         return status;
     }
 
-    @JSONField(deserialize = false)
-    public void setStatus(RpcConstants.Status status) {
+    //    @JSONField(deserialize = false)
+    public void setStatus(StatusEnum<Integer, String> status) {
         this.status = status;
     }
 
@@ -76,13 +76,8 @@ public class BaseResult extends BaseDto {
         this.messages = messages;
     }
 
-    public void setMessage(String messages) {
-        this.messages.clear();
-        this.addMessage(messages);
-    }
-
-    public void addMessage(String message) {
-        this.messages.add(message);
+    public void addMessages(String... messages) {
+        this.messages.addAll(Arrays.asList(messages));
     }
 
     /**

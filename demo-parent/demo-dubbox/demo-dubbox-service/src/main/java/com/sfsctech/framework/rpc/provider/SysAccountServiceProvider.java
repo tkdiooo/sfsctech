@@ -48,7 +48,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 //        model.setLocked(0);
 //        model.setStatus(StatusConstants.Status.VALID.getKey());
 //        writeService.save(model);
-        return new ActionResult<>(model);
+        return ActionResult.forSuccess(model);
     }
 
     @Override
@@ -68,6 +68,6 @@ public class SysAccountServiceProvider implements SysAccountService {
         PageInfo<TSysAccount> page = readService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
         page.getList().forEach(account -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(SysAccountDto.class, account)));
-        return new ActionResult<>(pagingInfo);
+        return ActionResult.forSuccess(pagingInfo);
     }
 }

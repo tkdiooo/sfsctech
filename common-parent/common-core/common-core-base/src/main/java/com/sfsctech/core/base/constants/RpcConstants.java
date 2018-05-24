@@ -2,6 +2,7 @@ package com.sfsctech.core.base.constants;
 
 
 import com.sfsctech.core.base.enums.BaseEnum;
+import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,30 +14,33 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class RpcConstants {
 
-    public enum Status implements BaseEnum<Integer, String> {
+    public enum Status implements StatusEnum<Integer, String> {
 
         Successful,
-        Failure(300, "操作失败"),
-        ServerError(500, "服务器错误"),
-        ServerNormal(501, "正常运行"),
-        ServerUpkeep(502, "维护更新"),
-        ServerShutdown(503, "下线停运"),
-        ClientError(600, "客户端错误"),
-        NotFound(404, "资源不存在"),
-        PayloadTooLarge(413, "负荷太大");
+        Failure(300, "操作失败", false),
+        ServerError(500, "服务器错误", false),
+        ServerNormal(501, "正常运行", true),
+        ServerUpkeep(502, "维护更新", false),
+        ServerShutdown(503, "下线停运", false),
+        ClientError(600, "客户端错误", false),
+        NotFound(404, "资源不存在", false),
+        PayloadTooLarge(413, "负荷太大", false);
 
         Status() {
             this.code = 200;
             this.description = "操作成功";
+            this.successful = true;
         }
 
-        Status(Integer key, String value) {
+        Status(Integer key, String value, boolean successful) {
             this.code = key;
             this.description = value;
+            this.successful = successful;
         }
 
         private int code;
         private String description;
+        private boolean successful;
 
         @Override
         public Integer getCode() {
@@ -46,6 +50,11 @@ public class RpcConstants {
         @Override
         public String getDescription() {
             return description;
+        }
+
+        @Override
+        public boolean getSuccessful() {
+            return successful;
         }
 
         @Override
@@ -64,5 +73,6 @@ public class RpcConstants {
         public static Integer getKeyByValue(String value) {
             return BaseEnum.findKey(values(), value);
         }
+
     }
 }

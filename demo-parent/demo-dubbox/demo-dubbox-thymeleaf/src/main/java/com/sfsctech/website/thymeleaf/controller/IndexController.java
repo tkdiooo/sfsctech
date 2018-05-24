@@ -38,8 +38,8 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(ModelMap model) {
-        factory.getCacheClient().put("test", "abc");
-        System.out.println(factory.getCacheClient().get("test"));
+        factory.getCacheClient().put("test1", "abc");
+        System.out.println(factory.getCacheClient().get("test1"));
         UserInfo userInfo = new UserInfo();
         userInfo.setUserName("account");
         userInfo.setPassword("password");
@@ -47,7 +47,7 @@ public class IndexController {
         SysAccountDto dto = new SysAccountDto();
         dto.setAccount("sdsada11111");
         dto.setPassword("sdsada11111");
-        service.save(dto);
+//        service.save(dto);
         return "index";
     }
 
@@ -57,13 +57,13 @@ public class IndexController {
         System.out.println(model);
         System.out.println(request.getParameter("userName"));
         System.out.println(userInfo.getUserName());
-        return new ActionResult<>(userInfo);
+        return ActionResult.forSuccess(userInfo);
     }
 
     @PostMapping("upload")
     @ResponseBody
     public ActionResult upload(@RequestParam(value = "fileUpload") MultipartFile[] files) {
-        return new ActionResult();
+        return ActionResult.forSuccess();
     }
 
     @GetMapping("test")

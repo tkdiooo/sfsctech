@@ -9,7 +9,7 @@ import com.sfsctech.cloud.net.domain.ServiceInterface;
 import com.sfsctech.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.cloud.net.ex.HttpExecuteErrorException;
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 import com.sfsctech.support.common.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -49,14 +49,14 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
 
         logger.info(request.toString());
 
-        ParameterizedTypeReference<ActionResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
+        ParameterizedTypeReference<RpcResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
         HttpEntity<BaseDto> httpEntity = new HttpEntity<>(request, httpHeaders);
-        ResponseEntity<ActionResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
+        ResponseEntity<RpcResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             logger.warn(responseEntity.toString());
             throw new HttpExecuteErrorException(httpEntity);
         } else {
-            ActionResult result = responseEntity.getBody();
+            RpcResult result = responseEntity.getBody();
             logger.info(result.toString());
             return result;
         }

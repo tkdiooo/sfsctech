@@ -3,6 +3,7 @@ package com.sfsctech.core.web.config;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
+import com.sfsctech.core.spring.config.SpringConfig;
 import com.sfsctech.core.web.cookie.Config;
 import com.sfsctech.core.web.initialize.PropertiesInitialize;
 import com.sfsctech.core.web.initialize.WebResourceInitialize;
@@ -41,7 +42,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({WebsiteProperties.class, WebResourceInitialize.class, PropertiesInitialize.class})
+@Import({SpringConfig.class, WebsiteProperties.class, WebResourceInitialize.class, PropertiesInitialize.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(WebConfig.class);
