@@ -27,9 +27,9 @@ import java.util.Set;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public class SecurityInterceptor extends HandlerInterceptorAdapter {
+public class CsrfSecurityInterceptor extends HandlerInterceptorAdapter {
 
-    private final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
+    private final Logger logger = LoggerFactory.getLogger(CsrfSecurityInterceptor.class);
 
     private Set<String> verifyExcludePath;
 
@@ -53,17 +53,14 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-//        if (handler instanceof HandlerMethod) {
-//            HandlerMethod handlerMethod = (HandlerMethod) handler;
-//            Method method = handlerMethod.getMethod();
-//        }
         String requestURI = request.getRequestURI();
         boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
         boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
         logger.info("exclusion：[" + verify + "] request uri：[" + requestURI + "] ");
         // 当前请求路径是否需要验证 && Csrf防御验证
         if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
-            logger.warn("CSRF attack intercept");
+            // TODO 待完善
+            logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
             throw new VerifyException(VerifyExceptionTipsEnum.CsrfWrong);
         }
         return true;

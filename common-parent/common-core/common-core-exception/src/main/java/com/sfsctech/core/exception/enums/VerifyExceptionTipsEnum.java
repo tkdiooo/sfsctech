@@ -3,6 +3,8 @@ package com.sfsctech.core.exception.enums;
 import com.sfsctech.core.base.ex.ExceptionTips;
 import com.sfsctech.core.base.ex.enums.ExceptionLevelEnum;
 import com.sfsctech.core.base.ex.enums.ExceptionTypeEnum;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Class BaseExceptionTipsEnum
@@ -51,5 +53,10 @@ public enum VerifyExceptionTipsEnum implements ExceptionTips<String, String> {
 
     public String getDescription() {
         return this.description;
+    }
+
+    @Override
+    public String toString() {
+        return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("name", "ordinal").toString();
     }
 }

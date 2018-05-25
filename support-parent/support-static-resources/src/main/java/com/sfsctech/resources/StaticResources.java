@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 
 /**
  * Class WebRunner
@@ -18,11 +19,10 @@ public class StaticResources {
 
     @Bean
     public FilterRegistrationBean filterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new SecurityFilter());
+        FilterRegistrationBean registration = new FilterRegistrationBean(new SecurityFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SecurityFilter");
-        registration.setOrder(1);
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registration;
     }
 

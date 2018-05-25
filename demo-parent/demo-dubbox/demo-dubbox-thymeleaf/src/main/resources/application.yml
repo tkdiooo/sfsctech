@@ -83,8 +83,10 @@ website:
     exclude-path: /index, /login
   security:
     csrf:
+      start: false
       # csrf拦截排除路径
 #     intercept-exclude-path: /**
       # csrf验证排除路径
-      verify-exclude-path: /**
-
+#      verify-exclude-path: /**
+    ddos:
+      start: true

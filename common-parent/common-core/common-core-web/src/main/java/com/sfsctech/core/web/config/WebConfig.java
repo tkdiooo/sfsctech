@@ -109,8 +109,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
             ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.NOT_FOUND));
+            ErrorPage error405Page = new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
-            container.addErrorPages(error401Page, error403Page, error404Page, error500Page);
+            container.addErrorPages(error401Page, error403Page, error404Page, error405Page, error500Page);
             if (container instanceof TomcatEmbeddedServletContainerFactory) {
                 ((TomcatEmbeddedServletContainerFactory) container)
                         .addContextCustomizers((TomcatContextCustomizer) context -> context.setCookieProcessor(new LegacyCookieProcessor()));

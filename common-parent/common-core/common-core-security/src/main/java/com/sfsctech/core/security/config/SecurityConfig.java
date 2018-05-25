@@ -6,16 +6,19 @@ import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.core.security.filter.DDOCFilter;
+import com.sfsctech.core.security.filter.RequestFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
-import com.sfsctech.core.security.interceptor.SecurityInterceptor;
+import com.sfsctech.core.security.interceptor.CsrfSecurityInterceptor;
+import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.properties.StartProperties;
 import com.sfsctech.core.security.resolver.RequestAttributeResolver;
+import com.sfsctech.support.common.util.NumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -53,8 +56,9 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if (null != properties.getProperties().getCsrf()) {
-            SecurityInterceptor securityInterceptor = new SecurityInterceptor();
+        SecurityProperties.Csrf csrf = properties.getProperties().getCsrf();
+        if (null != csrf && csrf.isStart()) {
+            CsrfSecurityInterceptor securityInterceptor = new CsrfSecurityInterceptor();
             // 验证排除
             securityInterceptor.setVerifyExcludePath(properties.getProperties().getCsrf().getVerifyExcludePath());
             // 强制验证路径
@@ -69,9 +73,10 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 自定义HandlerMethodFactory，用自己的ResponseBody包装类替换掉框架的，达到返回Result的效果
-     */// TODO 添加只有开启csrf后才加载
+     */
     @Bean
-    public HandlerMethodFactory HandlerMethodFactory() {
+    @ConditionalOnProperty(name = "website.security.csrf.start", havingValue = "true")
+    public HandlerMethodFactory handlerMethodFactory() {
         return new HandlerMethodFactory();
     }
 
@@ -83,20 +88,33 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("XSSFilter");
-        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registration.setOrder(10);
         return registration;
     }
 
     /**
-     * DDOC过滤 -
-     * // TODO 还需要继续完善，加载条件
+     * 请求安全过滤
      */
     @Bean
+    public FilterRegistrationBean RequestFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new RequestFilter());
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+        registration.setName("RequestFilter");
+        registration.setOrder(NumberUtil.INTEGER_ONE);
+        return registration;
+    }
+
+    /**
+     * DDOC过滤
+     */
+    @Bean
+    @ConditionalOnProperty(name = "website.security.ddos.start", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
         DDOCFilter filter = new DDOCFilter(properties.getProperties().getDdos());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");
+        registration.setOrder(2);
         return registration;
     }
 }

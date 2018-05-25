@@ -1,6 +1,8 @@
 package com.sfsctech.core.base.ex.enums;
 
 import com.sfsctech.core.base.enums.BaseEnum;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Class ExceptionTypeEnum
@@ -38,5 +40,10 @@ public enum ExceptionTypeEnum implements BaseEnum<Integer, String> {
 
     public static Integer getKeyByValue(String value) {
         return BaseEnum.findKey(values(), value);
+    }
+
+    @Override
+    public String toString() {
+        return getDescription();
     }
 }

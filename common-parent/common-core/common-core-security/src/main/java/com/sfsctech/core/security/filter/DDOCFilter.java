@@ -5,7 +5,6 @@ import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.support.common.util.HttpUtil;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +15,6 @@ import java.io.IOException;
  * @author 张麒 2017-11-6.
  * @version Description:
  */
-@WebFilter
 public class DDOCFilter implements Filter {
 
     private SecurityProperties.Ddos ddos;
@@ -34,9 +32,10 @@ public class DDOCFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         StringBuffer url = request.getRequestURL();
+        System.out.println(url);
         String ip = HttpUtil.getRequestIP(request);
         String domain = HttpUtil.getDomain(request);
-        if (ddos.getAccessControlAllowOrigin().contains(domain)) {
+        if (null != ddos.getAccessControlAllowOrigin() && ddos.getAccessControlAllowOrigin().contains(domain)) {
             // 跨域请求白名单
             response.setHeader("Access-Control-Allow-Origin", domain);
             // 请求Contetn-Type支持 application/json格式

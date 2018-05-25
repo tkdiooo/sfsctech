@@ -20,8 +20,8 @@ public class CommonConstants {
      */
     public static final String AJAX_TIME_FRESH = "ajaxTimeFresh";
 
-    public static final String VIEW_404 = "common/404";
-    public static final String VIEW_500 = "common/500";
+    public static final String VIEW_404 = "error/404";
+    public static final String VIEW_500 = "error/500";
 
     // Common Attribute
     //-------------------------------------------------------------------------------------------

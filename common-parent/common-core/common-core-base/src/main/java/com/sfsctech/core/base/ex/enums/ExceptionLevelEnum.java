@@ -40,4 +40,9 @@ public enum ExceptionLevelEnum implements BaseEnum<Integer, String> {
     public static Integer getKeyByValue(String value) {
         return BaseEnum.findKey(values(), value);
     }
+
+    @Override
+    public String toString() {
+        return getDescription();
+    }
 }

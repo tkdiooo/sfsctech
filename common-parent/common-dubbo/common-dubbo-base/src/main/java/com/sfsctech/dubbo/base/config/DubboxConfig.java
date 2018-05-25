@@ -7,14 +7,15 @@ import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.spring.util.SpringContextUtil;
-import com.sfsctech.support.common.util.BeanUtil;
-import com.sfsctech.support.common.util.StringUtil;
 import com.sfsctech.dubbo.base.condition.MultipleProtocolCondition;
 import com.sfsctech.dubbo.base.condition.SingleProtocolCondition;
 import com.sfsctech.dubbo.base.constants.DubboConstants;
 import com.sfsctech.dubbo.base.logger.filter.TraceNoFilter;
 import com.sfsctech.dubbo.base.properties.DubboProperties;
 import com.sfsctech.dubbo.base.serialize.KryoSerializationOptimizer;
+import com.sfsctech.support.common.util.BeanUtil;
+import com.sfsctech.support.common.util.NumberUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.Ordered;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -177,7 +177,7 @@ public class DubboxConfig {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("traceNoFilter");
-        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registration.setOrder(NumberUtil.INTEGER_ZERO);
         return registration;
     }
 

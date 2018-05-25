@@ -44,6 +44,7 @@ public class SSOConfig {
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SSOFilter");
+        registration.setOrder(5);
         return registration;
     }
 

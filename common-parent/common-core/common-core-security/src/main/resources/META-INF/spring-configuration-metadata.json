@@ -20,6 +20,12 @@
   ],
   "properties": [
     {
+      "name": "website.security.csrf.start",
+      "type": "java.lang.Boolean",
+      "description": "csrf防御启动",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+    },
+    {
       "name": "website.security.csrf.keep-pattern",
       "type": "com.sfsctech.core.security.properties.SecurityProperties.KeepPattern",
       "description": "CSRF跟踪方式，为空默认HttpSession",
@@ -42,6 +48,12 @@
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF强制校验路径",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+    },
+    {
+      "name": "website.security.ddos.start",
+      "type": "java.lang.Boolean",
+      "description": "ddos防御启动",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Ddos"
     },
     {
       "name": "website.security.ddos.access-control-allow-origin",

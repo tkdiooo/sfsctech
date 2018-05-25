@@ -30,6 +30,7 @@ public class SessionConfig {
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("SessionFilter");
+        registration.setOrder(5);
         registration.addInitParameter("welcomeFile", filterConfig.getWelcomeFile());
         return registration;
     }

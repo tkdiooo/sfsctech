@@ -51,7 +51,7 @@ public class GenericException extends RuntimeException implements BaseException<
     public String getMessage() {
         if (params.length > 0) return MessageFormat.format(super.getMessage(), (Object[]) this.params);
         else if (null != this.tips)
-            return "{message:" + tips.getDescription() + ",level:" + tips.getLevel().getDescription() + ",type:" + tips.getType().getDescription() + "}";
+            return tips.toString();
         else return super.getMessage();
     }
 

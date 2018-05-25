@@ -45,6 +45,7 @@ public class SecurityProperties {
     }
 
     public static class Csrf {
+        private boolean start = false;
         private KeepPattern keepPattern = KeepPattern.Session;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
@@ -85,14 +86,30 @@ public class SecurityProperties {
         public void setRequiredVerifyPath(Set<String> requiredVerifyPath) {
             this.requiredVerifyPath = requiredVerifyPath;
         }
+
+        public boolean isStart() {
+            return start;
+        }
+
+        public void setStart(boolean start) {
+            this.start = start;
+        }
     }
 
     public static class Ddos {
-
+        private boolean start = false;
         private Set<String> accessControlAllowOrigin;
 
         public Ddos() {
 
+        }
+
+        public boolean isStart() {
+            return start;
+        }
+
+        public void setStart(boolean start) {
+            this.start = start;
         }
 
         public Set<String> getAccessControlAllowOrigin() {
