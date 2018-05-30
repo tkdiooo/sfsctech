@@ -177,7 +177,7 @@ public class DubboxConfig {
         FilterRegistrationBean registration = new FilterRegistrationBean(new TraceNoFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("traceNoFilter");
-        registration.setOrder(NumberUtil.INTEGER_ZERO);
+        registration.setOrder(TraceNoFilter.FILTER_ORDER);
         return registration;
     }
 

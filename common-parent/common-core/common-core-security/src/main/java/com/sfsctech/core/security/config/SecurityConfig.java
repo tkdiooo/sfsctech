@@ -2,17 +2,19 @@ package com.sfsctech.core.security.config;
 
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
+import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.core.security.filter.DDOCFilter;
-import com.sfsctech.core.security.filter.RequestFilter;
+import com.sfsctech.core.security.filter.AccessFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
 import com.sfsctech.core.security.interceptor.CsrfSecurityInterceptor;
 import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.properties.StartProperties;
 import com.sfsctech.core.security.resolver.RequestAttributeResolver;
-import com.sfsctech.support.common.util.NumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -32,11 +34,14 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class})
+@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class})
 public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private StartProperties properties;
+
+    @Autowired
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     /**
      * 自定义参数解析器
@@ -56,13 +61,13 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        SecurityProperties.Csrf csrf = properties.getProperties().getCsrf();
+        SecurityProperties.CSRF csrf = properties.getProperties().getCSRF();
         if (null != csrf && csrf.isStart()) {
             CsrfSecurityInterceptor securityInterceptor = new CsrfSecurityInterceptor();
             // 验证排除
-            securityInterceptor.setVerifyExcludePath(properties.getProperties().getCsrf().getVerifyExcludePath());
+            securityInterceptor.setVerifyExcludePath(csrf.getVerifyExcludePath());
             // 强制验证路径
-            securityInterceptor.setRequiredVerifyPath(properties.getProperties().getCsrf().getRequiredVerifyPath());
+            securityInterceptor.setRequiredVerifyPath(csrf.getRequiredVerifyPath());
             // 多个拦截器组成一个拦截器链
             // addPathPatterns 用于添加拦截规则
             // excludePathPatterns 用户拦截排除
@@ -88,19 +93,20 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
         FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("XSSFilter");
-        registration.setOrder(10);
+        registration.setOrder(XSSFilter.FILTER_ORDER);
         return registration;
     }
 
     /**
-     * 请求安全过滤
+     * 访问安全过滤
      */
     @Bean
     public FilterRegistrationBean RequestFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new RequestFilter());
+        AccessFilter filter = new AccessFilter(properties.getProperties().getCrossDomain());
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("RequestFilter");
-        registration.setOrder(NumberUtil.INTEGER_ONE);
+        registration.setOrder(AccessFilter.FILTER_ORDER);
         return registration;
     }
 
@@ -110,11 +116,11 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @Bean
     @ConditionalOnProperty(name = "website.security.ddos.start", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
-        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDdos());
+        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");
-        registration.setOrder(2);
+        registration.setOrder(DDOCFilter.FILTER_ORDER);
         return registration;
     }
 }

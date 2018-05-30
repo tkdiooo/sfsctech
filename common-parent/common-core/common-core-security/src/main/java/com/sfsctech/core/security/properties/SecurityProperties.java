@@ -1,8 +1,10 @@
 package com.sfsctech.core.security.properties;
 
+import com.sfsctech.core.security.domain.Access;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,42 +18,51 @@ import java.util.Set;
         prefix = "website.security"
 )
 public class SecurityProperties {
+
     // 协议
     public enum KeepPattern {
         Session, Cache
     }
 
-    private SecurityProperties.Ddos ddos;
-    private SecurityProperties.Csrf csrf;
+    private DDOS ddos;
+    private CSRF csrf;
+    private Map<String, Access> crossDomain;
 
     public SecurityProperties() {
     }
 
-    public Csrf getCsrf() {
+    public CSRF getCSRF() {
         return csrf;
     }
 
-    public void setCsrf(Csrf csrf) {
+    public void setCsrf(CSRF csrf) {
         this.csrf = csrf;
     }
 
-    public Ddos getDdos() {
+    public DDOS getDDOS() {
         return ddos;
     }
 
-
-    public void setDdos(Ddos ddos) {
+    public void setDdos(DDOS ddos) {
         this.ddos = ddos;
     }
 
-    public static class Csrf {
+    public Map<String, Access> getCrossDomain() {
+        return crossDomain;
+    }
+
+    public void setCrossDomain(Map<String, Access> crossDomain) {
+        this.crossDomain = crossDomain;
+    }
+
+    public static class CSRF {
         private boolean start = false;
         private KeepPattern keepPattern = KeepPattern.Session;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
         private Set<String> requiredVerifyPath;
 
-        public Csrf() {
+        public CSRF() {
 
         }
 
@@ -96,11 +107,17 @@ public class SecurityProperties {
         }
     }
 
-    public static class Ddos {
-        private boolean start = false;
-        private Set<String> accessControlAllowOrigin;
+    public static class DDOS {
 
-        public Ddos() {
+        private boolean start = false;
+
+        private Set<String> whitelist;
+
+        private int timeSpan;
+
+        private int limit;
+
+        public DDOS() {
 
         }
 
@@ -112,12 +129,28 @@ public class SecurityProperties {
             this.start = start;
         }
 
-        public Set<String> getAccessControlAllowOrigin() {
-            return accessControlAllowOrigin;
+        public Set<String> getWhitelist() {
+            return whitelist;
         }
 
-        public void setAccessControlAllowOrigin(Set<String> accessControlAllowOrigin) {
-            this.accessControlAllowOrigin = accessControlAllowOrigin;
+        public void setWhitelist(Set<String> whitelist) {
+            this.whitelist = whitelist;
+        }
+
+        public int getTimeSpan() {
+            return timeSpan;
+        }
+
+        public void setTimeSpan(int timeSpan) {
+            this.timeSpan = timeSpan;
+        }
+
+        public int getLimit() {
+            return limit;
+        }
+
+        public void setLimit(int limit) {
+            this.limit = limit;
         }
     }
 }

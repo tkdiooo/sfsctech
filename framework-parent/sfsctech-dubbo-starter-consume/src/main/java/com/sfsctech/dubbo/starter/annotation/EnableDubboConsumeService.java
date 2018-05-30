@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({WebConfig.class, SecurityConfig.class, CacheConfig.class, DubboxConfig.class, LogbackConfig.class})
+@Import({WebConfig.class, SecurityConfig.class, DubboxConfig.class, LogbackConfig.class})
 @SpringBootApplication
 public @interface EnableDubboConsumeService {
 

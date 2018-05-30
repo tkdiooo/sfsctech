@@ -19,6 +19,8 @@ import java.io.IOException;
  */
 public class XSSFilter extends BaseFilter {
 
+    public static final int FILTER_ORDER = 10;
+
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         RpcUtil.setRequest(new XSSHttpServletRequestWrapper((HttpServletRequest) request));

@@ -17,9 +17,11 @@ import java.io.IOException;
  */
 public class DDOCFilter implements Filter {
 
-    private SecurityProperties.Ddos ddos;
+    public static final int FILTER_ORDER = 2;
 
-    public DDOCFilter(SecurityProperties.Ddos ddos) {
+    private SecurityProperties.DDOS ddos;
+
+    public DDOCFilter(SecurityProperties.DDOS ddos) {
         this.ddos = ddos;
     }
 
@@ -35,13 +37,7 @@ public class DDOCFilter implements Filter {
         System.out.println(url);
         String ip = HttpUtil.getRequestIP(request);
         String domain = HttpUtil.getDomain(request);
-        if (null != ddos.getAccessControlAllowOrigin() && ddos.getAccessControlAllowOrigin().contains(domain)) {
-            // 跨域请求白名单
-            response.setHeader("Access-Control-Allow-Origin", domain);
-            // 请求Contetn-Type支持 application/json格式
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-            // 跨域Cookies设置
-            response.setHeader("Access-Control-Allow-Credentials", "true");
+        if (null != ddos.getWhitelist() && ddos.getWhitelist().contains(domain)) {
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

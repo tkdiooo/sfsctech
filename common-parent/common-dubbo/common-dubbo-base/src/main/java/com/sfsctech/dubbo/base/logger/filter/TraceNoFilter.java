@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 public class TraceNoFilter extends BaseFilter {
 
+    public static final int FILTER_ORDER = 0;
+
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         TraceNoUtil.newTraceNo();
