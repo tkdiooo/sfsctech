@@ -20,46 +20,52 @@
   ],
   "properties": [
     {
-      "name": "website.security.csrf.start",
+      "name": "website.security.cross-domain",
+      "type": "java.util.Map<java.lang.String, com.sfsctech.core.security.domain.Access>",
+      "description": "跨域访问配置",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties"
+    },
+    {
+      "name": "website.security.csrf.enabled",
       "type": "java.lang.Boolean",
       "description": "csrf防御启动",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CSRF"
     },
     {
       "name": "website.security.csrf.keep-pattern",
       "type": "com.sfsctech.core.security.properties.SecurityProperties.KeepPattern",
       "description": "CSRF跟踪方式，为空默认HttpSession",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CSRF"
     },
     {
       "name": "website.security.csrf.intercept-exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF拦截排除路径",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CSRF"
     },
     {
       "name": "website.security.csrf.verify-exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF校验排除路径",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CSRF"
     },
     {
       "name": "website.security.csrf.required-verify-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "CSRF强制校验路径",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Csrf"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CSRF"
     },
     {
-      "name": "website.security.ddos.start",
+      "name": "website.security.ddos.enabled",
       "type": "java.lang.Boolean",
       "description": "ddos防御启动",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Ddos"
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$DDOS"
     },
     {
-      "name": "website.security.ddos.access-control-allow-origin",
+      "name": "website.security.ddos.whitelist",
       "type": "java.util.Set<java.lang.String>",
-      "description": "跨域请求白名单",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$Ddos"
+      "description": "白名单",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$DDOS"
     }
   ],
   "hints": [

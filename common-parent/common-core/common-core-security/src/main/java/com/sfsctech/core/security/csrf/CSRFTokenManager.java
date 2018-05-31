@@ -32,11 +32,11 @@ public class CSRFTokenManager {
     public static CSRFToken generateCSRFToken(HttpServletRequest request, HttpServletResponse response) {
         CSRFToken token = new CSRFToken();
         // Session保持
-        if (properties.getProperties().getCsrf().getKeepPattern().equals(SecurityProperties.KeepPattern.Session)) {
+        if (properties.getProperties().getCSRF().getKeepPattern().equals(SecurityProperties.KeepPattern.Session)) {
             request.getSession().setAttribute(CSRF_TOKEN, token);
         }
         // Cache保持
-        else if (properties.getProperties().getCsrf().getKeepPattern().equals(SecurityProperties.KeepPattern.Cache)) {
+        else if (properties.getProperties().getCSRF().getKeepPattern().equals(SecurityProperties.KeepPattern.Cache)) {
             String key = UUIDUtil.base64Uuid();
             factory.getCacheClient().add(key, token);
             CookieHelper helper = CookieHelper.getInstance(request, response);
@@ -49,14 +49,14 @@ public class CSRFTokenManager {
         CSRFToken token = null;
         boolean bool = true;
         // Session保持
-        if (properties.getProperties().getCsrf().getKeepPattern().equals(SecurityProperties.KeepPattern.Session)) {
+        if (properties.getProperties().getCSRF().getKeepPattern().equals(SecurityProperties.KeepPattern.Session)) {
             if (null != request.getSession().getAttribute(CSRF_TOKEN)) {
                 token = (CSRFToken) request.getSession().getAttribute(CSRF_TOKEN);
                 request.getSession().removeAttribute(CSRF_TOKEN);
             }
         }
         // Cache保持
-        else if (properties.getProperties().getCsrf().getKeepPattern().equals(SecurityProperties.KeepPattern.Cache)) {
+        else if (properties.getProperties().getCSRF().getKeepPattern().equals(SecurityProperties.KeepPattern.Cache)) {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             String key = helper.getCookieValue(CSRF_TOKEN);
             if (StringUtil.isNotBlank(key)) {

@@ -12,6 +12,7 @@ import com.sfsctech.data.mybatis.config.MyBatisConfig;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.lang.annotation.*;
 
@@ -20,6 +21,7 @@ import java.lang.annotation.*;
 @Documented
 @Import({MyBatisConfig.class, DubboxConfig.class, LogbackConfig.class})
 @SpringBootApplication
+@EnableTransactionManagement
 public @interface EnableDubboProviderService {
 
 

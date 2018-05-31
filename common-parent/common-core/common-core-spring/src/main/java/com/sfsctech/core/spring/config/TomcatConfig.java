@@ -1,12 +1,15 @@
 package com.sfsctech.core.spring.config;
 
 import com.sfsctech.core.spring.properties.TomcatProperties;
+import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.apache.coyote.http11.Http11AprProtocol;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
@@ -44,6 +47,8 @@ public class TomcatConfig {
             factory.setUriEncoding(serverProperties.getTomcat().getUriEncoding());
         factory.addConnectorCustomizers(connectorCustomizer);
 
+        // TODO 需要添加相关代码
+//        factory.addAdditionalTomcatConnectors(initiateHttpConnector());
         return factory;
     }
 
@@ -69,4 +74,13 @@ public class TomcatConfig {
             protocol.setConnectionTimeout(properties.getConnectionTimeout());
         }
     }
+
+//    private Connector initiateHttpConnector() {
+//        Connector connector = new Connector(TomcatEmbeddedServletContainerFactory.DEFAULT_PROTOCOL);
+//        connector.setScheme("http");
+//        connector.setPort(8080);
+//        connector.setSecure(false);
+//        connector.setRedirectPort(port);
+//        return connector;
+//    }
 }

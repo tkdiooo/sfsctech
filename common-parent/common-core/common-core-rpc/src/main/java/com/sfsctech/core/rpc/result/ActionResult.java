@@ -48,6 +48,16 @@ public class ActionResult<T> extends BaseResult {
         this.result = result;
     }
 
+    public void setMessage(TipsEnum<String, String> tips, String... params) {
+        super.getMessages().clear();
+        super.addMessages(ResourceUtil.getMessage(tips.getCode(), RpcUtil.getRequest().getLocale(), params));
+    }
+
+    public void setMessage(String message) {
+        super.getMessages().clear();
+        super.addMessages(message);
+    }
+
     public static <T> ActionResult<T> forSuccess() {
         ActionResult<T> result = new ActionResult<>();
         result.addMessages(ResourceUtil.getMessage(I18NConstants.Tips.OperateSuccess.getCode(), RpcUtil.getRequest().getLocale()));

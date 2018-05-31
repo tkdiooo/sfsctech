@@ -38,8 +38,18 @@ public class DDOCFilter implements Filter {
         String ip = HttpUtil.getRequestIP(request);
         String domain = HttpUtil.getDomain(request);
         if (null != ddos.getWhitelist() && ddos.getWhitelist().contains(domain)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+//            String key = "req_limit_".concat(url).concat(ip);
+//            long count = redisTemplate.opsForValue().increment(key, 1);
+//            if (count == 1) {
+//                redisTemplate.expire(key, limit.time(), TimeUnit.MILLISECONDS);
+//            }
+//            if (count > limit.count()) {
+//                logger.info("用户IP[" + ip + "]访问地址[" + url + "]超过了限定的次数[" + limit.count() + "]");
+//                throw new RequestLimitException();
+//            }
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

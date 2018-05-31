@@ -62,7 +62,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         SecurityProperties.CSRF csrf = properties.getProperties().getCSRF();
-        if (null != csrf && csrf.isStart()) {
+        if (null != csrf && csrf.isEnabled()) {
             CsrfSecurityInterceptor securityInterceptor = new CsrfSecurityInterceptor();
             // 验证排除
             securityInterceptor.setVerifyExcludePath(csrf.getVerifyExcludePath());
@@ -80,7 +80,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      * 自定义HandlerMethodFactory，用自己的ResponseBody包装类替换掉框架的，达到返回Result的效果
      */
     @Bean
-    @ConditionalOnProperty(name = "website.security.csrf.start", havingValue = "true")
+    @ConditionalOnProperty(name = "website.security.csrf.enabled", havingValue = "true")
     public HandlerMethodFactory handlerMethodFactory() {
         return new HandlerMethodFactory();
     }
@@ -114,7 +114,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      * DDOC过滤
      */
     @Bean
-    @ConditionalOnProperty(name = "website.security.ddos.start", havingValue = "true")
+    @ConditionalOnProperty(name = "website.security.ddos.enabled", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
         DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);

@@ -10,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,7 +28,11 @@ public class AccessFilter implements Filter {
     private Map<String, Access> crossDomain;
 
     public AccessFilter(Map<String, Access> crossDomain) {
-        this.crossDomain = crossDomain;
+        if (null != crossDomain) {
+            this.crossDomain = crossDomain;
+        }else{
+            this.crossDomain = new HashMap<>();
+        }
     }
 
     @Override

@@ -56,7 +56,7 @@ public class SecurityProperties {
     }
 
     public static class CSRF {
-        private boolean start = false;
+        private boolean enabled = false;
         private KeepPattern keepPattern = KeepPattern.Session;
         private Set<String> interceptExcludePath;
         private Set<String> verifyExcludePath;
@@ -64,6 +64,14 @@ public class SecurityProperties {
 
         public CSRF() {
 
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
         }
 
         public KeepPattern getKeepPattern() {
@@ -97,19 +105,11 @@ public class SecurityProperties {
         public void setRequiredVerifyPath(Set<String> requiredVerifyPath) {
             this.requiredVerifyPath = requiredVerifyPath;
         }
-
-        public boolean isStart() {
-            return start;
-        }
-
-        public void setStart(boolean start) {
-            this.start = start;
-        }
     }
 
     public static class DDOS {
 
-        private boolean start = false;
+        private boolean enabled = false;
 
         private Set<String> whitelist;
 
@@ -121,12 +121,12 @@ public class SecurityProperties {
 
         }
 
-        public boolean isStart() {
-            return start;
+        public boolean isEnabled() {
+            return enabled;
         }
 
-        public void setStart(boolean start) {
-            this.start = start;
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
         }
 
         public Set<String> getWhitelist() {
