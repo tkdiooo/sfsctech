@@ -8,9 +8,26 @@ package com.sfsctech.core.security.domain;
  */
 public class Access {
 
+    private String url;
     private String accessControlAllowMethods;
     private String accessControlAllowHeaders;
     private Boolean accessControlAllowCredentials;
+
+    public Access() {
+
+    }
+
+    public Access(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getAccessControlAllowMethods() {
         return accessControlAllowMethods;
@@ -34,5 +51,13 @@ public class Access {
 
     public void setAccessControlAllowCredentials(Boolean accessControlAllowCredentials) {
         this.accessControlAllowCredentials = accessControlAllowCredentials;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+        return obj.toString().contains(this.url);
     }
 }

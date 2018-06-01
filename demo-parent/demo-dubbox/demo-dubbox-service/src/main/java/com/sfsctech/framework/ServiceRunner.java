@@ -1,7 +1,9 @@
 package com.sfsctech.framework;
 
+import com.sfsctech.core.auth.sso.config.SSOConfig;
 import com.sfsctech.dubbo.starter.annotation.EnableDubboProviderService;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.Import;
 
 /**
  * Class ServiceRunning
@@ -10,6 +12,7 @@ import org.springframework.boot.SpringApplication;
  * @version Description:
  */
 @EnableDubboProviderService
+@Import(SSOConfig.class)
 public class ServiceRunner {
 
     public static void main(String[] args) {

@@ -4,9 +4,8 @@ import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.sfsctech.core.auth.base.config.AuthFilterConfig;
+import com.sfsctech.core.auth.sso.config.SSOConfig;
 import com.sfsctech.core.auth.sso.inf.VerifyService;
-import com.sfsctech.core.auth.sso.properties.AuthConfig;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
@@ -24,8 +23,8 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-@Import({AuthConfig.class, AuthFilterConfig.class, DubboxConfig.class, SSOProperties.class, JwtProperties.class})
-public class SSOConfig {
+@Import({SSOConfig.class, AuthFilterConfig.class, DubboxConfig.class})
+public class DubboSSOConfig {
 
     @Autowired
     private AuthFilterConfig filterConfig;

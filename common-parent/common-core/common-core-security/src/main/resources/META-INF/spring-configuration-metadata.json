@@ -21,9 +21,33 @@
   "properties": [
     {
       "name": "website.security.cross-domain",
-      "type": "java.util.Map<java.lang.String, com.sfsctech.core.security.domain.Access>",
+      "type": "java.util.List<com.sfsctech.core.security.domain.Access>",
       "description": "跨域访问配置",
-      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties"
+      "sourceType": "java.util.List<com.sfsctech.core.security.domain.Access>"
+    },
+    {
+      "name": "website.security.cross-domain.url",
+      "type": "java.lang.String",
+      "description": "跨域路径",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cross-domain.access-control-allow-methods",
+      "type": "java.lang.String",
+      "description": "跨域请求http方法",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cross-domain.access-control-allow-headers",
+      "type": "java.lang.String",
+      "description": "跨域请求http表头",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cross-domain.access-control-allow-credentials",
+      "type": "java.lang.Boolean",
+      "description": "跨域请求是否支持cookie",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
     },
     {
       "name": "website.security.csrf.enabled",

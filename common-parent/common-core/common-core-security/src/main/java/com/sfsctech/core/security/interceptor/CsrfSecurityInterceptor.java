@@ -9,6 +9,7 @@ import com.sfsctech.core.security.csrf.CSRFTokenManager;
 import com.sfsctech.core.security.tools.SecurityUtil;
 import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.common.util.ResponseUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Set;
@@ -52,8 +54,10 @@ public class CsrfSecurityInterceptor extends HandlerInterceptorAdapter {
      * @return
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String requestURI = request.getRequestURI();
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+        final String requestURI = request.getRequestURI();
+        final String domain = HttpUtil.getDomain(request);
+        final String ret_url = request.getHeader("Referer");
         boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
         boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
         logger.info("exclusion：[" + verify + "] request uri：[" + requestURI + "] ");
@@ -62,6 +66,11 @@ public class CsrfSecurityInterceptor extends HandlerInterceptorAdapter {
             // TODO 待完善
             logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
             throw new VerifyException(VerifyExceptionTipsEnum.CsrfWrong);
+        }
+        // 访问劫持验证：上次请求不是当前服务域名，并且不在允许跨域访问之内
+        if ((!verify || required) && (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith(domain))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
+            return false;
         }
         return true;
     }

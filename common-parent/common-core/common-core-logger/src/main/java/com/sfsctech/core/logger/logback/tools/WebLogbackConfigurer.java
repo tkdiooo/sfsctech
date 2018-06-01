@@ -20,14 +20,23 @@ import java.net.MalformedURLException;
  */
 public class WebLogbackConfigurer {
 
+    /**
+     * 配置文件地址
+     */
+    private static final String LOGBACK_CONFIG_FILE_LOCATION_PARAM = "logback-config-location";
+
+    /**
+     * 是否显示WebAppRoot
+     */
     private static final String LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM = "logback-expose-webapp-root";
+
 
     public static void initLogging(ServletContext servletContext) {
         if (exposeWebAppRoot(servletContext)) {
             WebUtils.setWebAppRootSystemProperty(servletContext);
         }
 
-        String location = servletContext.getInitParameter(LOGBACK_EXPOSE_WEB_APP_ROOT_PARAM);
+        String location = servletContext.getInitParameter(LOGBACK_CONFIG_FILE_LOCATION_PARAM);
 
         try {
             Class<?> julBridge = ClassUtils.forName("org.slf4j.bridge.SLF4JBridgeHandler", ClassUtils.getDefaultClassLoader());

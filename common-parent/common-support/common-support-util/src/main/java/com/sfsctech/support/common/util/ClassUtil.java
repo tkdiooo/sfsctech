@@ -129,7 +129,6 @@ public class ClassUtil extends ClassUtils {
                                     // 获取后面的字符串
                                     name = name.substring(1);
                                 }
-                                System.out.println("jar::::" + name);
                                 // 如果前半部分和定义的包名相同
                                 if (name.startsWith(packageDirName)) {
                                     int index = name.lastIndexOf(LabelConstants.FORWARD_SLASH.charAt(0));
@@ -142,8 +141,21 @@ public class ClassUtil extends ClassUtils {
                                             // 去掉后面的".class" 获取真正的类名
                                             String className = name.substring(packageName.length() + 1, name.length() - 6);
                                             try {
-                                                // 添加到classes
-                                                classes.add(Class.forName(packageName + '.' + className));
+                                                // 所有Class
+                                                if (annotation == null && StringUtil.isBlank(endsWith)) {
+                                                    classes.add(Class.forName(packageName + '.' + className));
+                                                }
+                                                // 包结尾匹配
+                                                else if (StringUtil.isNotBlank(endsWith) && packageName.contains(LabelConstants.PERIOD + endsWith)) {
+                                                    classes.add(Class.forName(packageName + '.' + className));
+                                                }
+                                                // 注解匹配
+                                                else if (null != annotation) {
+                                                    Class cls = Class.forName(packageName + '.' + className);
+                                                    if (cls.isAnnotationPresent(annotation)) {
+                                                        classes.add(cls);
+                                                    }
+                                                }
                                             } catch (ClassNotFoundException e) {
                                                 // log.error("添加用户自定义视图类错误 找不到此类的.class文件");
                                                 e.printStackTrace();

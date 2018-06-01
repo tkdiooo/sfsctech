@@ -4,6 +4,7 @@ import com.sfsctech.core.security.domain.Access;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class SecurityProperties {
 
     private DDOS ddos;
     private CSRF csrf;
-    private Map<String, Access> crossDomain;
+    private List<Access> crossDomain;
 
     public SecurityProperties() {
     }
@@ -47,11 +48,11 @@ public class SecurityProperties {
         this.ddos = ddos;
     }
 
-    public Map<String, Access> getCrossDomain() {
+    public List<Access> getCrossDomain() {
         return crossDomain;
     }
 
-    public void setCrossDomain(Map<String, Access> crossDomain) {
+    public void setCrossDomain(List<Access> crossDomain) {
         this.crossDomain = crossDomain;
     }
 

@@ -53,4 +53,9 @@ public class RpcResult<T> extends BaseResult {
     public void setException(GenericException exception) {
         this.exception = exception;
     }
+
+    public void setMessage(String message) {
+        super.getMessages().clear();
+        super.addMessages(message);
+    }
 }

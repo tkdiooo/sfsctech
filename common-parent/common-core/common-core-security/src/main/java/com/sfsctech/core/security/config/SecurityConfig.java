@@ -3,18 +3,17 @@ package com.sfsctech.core.security.config;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.cache.config.CacheConfig;
-import com.sfsctech.core.cache.factory.CacheFactory;
-import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
-import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.AccessFilter;
+import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
 import com.sfsctech.core.security.interceptor.CsrfSecurityInterceptor;
 import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.properties.StartProperties;
 import com.sfsctech.core.security.resolver.RequestAttributeResolver;
+import com.sfsctech.support.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -39,9 +38,6 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private StartProperties properties;
-
-    @Autowired
-    private CacheFactory<RedisProxy<String, Object>> factory;
 
     /**
      * 自定义参数解析器
@@ -101,8 +97,8 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      * 访问安全过滤
      */
     @Bean
-    public FilterRegistrationBean RequestFilter() {
-        AccessFilter filter = new AccessFilter(properties.getProperties().getCrossDomain());
+    public FilterRegistrationBean AccessFilter() {
+        AccessFilter filter = new AccessFilter(MapUtil.toMap(properties.getProperties().getCrossDomain(), "url"));
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("RequestFilter");

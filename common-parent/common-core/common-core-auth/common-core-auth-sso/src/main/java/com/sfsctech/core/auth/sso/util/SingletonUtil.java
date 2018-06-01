@@ -1,6 +1,6 @@
 package com.sfsctech.core.auth.sso.util;
 
-import com.sfsctech.core.auth.sso.properties.AuthConfig;
+import com.sfsctech.core.auth.sso.config.SSOConfig;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -43,13 +43,13 @@ public class SingletonUtil {
         return factory;
     }
 
-    private static AuthConfig authConfig;
+    private static SSOConfig authConfig;
 
-    public static AuthConfig getAuthConfig() {
+    public static SSOConfig getAuthConfig() {
         if (null == authConfig)
-            synchronized (AuthConfig.class) {
+            synchronized (SSOConfig.class) {
                 if (null == authConfig)
-                    authConfig = SpringContextUtil.getBean(AuthConfig.class);
+                    authConfig = SpringContextUtil.getBean(SSOConfig.class);
             }
         return authConfig;
     }
