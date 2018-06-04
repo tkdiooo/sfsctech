@@ -1,8 +1,8 @@
 #server setting
 server:
-  port: 8091
+  port: 8081
   address: localhost
-  context-path: /thymeleaf
+  context-path: /portal
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8
@@ -73,7 +73,7 @@ dubbo:
 website:
   support:
     # 静态资源服务
-    static-resources: http://localhost:8080
+    static-resources: http://www.zzl.com/static-global
     # 首页路径
     welcome-file: /index
   session:
@@ -82,11 +82,21 @@ website:
     # session过滤排除路径
     exclude-path: /index, /login
   security:
+#    cors:
+#      enabled: true
+#      cross-domain:
+#        - url: http://www.zzl.com
+#          access-control-allow-methods: GET
     csrf:
-      enabled: false
       # csrf拦截排除路径
 #     intercept-exclude-path: /**
       # csrf验证排除路径
-#      verify-exclude-path: /**
+      verify-exclude-path: /index
     ddos:
-      enabled: false
+      enabled: true
+      time-span: 60
+      limit: 10
+      whitelist:
+        ip: 127.0.0.1
+        time-span: 60
+        limit: 10

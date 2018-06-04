@@ -1,5 +1,7 @@
 package com.sfsctech.core.cache.factory;
 
+import org.springframework.data.redis.core.RedisTemplate;
+
 /**
  * Class CacheProxy
  *
@@ -103,4 +105,6 @@ public interface CacheProxy<K, V> {
      * @return boolean
      */
     boolean flushAll();
+
+    RedisTemplate<String, ?> getRedisTemplate();
 }

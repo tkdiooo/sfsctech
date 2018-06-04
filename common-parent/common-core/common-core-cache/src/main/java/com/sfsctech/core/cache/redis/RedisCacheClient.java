@@ -139,4 +139,9 @@ public class RedisCacheClient implements RedisProxy<String, Object> {
     public boolean flushAll() {
         return false;
     }
+
+    @Override
+    public RedisTemplate<String, ?> getRedisTemplate() {
+        return this.redisTemplate;
+    }
 }

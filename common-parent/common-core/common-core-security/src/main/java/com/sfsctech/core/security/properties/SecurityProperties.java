@@ -1,11 +1,11 @@
 package com.sfsctech.core.security.properties;
 
 import com.sfsctech.core.security.domain.Access;
+import com.sfsctech.core.security.domain.Whitelist;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,7 +27,7 @@ public class SecurityProperties {
 
     private DDOS ddos;
     private CSRF csrf;
-    private List<Access> crossDomain;
+    private CORS cors;
 
     public SecurityProperties() {
     }
@@ -36,7 +36,7 @@ public class SecurityProperties {
         return csrf;
     }
 
-    public void setCsrf(CSRF csrf) {
+    public void setCSRF(CSRF csrf) {
         this.csrf = csrf;
     }
 
@@ -44,16 +44,16 @@ public class SecurityProperties {
         return ddos;
     }
 
-    public void setDdos(DDOS ddos) {
+    public void setDDOS(DDOS ddos) {
         this.ddos = ddos;
     }
 
-    public List<Access> getCrossDomain() {
-        return crossDomain;
+    public CORS getCORS() {
+        return cors;
     }
 
-    public void setCrossDomain(List<Access> crossDomain) {
-        this.crossDomain = crossDomain;
+    public void setCORS(CORS cors) {
+        this.cors = cors;
     }
 
     public static class CSRF {
@@ -109,13 +109,9 @@ public class SecurityProperties {
     }
 
     public static class DDOS {
-
         private boolean enabled = false;
-
-        private Set<String> whitelist;
-
+        private List<Whitelist> whitelist;
         private int timeSpan;
-
         private int limit;
 
         public DDOS() {
@@ -130,11 +126,11 @@ public class SecurityProperties {
             this.enabled = enabled;
         }
 
-        public Set<String> getWhitelist() {
+        public List<Whitelist> getWhitelist() {
             return whitelist;
         }
 
-        public void setWhitelist(Set<String> whitelist) {
+        public void setWhitelist(List<Whitelist> whitelist) {
             this.whitelist = whitelist;
         }
 
@@ -152,6 +148,31 @@ public class SecurityProperties {
 
         public void setLimit(int limit) {
             this.limit = limit;
+        }
+    }
+
+    public static class CORS {
+        private boolean enabled = false;
+        private List<Access> crossDomain;
+
+        public CORS() {
+
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public List<Access> getCrossDomain() {
+            return crossDomain;
+        }
+
+        public void setCrossDomain(List<Access> crossDomain) {
+            this.crossDomain = crossDomain;
         }
     }
 }

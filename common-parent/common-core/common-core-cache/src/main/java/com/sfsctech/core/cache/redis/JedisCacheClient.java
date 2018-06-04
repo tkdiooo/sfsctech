@@ -1,5 +1,6 @@
 package com.sfsctech.core.cache.redis;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisCluster;
@@ -102,5 +103,10 @@ public class JedisCacheClient implements RedisProxy<String, Object> {
     @Deprecated
     public boolean flushAll() {
         return false;
+    }
+
+    @Override
+    public RedisTemplate<String, ?> getRedisTemplate() {
+        return null;
     }
 }

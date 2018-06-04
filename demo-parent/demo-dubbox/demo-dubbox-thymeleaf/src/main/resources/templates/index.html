@@ -8,15 +8,8 @@
 		<meta name="author" content="IKKI">
 		<meta name="copyright" content="外服信">
 		<title>OA办公平台</title>
-		<link rel="stylesheet" th:href="@{/static/css/base.css}">
-		<link rel="stylesheet" th:href="@{/static/css/font-awesome.css}">
-		<link rel="stylesheet" th:href="@{/static/css/animate.css}">
-		<link rel="stylesheet" th:href="@{/static/css/login.css}">
-		<!--[if lt IE 9]>
-		<script type="text/javascript" src="_js/html5.js"></script>
-		<![endif]-->
 		<script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
-		<script th:src="${application.static_resource} + '/static/plugins/layer/layer.js'"></script>
+		<script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>
 		<script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>
 		<script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
 		<script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
@@ -36,9 +29,14 @@
 				<p><button type="button" onclick="login()">登 录</button></p>
 			</form>
 		</section>
+		<img th:src="${application.static_resource} + '/static/sso/images/loader.gif'">
+		<div id="abc"></div>
 		<footer>Powered by 外服信 &copy; 2017</footer>
 		<script th:inline="javascript">
 			$(function(){
+                // initSize();
+                // alert(win.width);
+                // load_url('http://www.zzl.com/static-global/index',$('#abc'));
 				// 回车登录
 			    $("body").keyup(function (event) {
 			        if (event.keyCode === 13) {
@@ -49,7 +47,7 @@
 			// 登录提交
 			function login(){
                 var formParams = $("#contact-form").serializeJson();
-                ajax_action(/*[[@{/login}]]*/ "", formParams);
+                ajax_action('http://www.zzl.com/static-global/index', formParams);
 			}
 			
 		</script>

@@ -3,14 +3,15 @@ package com.sfsctech.core.security.config;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
-import com.sfsctech.core.security.filter.AccessFilter;
 import com.sfsctech.core.security.filter.DDOCFilter;
+import com.sfsctech.core.security.filter.CORSFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
-import com.sfsctech.core.security.interceptor.CsrfSecurityInterceptor;
-import com.sfsctech.core.security.properties.SecurityProperties;
+import com.sfsctech.core.security.interceptor.AccessSecurityInterceptor;
 import com.sfsctech.core.security.properties.StartProperties;
 import com.sfsctech.core.security.resolver.RequestAttributeResolver;
 import com.sfsctech.support.common.util.MapUtil;
@@ -39,6 +40,9 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private StartProperties properties;
 
+    @Autowired
+    private CacheFactory<RedisProxy<String, Object>> factory;
+
     /**
      * 自定义参数解析器
      *
@@ -51,25 +55,19 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 添加拦截器
+     * 访问安全拦截器
      *
      * @param registry InterceptorRegistry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        SecurityProperties.CSRF csrf = properties.getProperties().getCSRF();
-        if (null != csrf && csrf.isEnabled()) {
-            CsrfSecurityInterceptor securityInterceptor = new CsrfSecurityInterceptor();
-            // 验证排除
-            securityInterceptor.setVerifyExcludePath(csrf.getVerifyExcludePath());
-            // 强制验证路径
-            securityInterceptor.setRequiredVerifyPath(csrf.getRequiredVerifyPath());
-            // 多个拦截器组成一个拦截器链
-            // addPathPatterns 用于添加拦截规则
-            // excludePathPatterns 用户拦截排除
-            registry.addInterceptor(securityInterceptor).addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR).excludePathPatterns(FilterHandler.getCSRFExcludes());
-            super.addInterceptors(registry);
-        }
+        // 多个拦截器组成一个拦截器链
+        // addPathPatterns 用于添加拦截规则
+        // excludePathPatterns 用户拦截排除
+        registry.addInterceptor(new AccessSecurityInterceptor(properties.getProperties().getCSRF()))
+                .addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR)
+                .excludePathPatterns(FilterHandler.getCSRFExcludes());
+        super.addInterceptors(registry);
     }
 
     /**
@@ -94,15 +92,18 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 访问安全过滤
+     * 跨域访问过滤
      */
     @Bean
-    public FilterRegistrationBean AccessFilter() {
-        AccessFilter filter = new AccessFilter(MapUtil.toMap(properties.getProperties().getCrossDomain(), "url"));
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+    @ConditionalOnProperty(name = "website.security.cors.enabled", havingValue = "true")
+    public FilterRegistrationBean CORSFilter() {
+        if (properties.getProperties().getCORS().getCrossDomain() == null) {
+            throw new RuntimeException("website.security.cors 跨域请求已经激活，跨域访问路径不能为空，请设置website.security.cors.cross-domain");
+        }
+        FilterRegistrationBean registration = new FilterRegistrationBean(new CORSFilter(MapUtil.toMap(properties.getProperties().getCORS().getCrossDomain(), "url")));
+        registration.setName("CORSFilter");
+        registration.setOrder(CORSFilter.FILTER_ORDER);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("RequestFilter");
-        registration.setOrder(AccessFilter.FILTER_ORDER);
         return registration;
     }
 
@@ -112,7 +113,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @Bean
     @ConditionalOnProperty(name = "website.security.ddos.enabled", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
-        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS());
+        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS(), factory.getCacheClient().getRedisTemplate());
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");

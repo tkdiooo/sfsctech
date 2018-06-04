@@ -7,48 +7,24 @@
     },
     {
       "name": "website.security.csrf",
-      "type": "com.sfsctech.core.security.properties.SecurityProperties$Csrf",
+      "type": "com.sfsctech.core.security.properties.SecurityProperties$CSRF",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
-      "sourceMethod": "getCsrf()"
+      "sourceMethod": "getCSRF()"
     },
     {
       "name": "website.security.ddos",
-      "type": "com.sfsctech.core.security.properties.SecurityProperties$Ddos",
+      "type": "com.sfsctech.core.security.properties.SecurityProperties$DDOS",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
-      "sourceMethod": "getDdos()"
+      "sourceMethod": "getDDOS()"
+    },
+    {
+      "name": "website.security.cors",
+      "type": "com.sfsctech.core.security.properties.SecurityProperties$CORS",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
+      "sourceMethod": "getCORS()"
     }
   ],
   "properties": [
-    {
-      "name": "website.security.cross-domain",
-      "type": "java.util.List<com.sfsctech.core.security.domain.Access>",
-      "description": "跨域访问配置",
-      "sourceType": "java.util.List<com.sfsctech.core.security.domain.Access>"
-    },
-    {
-      "name": "website.security.cross-domain.url",
-      "type": "java.lang.String",
-      "description": "跨域路径",
-      "sourceType": "com.sfsctech.core.security.domain.Access"
-    },
-    {
-      "name": "website.security.cross-domain.access-control-allow-methods",
-      "type": "java.lang.String",
-      "description": "跨域请求http方法",
-      "sourceType": "com.sfsctech.core.security.domain.Access"
-    },
-    {
-      "name": "website.security.cross-domain.access-control-allow-headers",
-      "type": "java.lang.String",
-      "description": "跨域请求http表头",
-      "sourceType": "com.sfsctech.core.security.domain.Access"
-    },
-    {
-      "name": "website.security.cross-domain.access-control-allow-credentials",
-      "type": "java.lang.Boolean",
-      "description": "跨域请求是否支持cookie",
-      "sourceType": "com.sfsctech.core.security.domain.Access"
-    },
     {
       "name": "website.security.csrf.enabled",
       "type": "java.lang.Boolean",
@@ -86,10 +62,75 @@
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$DDOS"
     },
     {
-      "name": "website.security.ddos.whitelist",
-      "type": "java.util.Set<java.lang.String>",
-      "description": "白名单",
+      "name": "website.security.ddos.time-span",
+      "type": "java.lang.Integer",
+      "description": "请求时间跨度",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$DDOS"
+    },
+    {
+      "name": "website.security.ddos.limit",
+      "type": "java.lang.Integer",
+      "description": "请求次数限制",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$DDOS"
+    },
+    {
+      "name": "website.security.ddos.whitelist",
+      "type": "java.util.List<com.sfsctech.core.security.domain.Whitelist>",
+      "description": "白名单",
+      "sourceType": "java.util.List<com.sfsctech.core.security.domain.Whitelist>"
+    },{
+      "name": "website.security.ddos.whitelist.ip",
+      "type": "java.lang.String",
+      "description": "白名单IP",
+      "sourceType": "com.sfsctech.core.security.domain.Whitelist"
+    },
+    {
+      "name": "website.security.ddos.whitelist.time-span",
+      "type": "java.lang.Integer",
+      "description": "白名单请求时间跨度",
+      "sourceType": "com.sfsctech.core.security.domain.Whitelist"
+    },
+    {
+      "name": "website.security.ddos.whitelist.limit",
+      "type": "java.lang.Integer",
+      "description": "白名单请求次数限制",
+      "sourceType": "com.sfsctech.core.security.domain.Whitelist"
+    },
+    {
+      "name": "website.security.cors.enabled",
+      "type": "java.lang.Boolean",
+      "description": "csrf防御启动",
+      "sourceType": "com.sfsctech.core.security.properties.SecurityProperties$CORS"
+    },
+    {
+      "name": "website.security.cors.cross-domain",
+      "type": "java.util.List<com.sfsctech.core.security.domain.Access>",
+      "description": "跨域访问配置",
+      "sourceType": "java.util.List<com.sfsctech.core.security.domain.Access>"
+    },
+    {
+      "name": "website.security.cors.cross-domain.url",
+      "type": "java.lang.String",
+      "description": "跨域路径",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cors.cross-domain.access-control-allow-methods",
+      "type": "java.lang.String",
+      "description": "跨域请求http方法",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cors.cross-domain.access-control-allow-headers",
+      "type": "java.lang.String",
+      "description": "跨域请求http表头",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
+    },
+    {
+      "name": "website.security.cors.cross-domain.access-control-allow-credentials",
+      "type": "java.lang.Boolean",
+      "description": "跨域请求是否支持cookie",
+      "sourceType": "com.sfsctech.core.security.domain.Access"
     }
   ],
   "hints": [

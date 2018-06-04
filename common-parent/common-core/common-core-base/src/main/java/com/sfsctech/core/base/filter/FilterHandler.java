@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class FilterHandler {
 
-    private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2)$");
+    private static final Pattern pattern = Pattern.compile("^.*?\\.(js|bmp|css|jpg|gif|png|eot|svg|ttf|woff|ico|woff2|map)$");
     private static final ThreadLocal<Map<String, Boolean>> STATIC_RESOURCE = new ThreadLocal<>();
     private static final ThreadLocal<Map<String, Boolean>> REQUEST_MAPPING = new ThreadLocal<>();
     public static final String ERROR_PATH = "/error";
