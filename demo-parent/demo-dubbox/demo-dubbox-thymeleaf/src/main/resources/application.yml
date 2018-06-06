@@ -95,8 +95,8 @@ website:
     ddos:
       enabled: true
       time-span: 60
-      limit: 10
+      limit: 1
       whitelist:
-        ip: 127.0.0.1
-        time-span: 60
-        limit: 10
+        - ip: 127.0.0.1
+          time-span: -1
+          limit: 10

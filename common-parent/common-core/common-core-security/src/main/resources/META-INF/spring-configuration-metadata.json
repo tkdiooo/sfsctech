@@ -87,7 +87,7 @@
     {
       "name": "website.security.ddos.whitelist.time-span",
       "type": "java.lang.Integer",
-      "description": "白名单请求时间跨度",
+      "description": "白名单请求时间跨度(秒)[0：不限制、-1：禁用]",
       "sourceType": "com.sfsctech.core.security.domain.Whitelist"
     },
     {

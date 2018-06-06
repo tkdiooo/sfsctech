@@ -48,24 +48,32 @@ public class DDOCFilter extends BaseFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String url = request.getRequestURI();
-        System.out.println(url);
         String ip = HttpUtil.getRequestIP(request);
-        String key = "req_limit_".concat(url).concat(LabelConstants.UNDERLINE).concat(ip);
-        long count = redisTemplate.opsForValue().increment(key, 1);
         int time = ddos.getTimeSpan();
         int limit = ddos.getLimit();
         // 白名单请求
         if (null != this.whitelist && whitelist.containsKey(ip)) {
             time = whitelist.get(ip).getTimeSpan();
+            if (time == 0) {
+                chain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            if (time == -1) {
+                logger.warn("用户IP[" + ip + "]已被拉入黑名单，禁止访问地址[" + url + "]");
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
+                return;
+            }
             limit = whitelist.get(ip).getLimit();
         }
+        String key = "req_limit_".concat(url).concat(LabelConstants.UNDERLINE).concat(ip);
+        long count = redisTemplate.opsForValue().increment(key, 1);
         if (count > limit) {
             logger.warn("用户IP[" + ip + "]访问地址[" + url + "]，在[" + time + "]秒内，超过了限定的次数[" + limit + "]");
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
             return;
         }
         if (count == 1) {
-            redisTemplate.expire(key, time, TimeUnit.MILLISECONDS);
+            redisTemplate.expire(key, time, TimeUnit.SECONDS);
         }
         chain.doFilter(servletRequest, servletResponse);
     }
