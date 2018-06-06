@@ -3,6 +3,7 @@ package com.sfsctech.demo.cloud.client.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
 import com.sfsctech.demo.cloud.inf.service.ClientService;
@@ -23,11 +24,11 @@ public class ClientServiceImpl implements ClientService {
     private final Logger loggers = LoggerFactory.getLogger(ClientServiceImpl.class);
 
     @Override
-    public ActionResult<CheckBindingRes> checkBinding(@RequestBody CheckBindingReq checkBindingReq) {
+    public RpcResult<CheckBindingRes> checkBinding(@RequestBody CheckBindingReq checkBindingReq) {
         CheckBindingRes res = new CheckBindingRes();
         res.setGroupId(checkBindingReq.getBuCode() + ":ClientService");
         res.setReq(new CheckBindingReq());
-        ActionResult<CheckBindingRes> result = ActionResult.forSuccess(res);
+        RpcResult<CheckBindingRes> result = new RpcResult<>();
         result.setStatus(RpcConstants.Status.Failure);
         loggers.info(JSON.toJSONString(result));
         return result;

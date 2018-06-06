@@ -9,27 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-cloud-net</artifactId>
+    <artifactId>common-cloud-rpc</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-rest</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-logger</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-rpc</artifactId>
+            <artifactId>common-core-rpc</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
@@ -45,5 +31,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 
 </project>

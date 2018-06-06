@@ -2,6 +2,7 @@ package com.sfsctech.demo.cloud.feign.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 import com.sfsctech.demo.cloud.feign.service.IndexService;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
@@ -37,7 +38,7 @@ public class IndexController {
         loggers.info(JSON.toJSONString(cbReq));
         loggers.warn(JSON.toJSONString(cbReq));
         loggers.error(JSON.toJSONString(cbReq));
-        ActionResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
+        RpcResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
         loggers.info(JSON.toJSONString(result));
         return result.getResult().getGroupId();
     }

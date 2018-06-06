@@ -15,7 +15,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableCloudServiceClient(basePackages = {"com.sfsctech.demo.cloud.inf.service"})
+@EnableCloudServiceClient(basePackages = {"com.sfsctech.demo.*.inf.service"})
 public class CloudFeignStarter {
 
     public static void main(String[] args) {

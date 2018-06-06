@@ -1,4 +1,4 @@
-package com.sfsctech.demo.cloud.inf.service;
+package com.sfsctech.demo.test.inf.service;
 
 import com.sfsctech.cloud.client.annotation.CloudService;
 import com.sfsctech.core.rpc.result.RpcResult;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @version Description:
  */
 @RestController
-@RequestMapping("/binding")
+@RequestMapping("/test")
 @CloudService("cloud-client")
-public interface ClientService {
+public interface TestService {
 
     /**
      * 通过buCode和buMemberId检查是否绑定

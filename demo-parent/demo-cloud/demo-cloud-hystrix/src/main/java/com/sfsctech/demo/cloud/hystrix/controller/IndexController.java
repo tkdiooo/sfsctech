@@ -1,6 +1,6 @@
 package com.sfsctech.demo.cloud.hystrix.controller;
 
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 import com.sfsctech.demo.cloud.hystrix.service.IndexService;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;
@@ -29,7 +29,7 @@ public class IndexController {
     public String index(@RequestParam String name) {
         CheckBindingReq cbReq = new CheckBindingReq();
         cbReq.setBuCode(name);
-        ActionResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
+        RpcResult<CheckBindingRes> result = clientService.checkBinding(cbReq);
         return result.getResult().getGroupId();
     }
 }

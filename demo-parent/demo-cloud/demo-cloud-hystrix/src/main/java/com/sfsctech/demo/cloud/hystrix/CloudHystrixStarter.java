@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableHystrixDashboard
-@EnableCloudServiceClient(basePackages = {"com.sfsctech.demo.cloud.inf.service"})
+@EnableCloudServiceClient(basePackages = {"com.sfsctech.demo.*.inf.service"})
 public class CloudHystrixStarter {
 
     @Bean

@@ -7,3 +7,18 @@ server:
 spring:
   application:
     name: cloud-hystrix
+hystrix:
+  #hystrix任务执行超时时间
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 500
+        errorThresholdPercentage: 5
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000000
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 1000

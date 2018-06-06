@@ -1,0 +1,74 @@
+{
+  "groups": [
+    {
+      "name": "hystrix.command.default"
+    }
+  ],
+  "properties": [
+    {
+      "name": "hystrix.command.default.execution.isolation.strategy",
+      "type": "com.netflix.hystrix.HystrixCommandProperties.ExecutionIsolationStrategy",
+      "description": "设置HystrixCommand.run()的隔离策略（默认值：THREAD）"
+    },
+    {
+      "name": "hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "设置调用者等待命令执行的超时限制（默认1000ms，单位：ms）"
+    },
+    {
+      "name": "hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests",
+      "type": "java.lang.Integer",
+      "description": "设置当使用ExecutionIsolationStrategy.SEMAPHORE时，HystrixCommand.run()方法允许的最大请求数。如果达到最大并发数时，后续请求会被拒绝。信号量应该是容器（比如Tomcat）线程池一小部分，不能等于或者略小于容器线程池大小，否则起不到保护作用。"
+    },
+    {
+      "name": "hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests",
+      "type": "java.lang.Integer",
+      "description": "设置调用线程产生的HystrixCommand.getFallback()方法的允许最大请求数目，如果达到最大并发数目，后续请求将会被拒绝，如果没有实现回退，则抛出异常。"
+    },
+    {
+      "name": "hystrix.command.default.circuitBreaker.requestVolumeThreshold",
+      "type": "java.lang.Integer",
+      "description": "当在配置时间窗口内达到此数量的失败后，进行短路。默认20个"
+    },
+    {
+      "name": "hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds",
+      "type": "java.lang.Integer",
+      "description": "短路多久以后开始尝试是否恢复（默认5000ms，单位：ms）"
+    },
+    {
+      "name": "hystrix.command.default.circuitBreaker.errorThresholdPercentage",
+      "type": "java.lang.Integer",
+      "description": "出错百分比阈值，当达到此阈值后，开始短路。默认50"
+    },
+    {
+      "name": "hystrix.threadpool.default.coreSize",
+      "type": "java.lang.Integer",
+      "description": "设置核心线程池大小"
+    },
+    {
+      "name": "hystrix.threadpool.default.maxQueueSize",
+      "type": "java.lang.Integer",
+      "description": "设置BlockingQueue最大的队列值。如果设置为-1，那么使用SynchronousQueue，否则正数将会使用LinkedBlockingQueue。"
+    },
+    {
+      "name": "hystrix.threadpool.default.queueSizeRejectionThreshold",
+      "type": "java.lang.Integer",
+      "description": "设置队列拒绝的阈值，人为设置的拒绝访问的最大队列值，即使maxQueueSize还没有达到。"
+    }
+  ],
+  "hints": [
+    {
+      "name": "hystrix.command.default.execution.isolation.strategy",
+      "values": [
+        {
+          "value": "THREAD",
+          "description": "线程池"
+        },
+        {
+          "value": "SEMAPHORE",
+          "description": "信号量"
+        }
+      ]
+    }
+  ]
+}
