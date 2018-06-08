@@ -9,18 +9,16 @@ package com.sfsctech.dubbo.starter.annotation;
 
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.logger.config.LogbackConfig;
-import com.sfsctech.data.mybatis.config.MyBatisConfig;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({MyBatisConfig.class, CacheConfig.class, DubboxConfig.class, LogbackConfig.class})
+@Import({CacheConfig.class, DubboxConfig.class, LogbackConfig.class})
 @SpringBootApplication
 public @interface EnableDubboProviderService {
 
