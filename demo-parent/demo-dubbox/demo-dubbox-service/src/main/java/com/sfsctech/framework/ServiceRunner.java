@@ -1,7 +1,7 @@
 package com.sfsctech.framework;
 
 import com.sfsctech.core.auth.sso.config.SSOConfig;
-import com.sfsctech.dubbo.starter.annotation.EnableDubboProviderService;
+import com.sfsctech.starter.annotation.EnableDubboProviderService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Import;
 

@@ -17,6 +17,7 @@
     <modules>
         <module>support-config-service</module>
         <module>support-static-resources</module>
+        <module>support-turbine-service</module>
     </modules>
 
     <properties>

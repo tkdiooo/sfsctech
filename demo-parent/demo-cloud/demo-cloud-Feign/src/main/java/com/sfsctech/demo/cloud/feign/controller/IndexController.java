@@ -1,8 +1,7 @@
 package com.sfsctech.demo.cloud.feign.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.sfsctech.core.rpc.result.ActionResult;
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.demo.cloud.feign.service.IndexService;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;

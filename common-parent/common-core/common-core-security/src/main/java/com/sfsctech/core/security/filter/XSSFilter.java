@@ -1,7 +1,6 @@
 package com.sfsctech.core.security.filter;
 
 import com.sfsctech.core.base.filter.BaseFilter;
-import com.sfsctech.core.rpc.util.RpcUtil;
 import com.sfsctech.core.security.xss.XSSHttpServletRequestWrapper;
 
 import javax.servlet.FilterChain;
@@ -23,8 +22,7 @@ public class XSSFilter extends BaseFilter {
 
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        RpcUtil.setRequest(new XSSHttpServletRequestWrapper((HttpServletRequest) request));
-        chain.doFilter(RpcUtil.getRequest(), response);
+        chain.doFilter(new XSSHttpServletRequestWrapper((HttpServletRequest) request), response);
     }
 
 }

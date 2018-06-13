@@ -9,7 +9,7 @@ import com.sfsctech.cloud.net.domain.ServiceInterface;
 import com.sfsctech.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.cloud.net.ex.HttpExecuteErrorException;
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.support.common.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;

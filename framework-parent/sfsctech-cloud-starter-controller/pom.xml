@@ -10,6 +10,33 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sfsctech-cloud-starter-controller</artifactId>
+    <packaging>jar</packaging>
 
+    <properties>
+        <sfsctech.common.version>2.0.0-SNAPSHOT</sfsctech.common.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-web</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-logger</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cloud-net</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

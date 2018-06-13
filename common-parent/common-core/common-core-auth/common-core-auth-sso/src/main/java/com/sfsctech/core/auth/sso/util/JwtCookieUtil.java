@@ -2,7 +2,7 @@ package com.sfsctech.core.auth.sso.util;
 
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.web.cookie.CookieHelper;
+import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.util.StringUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;

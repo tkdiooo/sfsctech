@@ -3,8 +3,9 @@ package com.sfsctech.framework.rpc.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageInfo;
 import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.cache.factory.CacheFactory;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.dto.SysAccountDto;
@@ -41,33 +42,35 @@ public class SysAccountServiceProvider implements SysAccountService {
     private CacheFactory factory;
 
     @Override
-    public ActionResult<SysAccountDto> save(SysAccountDto model) {
+    public RpcResult<SysAccountDto> save(SysAccountDto model) {
         System.out.println("哦啊");
         System.out.println(readService.find());
 //        model.setEnabled(0);
 //        model.setLocked(0);
 //        model.setStatus(StatusConstants.Status.VALID.getKey());
 //        writeService.save(model);
-        return ActionResult.forSuccess(model);
-    }
-
-    @Override
-    public ActionResult<SysAccountDto> find() {
+//        return ActionResult.forSuccess(model);
         return null;
     }
 
     @Override
-    public ActionResult<SysAccountDto> findByAccount(String account) {
+    public RpcResult<SysAccountDto> find() {
         return null;
     }
 
     @Override
-    public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
+    public RpcResult<SysAccountDto> findByAccount(String account) {
+        return null;
+    }
+
+    @Override
+    public RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
         System.out.println(factory.getCacheClient().get("test_key"));
         logger.info("日志消息");
         PageInfo<TSysAccount> page = readService.findByPage(pagingInfo);
         pagingInfo.setRecordsTotal(page.getTotal());
         page.getList().forEach(account -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(SysAccountDto.class, account)));
-        return ActionResult.forSuccess(pagingInfo);
+//        return ActionResult.forSuccess(pagingInfo);
+        return null;
     }
 }

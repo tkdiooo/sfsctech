@@ -1,6 +1,6 @@
 package com.sfsctech.demo.cloud.hystrix.controller;
 
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.demo.cloud.hystrix.service.IndexService;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;

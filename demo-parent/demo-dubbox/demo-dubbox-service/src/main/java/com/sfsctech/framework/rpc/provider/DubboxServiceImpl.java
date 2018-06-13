@@ -1,9 +1,9 @@
 package com.sfsctech.framework.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.inf.DubboxService;
-import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.service.read.AccountReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,13 +20,13 @@ public class DubboxServiceImpl implements DubboxService {
     private AccountReadService readService;
 
     @Override
-    public ActionResult DubboxTestMethod(String... params) {
+    public RpcResult DubboxTestMethod(String... params) {
         readService.find();
         System.out.println("请求的参数长度" + params.length);
         for (String param : params) {
             System.out.println(param);
         }
-        return ActionResult.forSuccess();
+        return new RpcResult();
     }
 
 }

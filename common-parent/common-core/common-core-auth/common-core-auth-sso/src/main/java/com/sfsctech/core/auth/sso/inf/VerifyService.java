@@ -2,7 +2,7 @@ package com.sfsctech.core.auth.sso.inf;
 
 
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 
 /**
  * Class VerifyService

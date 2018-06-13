@@ -13,6 +13,25 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- 负载均衡 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-ribbon</artifactId>
+        </dependency>
+        <!-- 熔断 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+        <!-- 熔断仪表盘 -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-commons</artifactId>
@@ -29,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-rpc</artifactId>
+            <artifactId>common-cloud-client</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

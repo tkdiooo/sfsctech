@@ -1,9 +1,9 @@
 package com.sfsctech.cloud.sso.inf;
 
 
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
-import com.sfsctech.core.rpc.result.ActionResult;
 
 /**
  * Class LoginService
@@ -19,7 +19,7 @@ public interface LoginService {
      * @param authData UserAuthData
      * @return ActionResult&lt;JwtToken&gt;
      */
-    ActionResult<JwtToken> login(UserAuthData authData);
+    RpcResult<JwtToken> login(UserAuthData authData);
 
     /**
      * 登出服务

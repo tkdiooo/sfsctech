@@ -14,7 +14,7 @@
     <modules>
         <module>common-cloud-net</module>
         <module>common-cloud-sso</module>
-        <module>common-cloud-rpc</module>
+        <module>common-cloud-client</module>
     </modules>
 
 

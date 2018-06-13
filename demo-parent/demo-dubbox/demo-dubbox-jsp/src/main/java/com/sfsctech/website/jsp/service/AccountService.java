@@ -1,9 +1,11 @@
 package com.sfsctech.website.jsp.service;
 
 //import com.alibaba.dubbo.config.annotation.Reference;
+
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.model.PagingInfo;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.support.common.util.RandomUtil;
@@ -41,10 +43,12 @@ public class AccountService {
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
         model.setCreatetime(new Date());
         model.setCreator(1L);
-        return accountService.save(model);
+        RpcResult<SysAccountDto> result = accountService.save(model);
+        return ActionResult.forSuccess(result.getResult());
     }
 
     public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {
-        return accountService.findByPage(pagingInfo);
+        RpcResult<PagingInfo<SysAccountDto>> result = accountService.findByPage(pagingInfo);
+        return ActionResult.forSuccess(result.getResult());
     }
 }

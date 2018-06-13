@@ -2,10 +2,12 @@ package com.sfsctech.dubbo.base.serialize;
 
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
-import com.sfsctech.core.exception.ex.*;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.exception.ex.BizException;
+import com.sfsctech.core.exception.ex.RpcException;
+import com.sfsctech.core.exception.ex.VerifyException;
 import com.sfsctech.dubbo.base.constants.DubboConstants;
 import com.sfsctech.support.common.util.ClassUtil;
 
@@ -32,7 +34,7 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         classes.add(RpcConstants.class);
         classes.add(RpcConstants.Status.class);
         classes.add(UserAuthData.class);
-        classes.add(ActionResult.class);
+        classes.add(RpcResult.class);
         classes.add(JwtToken.class);
         classes.addAll(ClassUtil.getClassesByEndsWith(DubboConstants.KRYO_SERIALIZE_PATH, "dto"));
     }

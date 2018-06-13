@@ -3,7 +3,7 @@ package com.sfsctech.framework.rpc.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sfsctech.core.auth.sso.inf.VerifyService;
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 
 /**
  * Class VerifyServiceImpl

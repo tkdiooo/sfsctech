@@ -1,7 +1,7 @@
 package com.sfsctech.website.thymeleaf.controller;
 
 import com.sfsctech.core.cache.factory.CacheFactory;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.core.security.annotation.Verify;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.thymeleaf.model.UserInfo;

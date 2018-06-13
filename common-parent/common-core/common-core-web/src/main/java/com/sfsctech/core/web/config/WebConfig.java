@@ -4,7 +4,8 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.spring.config.SpringConfig;
-import com.sfsctech.core.web.cookie.Config;
+import com.sfsctech.core.web.filter.ActionFilter;
+import com.sfsctech.core.web.tools.cookie.Config;
 import com.sfsctech.core.web.initialize.PropertiesInitialize;
 import com.sfsctech.core.web.initialize.WebResourceInitialize;
 import com.sfsctech.core.web.properties.WebsiteProperties;
@@ -18,6 +19,7 @@ import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -149,5 +151,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @ConfigurationProperties(prefix = "server.session.cookie")
     public Config cookieConfig() {
         return new Config();
+    }
+
+    @Bean
+    public FilterRegistrationBean XSSFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean(new ActionFilter());
+        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+        registration.setName("ActionFilter");
+        registration.setOrder(ActionFilter.FILTER_ORDER);
+        return registration;
     }
 }

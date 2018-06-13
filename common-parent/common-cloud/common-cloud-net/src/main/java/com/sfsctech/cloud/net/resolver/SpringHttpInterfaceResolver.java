@@ -7,7 +7,7 @@ import com.sfsctech.cloud.net.ex.AppNameNotExistsException;
 import com.sfsctech.cloud.net.ex.InterfaceMethodException;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

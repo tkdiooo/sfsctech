@@ -6,7 +6,7 @@ import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.properties.StartProperties;
 import com.sfsctech.core.spring.util.SpringContextUtil;
-import com.sfsctech.core.web.cookie.CookieHelper;
+import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.StringUtil;
 import com.sfsctech.support.common.util.UUIDUtil;

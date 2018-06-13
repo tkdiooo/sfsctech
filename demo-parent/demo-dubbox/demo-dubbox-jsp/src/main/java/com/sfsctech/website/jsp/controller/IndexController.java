@@ -1,7 +1,7 @@
 package com.sfsctech.website.jsp.controller;
 
 import com.sfsctech.core.base.domain.model.PagingInfo;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 import com.sfsctech.website.jsp.service.AccountService;
 import org.slf4j.Logger;

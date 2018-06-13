@@ -1,7 +1,7 @@
 package com.sfsctech.framework.inf;
 
 import com.sfsctech.core.base.domain.model.PagingInfo;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.framework.model.dto.SysAccountDto;
 
 /**
@@ -12,11 +12,11 @@ import com.sfsctech.framework.model.dto.SysAccountDto;
  */
 public interface SysAccountService {
 
-    ActionResult<SysAccountDto> save(SysAccountDto model);
+    RpcResult<SysAccountDto> save(SysAccountDto model);
 
-    ActionResult<SysAccountDto> find();
+    RpcResult<SysAccountDto> find();
 
-    ActionResult<SysAccountDto> findByAccount(String account);
+    RpcResult<SysAccountDto> findByAccount(String account);
 
-    ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo);
+    RpcResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo);
 }
