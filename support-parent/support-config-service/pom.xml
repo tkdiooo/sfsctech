@@ -44,7 +44,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.sfsctech.config.ConfigService</mainClass>
+                    <mainClass>com.sfsctech.config.ConfigStarter</mainClass>
                 </configuration>
                 <executions>
                     <execution>

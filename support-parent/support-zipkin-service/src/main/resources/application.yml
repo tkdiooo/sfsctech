@@ -1,0 +1,25 @@
+server:
+  port: 10004
+spring:
+  application:
+    name: zipkin-server
+  sleuth:
+    enabled: false
+    sampler:
+      percentage: 1.0
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 10.20.1.11:9092,10.20.1.12:9092  #ip地址根据实际kafka集群地址
+          zkNodes: 10.20.1.11:2181,10.20.1.12:2181
+#ES配置
+zipkin:
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      hosts: 10.20.1.11:9200,10.20.1.12:9200
+      cluster: elasticsearch
+      index: zipkin
+      index-shards: 1
+      index-replicas: 1

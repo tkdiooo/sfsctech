@@ -1,7 +1,7 @@
 package com.sfsctech.dubbo.sso.util;
 
 import com.alibaba.dubbo.config.ReferenceConfig;
-import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.dubbo.sso.inf.VerifyService;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

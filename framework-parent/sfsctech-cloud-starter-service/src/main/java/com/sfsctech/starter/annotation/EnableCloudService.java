@@ -25,7 +25,6 @@ import java.lang.annotation.*;
 @Import({SpringConfig.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableZipkinServer
 public @interface EnableCloudService {
 
 }

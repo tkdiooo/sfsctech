@@ -148,7 +148,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.sfsctech.resources.StaticResources</mainClass>
+                    <mainClass>com.sfsctech.resources.StaticResourcesStarter</mainClass>
                 </configuration>
                 <executions>
                     <execution>

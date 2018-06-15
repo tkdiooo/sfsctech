@@ -13,13 +13,16 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- common-rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-rpc</artifactId>
+            <artifactId>common-cloud-client</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
-
 
 </project>

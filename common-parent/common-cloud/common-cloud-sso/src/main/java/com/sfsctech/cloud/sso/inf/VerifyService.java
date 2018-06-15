@@ -1,8 +1,12 @@
 package com.sfsctech.cloud.sso.inf;
 
 
+import com.sfsctech.cloud.client.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Class VerifyService
@@ -10,6 +14,8 @@ import com.sfsctech.core.base.jwt.JwtToken;
  * @author 张麒 2017/10/13.
  * @version Description:
  */
+@RestController
+@CloudService("sso-server")
 public interface VerifyService {
 
     /**
@@ -18,7 +24,8 @@ public interface VerifyService {
      * @param jt JwtToken
      * @return ActionResult&lt;JwtToken&gt;
      */
-    RpcResult<JwtToken> simpleVerify(JwtToken jt);
+    @RequestMapping("simpleVerify")
+    RpcResult<JwtToken> simpleVerify(@RequestBody JwtToken jt);
 
     /**
      * 复杂Session检验：校验token包含的数据，以及更新数据版本
@@ -26,6 +33,7 @@ public interface VerifyService {
      * @param jt JwtToken
      * @return ActionResult&lt;JwtToken&gt;
      */
-    RpcResult<JwtToken> complexVerify(JwtToken jt);
+    @RequestMapping("complexVerify")
+    RpcResult<JwtToken> complexVerify(@RequestBody JwtToken jt);
 
 }

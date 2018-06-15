@@ -6,14 +6,14 @@ import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.base.filter.BaseFilter;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.exception.ex.BizException;
-import com.sfsctech.core.web.domain.result.ActionResult;
-import com.sfsctech.core.web.tools.cookie.CookieHelper;
-import com.sfsctech.core.base.filter.BaseFilter;
 import com.sfsctech.core.base.session.SessionHolder;
 import com.sfsctech.core.base.session.SessionInfo;
+import com.sfsctech.core.exception.ex.BizException;
+import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.dubbo.sso.util.SingletonUtil;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.*;
@@ -57,7 +57,7 @@ public class SSOFilter extends BaseFilter {
                     Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
                     if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
                     // Jwt 认证校验
-                    ActionResult<JwtToken> result;
+                    RpcResult<JwtToken> result;
                     if (ssoProperties.getAuth().getWay().equals(SSOProperties.AuthWay.Complex)) {
                         result = SingletonUtil.getVerifyService().complexVerify(jt);
                     } else {

@@ -1,8 +1,8 @@
-package com.sfsctech.turbine;
+package com.sfsctech.config;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.netflix.turbine.EnableTurbine;
+import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * Class ConfigService
@@ -10,12 +10,12 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
  * @author 张麒 2017/5/17.
  * @version Description:
  */
+@EnableConfigServer
 @SpringBootApplication
-@EnableTurbine
-public class TurbineService {
+public class ConfigStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(TurbineService.class).web(true).run(args);
+        new SpringApplicationBuilder(ConfigStarter.class).web(true).run(args);
     }
 
 }

@@ -1,8 +1,8 @@
-package com.sfsctech.config;
+package com.sfsctech.zipkin;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.sleuth.zipkin.stream.EnableZipkinStreamServer;
 
 /**
  * Class ConfigService
@@ -10,12 +10,12 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * @author 张麒 2017/5/17.
  * @version Description:
  */
-@EnableConfigServer
 @SpringBootApplication
-public class ConfigService {
+@EnableZipkinStreamServer
+public class ZipkinStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(ConfigService.class).web(true).run(args);
+        new SpringApplicationBuilder(ZipkinStarter.class).web(true).run(args);
     }
 
 }

@@ -5,7 +5,7 @@ import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.sfsctech.core.auth.base.config.AuthFilterConfig;
 import com.sfsctech.core.auth.sso.config.SSOConfig;
-import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.dubbo.sso.inf.VerifyService;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.dubbo.base.config.DubboxConfig;

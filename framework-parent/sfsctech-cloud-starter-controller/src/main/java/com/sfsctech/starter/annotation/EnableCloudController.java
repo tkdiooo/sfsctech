@@ -25,7 +25,6 @@ import java.lang.annotation.*;
 @Import({WebConfig.class, SecurityConfig.class,  LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableZipkinServer
 @EnableHystrix
 //@EnableHystrixDashboard
 public @interface EnableCloudController {

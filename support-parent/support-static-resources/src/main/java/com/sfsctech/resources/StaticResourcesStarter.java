@@ -15,7 +15,7 @@ import org.springframework.core.Ordered;
  * @version Description:
  */
 @SpringBootApplication
-public class StaticResources {
+public class StaticResourcesStarter {
 
     @Bean
     public FilterRegistrationBean filterRegistration() {
@@ -27,6 +27,6 @@ public class StaticResources {
     }
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(StaticResources.class).web(true).run(args);
+        new SpringApplicationBuilder(StaticResourcesStarter.class).web(true).run(args);
     }
 }
