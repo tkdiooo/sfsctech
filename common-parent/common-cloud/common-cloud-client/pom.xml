@@ -13,6 +13,21 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-logger</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- 注册中心 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -154,7 +154,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean XSSFilter() {
+    public FilterRegistrationBean ActionFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new ActionFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("ActionFilter");

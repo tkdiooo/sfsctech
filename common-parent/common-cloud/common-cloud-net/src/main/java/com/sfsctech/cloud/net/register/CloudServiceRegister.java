@@ -5,7 +5,7 @@
 
 package com.sfsctech.cloud.net.register;
 
-import com.sfsctech.cloud.net.annotation.EnableCloudServiceClient;
+import com.sfsctech.cloud.net.starter.EnableCloudController;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -17,8 +17,8 @@ import org.springframework.core.type.AnnotationMetadata;
  */
 public class CloudServiceRegister implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
     private ResourceLoader resourceLoader;
-    private static final Class SCAN_ANNOTATION_CLASS = EnableCloudServiceClient.class;
-    private static final String BASE_PACKAGES_KEY = "basePackages";
+    private static final Class SCAN_ANNOTATION_CLASS = EnableCloudController.class;
+    private static final String BASE_PACKAGES_KEY = "packages";
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {

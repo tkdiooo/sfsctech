@@ -14,8 +14,6 @@
         <module>sfsctech-dubbo-starter-consume</module>
         <module>sfsctech-dubbo-starter-provider</module>
         <module>sfsctech-cloud-starter-api</module>
-        <module>sfsctech-cloud-starter-controller</module>
-        <module>sfsctech-cloud-starter-service</module>
         <module>sfsctech-mybatis-starter</module>
     </modules>
 

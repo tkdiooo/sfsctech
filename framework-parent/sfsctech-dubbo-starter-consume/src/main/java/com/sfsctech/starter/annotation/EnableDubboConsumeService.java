@@ -10,7 +10,6 @@ package com.sfsctech.starter.annotation;
 import com.sfsctech.core.logger.config.LogbackConfig;
 import com.sfsctech.core.security.config.SecurityConfig;
 import com.sfsctech.core.web.config.WebConfig;
-import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

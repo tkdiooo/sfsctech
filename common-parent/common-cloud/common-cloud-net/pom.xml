@@ -38,6 +38,11 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-rest</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>

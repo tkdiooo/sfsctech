@@ -1,4 +1,4 @@
-package com.sfsctech.starter.annotation;
+package com.sfsctech.cloud.client.starter;
 
 /**
  * Class EnableCloudServiceClient
@@ -15,9 +15,9 @@ import com.sfsctech.core.spring.config.SpringConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
-import zipkin.server.EnableZipkinServer;
 
 import java.lang.annotation.*;
+
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
