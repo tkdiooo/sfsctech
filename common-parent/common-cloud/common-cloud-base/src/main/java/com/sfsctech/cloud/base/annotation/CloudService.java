@@ -1,4 +1,4 @@
-package com.sfsctech.cloud.client.annotation;
+package com.sfsctech.cloud.base.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 

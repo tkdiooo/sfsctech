@@ -53,7 +53,7 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-client</artifactId>
+            <artifactId>common-cloud-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

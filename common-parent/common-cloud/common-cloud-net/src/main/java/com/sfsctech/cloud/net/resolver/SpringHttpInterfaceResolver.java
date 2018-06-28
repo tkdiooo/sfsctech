@@ -1,6 +1,6 @@
 package com.sfsctech.cloud.net.resolver;
 
-import com.sfsctech.cloud.client.annotation.CloudService;
+import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.cloud.net.domain.ServiceInterface;
 import com.sfsctech.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.cloud.net.ex.AppNameNotExistsException;

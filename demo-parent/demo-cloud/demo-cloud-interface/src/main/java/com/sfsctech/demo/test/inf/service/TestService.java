@@ -1,6 +1,6 @@
 package com.sfsctech.demo.test.inf.service;
 
-import com.sfsctech.cloud.client.annotation.CloudService;
+import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingReq;
 import com.sfsctech.demo.cloud.inf.request.CheckBindingRes;

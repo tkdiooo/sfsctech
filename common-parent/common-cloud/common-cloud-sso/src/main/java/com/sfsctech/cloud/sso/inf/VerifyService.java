@@ -1,7 +1,7 @@
 package com.sfsctech.cloud.sso.inf;
 
 
-import com.sfsctech.cloud.client.annotation.CloudService;
+import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import org.springframework.web.bind.annotation.RequestBody;
