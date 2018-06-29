@@ -1,10 +1,7 @@
 package com.sfsctech.demo.cloud.feign;
 
 import com.sfsctech.cloud.net.starter.EnableCloudController;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 /**
  * Class Star
