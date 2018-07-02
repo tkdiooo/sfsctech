@@ -2,18 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>com.sfsctech.framework</groupId>
-        <artifactId>framework-parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.sfsctech.framework</groupId>
     <artifactId>sfsctech-dubbo-starter-provider</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
         <sfsctech.common.version>2.0.0-SNAPSHOT</sfsctech.common.version>
+        <repository.url>http://172.16.225.98:8081</repository.url>
     </properties>
 
     <dependencies>
@@ -33,5 +31,18 @@
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>${repository.url}/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>${repository.url}/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

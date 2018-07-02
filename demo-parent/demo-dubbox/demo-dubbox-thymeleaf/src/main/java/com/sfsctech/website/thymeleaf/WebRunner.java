@@ -1,6 +1,6 @@
 package com.sfsctech.website.thymeleaf;
 
-import com.sfsctech.starter.annotation.EnableDubboConsumeService;
+import com.sfsctech.dubbo.starter.EnableDubboConsumeService;
 import org.springframework.boot.SpringApplication;
 
 /**

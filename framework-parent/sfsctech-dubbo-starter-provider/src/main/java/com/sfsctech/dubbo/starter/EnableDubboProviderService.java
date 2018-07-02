@@ -1,4 +1,4 @@
-package com.sfsctech.starter.annotation;
+package com.sfsctech.dubbo.starter;
 
 /**
  * Class EnableCloudServiceClient
