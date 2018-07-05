@@ -15,8 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class SpringConfig
@@ -51,10 +55,15 @@ public class SpringConfig {
         fastJsonConfig.setSerializerFeatures(
                 SerializerFeature.QuoteFieldNames,
                 SerializerFeature.WriteDateUseDateFormat,
-                SerializerFeature.WriteMapNullValue
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty
         );
         fastJsonConfig.setSerializeConfig(FastJson.getSerializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
+        List<MediaType> fastMediaTypes = new ArrayList<>();
+        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        fastConverter.setSupportedMediaTypes(fastMediaTypes);
         return fastConverter;
     }
 
