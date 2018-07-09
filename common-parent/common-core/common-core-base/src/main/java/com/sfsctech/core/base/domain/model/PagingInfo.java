@@ -69,6 +69,30 @@ public class PagingInfo<T> extends BaseDto {
     public PagingInfo() {
     }
 
+    public PagingInfo(PagingInfo<?> paging, T condition) {
+        this.columns = paging.getColumns();
+        this.condition = condition;
+        this.currentPage = paging.getCurrentPage();
+        this.draw = paging.getDraw();
+        this.length = paging.getLength();
+        this.order = paging.getOrder();
+        this.pageSize = paging.getPageSize();
+        this.recordsTotal = paging.getRecordsTotal();
+        this.start = paging.getStart();
+    }
+
+    public PagingInfo(PagingInfo<?> paging, List<T> data) {
+        this.columns = paging.getColumns();
+        this.data = data;
+        this.currentPage = paging.getCurrentPage();
+        this.draw = paging.getDraw();
+        this.length = paging.getLength();
+        this.order = paging.getOrder();
+        this.pageSize = paging.getPageSize();
+        this.recordsTotal = paging.getRecordsTotal();
+        this.start = paging.getStart();
+    }
+
     /**
      * 获取length
      *
