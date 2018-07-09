@@ -64,6 +64,10 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
         }
         // 判断路径是否无需校验
         boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
+        logger.info("requestURI:" + requestURI + ",isExclusion:" + verify);
+        logger.info("domain:" + domain);
+        logger.info("Referer:" + ret_url);
+        logger.info(String.valueOf(!ret_url.startsWith(domain)));
         // 访问劫持验证：路径无需校验，并且上次请求不是当前服务域名
         if (!verify && (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith(domain))) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");

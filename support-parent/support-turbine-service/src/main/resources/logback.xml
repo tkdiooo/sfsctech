@@ -15,7 +15,7 @@
 
     <!-- 只写本地文件，level>=INFO -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="com.sfsctech.logback.core.rolling.PatchedSizeAndTimeBasedRollingPolicy">
+        <rollingPolicy class="com.sfsctech.core.logger.logback.rolling.PatchedSizeAndTimeBasedRollingPolicy">
             <FileNamePattern>${filepath}/log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxFileSize>10MB</MaxFileSize>
             <MaxHistory>365</MaxHistory>
