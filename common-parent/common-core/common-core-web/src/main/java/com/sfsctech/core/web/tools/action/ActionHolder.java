@@ -3,7 +3,7 @@ package com.sfsctech.core.web.tools.action;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Class RpcUtil
+ * Class ActionHolder
  *
  * @author 张麒 2016/9/1.
  * @version Description:

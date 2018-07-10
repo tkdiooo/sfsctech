@@ -45,6 +45,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         ServiceInterfacePoint servicePointInfo = pointMap.get(method);
+
         BaseDto request = (BaseDto) args[0];
 
         logger.info(request.toString());
