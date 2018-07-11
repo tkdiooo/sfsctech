@@ -1,0 +1,31 @@
+{
+  "groups": [
+    {
+      "name": "website.sso.dubbo",
+      "type": "com.sfsctech.dubbo.sso.properties.SSOProperties",
+      "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "website.sso.dubbo.lazy",
+      "type": "java.lang.Boolean",
+      "description": "Dubbo服务是否延迟加载默认true",
+      "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "website.sso.dubbo.version",
+      "type": "java.lang.String",
+      "description": "Dubbo消费服务的版本号",
+      "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.dubbo.timeout",
+      "type": "java.lang.Integer",
+      "description": "Dubbo服务连接超时时间默认2000",
+      "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties",
+      "defaultValue": 2000
+    }
+  ]
+}

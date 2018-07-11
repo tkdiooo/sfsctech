@@ -8,7 +8,6 @@ import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.core.web.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Class VerifyUtil
@@ -52,16 +51,5 @@ public class SingletonUtil {
                     authConfig = SpringContextUtil.getBean(SSOConfig.class);
             }
         return authConfig;
-    }
-
-    private static RestTemplate restTemplate;
-
-    public static RestTemplate getRestTemplate() {
-        if (null == restTemplate)
-            synchronized (RestTemplate.class) {
-                if (null == restTemplate)
-                    restTemplate = SpringContextUtil.getBean(RestTemplate.class);
-            }
-        return restTemplate;
     }
 }

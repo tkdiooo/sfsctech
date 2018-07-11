@@ -1,8 +1,7 @@
-package com.sfsctech.dubbo.sso.util;
+package com.sfsctech.cloud.sso.util;
 
-import com.alibaba.dubbo.config.ReferenceConfig;
+import com.sfsctech.cloud.base.inf.VerifyService;
 import com.sfsctech.core.spring.util.SpringContextUtil;
-import com.sfsctech.dubbo.base.inf.VerifyService;
 
 /**
  * Class VerifyUtil
@@ -18,7 +17,7 @@ public class SingletonUtil {
         if (null == verifyService)
             synchronized (VerifyService.class) {
                 if (null == verifyService)
-                    verifyService = (VerifyService) SpringContextUtil.getBean(ReferenceConfig.class).get();
+                    verifyService = SpringContextUtil.getBean(VerifyService.class);
             }
         return verifyService;
     }

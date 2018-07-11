@@ -1,4 +1,4 @@
-package com.sfsctech.cloud.sso.inf;
+package com.sfsctech.cloud.base.inf;
 
 
 import com.sfsctech.cloud.base.annotation.CloudService;

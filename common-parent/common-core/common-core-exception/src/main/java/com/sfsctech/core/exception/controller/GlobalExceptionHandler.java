@@ -3,6 +3,7 @@ package com.sfsctech.core.exception.controller;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.RpcConstants.Status;
 import com.sfsctech.core.base.domain.result.BaseResult;
+import com.sfsctech.core.base.ex.GenericException;
 import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.core.exception.ex.RpcException;
 import com.sfsctech.core.exception.ex.VerifyException;
@@ -36,13 +37,21 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @Autowired
     private MultipartProperties multipart;
 
+    private String getMessage(GenericException e, HttpServletRequest request) {
+        if (null != e.getTips())
+            return ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams());
+        else
+            return e.getMessage();
+    }
+
     /**
      * 业务异常捕获
      */
     @ExceptionHandler(BizException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
-        logger.info("业务异常捕获：" + e.getMessage());
-        BaseResult result = new BaseResult(Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        String message = getMessage(e, request);
+        logger.info("业务异常捕获：" + message);
+        BaseResult result = new BaseResult(Status.Failure, message);
         return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -51,8 +60,9 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(RpcException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
-        logger.info("RPC异常捕获：" + e.getMessage() + "--" + e.getCause().toString());
-        BaseResult result = new BaseResult(Status.PayloadTooLarge, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        String message = getMessage(e, request);
+        logger.info("RPC异常捕获：" + message + "--" + e.getCause().toString());
+        BaseResult result = new BaseResult(Status.PayloadTooLarge, message);
         return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -61,8 +71,9 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      */
     @ExceptionHandler(VerifyException.class)
     public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) {
-        logger.warn("校验异常捕获：" + e.getMessage());
-        BaseResult result = new BaseResult(Status.Failure, ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale(), e.getParams()));
+        String message = getMessage(e, request);
+        logger.warn("校验异常捕获：" + message);
+        BaseResult result = new BaseResult(Status.Failure, message);
         result.addAttach(CommonConstants.MESSAGES_DETAILS, e.getResult());
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }

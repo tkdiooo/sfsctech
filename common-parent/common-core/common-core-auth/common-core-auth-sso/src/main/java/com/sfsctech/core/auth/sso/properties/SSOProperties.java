@@ -37,11 +37,8 @@ public class SSOProperties {
 
     private final SSOProperties.Authentication auth;
 
-    private final SSOProperties.Reference reference;
-
     public SSOProperties() {
         this.auth = new SSOProperties.Authentication();
-        this.reference = new SSOProperties.Reference();
     }
 
     public String getDomain() {
@@ -104,11 +101,6 @@ public class SSOProperties {
         return auth;
     }
 
-    public Reference getReference() {
-        return reference;
-    }
-
-
     public static class Authentication {
 
         private AuthWay way = AuthWay.Simple;
@@ -131,39 +123,6 @@ public class SSOProperties {
 
         public void setItemType(ItemType itemType) {
             this.itemType = itemType;
-        }
-    }
-
-    public static class Reference {
-        private boolean lazy;
-        private String version;
-        private Integer timeout;
-
-        Reference() {
-        }
-
-        public boolean isLazy() {
-            return lazy;
-        }
-
-        public void setLazy(boolean lazy) {
-            this.lazy = lazy;
-        }
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-
-        public Integer getTimeout() {
-            return timeout;
-        }
-
-        public void setTimeout(Integer timeout) {
-            this.timeout = timeout;
         }
     }
 }

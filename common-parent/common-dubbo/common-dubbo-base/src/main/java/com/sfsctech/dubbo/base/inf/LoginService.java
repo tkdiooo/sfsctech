@@ -1,4 +1,4 @@
-package com.sfsctech.dubbo.sso.inf;
+package com.sfsctech.dubbo.base.inf;
 
 
 import com.sfsctech.core.base.domain.result.RpcResult;

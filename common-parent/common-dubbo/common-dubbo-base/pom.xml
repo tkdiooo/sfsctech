@@ -23,6 +23,11 @@
             <artifactId>common-core-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- kryo-serializers -->
         <dependency>
             <groupId>de.javakaffee</groupId>
