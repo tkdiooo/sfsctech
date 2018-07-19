@@ -20,9 +20,11 @@ public class UTF8PatcherForHttpClient {
     public static RestTemplate patch(RestTemplate restTemplate, FastJsonHttpMessageConverter jsonConverter) {
         List<HttpMessageConverter<?>> converters = restTemplate.getMessageConverters();
         for (int i = converters.size() - 1; i >= 0; i--) {
-            if (converters.get(i) instanceof StringHttpMessageConverter || converters.get(i) instanceof MappingJackson2HttpMessageConverter) {
+            if (converters.get(i) instanceof StringHttpMessageConverter) {
                 converters.remove(i);
-                break;
+            }
+            if (converters.get(i) instanceof MappingJackson2HttpMessageConverter) {
+                converters.remove(i);
             }
         }
         converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));

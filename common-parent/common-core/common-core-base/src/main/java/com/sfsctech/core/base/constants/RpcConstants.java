@@ -6,6 +6,8 @@ import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Class RpcConstants
  *
@@ -23,7 +25,8 @@ public class RpcConstants {
         ServerUpkeep(502, "维护更新", false),
         ServerShutdown(503, "下线停运", false),
         ClientError(600, "客户端错误", false),
-        NotFound(404, "资源不存在", false),
+        NotFound(HttpServletResponse.SC_NOT_FOUND, "资源不存在", false),
+        Forbidden(HttpServletResponse.SC_FORBIDDEN, "请求的资源不允许访问", false),
         PayloadTooLarge(413, "负荷太大", false);
 
         Status() {

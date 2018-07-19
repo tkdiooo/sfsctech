@@ -9,6 +9,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -27,6 +28,13 @@ public class InterfaceProxyFactoryConfiguration {
     @ConditionalOnMissingBean(RestTemplate.class)
     public RestTemplate restTemplate(RestTemplateFactory restTemplateFactory) {
         return restTemplateFactory.buildPoolRest();
+    }
+
+    @Bean
+    @LoadBalanced
+    @ConditionalOnMissingBean(AsyncRestTemplate.class)
+    public AsyncRestTemplate asyncRestTemplate(RestTemplateFactory restTemplateFactory) {
+        return restTemplateFactory.buildAsyncRest();
     }
 
     /**

@@ -8,6 +8,10 @@ import com.sfsctech.support.common.security.des3.Des3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 /**
  * Class EncrypterTool
  *
@@ -103,6 +107,17 @@ public class EncrypterTool {
     }
 
     public static void main(String[] args) {
-        System.out.println(encrypt(Security.Des3ECB,"xiangzuocheng"));
+
+        try {
+            String key = URLEncoder.encode(encrypt(Security.AesCBC, "0000792773"), "UTF-8");
+            System.out.println(key);
+            System.out.println(decrypt(Security.AesCBC, URLDecoder.decode(key, "UTF-8")));
+            String key1 = URLEncoder.encode(encrypt(Security.AesCBC, "index"), "UTF-8");
+            System.out.println(key1);
+            System.out.println(decrypt(Security.AesCBC, URLDecoder.decode(key1, "UTF-8")));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(encrypt(Security.Des3ECB, "jianglei"));
     }
 }
