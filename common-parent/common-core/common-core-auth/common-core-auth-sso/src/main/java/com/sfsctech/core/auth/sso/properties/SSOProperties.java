@@ -17,7 +17,7 @@ public class SSOProperties {
 
     // 校验方式
     public enum AuthWay {
-        Simple, Complex
+        Simple, Complex, Local
     }
 
     // 项目类型

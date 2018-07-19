@@ -1,8 +1,8 @@
 package com.sfsctech.core.auth.sso.util;
 
+import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.common.util.DateUtil;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;

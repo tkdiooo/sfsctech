@@ -135,5 +135,5 @@ public abstract class BaseSSOFilter extends BaseFilter {
         }
     }
 
-    protected abstract RpcResult<JwtToken> check(JwtToken jt, SSOProperties.AuthWay authWay);
+    protected abstract RpcResult check(JwtToken jt, SSOProperties.AuthWay authWay);
 }

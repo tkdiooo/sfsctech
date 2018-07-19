@@ -128,6 +128,10 @@
         {
           "value": "Complex",
           "description": "复杂校验用户认证，用于有复杂权限信息的后台管理系统"
+        },
+        {
+          "value": "Local",
+          "description": "JWT方式本地校验用户认证"
         }
       ]
     },

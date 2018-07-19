@@ -10,7 +10,7 @@ import com.sfsctech.dubbo.base.inf.VerifyService;
  * @author 张麒 2017-11-28.
  * @version Description:
  */
-public class SingletonUtil {
+public class SingletonUtil extends com.sfsctech.core.auth.sso.util.SingletonUtil{
 
     private static VerifyService verifyService;
 
