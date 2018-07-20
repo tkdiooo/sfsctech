@@ -148,7 +148,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
             if (HttpUtil.isAjaxRequest(request)) {
-                response.getWriter().write(ssoProperties.getLoginUrl());
+                response.getWriter().write("{result:session}");
             } else {
                 response.sendRedirect(redirect_url);
             }
