@@ -5,7 +5,6 @@ import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.HexUtil;
@@ -62,24 +61,25 @@ public class SSOUtil {
             return result;
         }
         result.addAttach("salt_CacheKey", salt_CacheKey);
+        result.setResult(jt);
         return result;
     }
 
-    public static void refreshJwt(Claims claims, UserAuthData authData, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
-        logger.info("刷新登录用户：" + authData.getAccount() + "的Jwt信息");
+    public static void refreshJwt(Claims claims, String account, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
+        logger.info("刷新登录用户：" + account + "的Jwt信息");
         String jwt = JwtUtil.generalJwt(claims);
-        logger.info("用户：" + authData.getAccount() + "，生成新的jwt[" + jwt + "]。");
+        logger.info("用户：" + account + "，生成新的jwt[" + jwt + "]。");
         // 生成新的salt
         String salt = HexUtil.getEncryptKey();
-        logger.info("用户：" + authData.getAccount() + "，生成新的加密盐值[" + salt + "]。");
+        logger.info("用户：" + account + "，生成新的加密盐值[" + salt + "]。");
         // 加密JwtToken
         String token = EncrypterTool.encrypt(jwt, salt);
-        logger.info("用户：" + authData.getAccount() + "，生成新的token[" + token + "]。");
+        logger.info("用户：" + account + "，生成新的token[" + token + "]。");
         // 清除salt_CacheKey
         SingletonUtil.getCacheFactory().getCacheClient().remove(salt_CacheKey);
         // 生成新的salt_CacheKey
         salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
-        logger.info("用户：" + authData.getAccount() + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
+        logger.info("用户：" + account + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
         SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, config.getExpiration().intValue());
         // 缓存token

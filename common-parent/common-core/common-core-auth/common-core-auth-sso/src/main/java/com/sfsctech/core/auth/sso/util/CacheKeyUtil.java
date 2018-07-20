@@ -35,10 +35,10 @@ public class CacheKeyUtil {
      * @return UserAuthData
      */
     @SuppressWarnings("unchecked")
-    public static UserAuthData getUserAuthData(Claims claims) {
+    public static <T> T getUserAuthData(Claims claims, Class<T> cls) {
         JSONObject jo = new JSONObject();
         jo.putAll((Map) claims.get(SSOConstants.JWT_USER_AUTH_INFO));
-        return JSONObject.parseObject(jo.toJSONString(), UserAuthData.class);
+        return JSONObject.parseObject(jo.toJSONString(), cls);
     }
 
     /**

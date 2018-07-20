@@ -30,10 +30,9 @@ public class SSOConfig {
     }
 
     public void setExpiration(Integer expiration) {
-        if (null != config.getExpiration() && null == this.expiration) {
-            this.expiration = config.getExpiration().intValue();
-        } else if (null == this.expiration) {
-            this.expiration = expiration;
+        if (null == config.getExpiration() && null != expiration) {
+            config.setExpiration((long) (expiration * 1000));
         }
+        this.expiration = expiration;
     }
 }

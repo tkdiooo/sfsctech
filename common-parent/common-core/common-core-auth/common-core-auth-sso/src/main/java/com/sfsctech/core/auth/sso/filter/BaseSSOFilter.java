@@ -1,10 +1,11 @@
 package com.sfsctech.core.auth.sso.filter;
 
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.inf.SSOCheckInterface;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
+import com.sfsctech.core.auth.sso.util.SSOUtil;
 import com.sfsctech.core.auth.sso.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -45,15 +46,43 @@ public abstract class BaseSSOFilter extends BaseFilter {
             final HttpServletResponse response = (HttpServletResponse) servletResponse;
             // 请求路径
             String requestURI = request.getRequestURI();
-            logger.info("Request path：" + requestURI);
-            // JwtToken信息
-            CookieHelper helper = CookieHelper.getInstance(request, response);
             JwtToken jt = null;
             try {
-                jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+                // 请求路径是无需校验的路径
+                if (FilterHandler.isExclusion(requestURI, super.excludesPattern)) {
+                    logger.info("Don't need to intercept the path：" + requestURI);
+                    chain.doFilter(request, response);
+                    return;
+                }
+                final String method = request.getMethod();
+                if ("OPTIONS".equals(method)) {
+                    logger.info("测试环境跨域请求放行");
+                    chain.doFilter(request, response);
+                    return;
+                }
+                logger.info("Request path：" + requestURI);
+                // JwtToken信息
+                CookieHelper helper = CookieHelper.getInstance(request, response);
+                if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
+                    jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+                } else {
+                    jt = JwtCookieUtil.getJwtTokenByHeader(request);
+                }
                 if (null != jt) {
+                    RpcResult<JwtToken> result;
                     // Jwt 认证校验
-                    RpcResult<JwtToken> result = check(jt, ssoProperties.getAuth().getWay());
+                    SSOCheckInterface check = getcheck();
+                    if (ssoProperties.getAuth().getWay().equals(SSOProperties.AuthWay.Complex)) {
+                        result = check.complexVerify(jt);
+                    } else if (ssoProperties.getAuth().getWay().equals(SSOProperties.AuthWay.Simple)) {
+                        result = check.simpleVerify(jt);
+                    } else if (ssoProperties.getAuth().getWay().equals(SSOProperties.AuthWay.Local)) {
+                        result = localVerify(jt);
+                    } else {
+                        result = new RpcResult<>();
+                        result.setSuccess(false);
+                        result.setMessage("校验规则无法匹配");
+                    }
                     // 设置Session attribute
                     Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
                     if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
@@ -61,17 +90,16 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     // 校验成功
                     if (result.isSuccess()) {
                         jt = result.getResult();
-                        String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
                         try {
+                            String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
                             Claims claims = JwtUtil.parseJWT(token);
-                            // 设置UserAuthData
-                            SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
-                            // 设置RoleInfo
-
+                            generateSesssion(claims, request);
                             // 更新token
-                            JwtCookieUtil.updateJwtToken(helper, jt);
-                            // 设置session
-                            request.getSession().setAttribute(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
+                            if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
+                                JwtCookieUtil.updateJwtToken(helper, jt);
+                            } else {
+                                JwtCookieUtil.updateJwtToken(response, jt);
+                            }
                             chain.doFilter(request, response);
                             return;
                         } catch (Exception e) {
@@ -83,12 +111,6 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     else {
                         logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
                     }
-                }
-                // 请求路径是无需校验的路径
-                if (FilterHandler.isExclusion(requestURI, excludesPattern)) {
-                    logger.info("Don't need to intercept the path：" + requestURI);
-                    chain.doFilter(request, response);
-                    return;
                 }
             } catch (Exception e) {
                 logger.error(ThrowableUtil.getRootMessage(e), e);
@@ -126,7 +148,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
             if (HttpUtil.isAjaxRequest(request)) {
-                response.getWriter().write("<script>window.parent.location.href='" + redirect_url + "';</script>");
+                response.getWriter().write(ssoProperties.getLoginUrl());
             } else {
                 response.sendRedirect(redirect_url);
             }
@@ -135,5 +157,28 @@ public abstract class BaseSSOFilter extends BaseFilter {
         }
     }
 
-    protected abstract RpcResult check(JwtToken jt, SSOProperties.AuthWay authWay);
+    private RpcResult<JwtToken> localVerify(JwtToken jt) {
+        RpcResult<JwtToken> result = SSOUtil.generalVerify(jt, logger);
+        if (!result.isSuccess()) {
+            return result;
+        }// 获取salt_CacheKey
+        String salt_CacheKey = result.getAttachs().get("salt_CacheKey").toString();
+        // 会话保持剩余时间（秒）
+        long loginedTimeStamp = SingletonUtil.getCacheFactory().getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + jt.getSalt());
+        // 如果离超时间还有一半左右，刷新Jwt
+        if (SingletonUtil.getJwtProperties().getExpiration() > 0 && (loginedTimeStamp <= (SingletonUtil.getJwtProperties().getExpiration() / 2))) {
+            // 解密Jwt
+            String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
+            // 获取jwt Claims
+            Claims claims = JwtUtil.parseJWT(token);
+            // 刷新Jwt
+            SSOUtil.refreshJwt(claims, String.valueOf(claims.get(SSOConstants.LOGIN_ACCOUNT)), salt_CacheKey, jt, logger);
+            result.setResult(jt);
+        }
+        return result;
+    }
+
+    protected abstract SSOCheckInterface getcheck();
+
+    protected abstract void generateSesssion(Claims claims, HttpServletRequest request);
 }

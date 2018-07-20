@@ -26,6 +26,12 @@
       "description": "Dubbo服务连接超时时间默认2000",
       "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties",
       "defaultValue": 2000
+    },
+    {
+      "name": "website.sso.dubbo.url",
+      "type": "java.lang.String",
+      "description": "Dubbo服务连接请求路径",
+      "sourceType": "com.sfsctech.dubbo.sso.properties.SSOProperties"
     }
   ]
 }

@@ -9,6 +9,8 @@ import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -46,6 +48,22 @@ public class JwtCookieUtil {
         return null;
     }
 
+    public static JwtToken getJwtTokenByHeader(HttpServletRequest request) {
+        String authorization = request.getHeader("Authorization");
+        if (StringUtil.isNotBlank(authorization)) {
+            try {
+                String[] token = authorization.split(LabelConstants.POUND);
+                JwtToken jt = new JwtToken();
+                jt.setJwt(URLDecoder.decode(token[0], LabelConstants.UTF8));
+                jt.setSalt_CacheKey(URLDecoder.decode(token[1], LabelConstants.UTF8));
+                return jt;
+            } catch (Exception e) {
+                logger.error(ThrowableUtil.getRootMessage(e));
+            }
+        }
+        return null;
+    }
+
     /**
      * 根据UserToken更新Cookie
      *
@@ -54,6 +72,10 @@ public class JwtCookieUtil {
      */
     public static void updateJwtToken(CookieHelper helper, JwtToken jt) {
         updateJwtToken(helper, SSOConstants.COOKIE_TOKEN_NAME, SSOConstants.COOKIE_SALT_CACHE_KEY_NAME, jt);
+    }
+
+    public static void updateJwtToken(HttpServletResponse response, JwtToken jt) {
+        response.setHeader("Authorization", jt.getJwt() + LabelConstants.PERIOD + jt.getSalt_CacheKey());
     }
 
     /**

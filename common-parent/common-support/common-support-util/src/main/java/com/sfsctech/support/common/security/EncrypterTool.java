@@ -109,12 +109,15 @@ public class EncrypterTool {
     public static void main(String[] args) {
 
         try {
-            String key = URLEncoder.encode(encrypt(Security.AesCBC, "0000792773"), "UTF-8");
-            System.out.println(key);
-            System.out.println(decrypt(Security.AesCBC, URLDecoder.decode(key, "UTF-8")));
-            String key1 = URLEncoder.encode(encrypt(Security.AesCBC, "index"), "UTF-8");
-            System.out.println(key1);
-            System.out.println(decrypt(Security.AesCBC, URLDecoder.decode(key1, "UTF-8")));
+//            String key = URLEncoder.encode(encrypt(Security.AesCBC, "0000792773"), "UTF-8");
+//            System.out.println(key);
+//            System.out.println(decrypt(Security.AesCBC, URLDecoder.decode(key, "UTF-8")));
+//            String key1 = URLEncoder.encode(encrypt(Security.AesCBC, "index"), "UTF-8");
+//            System.out.println(key1);
+            System.out.println(URLEncoder.encode(encrypt(Security.AesCBC, "http://m.fsgplus.com/home?v=1530436188891"), "UTF-8"));
+            System.out.println(decrypt(Security.AesCBC,"6xvDUkUPdlVnwQIuK33bfUDNunlluRuUKLAwSW9wV0mjVo7FQ/nEcdIBTBvJA+aH"));
+            System.out.println(URLDecoder.decode("81B6FDA9FB15F0CAE4BB52B5DEDDAAAEAD910C5980A7C16EF07656647048966B1D0159A5556ED080A436898EDE53B00E", "UTF-8"));
+//            System.out.println(decrypt(Security.AesCBC, ));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

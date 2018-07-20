@@ -79,6 +79,12 @@
       "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
     },
     {
+      "name": "website.sso.auth.session-keep",
+      "type": "com.sfsctech.constants.SSOProperties.SessionKeep",
+      "description": "Session保持方式",
+      "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
+    },
+    {
       "name": "website.sso.reference.lazy",
       "type": "java.lang.Boolean",
       "description": "Dubbo服务是否延迟加载默认true",
@@ -149,6 +155,19 @@
         {
           "value": "FrameService",
           "description": "Frame服务"
+        }
+      ]
+    },
+    {
+      "name": "website.sso.auth.session-keep",
+      "values": [
+        {
+          "value": "Cookie",
+          "description": "Cookie"
+        },
+        {
+          "value": "Header",
+          "description": "Header"
         }
       ]
     }

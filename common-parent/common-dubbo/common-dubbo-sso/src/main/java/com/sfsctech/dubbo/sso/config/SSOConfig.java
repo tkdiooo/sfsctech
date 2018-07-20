@@ -7,7 +7,7 @@ import com.sfsctech.core.auth.base.config.AuthFilterConfig;
 import com.sfsctech.dubbo.base.inf.VerifyService;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
-import com.sfsctech.dubbo.sso.filter.SSOFilter;
+import com.sfsctech.dubbo.sso.filter.DubboSSOFilter;
 import com.sfsctech.dubbo.sso.properties.SSOProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -26,25 +26,11 @@ import org.springframework.context.annotation.Import;
 public class SSOConfig {
 
     @Autowired
-    private AuthFilterConfig filterConfig;
-    @Autowired
     private SSOProperties ssoProperties;
     @Autowired
     private ApplicationConfig applicationConfig;
     @Autowired
     private RegistryConfig registryConfig;
-
-    @Bean
-    public FilterRegistrationBean SSOFilter() {
-        SSOFilter filter = new SSOFilter();
-        // Session认证排除路径
-        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("DubboSSOFilter");
-        registration.setOrder(5);
-        return registration;
-    }
 
     @Bean
     public ReferenceConfig<VerifyService> referenceConfig() {
@@ -57,6 +43,7 @@ public class SSOConfig {
         config.setTimeout(ssoProperties.getTimeout());
         config.setApplication(applicationConfig);
         config.setRegistry(registryConfig);
+        config.setUrl(ssoProperties.getUrl());
 //        List<MethodConfig> methods = new ArrayList<>();
 //        MethodConfig methodConfig = new MethodConfig();
 //        methodConfig.setAsync(true);

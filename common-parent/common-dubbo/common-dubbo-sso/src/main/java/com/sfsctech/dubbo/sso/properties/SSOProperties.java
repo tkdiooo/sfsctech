@@ -18,6 +18,7 @@ public class SSOProperties {
     private boolean lazy;
     private String version;
     private Integer timeout;
+    private String url;
 
     public SSOProperties() {
     }
@@ -45,5 +46,13 @@ public class SSOProperties {
 
     public void setTimeout(Integer timeout) {
         this.timeout = timeout;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

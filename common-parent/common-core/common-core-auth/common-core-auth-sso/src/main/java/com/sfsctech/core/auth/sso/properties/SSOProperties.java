@@ -15,6 +15,10 @@ import org.springframework.stereotype.Component;
 )
 public class SSOProperties {
 
+    public enum SessionKeep {
+        Cookie, Header
+    }
+
     // 校验方式
     public enum AuthWay {
         Simple, Complex, Local
@@ -104,6 +108,7 @@ public class SSOProperties {
     public static class Authentication {
 
         private AuthWay way = AuthWay.Simple;
+        private SessionKeep sessionKeep = SessionKeep.Cookie;
         private ItemType itemType;
 
         Authentication() {
@@ -123,6 +128,14 @@ public class SSOProperties {
 
         public void setItemType(ItemType itemType) {
             this.itemType = itemType;
+        }
+
+        public SessionKeep getSessionKeep() {
+            return sessionKeep;
+        }
+
+        public void setSessionKeep(SessionKeep sessionKeep) {
+            this.sessionKeep = sessionKeep;
         }
     }
 }
