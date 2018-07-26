@@ -3,7 +3,6 @@ package com.sfsctech.core.web.initialize;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.WebsiteConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
-import com.sfsctech.core.web.properties.WebsiteProperties;
 import com.sfsctech.support.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +25,6 @@ public class PropertiesInitialize {
 
     @Autowired
     private WebMvcProperties webMvcProperties;
-    
-    @Autowired
-    private WebsiteProperties websiteProperties;
-
 
     private String getViewTemplate() {
         if (null != webMvcProperties && StringUtils.isNotBlank(webMvcProperties.getView().getSuffix())) {
@@ -40,7 +35,8 @@ public class PropertiesInitialize {
 
     @Autowired
     public void attribute(
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.mvc.static-path-pattern" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath) {
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.mvc.static-path-pattern" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath,
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.profiles.active" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String active) {
         // 项目ContextPath
         WebsiteConstants.CONTEXT_PATH = serverProperties.getContextPath();
         // 过滤器排除 - 项目视图模板

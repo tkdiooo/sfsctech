@@ -24,11 +24,16 @@ public class SSOProperties {
         Simple, Complex, Local
     }
 
-    // 项目类型
-    public enum ItemType {
-        BackendSystem,
-        FrontendSystem,
-        FrameService
+    // 应用类型
+    public enum AppType {
+        // 后端应用
+        Backend,
+        // 前端应用
+        Frontend,
+        // 模板应用
+        Template,
+        // 单页应用
+        SinglePage
     }
 
     private String domain;
@@ -109,7 +114,7 @@ public class SSOProperties {
 
         private AuthWay way = AuthWay.Simple;
         private SessionKeep sessionKeep = SessionKeep.Cookie;
-        private ItemType itemType;
+        private AppType appType;
 
         Authentication() {
         }
@@ -122,20 +127,20 @@ public class SSOProperties {
             this.way = way;
         }
 
-        public ItemType getItemType() {
-            return itemType;
-        }
-
-        public void setItemType(ItemType itemType) {
-            this.itemType = itemType;
-        }
-
         public SessionKeep getSessionKeep() {
             return sessionKeep;
         }
 
         public void setSessionKeep(SessionKeep sessionKeep) {
             this.sessionKeep = sessionKeep;
+        }
+
+        public AppType getAppType() {
+            return appType;
+        }
+
+        public void setAppType(AppType appType) {
+            this.appType = appType;
         }
     }
 }

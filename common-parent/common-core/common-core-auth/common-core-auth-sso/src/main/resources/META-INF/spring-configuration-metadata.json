@@ -73,9 +73,9 @@
       "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
     },
     {
-      "name": "website.sso.auth.item-type",
-      "type": "com.sfsctech.constants.SSOProperties.ItemType",
-      "description": "项目类型",
+      "name": "website.sso.auth.app-type",
+      "type": "com.sfsctech.constants.SSOProperties.AppType",
+      "description": "应用类型",
       "sourceType": "com.sfsctech.core.auth.sso.properties.SSOProperties$Authentication"
     },
     {
@@ -142,19 +142,23 @@
       ]
     },
     {
-      "name": "website.sso.auth.item-type",
+      "name": "website.sso.auth.app-type",
       "values": [
         {
-          "value": "BackendSystem",
-          "description": "后端系统"
+          "value": "Backend",
+          "description": "后端应用"
         },
         {
-          "value": "FrontendSystem",
-          "description": "前端系统"
+          "value": "Frontend",
+          "description": "前端应用"
         },
         {
-          "value": "FrameService",
-          "description": "Frame服务"
+          "value": "Template",
+          "description": "模板应用"
+        },
+        {
+          "value": "SinglePage",
+          "description": "单页应用"
         }
       ]
     },

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.json.FastJson;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({SpringContextUtil.class, TomcatConfig.class})
+@Import({SpringContextUtil.class, TomcatConfig.class, ApplicationInitialize.class})
 public class SpringConfig {
 
     private final Logger logger = LoggerFactory.getLogger(SpringConfig.class);

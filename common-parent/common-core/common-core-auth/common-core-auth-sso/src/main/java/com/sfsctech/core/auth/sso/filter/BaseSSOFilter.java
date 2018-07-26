@@ -55,8 +55,8 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     return;
                 }
                 final String method = request.getMethod();
-                if ("OPTIONS".equals(method)) {
-                    logger.info("测试环境跨域请求放行");
+                if (SingletonUtil.getApplication().getActive().equals("dev") && "OPTIONS".equals(method)) {
+                    logger.info("开发环境跨域请求放行");
                     chain.doFilter(request, response);
                     return;
                 }
@@ -120,22 +120,27 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
                 }
             }
+            // 项目类型是单页应用
+            if (SSOProperties.AppType.SinglePage.equals(ssoProperties.getAuth().getAppType())) {
+                response.getWriter().write(LabelConstants.OPEN_CURLY_BRACE + LabelConstants.QUOTE + "result" + LabelConstants.QUOTE + LabelConstants.COLON + LabelConstants.QUOTE + "session" + LabelConstants.QUOTE + LabelConstants.CLOSE_CURLY_BRACE);
+            }
+            // TODO
             String redirect_url = null;
-            // 后端架构系统session失效处理
-            if (SSOProperties.ItemType.BackendSystem.equals(ssoProperties.getAuth().getItemType())) {
+            // 后端模板应用session失效处理
+            if (SSOProperties.AppType.Backend.equals(ssoProperties.getAuth().getAppType())) {
                 redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getDomain() + requestURI);
             }
-            // 非后端架构系统，回调页面处理
+            // 后端模板应用，回调页面处理
             else {
                 String form_url = request.getHeader("Referer");
                 // 上次路径不为空，并且属于当前系统的页面，并且不是首页
                 if (StringUtil.isNotBlank(form_url) && form_url.contains(ssoProperties.getDomain()) && !form_url.contains(ssoProperties.getHomePage())) {
                     // 项目类型是前端系统
-                    if (SSOProperties.ItemType.FrontendSystem.equals(ssoProperties.getAuth().getItemType())) {
+                    if (SSOProperties.AppType.Frontend.equals(ssoProperties.getAuth().getAppType())) {
                         redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
                     }
-                    // 项目类型是frame服务
-                    else if (SSOProperties.ItemType.FrameService.equals(ssoProperties.getAuth().getItemType())) {
+                    // 项目类型是模板应用
+                    else if (SSOProperties.AppType.Template.equals(ssoProperties.getAuth().getAppType())) {
                         redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getHomePage() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + form_url);
                     }
                 }
@@ -148,7 +153,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
             if (HttpUtil.isAjaxRequest(request)) {
-                response.getWriter().write("{result:session}");
+                response.getWriter().write("<script>window.parent.location.href='" + redirect_url + "';</script>");
             } else {
                 response.sendRedirect(redirect_url);
             }

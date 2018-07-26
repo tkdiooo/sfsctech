@@ -5,6 +5,7 @@ import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.core.web.properties.WebsiteProperties;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class SingletonUtil {
 
     public static SSOProperties getSSOProperties() {
         if (null == ssoProperties)
-            synchronized (WebsiteProperties.class) {
+            synchronized (SSOProperties.class) {
                 if (null == ssoProperties)
                     ssoProperties = SpringContextUtil.getBean(SSOProperties.class);
             }
@@ -36,7 +37,7 @@ public class SingletonUtil {
     @SuppressWarnings("unchecked")
     public static CacheFactory<RedisProxy<String, Object>> getCacheFactory() {
         if (null == factory)
-            synchronized (WebsiteProperties.class) {
+            synchronized (CacheFactory.class) {
                 if (null == factory)
                     factory = SpringContextUtil.getBean(CacheFactory.class);
             }
@@ -58,10 +59,21 @@ public class SingletonUtil {
 
     public static JwtProperties getJwtProperties() {
         if (null == jwtProperties)
-            synchronized (SSOConfig.class) {
+            synchronized (JwtProperties.class) {
                 if (null == jwtProperties)
                     jwtProperties = SpringContextUtil.getBean(JwtProperties.class);
             }
         return jwtProperties;
+    }
+
+    private static ApplicationInitialize application;
+
+    public static ApplicationInitialize getApplication() {
+        if (null == application)
+            synchronized (ApplicationInitialize.class) {
+                if (null == application)
+                    application = SpringContextUtil.getBean(ApplicationInitialize.class);
+            }
+        return application;
     }
 }
