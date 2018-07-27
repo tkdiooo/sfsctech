@@ -32,8 +32,8 @@ public class SSOProperties {
         Frontend,
         // 模板应用
         Template,
-        // 单页应用
-        SinglePage
+        // Rest应用
+        RestAPI
     }
 
     private String domain;

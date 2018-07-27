@@ -157,7 +157,7 @@
           "description": "模板应用"
         },
         {
-          "value": "SinglePage",
+          "value": "RestAPI",
           "description": "单页应用"
         }
       ]

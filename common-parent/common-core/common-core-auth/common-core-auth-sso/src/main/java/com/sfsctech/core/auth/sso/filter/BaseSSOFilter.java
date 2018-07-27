@@ -121,8 +121,9 @@ public abstract class BaseSSOFilter extends BaseFilter {
                 }
             }
             // 项目类型是单页应用
-            if (SSOProperties.AppType.SinglePage.equals(ssoProperties.getAuth().getAppType())) {
+            if (SSOProperties.AppType.RestAPI.equals(ssoProperties.getAuth().getAppType())) {
                 response.getWriter().write(LabelConstants.OPEN_CURLY_BRACE + LabelConstants.QUOTE + "result" + LabelConstants.QUOTE + LabelConstants.COLON + LabelConstants.QUOTE + "session" + LabelConstants.QUOTE + LabelConstants.CLOSE_CURLY_BRACE);
+                return;
             }
             // TODO
             String redirect_url = null;
