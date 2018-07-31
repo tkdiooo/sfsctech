@@ -90,9 +90,9 @@ public class MyBatisConfig {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         //添加初始化参数：initParams
         //白名单：
-        servletRegistrationBean.addInitParameter("allow", "127.0.0.1");
+        servletRegistrationBean.addInitParameter("allow", HttpUtil.getServerIp());
         //IP黑名单 (存在共同时，deny优先于allow) : 如果满足deny的话提示:Sorry, you are not permitted to view this page.
-        servletRegistrationBean.addInitParameter("deny", HttpUtil.getServerIp());
+//        servletRegistrationBean.addInitParameter("deny", HttpUtil.getServerIp());
         //登录查看信息的账号密码.
         servletRegistrationBean.addInitParameter("loginUsername", "admin");
         servletRegistrationBean.addInitParameter("loginPassword", "123456");

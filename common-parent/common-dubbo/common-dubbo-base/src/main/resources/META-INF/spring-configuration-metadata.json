@@ -28,6 +28,12 @@
       "type": "com.sfsctech.dubbo.base.properties.DubboProperties$Rpc",
       "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties",
       "sourceMethod": "getRpc()"
+    },
+    {
+      "name": "dubbo.dev-setting",
+      "type": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties",
+      "sourceMethod": "getDevSetting()"
     }
   ],
   "properties": [
@@ -128,6 +134,36 @@
       "type": "java.lang.Integer",
       "description": "熔断策略：并发量",
       "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$Rpc"
+    },
+    {
+      "name": "dubbo.dev-setting.system-path",
+      "type": "java.lang.String",
+      "description": "系统用户路径",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting"
+    },
+    {
+      "name": "dubbo.dev-setting.develop",
+      "type": "java.util.List<com.sfsctech.dubbo.base.properties.DubboProperties.Develop>",
+      "description": "开发设置",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting"
+    },
+    {
+      "name": "dubbo.dev-setting.develop.name",
+      "type": "java.lang.String",
+      "description": "协议名称",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting$Develop"
+    },
+    {
+      "name": "dubbo.dev-setting.develop.port",
+      "type": "java.lang.Integer",
+      "description": "协议端口",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting$Develop"
+    },
+    {
+      "name": "dubbo.dev-setting.develop.inf-package",
+      "type": "java.lang.String",
+      "description": "接口package路径",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$DevSetting$Develop"
     }
   ],
   "hints": [

@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,12 +34,14 @@ public class DubboProperties {
     private final DubboProperties.Registry registry;
     private final DubboProperties.Protocol protocol;
     private final DubboProperties.Rpc rpc;
+    private final DubboProperties.DevSetting devSetting;
 
     public DubboProperties() {
         this.application = new DubboProperties.Application();
         this.registry = new DubboProperties.Registry();
         this.protocol = new DubboProperties.Protocol();
         this.rpc = new DubboProperties.Rpc();
+        this.devSetting = new DubboProperties.DevSetting();
     }
 
     public Application getApplication() {
@@ -56,6 +59,11 @@ public class DubboProperties {
     public Rpc getRpc() {
         return rpc;
     }
+
+    public DevSetting getDevSetting() {
+        return devSetting;
+    }
+
 
     public static class Application {
 
@@ -208,7 +216,6 @@ public class DubboProperties {
                 this.server = server;
             }
         }
-
     }
 
     public static class Rpc {
@@ -235,4 +242,62 @@ public class DubboProperties {
             this.concurrency = concurrency;
         }
     }
+
+
+    public static class DevSetting {
+
+        private String systemPath;
+        private List<Develop> develop;
+
+        DevSetting() {
+        }
+
+        public String getSystemPath() {
+            return systemPath;
+        }
+
+        public void setSystemPath(String systemPath) {
+            this.systemPath = systemPath;
+        }
+
+        public List<Develop> getDevelop() {
+            return develop;
+        }
+
+        public void setDevelop(List<Develop> develop) {
+            this.develop = develop;
+        }
+
+
+        public static class Develop {
+            private String name;
+            private int port;
+            private String infPackage;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getPort() {
+                return port;
+            }
+
+            public void setPort(int port) {
+                this.port = port;
+            }
+
+            public String getInfPackage() {
+                return infPackage;
+            }
+
+            public void setInfPackage(String infPackage) {
+                this.infPackage = infPackage;
+            }
+        }
+    }
+
 }

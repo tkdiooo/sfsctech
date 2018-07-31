@@ -6,6 +6,7 @@ import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.spring.AnnotationBean;
 import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.dubbo.base.condition.MultipleProtocolCondition;
 import com.sfsctech.dubbo.base.condition.SingleProtocolCondition;
@@ -14,7 +15,8 @@ import com.sfsctech.dubbo.base.logger.filter.TraceNoFilter;
 import com.sfsctech.dubbo.base.properties.DubboProperties;
 import com.sfsctech.dubbo.base.serialize.KryoSerializationOptimizer;
 import com.sfsctech.support.common.util.BeanUtil;
-import com.sfsctech.support.common.util.NumberUtil;
+import com.sfsctech.support.common.util.ClassUtil;
+import com.sfsctech.support.common.util.FileUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Class DubboxConfigurer
@@ -43,6 +46,34 @@ public class DubboxConfig {
 
     @Autowired
     private DubboProperties properties;
+
+    @Autowired
+    private ApplicationInitialize application;
+
+    @Autowired
+    public void initialize() throws IOException {
+        DubboProperties.DevSetting devSetting = properties.getDevSetting();
+        String filePath = devSetting.getSystemPath() + "dubbo-resolve.properties";
+        List<DubboProperties.DevSetting.Develop> list;
+        // 添加文件
+        if (application.getActive().equals("dev") && null != (list = devSetting.getDevelop())) {
+            Set<String> lines;
+            if (FileUtil.isExists(filePath)) {
+                lines = new TreeSet<>(FileUtil.readFileToLines(filePath));
+            } else {
+                lines = new TreeSet<>();
+            }
+            list.forEach(inf -> {
+                Set<Class<?>> cls = ClassUtil.getClasses(inf.getInfPackage());
+                cls.forEach(s -> lines.add(s.getName() + LabelConstants.EQUAL + inf.getName() + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + "localhost" + LabelConstants.COLON + inf.getPort()));
+            });
+            FileUtil.writeLines(new File(filePath), lines, false);
+        }
+        // 删除文件
+        else if (!application.getActive().equals("dev") && FileUtil.isExists(filePath)) {
+            FileUtil.deleteQuietly(new File(filePath));
+        }
+    }
 
     /**
      * &lt;dubbo:application&gt;

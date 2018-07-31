@@ -78,7 +78,8 @@
       "type": "java.util.List<com.sfsctech.core.security.domain.Whitelist>",
       "description": "白名单",
       "sourceType": "java.util.List<com.sfsctech.core.security.domain.Whitelist>"
-    },{
+    },
+    {
       "name": "website.security.ddos.whitelist.ip",
       "type": "java.lang.String",
       "description": "白名单IP",
