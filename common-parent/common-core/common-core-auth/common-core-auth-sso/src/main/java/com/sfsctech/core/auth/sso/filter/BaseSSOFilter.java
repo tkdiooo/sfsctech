@@ -150,6 +150,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             if (StringUtil.isBlank(redirect_url)) {
                 redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getHomePage());
             }
+            logger.info("用户Session失效");
             // 登录超时处理
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
