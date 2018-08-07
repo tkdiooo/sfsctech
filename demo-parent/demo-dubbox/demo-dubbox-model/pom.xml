@@ -13,7 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- common-rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-rpc</artifactId>

@@ -39,10 +39,12 @@ public enum BaseExceptionTipsEnum implements ExceptionTips<String, String> {
         return this.level;
     }
 
+    @Override
     public String getCode() {
         return this.code;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }

@@ -3,7 +3,10 @@ package com.sfsctech.website.thymeleaf.model;
 
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.security.annotation.Encrypt;
+import com.sfsctech.core.spring.constants.VerifyConstants;
 import com.sfsctech.support.common.security.EncrypterTool;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Class UserInfo
@@ -14,7 +17,8 @@ import com.sfsctech.support.common.security.EncrypterTool;
 public class UserInfo extends BaseDto {
 
     private static final long serialVersionUID = 4750509479154620098L;
-    @Encrypt
+    @NotBlank
+    @Length(min = 5, max = 20, message = VerifyConstants.Length)
     private String userName;
     @Encrypt(EncrypterTool.Security.Md5)
     private String password;

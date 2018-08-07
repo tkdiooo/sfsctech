@@ -121,6 +121,6 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Des3ECB, "hanwei"));
+        System.out.println(encrypt(Security.Des3ECB, "liuxincheng"));
     }
 }

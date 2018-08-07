@@ -75,7 +75,7 @@ public class JwtCookieUtil {
     }
 
     public static void updateJwtToken(HttpServletResponse response, JwtToken jt) {
-        response.setHeader("Authorization", jt.getJwt() + LabelConstants.PERIOD + jt.getSalt_CacheKey());
+        response.setHeader("Authorization", jt.getJwt() + LabelConstants.POUND + jt.getSalt_CacheKey());
     }
 
     /**

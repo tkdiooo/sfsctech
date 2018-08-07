@@ -12,7 +12,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author 张麒 2018-5-10.
  * @version Description:
  */
-// TODO 验证消息需要补全
 public enum VerifyExceptionTipsEnum implements ExceptionTips<String, String> {
 
     LoginWrong("tips.login.wrong", "账号或密码错误", ExceptionTypeEnum.Business, ExceptionLevelEnum.Warn),
@@ -47,10 +46,12 @@ public enum VerifyExceptionTipsEnum implements ExceptionTips<String, String> {
         return this.level;
     }
 
+    @Override
     public String getCode() {
         return this.code;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }
