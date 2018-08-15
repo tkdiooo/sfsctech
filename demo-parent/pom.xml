@@ -13,6 +13,7 @@
         <module>demo-cloud</module>
         <module>demo-dubbox</module>
         <module>demo-oauth2</module>
+        <module>demo-test</module>
     </modules>
 
 

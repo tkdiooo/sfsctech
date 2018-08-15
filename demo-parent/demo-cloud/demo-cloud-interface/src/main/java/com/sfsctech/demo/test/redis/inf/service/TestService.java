@@ -1,4 +1,4 @@
-package com.sfsctech.demo.test.inf.service;
+package com.sfsctech.demo.test.redis.inf.service;
 
 import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
