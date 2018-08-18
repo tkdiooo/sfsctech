@@ -20,14 +20,17 @@ public class RpcConstants {
 
         Successful,
         Failure(300, "操作失败", false),
-        ServerError(500, "服务器错误", false),
-        ServerNormal(501, "正常运行", true),
-        ServerUpkeep(502, "维护更新", false),
-        ServerShutdown(503, "下线停运", false),
-        ClientError(600, "客户端错误", false),
+        // 400 - 499
         NotFound(HttpServletResponse.SC_NOT_FOUND, "资源不存在", false),
         Forbidden(HttpServletResponse.SC_FORBIDDEN, "请求的资源不允许访问", false),
-        PayloadTooLarge(413, "负荷太大", false);
+        RequestEntityTooLarge(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE, "请求提交的实体数据无法处理", false),
+        // 500 - 599
+        ServerError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "服务器错误", false),
+        // 自定义
+        ServerNormal(700, "正常运行", true),
+        ServerUpkeep(701, "维护更新", false),
+        ServerShutdown(702, "下线停运", false),
+        RpcError(801, "远程过程调用错误", false);
 
         Status() {
             this.code = 200;
@@ -66,7 +69,7 @@ public class RpcConstants {
         }
 
         public static Status getEnum(Integer code) {
-            return (Status) BaseEnum.getByCode(values(), code);
+            return (Status) StatusEnum.getByCode(values(), code);
         }
 
         public static String getValueByKey(Integer key) {

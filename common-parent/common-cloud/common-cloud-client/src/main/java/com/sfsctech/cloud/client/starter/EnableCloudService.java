@@ -9,7 +9,7 @@ package com.sfsctech.cloud.client.starter;
 
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
-import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
+import com.sfsctech.core.exception.handler.ServiceExceptionHandler;
 import com.sfsctech.core.logger.config.LogbackConfig;
 import com.sfsctech.core.spring.config.SpringConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +22,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({SpringConfig.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
+@Import({SpringConfig.class, GlobalErrorController.class, ServiceExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
 public @interface EnableCloudService {

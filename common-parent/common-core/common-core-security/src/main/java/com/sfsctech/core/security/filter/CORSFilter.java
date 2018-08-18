@@ -42,7 +42,7 @@ public class CORSFilter extends BaseFilter {
         final String domain = request.getHeader("Origin");
         // 跨域访问验证
         if (this.crossDomain.containsKey(domain)) {
-            logger.info("cross-domain[Origin]：" + domain);
+            logger.info("cross-domain[Origin]:" + domain);
             Access access = crossDomain.get(domain);
             final String method = request.getMethod();
             // 跨域请求方法错误

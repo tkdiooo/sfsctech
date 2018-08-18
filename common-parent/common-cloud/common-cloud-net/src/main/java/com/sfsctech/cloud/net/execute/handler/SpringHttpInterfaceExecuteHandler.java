@@ -8,8 +8,11 @@ package com.sfsctech.cloud.net.execute.handler;
 import com.sfsctech.cloud.net.domain.ServiceInterface;
 import com.sfsctech.cloud.net.domain.ServiceInterfacePoint;
 import com.sfsctech.cloud.net.ex.HttpExecuteErrorException;
+import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.base.ex.GenericException;
+import com.sfsctech.core.exception.enums.RpcExceptionTipsEnum;
 import com.sfsctech.support.common.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -47,7 +50,6 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
         ServiceInterfacePoint servicePointInfo = pointMap.get(method);
 
         BaseDto request = (BaseDto) args[0];
-
         logger.info(request.toString());
 
         ParameterizedTypeReference<RpcResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
@@ -58,7 +60,10 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
             throw new HttpExecuteErrorException(httpEntity);
         } else {
             RpcResult result = responseEntity.getBody();
-            logger.info(result.toString());
+            logger.info("result:[{}]", result.toString());
+            if (!result.isSuccess() && result.getStatus().equals(RpcConstants.Status.ServerError)) {
+                throw new GenericException(RpcExceptionTipsEnum.ServiceError);
+            }
             return result;
         }
     }

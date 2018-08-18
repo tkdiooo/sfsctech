@@ -1,7 +1,6 @@
 package com.sfsctech.core.base.domain.result;
 
-import com.sfsctech.core.base.domain.result.BaseResult;
-import com.sfsctech.core.base.enums.StatusEnum;
+import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.ex.GenericException;
 
 /**
@@ -32,9 +31,18 @@ public class RpcResult<T> extends BaseResult {
         this.exception = exception;
     }
 
-    public RpcResult(T result, StatusEnum<Integer, String> status, GenericException exception) {
+    public RpcResult(T result, RpcConstants.Status status, GenericException exception) {
         super(status);
         this.result = result;
+        this.exception = exception;
+    }
+
+    public RpcResult(RpcConstants.Status status) {
+        super(status);
+    }
+
+    public RpcResult(RpcConstants.Status status, GenericException exception) {
+        super(status);
         this.exception = exception;
     }
 

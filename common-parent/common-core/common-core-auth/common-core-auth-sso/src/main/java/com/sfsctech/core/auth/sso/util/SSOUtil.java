@@ -32,7 +32,7 @@ public class SSOUtil {
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             return result;
         }
-        logger.info("用户校验：salt_CacheKey[" + salt_CacheKey + "]。");
+        logger.info("用户校验:salt_CacheKey[" + salt_CacheKey + "]。");
 
         String salt = String.valueOf(SingletonUtil.getCacheFactory().getCacheClient().get(salt_CacheKey));
         if (StringUtil.isBlank(salt)) {
@@ -41,7 +41,7 @@ public class SSOUtil {
             return result;
         }
         jt.setSalt(salt);
-        logger.info("用户校验：salt[" + salt + "]。");
+        logger.info("用户校验:salt[" + salt + "]。");
 
         // 从缓存中获取token信息
         String token = String.valueOf(SingletonUtil.getCacheFactory().getCacheClient().get(salt_CacheKey + LabelConstants.POUND + salt));
@@ -66,20 +66,20 @@ public class SSOUtil {
     }
 
     public static void refreshJwt(Claims claims, String account, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
-        logger.info("刷新登录用户：" + account + "的Jwt信息");
+        logger.info("刷新登录用户:" + account + "的Jwt信息");
         String jwt = JwtUtil.generalJwt(claims);
-        logger.info("用户：" + account + "，生成新的jwt[" + jwt + "]。");
+        logger.info("用户:" + account + "，生成新的jwt[" + jwt + "]。");
         // 生成新的salt
         String salt = HexUtil.getEncryptKey();
-        logger.info("用户：" + account + "，生成新的加密盐值[" + salt + "]。");
+        logger.info("用户:" + account + "，生成新的加密盐值[" + salt + "]。");
         // 加密JwtToken
         String token = EncrypterTool.encrypt(jwt, salt);
-        logger.info("用户：" + account + "，生成新的token[" + token + "]。");
+        logger.info("用户:" + account + "，生成新的token[" + token + "]。");
         // 清除salt_CacheKey
         SingletonUtil.getCacheFactory().getCacheClient().remove(salt_CacheKey);
         // 生成新的salt_CacheKey
         salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
-        logger.info("用户：" + account + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
+        logger.info("用户:" + account + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
         SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, config.getExpiration().intValue());
         // 缓存token
@@ -90,7 +90,7 @@ public class SSOUtil {
     }
 
     private static void saltCacheKey(RpcResult<JwtToken> result, String salt_CacheKey) {
-        result.setMessage("用户校验失败：[" + salt_CacheKey + "] 无法解密出salt_CacheKey。");
+        result.setMessage("用户校验失败:[" + salt_CacheKey + "] 无法解密出salt_CacheKey。");
         result.setSuccess(false);
         result.setStatus(RpcConstants.Status.Failure);
     }

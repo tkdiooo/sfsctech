@@ -60,7 +60,7 @@ public class Des3 {
             // Encode bytes to base64 to get a string
             return Base64.encrypt(enc);
         } catch (Exception e) {
-            logger.error("明文：" + data + "加密失败", e);
+            logger.error("明文:" + data + "加密失败", e);
         }
         return "";
     }
@@ -82,7 +82,7 @@ public class Des3 {
             // Decode using utf-8
             return new String(utf8, "UTF8");
         } catch (Exception e) {
-            logger.error("密文：" + data + "解密失败", e);
+            logger.error("密文:" + data + "解密失败", e);
         }
         return "";
     }
@@ -99,7 +99,7 @@ public class Des3 {
         try {
             return HexUtil.toHexString(encryptECB(new BASE64Decoder().decodeBuffer(key), data.getBytes("UTF-8")));
         } catch (Exception e) {
-            logger.error("明文：" + data + "ECB加密失败", e);
+            logger.error("明文:" + data + "ECB加密失败", e);
         }
         return "";
     }
@@ -121,7 +121,7 @@ public class Des3 {
 
             return cipher.doFinal(data);
         } catch (Exception e) {
-            logger.error("明文：" + new String(data) + "ECB加密失败", e);
+            logger.error("明文:" + new String(data) + "ECB加密失败", e);
         }
         return new byte[0];
     }
@@ -136,7 +136,7 @@ public class Des3 {
         try {
             return new String(decryptECB(new BASE64Decoder().decodeBuffer(key), HexUtil.fromHexString(data)), "UTF-8");
         } catch (Exception e) {
-            logger.error("密文：" + data + "ECB解密失败", e);
+            logger.error("密文:" + data + "ECB解密失败", e);
         }
         return "";
     }
@@ -158,7 +158,7 @@ public class Des3 {
 
             return cipher.doFinal(data);
         } catch (Exception e) {
-            logger.error("明文：" + new String(data) + "ECB解密失败", e);
+            logger.error("明文:" + new String(data) + "ECB解密失败", e);
         }
         return new byte[0];
     }
@@ -175,7 +175,7 @@ public class Des3 {
         try {
             return HexUtil.toHexString(encryptCBC(new BASE64Decoder().decodeBuffer(key), keyiv, data.getBytes("UTF-8")));
         } catch (Exception e) {
-            logger.error("明文：" + data + "CBC加密失败", e);
+            logger.error("明文:" + data + "CBC加密失败", e);
         }
         return "";
     }
@@ -200,7 +200,7 @@ public class Des3 {
 
             return cipher.doFinal(data);
         } catch (Exception e) {
-            logger.error("明文：" + new String(data) + "CBC加密失败", e);
+            logger.error("明文:" + new String(data) + "CBC加密失败", e);
         }
         return new byte[0];
     }
@@ -215,7 +215,7 @@ public class Des3 {
         try {
             return new String(decryptCBC(new BASE64Decoder().decodeBuffer(key), keyiv, HexUtil.fromHexString(data)), "UTF-8");
         } catch (Exception e) {
-            logger.error("密文：" + data + "CBC解密失败", e);
+            logger.error("密文:" + data + "CBC解密失败", e);
         }
         return "";
     }
@@ -240,7 +240,7 @@ public class Des3 {
 
             return cipher.doFinal(data);
         } catch (Exception e) {
-            logger.error("密文：" + new String(data) + "CBC解密失败", e);
+            logger.error("密文:" + new String(data) + "CBC解密失败", e);
         }
         return new byte[0];
     }

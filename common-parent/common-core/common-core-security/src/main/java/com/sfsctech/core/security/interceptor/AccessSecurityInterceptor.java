@@ -75,7 +75,7 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
         }
         if (null != csrf && csrf.isEnabled()) {
             boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
-            logger.info("exclusion：[" + verify + "] request uri：[" + requestURI + "] ");
+            logger.info("exclusion:[" + verify + "] request uri:[" + requestURI + "] ");
             // 当前请求路径是否需要验证 && Csrf防御验证
             if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
                 logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
@@ -91,7 +91,7 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        logger.info("postHandle：[" + request.getRequestURI() + "] ");
+        logger.info("postHandle:[" + request.getRequestURI() + "] ");
         if (null != csrf && csrf.isEnabled()) {
             Method method = null;
             if (handler instanceof HandlerMethod) {

@@ -50,7 +50,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             try {
                 // 请求路径是无需校验的路径
                 if (FilterHandler.isExclusion(requestURI, super.excludesPattern)) {
-                    logger.info("Don't need to intercept the path：" + requestURI);
+                    logger.info("Don't need to intercept the path:" + requestURI);
                     chain.doFilter(request, response);
                     return;
                 }
@@ -60,7 +60,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     chain.doFilter(request, response);
                     return;
                 }
-                logger.info("Request path：" + requestURI);
+                logger.info("Request path:" + requestURI);
                 // JwtToken信息
                 CookieHelper helper = CookieHelper.getInstance(request, response);
                 if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {

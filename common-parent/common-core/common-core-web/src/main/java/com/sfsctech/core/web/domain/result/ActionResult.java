@@ -3,7 +3,6 @@ package com.sfsctech.core.web.domain.result;
 
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.BaseResult;
-import com.sfsctech.core.base.enums.StatusEnum;
 import com.sfsctech.core.base.enums.TipsEnum;
 import com.sfsctech.core.spring.constants.I18NConstants;
 import com.sfsctech.core.spring.util.ResourceUtil;
@@ -31,12 +30,12 @@ public class ActionResult<T> extends BaseResult {
         super.addMessages(messages);
     }
 
-    private ActionResult(T result, StatusEnum<Integer, String> status, String... messages) {
+    private ActionResult(T result, RpcConstants.Status status, String... messages) {
         super(status, messages);
         this.result = result;
     }
 
-    private ActionResult(StatusEnum<Integer, String> status, String... messages) {
+    private ActionResult(RpcConstants.Status status, String... messages) {
         super(status, messages);
     }
 
@@ -94,7 +93,7 @@ public class ActionResult<T> extends BaseResult {
         return new ActionResult<>(t, RpcConstants.Status.Failure, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
     }
 
-    public static <T> ActionResult<T> forStatus(T t, StatusEnum<Integer, String> status, TipsEnum<String, String> tips, String... params) {
+    public static <T> ActionResult<T> forStatus(T t, RpcConstants.Status status, TipsEnum<String, String> tips, String... params) {
         return new ActionResult<>(t, status, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
     }
 

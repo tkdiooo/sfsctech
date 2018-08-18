@@ -1,9 +1,11 @@
 package com.sfsctech.core.base.domain.result;
 
-import com.sfsctech.core.base.constants.RpcConstants;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.sfsctech.core.base.constants.RpcConstants.Status;
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.*;
 
@@ -23,7 +25,7 @@ public class BaseResult extends BaseDto {
     /**
      * 响应状态
      */
-    protected StatusEnum<Integer, String> status = RpcConstants.Status.Successful;
+    protected Status status = Status.Successful;
     /**
      * 响应消息列表
      */
@@ -32,7 +34,7 @@ public class BaseResult extends BaseDto {
     public BaseResult() {
     }
 
-    public BaseResult(StatusEnum<Integer, String> status, String... messages) {
+    public BaseResult(Status status, String... messages) {
         this.success = status.getSuccessful();
         this.status = status;
         if (ArrayUtils.isNotEmpty(messages)) {
@@ -48,23 +50,23 @@ public class BaseResult extends BaseDto {
         this.success = hasErrors;
     }
 
-//    @JSONField(name = "statusCode")
-//    public int getStatusCode() {
-//        return status.getCode();
-//    }
-//
-//    @JSONField(name = "statusCode")
-//    public void setStatusCode(int code) {
-//        this.status = BaseEnum.getByCode(this.status, code);
-//    }
+    @JSONField(name = "statusCode")
+    public int getStatusCode() {
+        return status.getCode();
+    }
 
-    //    @JSONField(deserialize = false)
-    public StatusEnum<Integer, String> getStatus() {
+    @JSONField(name = "statusCode")
+    public void setStatusCode(int code) {
+        this.status = Status.getEnum(code);
+    }
+
+    @JSONField(deserialize = false)
+    public Status getStatus() {
         return status;
     }
 
-    //    @JSONField(deserialize = false)
-    public void setStatus(StatusEnum<Integer, String> status) {
+    @JSONField(deserialize = false)
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -98,6 +100,11 @@ public class BaseResult extends BaseDto {
 
     public Map<String, Object> getAttachs() {
         return this.attachs;
+    }
+
+    @Override
+    public String toString() {
+        return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("statusCode").toString();
     }
 
 }

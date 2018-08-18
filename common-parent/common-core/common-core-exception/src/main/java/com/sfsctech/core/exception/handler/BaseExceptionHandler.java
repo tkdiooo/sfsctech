@@ -24,7 +24,7 @@ import java.util.HashMap;
  */
 public abstract class BaseExceptionHandler {
 
-    protected final static Logger logger = LoggerFactory.getLogger(BaseExceptionHandler.class);
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, BaseResult result, String viewName, HttpStatus status) {
         String ret_url = request.getHeader("Referer");

@@ -15,6 +15,7 @@
         <module>common-support-util</module>
         <module>common-support-tools</module>
         <module>common-support-saml</module>
+        <module>common-support-bootstrap</module>
     </modules>
 
 </project>

@@ -9,4 +9,15 @@ package com.sfsctech.core.base.enums;
 public interface StatusEnum<K, V> extends BaseEnum<K, V> {
 
     boolean getSuccessful();
+
+    static <K, V> BaseEnum<K, V> getByCode(BaseEnum<K, V>[] enums, K key) {
+        BaseEnum<K, V> value = null;
+        for (BaseEnum<K, V> e : enums) {
+            if (key == e.getCode() || key.equals(e.getCode())) {
+                value = e;
+                break;
+            }
+        }
+        return value;
+    }
 }

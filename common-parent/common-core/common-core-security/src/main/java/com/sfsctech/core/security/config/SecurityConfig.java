@@ -6,7 +6,7 @@ import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
-import com.sfsctech.core.exception.controller.GlobalExceptionHandler;
+import com.sfsctech.core.exception.handler.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.CORSFilter;

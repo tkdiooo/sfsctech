@@ -46,7 +46,7 @@ public class RequestAttributeResolver implements HandlerMethodArgumentResolver {
                 jo.put(key, value[0]);
             }
         });
-        logger.info("请求地址：" + parameter.getMethod().getDeclaringClass() + "." + parameter.getMethod().getName() + "()，参数解析：" + jo.toJSONString());
+        logger.info("请求地址:" + parameter.getMethod().getDeclaringClass() + "." + parameter.getMethod().getName() + "()，参数解析:" + jo.toJSONString());
         Object o = JSON.parseObject(jo.toJSONString(), parameter.getParameterType());
         
         ValidatorResult result = ValidatorUtil.validate(o);
