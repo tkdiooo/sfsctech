@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class BootstrapUtil {
 
-    private static String[] OPTIONS_CLASS = {"btn btn-danger", "btn btn-success", "btn btn-info", "btn btn-warning"};
+    private static String[] OPTIONS_CLASS = {"text-red", "text-green", "text-aqua", "text-yellow"};
 
     private static CacheFactory factory = SpringContextUtil.getBean(CacheFactory.class);
 
