@@ -29,9 +29,14 @@ public class RedisTest {
 
     @Test
     public void testRedis() {
-        factory.getCacheClient().putTimeOut("test", "abc", CacheConstants.MilliSecond.Minutes30.getContent());
+        for (int i = 0; i < 300; i++) {
+            factory.getCacheClient().putTimeOut("test" + i, "abc" + i, CacheConstants.MilliSecond.Minutes30.getContent());
+        }
 
-        System.out.println(factory.get("test").toString());
+        for (int i = 0; i < 300; i++) {
+            System.out.println(factory.get("test" + i).toString());
+        }
+
 
     }
 }

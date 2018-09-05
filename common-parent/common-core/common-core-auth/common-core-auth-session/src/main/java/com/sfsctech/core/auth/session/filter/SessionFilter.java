@@ -2,6 +2,7 @@ package com.sfsctech.core.auth.session.filter;
 
 
 import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.WebsiteConstants;
 import com.sfsctech.core.base.filter.BaseFilter;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.support.common.security.EncrypterTool;
@@ -45,10 +46,10 @@ public class SessionFilter extends BaseFilter {
             chain.doFilter(request, response);
             return;
         }
-        String index_url = this.welcomeFile;
+        String index_url = WebsiteConstants.CONTEXT_PATH + this.welcomeFile;
         String form_url = HttpUtil.getFullUrl(request);
         if (StringUtil.isNotBlank(form_url)) {
-            index_url += LabelConstants.QUESTION + SessionConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.DEs3CBC, form_url);
+            index_url += LabelConstants.QUESTION + SessionConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
         }
         logger.info("User Session invalidation, jump page[" + index_url + "]");
         if (HttpUtil.isAjaxRequest(request)) {
