@@ -1,5 +1,6 @@
 package com.sfsctech.demo.test.redis;
 
+import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.base.constants.CacheConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -9,6 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class RedisTest
@@ -29,13 +33,15 @@ public class RedisTest {
 
     @Test
     public void testRedis() {
+        List<String> keys = new ArrayList<>();
         for (int i = 0; i < 300; i++) {
-            factory.getCacheClient().putTimeOut("test" + i, "abc" + i, CacheConstants.MilliSecond.Minutes30.getContent());
+            keys.add(CacheKeyUtil.getSaltCacheKey());
         }
 
-        for (int i = 0; i < 300; i++) {
-            System.out.println(factory.get("test" + i).toString());
-        }
+        keys.forEach(key -> factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent()));
+
+        keys.forEach(key -> System.out.println(factory.get(key).toString()));
+
 
 
     }

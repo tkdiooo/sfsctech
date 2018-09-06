@@ -44,7 +44,7 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager(RedisTemplate<String, ?> redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        cacheManager.setDefaultExpiration(10); // 设置key-value超时时间
+        cacheManager.setDefaultExpiration(3600); // 设置key-value超时时间
         return cacheManager;
     }
 
@@ -58,8 +58,6 @@ public class CacheConfig {
     }
 
     /**
-     * Redis 单机
-     *
      * @return RedisTemplate
      */
     @Bean
