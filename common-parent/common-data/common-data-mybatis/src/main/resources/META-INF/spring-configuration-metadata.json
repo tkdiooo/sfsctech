@@ -433,6 +433,10 @@
       "sourceType": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>",
       "name": "spring.druid-datasource.slave",
       "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"
+    },
+    {
+      "name": "spring.druid-datasource.spring-monitor.enabled",
+      "type": "java.lang.Boolean"
     }
   ]
 }

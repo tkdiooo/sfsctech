@@ -61,7 +61,7 @@ public class JwtCookieUtil {
                 logger.error(ThrowableUtil.getRootMessage(e));
             }
         }
-        logger.info("用户Authorization获取为空");
+        logger.info("用户Authorization Token获取为空");
         return null;
     }
 

@@ -120,6 +120,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
                 }
             }
+            logger.info("用户Session失效");
             // 项目类型是单页应用
             if (SSOProperties.AppType.RestAPI.equals(ssoProperties.getAuth().getAppType())) {
                 response.getWriter().write(LabelConstants.OPEN_CURLY_BRACE + LabelConstants.QUOTE + "result" + LabelConstants.QUOTE + LabelConstants.COLON + LabelConstants.QUOTE + "session" + LabelConstants.QUOTE + LabelConstants.CLOSE_CURLY_BRACE);
@@ -150,7 +151,6 @@ public abstract class BaseSSOFilter extends BaseFilter {
             if (StringUtil.isBlank(redirect_url)) {
                 redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getHomePage());
             }
-            logger.info("用户Session失效");
             // 登录超时处理
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
