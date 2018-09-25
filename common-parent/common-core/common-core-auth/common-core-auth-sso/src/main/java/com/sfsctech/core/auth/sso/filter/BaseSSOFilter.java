@@ -164,28 +164,10 @@ public abstract class BaseSSOFilter extends BaseFilter {
         }
     }
 
-    private RpcResult<JwtToken> localVerify(JwtToken jt) {
-        RpcResult<JwtToken> result = SSOUtil.generalVerify(jt, logger);
-        if (!result.isSuccess()) {
-            return result;
-        }// 获取salt_CacheKey
-        String salt_CacheKey = result.getAttachs().get("salt_CacheKey").toString();
-        // 会话保持剩余时间（秒）
-        long loginedTimeStamp = SingletonUtil.getCacheFactory().getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + jt.getSalt());
-        // 如果离超时间还有一半左右，刷新Jwt
-        if (SingletonUtil.getJwtProperties().getExpiration() > 0 && (loginedTimeStamp <= (SingletonUtil.getJwtProperties().getExpiration() / 2))) {
-            // 解密Jwt
-            String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
-            // 获取jwt Claims
-            Claims claims = JwtUtil.parseJWT(token);
-            // 刷新Jwt
-            SSOUtil.refreshJwt(claims, String.valueOf(claims.get(SSOConstants.LOGIN_ACCOUNT)), salt_CacheKey, jt, logger);
-            result.setResult(jt);
-        }
-        return result;
-    }
 
     protected abstract SSOCheckInterface getcheck();
 
     protected abstract void generateSesssion(Claims claims, HttpServletRequest request);
+
+    protected abstract RpcResult<JwtToken> localVerify(JwtToken jt);
 }

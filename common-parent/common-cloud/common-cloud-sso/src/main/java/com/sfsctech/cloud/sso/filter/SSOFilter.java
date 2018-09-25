@@ -37,4 +37,9 @@ public class SSOFilter extends BaseSSOFilter {
     protected void generateSesssion(Claims claims, HttpServletRequest request) {
 
     }
+
+    @Override
+    protected RpcResult<JwtToken> localVerify(JwtToken jt) {
+        return null;
+    }
 }

@@ -1,8 +1,6 @@
 package com.sfsctech.core.base.ex.enums;
 
 import com.sfsctech.core.base.enums.BaseEnum;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Class ExceptionTypeEnum
