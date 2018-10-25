@@ -771,4 +771,35 @@ public class DateUtil extends DateUtils {
 
         return result;
     }
+
+    public static String getDayByStart(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        //一天的开始时间 yyyy:MM:dd 00:00:00
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return toDateTimeDash(calendar.getTime());
+    }
+
+    public static String getDayByStart(String date) {
+        return getDayByStart(parseDate(date));
+    }
+
+    public static String getDayByEnd(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        //一天的结束时间 yyyy:MM:dd 23:59:59
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return toDateTimeDash(calendar.getTime());
+    }
+
+    public static String getDayByEnd(String date) {
+        return getDayByStart(parseDate(date));
+    }
+
 }
