@@ -33,12 +33,12 @@ public class DefaultCellStyle implements CellStyles {
         //标题字体
         Font headerFont = wb.createFont();
         headerFont.setFontHeightInPoints((short) 14);
-        headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//        headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         //蓝色加粗字体
         Font blueBoldFont = wb.createFont();
         blueBoldFont.setFontHeightInPoints((short) 10);
-        blueBoldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//        blueBoldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
         blueBoldFont.setColor(IndexedColors.BLUE.getIndex());
 
         // --Cell Style设定-- //
@@ -46,8 +46,8 @@ public class DefaultCellStyle implements CellStyles {
         //标题格式
         CellStyle headerStyle = wb.createCellStyle();
         headerStyle.setFont(headerFont);
-        headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-        headerStyle.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+//        headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//        headerStyle.setVerticalAlignment(CellStyle.ALIGN_CENTER);
         setBorder(headerStyle);
         styles.put(ExcelConstants.CellStyle.HeaderCell, headerStyle);
 
@@ -87,21 +87,21 @@ public class DefaultCellStyle implements CellStyles {
         //布尔格式
         CellStyle boolStyle = wb.createCellStyle();
         boolStyle.setFont(blueBoldFont);
-        boolStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//        boolStyle.setAlignment(CellStyle.ALIGN_CENTER);
         setBorder(boolStyle);
         styles.put(ExcelConstants.CellStyle.BooleanCell, boolStyle);
 
         CellStyle boolStyleNL = wb.createCellStyle();
         boolStyleNL.setWrapText(true);
         boolStyleNL.setFont(blueBoldFont);
-        boolStyleNL.setAlignment(CellStyle.ALIGN_CENTER);
+//        boolStyleNL.setAlignment(CellStyle.ALIGN_CENTER);
         setBorder(boolStyleNL);
         styles.put(ExcelConstants.CellStyle.BooleanCellNL, boolStyleNL);
 
         // 函数格式
         CellStyle formulaStyle = wb.createCellStyle();
         formulaStyle.setFont(blueBoldFont);
-        formulaStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//        formulaStyle.setAlignment(CellStyle.ALIGN_CENTER);
         setBorder(formulaStyle);
         styles.put(ExcelConstants.CellStyle.FormulaCell, boolStyle);
     }
@@ -109,16 +109,16 @@ public class DefaultCellStyle implements CellStyles {
     @Override
     public void setBorder(CellStyle style) {
         //设置边框
-        style.setBorderRight(CellStyle.BORDER_THIN);
+//        style.setBorderRight(CellStyle.BORDER_THIN);
         style.setRightBorderColor(IndexedColors.BLACK.getIndex());
 
-        style.setBorderLeft(CellStyle.BORDER_THIN);
+//        style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 
-        style.setBorderTop(CellStyle.BORDER_THIN);
+//        style.setBorderTop(CellStyle.BORDER_THIN);
         style.setTopBorderColor(IndexedColors.BLACK.getIndex());
 
-        style.setBorderBottom(CellStyle.BORDER_THIN);
+//        style.setBorderBottom(CellStyle.BORDER_THIN);
         style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
     }
 

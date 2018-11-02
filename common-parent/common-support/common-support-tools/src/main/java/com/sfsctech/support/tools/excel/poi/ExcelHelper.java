@@ -328,11 +328,11 @@ public abstract class ExcelHelper {
     public String getCellValue(Cell cell) {
         AssertUtil.notNull(cell, "cell 对象为空");
         String result;
-        switch (cell.getCellType()) {
+//        switch (cell.getCellType()) {
             // 数字类型
-            case HSSFCell.CELL_TYPE_NUMERIC:
+//            case CellType.NUMERIC:
                 // 处理日期格式、时间格式
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+//                if (HSSFDateUtil.isCellDateFormatted(cell)) {
 //                    可以判断得到的Date是日期时间、日期还是时间，可以通过cell.getCellStyle().getDataFormat()来判断，这个返回值没有一个常量值来对应，我本机是excel2013，测试结果是日期时间(yyyy-MM-dd HH:mm:ss) - 22，日期(yyyy-MM-dd) - 14，时间(HH:mm:ss) - 21，年月(yyyy-MM) - 17，时分(HH:mm) - 20，月日(MM-dd) - 58
 //                    switch (cell.getCellStyle().getDataFormat()) {
 //                        case 22:
@@ -345,49 +345,50 @@ public abstract class ExcelHelper {
 //                        Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
 //                        result = DateUtil.parse3String(date, "yyyy-MM-dd");
 //                    } else {
-                    double value = cell.getNumericCellValue();
-                    CellStyle style = cell.getCellStyle();
-                    DecimalFormat format = new DecimalFormat();
-                    String temp = style.getDataFormatString();
-                    // 单元格设置成常规
-                    if (temp.equals("General")) {
-                        format.applyPattern("#");
-                    }
-                    result = format.format(value);
+//                    double value = cell.getNumericCellValue();
+//                    CellStyle style = cell.getCellStyle();
+//                    DecimalFormat format = new DecimalFormat();
+//                    String temp = style.getDataFormatString();
+//                    // 单元格设置成常规
+//                    if (temp.equals("General")) {
+//                        format.applyPattern("#");
+//                    }
+//                    result = format.format(value);
 //                    }
 //                    Date date = cell.getDateCellValue();
 //                    result = DateUtil.toDateTime(date);
-                } else {
-                    double doubleVal = cell.getNumericCellValue();
-                    long longVal = Math.round(cell.getNumericCellValue());
-                    if (Double.parseDouble(longVal + ".0") == doubleVal)
-                        result = String.valueOf(longVal);
-                    else
-                        result = String.valueOf(doubleVal);
-                }
-                break;
+//                } else {
+//                    double doubleVal = cell.getNumericCellValue();
+//                    long longVal = Math.round(cell.getNumericCellValue());
+//                    if (Double.parseDouble(longVal + ".0") == doubleVal)
+//                        result = String.valueOf(longVal);
+//                    else
+//                        result = String.valueOf(doubleVal);
+//                }
+//                break;
             // String类型
-            case HSSFCell.CELL_TYPE_STRING:
-                result = cell.getRichStringCellValue().toString();
-                break;
+//            case HSSFCell.CELL_TYPE_STRING:
+//                result = cell.getRichStringCellValue().toString();
+//                break;
             // 布尔类型
-            case HSSFCell.CELL_TYPE_BOOLEAN:
-                result = String.valueOf(cell.getBooleanCellValue());
-                break;
+//            case HSSFCell.CELL_TYPE_BOOLEAN:
+//                result = String.valueOf(cell.getBooleanCellValue());
+//                break;
             // 表达式
-            case HSSFCell.CELL_TYPE_FORMULA:
-                result = cell.getCellFormula();
-                break;
+//            case HSSFCell.CELL_TYPE_FORMULA:
+//                result = cell.getCellFormula();
+//                break;
             // 空类型
-            case HSSFCell.CELL_TYPE_BLANK:
-                result = null;
-                break;
-            default:
-                result = "";
-                break;
-        }
-        if (StringUtil.isNotBlank(result)) return result.trim();
-        else return result;
+//            case HSSFCell.CELL_TYPE_BLANK:
+//                result = null;
+//                break;
+//            default:
+//                result = "";
+//                break;
+//        }
+//        if (StringUtil.isNotBlank(result)) return result.trim();
+//        else return result;
+            return null;
     }
 
 }

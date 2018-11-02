@@ -54,7 +54,7 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         final String requestURI = request.getRequestURI();
-        final String domain = HttpUtil.getDomain(request);
+        final String domain = request.getServerName();
         final String ret_url = request.getHeader("Referer");
         final String method = request.getMethod();
         // 请求方法验证
@@ -64,19 +64,20 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
         }
         // 判断路径是否无需校验
         boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
-        logger.info("requestURI:" + requestURI + ",isExclusion:" + verify);
+        logger.info("requestURI:[" + requestURI + "]，isExclusion:[" + verify + "]");
         logger.info("domain:" + domain);
         logger.info("Referer:" + ret_url);
-        logger.info(String.valueOf((StringUtil.isNotBlank(ret_url) && !ret_url.startsWith(domain))));
-        // 访问劫持验证：路径无需校验，并且上次请求不是当前服务域名
-        if (!verify && (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith(domain))) {
+        logger.info(String.valueOf((StringUtil.isNotBlank(ret_url) && !ret_url.startsWith("https://" + domain) && !ret_url.startsWith("http://" + domain))));
+        // 访问劫持验证：路径需校验，并且上次请求不是当前服务域名
+        if (!verify && (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith("https://" + domain) && !ret_url.startsWith("http://" + domain))) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
             return false;
         }
+        // 如果CSRF防御打开
         if (null != csrf && csrf.isEnabled()) {
             boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
-            logger.info("exclusion:[" + verify + "] request uri:[" + requestURI + "] ");
-            // 当前请求路径是否需要验证 && Csrf防御验证
+            logger.info("requestURI:[" + requestURI + "]，requiredVerify:[" + required + "]");
+            // 当前请求路径需要验证 或者 当前路径必须验证，CSRF防御校验
             if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
                 logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
