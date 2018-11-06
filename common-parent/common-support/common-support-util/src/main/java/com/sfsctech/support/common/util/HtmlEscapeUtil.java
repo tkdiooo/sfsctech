@@ -3,8 +3,7 @@
  */
 package com.sfsctech.support.common.util;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,7 +51,7 @@ public class HtmlEscapeUtil extends StringEscapeUtils {
      * @return "取消"
      */
     public static String htmlClear(String html) {
-        if (StringUtils.isBlank(html)) {
+        if (StringUtil.isBlank(html)) {
             return "";
         }
         String regEx_script = "<script[^>]*?>[\\s\\S]*?</script>"; // 定义script的正则表达式
