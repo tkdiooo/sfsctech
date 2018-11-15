@@ -1,5 +1,6 @@
 package com.sfsctech.website.thymeleaf.rpc.provider;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.core.base.domain.model.PagingInfo;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.web.domain.result.ActionResult;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Service
 public class AccountService {
 
-//    @Reference
+    @Reference
     private SysAccountService accountService;
 
     public ActionResult<SysAccountDto> save(SysAccountDto model) {

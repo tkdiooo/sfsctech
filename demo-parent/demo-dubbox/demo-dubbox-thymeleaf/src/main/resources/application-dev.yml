@@ -1,0 +1,8 @@
+#dubbo setting
+dubbo:
+  dev-setting:
+    system-path: C:\Users\tkdiooo\
+    develop:
+      - inf-package: com.sfsctech.framework.inf
+        port: 20880
+        name: dubbo

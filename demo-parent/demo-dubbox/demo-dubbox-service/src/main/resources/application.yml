@@ -9,6 +9,10 @@ server:
 #    logback-expose-webapp-root: true
 # datasource setting
 spring:
+  profiles:
+    active: dev
+  application:
+    name: dubbox-test-service
   druid-datasource:
     master:
       url: jdbc:mysql://localhost:3306/qi_system?useUnicode=true&characterEncoding=utf-8
@@ -146,7 +150,6 @@ dubbo:
     timeout: 2000
   protocol:
     config: Single
-    optimizer: Kryo
     single:
       name: dubbo
       port: 20080
@@ -157,3 +160,5 @@ dubbo:
 #--spring.cloud.config.name=jsp
 #--spring.cloud.config.profile=deve
 #--spring.cloud.config.uri=http://localhost:8888
+logging:
+  path: D:\opt\logs

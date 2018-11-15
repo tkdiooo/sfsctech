@@ -12,11 +12,13 @@ import org.slf4j.MDC;
  */
 public class TraceNoUtil {
 
+    public static final String TRACE_ID = "X-B3-TraceId";
+
     /**
      * 产生新的traceNo,并放到MDC中
      */
     public static void newTraceNo() {
-        MDC.put("traceNo", RandomStringUtils.randomAlphanumeric(12));
+        MDC.put(TRACE_ID, RandomStringUtils.randomAlphanumeric(12));
     }
 
     /**
@@ -25,7 +27,7 @@ public class TraceNoUtil {
      */
     public static void newTraceNo(String parentTranceNo) {
         if (StringUtils.isNotEmpty(parentTranceNo)) {
-            MDC.put("traceNo", parentTranceNo + "-" + RandomStringUtils.randomAlphanumeric(6));
+            MDC.put(TRACE_ID, parentTranceNo + "-" + RandomStringUtils.randomAlphanumeric(6));
         } else {
             newTraceNo();
         }
@@ -37,13 +39,13 @@ public class TraceNoUtil {
      * @return
      */
     public static String getTraceNo() {
-        return MDC.get("traceNo");
+        return MDC.get(TRACE_ID);
     }
 
     /**
      * 清除MDC中的traceNo
      */
     public static void clearTraceNo() {
-        MDC.remove("traceNo");
+        MDC.remove(TRACE_ID);
     }
 }

@@ -30,6 +30,8 @@ server:
 #    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
+#  profiles:
+#    active: dev
   thymeleaf:
     cache: false
     suffix: .html
@@ -38,6 +40,8 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
+  application:
+    name: dubbox-test-website
 cache:
   redis:
 #    host: 172.16.225.98:
@@ -57,8 +61,9 @@ dubbo:
     #日志适配
     logger: slf4j
   registry:
+    protocol: zookeeper
     #zookeeper注册中心服务地址
-    address: zookeeper://172.16.225.98:2181
+    address: 172.16.225.98:2181
     #注册中心不存在时，是否报错
     check: false
     #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
@@ -92,11 +97,13 @@ website:
 #     intercept-exclude-path: /**
       # csrf验证排除路径
       verify-exclude-path: /index
-    ddos:
-      enabled: true
-      time-span: 60
-      limit: 1
-      whitelist:
-        - ip: 127.0.0.1
-          time-span: -1
-          limit: 10
+#    ddos:
+#      enabled: true
+#      time-span: 60
+#      limit: 1
+#      whitelist:
+#        - ip: 127.0.0.1
+#          time-span: -1
+#          limit: 10
+logging:
+  path: D:\opt\logs

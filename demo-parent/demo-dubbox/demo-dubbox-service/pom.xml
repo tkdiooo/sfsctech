@@ -24,20 +24,20 @@
             <artifactId>demo-dubbox-interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-auth-sso</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.sfsctech.framework</groupId>
             <artifactId>sfsctech-dubbo-starter-provider</artifactId>
-            <version>1.0.0</version>
+            <version>${sfsctech.common.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

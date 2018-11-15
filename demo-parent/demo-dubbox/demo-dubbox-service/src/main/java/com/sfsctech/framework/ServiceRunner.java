@@ -1,9 +1,8 @@
 package com.sfsctech.framework;
 
-import com.sfsctech.core.auth.sso.config.SSOConfig;
+import com.sfsctech.data.mybatis.starter.EnableMybatis;
 import com.sfsctech.dubbo.starter.EnableDubboProviderService;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Import;
 
 /**
  * Class ServiceRunning
@@ -12,7 +11,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @EnableDubboProviderService
-@Import(SSOConfig.class)
+@EnableMybatis
 public class ServiceRunner {
 
     public static void main(String[] args) {
