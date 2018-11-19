@@ -1,6 +1,7 @@
 package com.sfsctech.core.logger.util;
 
 
+import com.sfsctech.core.logger.rmt.kafka.model.TransmitConfig;
 import com.sfsctech.core.logger.rmt.kafka.sender.KafkaSarsSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +29,13 @@ public class PushUtil extends Thread {
         logQueue = linkedBlockingQueue;
     }
 
-    public static synchronized PushUtil getInstance(String serverUrl, String zfcode, String fileName, String topic) {
-        if (push != null)
+    public static synchronized PushUtil getInstance(TransmitConfig config) {
+        if (push != null){
+            push.isRun = true;
             return push;
+        }
         push = new PushUtil(new LinkedBlockingQueue<>());
-        push.kafka = new KafkaSarsSender(serverUrl, zfcode, fileName, topic);
+        push.kafka = new KafkaSarsSender(config);
         push.start();
         logger.info("PushUtil initialize succeed[" + push.kafka.toString() + "]");
         return push;
@@ -48,6 +51,7 @@ public class PushUtil extends Thread {
     }
 
     public void run() {
+        System.out.println(isRun);
         while (isRun) {
             try {
                 kafka.push(logQueue.take());

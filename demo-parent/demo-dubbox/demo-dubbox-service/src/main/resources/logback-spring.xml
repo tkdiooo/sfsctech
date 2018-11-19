@@ -2,6 +2,7 @@
 <configuration debug="false">
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <conversionRule conversionWord="ip" converterClass="com.sfsctech.core.logger.logback.pattern.converter.IPConverter" />
 
     <springProperty name="appName" scope="context" source="spring.application.name"/>
     <springProperty name="logPath" scope="context" source="logging.path"/>
@@ -37,52 +38,24 @@
             <!-- 小于level级别的日志会被过滤掉 -->
             <level>DEBUG</level>
         </filter>
-        <!--<encoder>
+        <encoder class="com.sfsctech.core.logger.logback.pattern.encoder.TraceNoPatternLayoutEncoder">
             <pattern>${FILE_LOG_PATTERN}</pattern>
-        </encoder>-->
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        <!-- log level -->
-                        "severity": "%level",
-                        <!-- the name of the application that logged the span -->
-                        "service": "${appName:-}",
-                        <!-- the id of the latency graph that contains the span -->
-                        "trace": "%X{X-B3-TraceId:-}",
-                        <!-- the id of a specific operation that took place -->
-                        "span": "%X{X-B3-SpanId:-}",
-                        <!-- whether the log should be exported to Zipkin or not. Whenwould you like the span not to be exportable? In the case in which you want towrap some operation in a Span and have it written to the logs only. -->
-                        "exportable": "%X{X-Span-Export:-}",
-                        <!-- The current process ID -->
-                        "pid": "${PID:-}",
-                        "thread": "%thread",
-                        "class": "%logger{40}",
-                        "rest": "%message"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
     <!--File Log Setting end -->
 
     <!--RMT Log Setting begin -->
+    <!--远程同步参数：kafka zookeeper地址列表，IP:host,IP:host-->
     <property name="brokerList" value="172.16.225.98:9092"/>
-    <property name="zfcode" value="framework-website"/>
-    <property name="fileName" value="framework-website.log"/><!--远程文件 -->
-    <property name="topic" value="website"/><!--topic -->
-
+    <!--系统模块（SOA或微服务业务系统标记）-->
+    <property name="point" value="demo"/>
+    <!--系统类型（前端Controller、后端service、微信service、前端html）-->
+    <property name="aspect" value="后端service"/>
     <!-- Appender to log to Kafka -->
     <appender name="RMT" class="com.sfsctech.core.logger.rmt.kafka.appender.KafkaAppender">
-        <topic>${topic}</topic><!--topic//-->
-        <zfcode>${zfcode}</zfcode><!--远程同步参数：项目编号-->
-        <fileName>${fileName}</fileName><!--远程同步参数：同步过去的文件名称-->
-        <brokerList>${brokerList}</brokerList><!--远程同步参数：zookeeper地址列表，可配置N个-->
+        <topic>${appName}</topic>
+        <brokerList>${brokerList}</brokerList>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <!-- 小于level级别的日志会被过滤掉 -->
             <level>DEBUG</level>
@@ -98,7 +71,10 @@
                         <!-- log level -->
                         "severity": "%level",
                         <!-- the name of the application that logged the span -->
+                        "ip": "%ip",
                         "service": "${appName:-}",
+                        "point": "${point:-}",
+                        "aspect": "${aspect:-}",
                         <!-- the id of the latency graph that contains the span -->
                         "trace": "%X{X-B3-TraceId:-}",
                         <!-- the id of a specific operation that took place -->
@@ -109,7 +85,9 @@
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
-                        "rest": "%message"
+                        "rest": "%message",
+                        <!-- 异常堆栈信息，输出5行 -->
+                        "stack_trace": "%exception{5}"
                         }
                     </pattern>
                 </pattern>

@@ -41,7 +41,7 @@ spring:
     view:
       suffix: .html
   application:
-    name: dubbox-test-website
+    name: dubbox-test-website-abc
 cache:
   redis:
 #    host: 172.16.225.98:

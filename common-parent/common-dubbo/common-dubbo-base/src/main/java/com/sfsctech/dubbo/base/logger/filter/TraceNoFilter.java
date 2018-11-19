@@ -5,7 +5,7 @@ package com.sfsctech.dubbo.base.logger.filter;
 
 import com.sfsctech.core.base.filter.BaseFilter;
 import com.sfsctech.support.common.util.HttpUtil;
-import com.sfsctech.dubbo.base.logger.pattern.trace.util.TraceNoUtil;
+import com.sfsctech.core.logger.util.TraceNoUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

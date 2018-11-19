@@ -9,10 +9,12 @@ import com.sfsctech.core.base.domain.result.ValidatorResult;
 import com.sfsctech.core.base.ex.BaseException;
 import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
 import com.sfsctech.core.spring.util.ValidatorUtil;
+import com.sfsctech.core.logger.util.TraceNoUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;
 import com.sfsctech.core.exception.ex.VerifyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.lang.reflect.Method;
 
@@ -28,6 +30,7 @@ public class ExceptionFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+        MDC.put(TraceNoUtil.TRACE_ID, invocation.getAttachment(TraceNoUtil.TRACE_ID));
         logger.info("RPC调用：{IP：" + RpcContext.getContext().getRemoteHost() + ", service：" + invoker.getInterface().getName() + ", method：" + invocation.getMethodName() + "}");
         // 根据参数类型判断是否需要验证参数
         Class<?>[] parameterTypes = invocation.getParameterTypes();

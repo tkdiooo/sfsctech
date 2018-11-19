@@ -1,4 +1,4 @@
-package com.sfsctech.dubbo.base.logger.pattern.trace.util;
+package com.sfsctech.core.logger.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;

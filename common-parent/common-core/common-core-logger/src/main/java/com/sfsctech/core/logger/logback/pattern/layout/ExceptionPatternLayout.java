@@ -1,12 +1,10 @@
-package com.sfsctech.dubbo.base.logger.pattern.trace.layout;
+package com.sfsctech.core.logger.logback.pattern.layout;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.dubbo.base.logger.pattern.converter.TraceConverter;
-import com.sfsctech.dubbo.base.logger.pattern.trace.util.TraceNoUtil;
+import com.sfsctech.core.logger.util.TraceNoUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.logging.logback.ColorConverter;
 
 /**
  * Class TraceNoPatternLayout
@@ -14,12 +12,7 @@ import org.springframework.boot.logging.logback.ColorConverter;
  * @author 张麒 2017/6/8.
  * @version Description:
  */
-public class TraceNoPatternLayout extends PatternLayout {
-
-    static {
-        defaultConverterMap.put("trace", TraceConverter.class.getName());
-        defaultConverterMap.put("clr", ColorConverter.class.getName());
-    }
+public class ExceptionPatternLayout extends PatternLayout {
 
     @Override
     public String doLayout(ILoggingEvent event) {

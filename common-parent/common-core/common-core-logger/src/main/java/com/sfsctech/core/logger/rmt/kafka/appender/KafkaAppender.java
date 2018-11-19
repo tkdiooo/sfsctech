@@ -4,6 +4,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.core.encoder.Encoder;
 import ch.qos.logback.core.status.ErrorStatus;
+import com.sfsctech.core.logger.rmt.kafka.model.TransmitConfig;
 import com.sfsctech.core.logger.util.PushUtil;
 
 /**
@@ -18,8 +19,6 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
     private PushUtil pushUtil = null;
     private String topic;
-    private String zfcode;
-    private String fileName;
     private String brokerList;
 
     @Override
@@ -33,7 +32,7 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
         if (errors == 0) {
             super.start();
             if (pushUtil == null) {
-                pushUtil = PushUtil.getInstance(brokerList, zfcode, fileName, topic);
+                pushUtil = PushUtil.getInstance(TransmitConfig.builder().brokerList(brokerList).topic(topic).build());
             }
         }
     }
@@ -60,13 +59,5 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
 
     public void setBrokerList(String brokerList) {
         this.brokerList = brokerList;
-    }
-
-    public void setZfcode(String zfcode) {
-        this.zfcode = zfcode;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 }

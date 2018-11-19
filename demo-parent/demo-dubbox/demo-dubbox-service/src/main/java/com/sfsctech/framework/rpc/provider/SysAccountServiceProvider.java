@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.sfsctech.core.base.domain.model.PagingInfo;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.cache.factory.CacheFactory;
-import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.inf.SysAccountService;
 import com.sfsctech.framework.model.domain.TSysAccount;
 import com.sfsctech.framework.model.dto.SysAccountDto;
@@ -43,8 +42,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 
     @Override
     public RpcResult<SysAccountDto> save(SysAccountDto model) {
-        System.out.println("哦啊");
-        System.out.println(readService.find());
+        logger.info(readService.find().toString());
 //        model.setEnabled(0);
 //        model.setLocked(0);
 //        model.setStatus(StatusConstants.Status.VALID.getKey());

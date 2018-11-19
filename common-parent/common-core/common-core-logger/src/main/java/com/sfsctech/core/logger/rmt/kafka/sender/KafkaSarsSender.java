@@ -1,6 +1,7 @@
 package com.sfsctech.core.logger.rmt.kafka.sender;
 
-import com.sfsctech.core.logger.util.NetUtil;
+import com.sfsctech.core.base.json.FastJson;
+import com.sfsctech.core.logger.rmt.kafka.model.TransmitConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -8,7 +9,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -22,18 +22,13 @@ public class KafkaSarsSender {
 
     private static final Random random = new Random();
     private Producer<String, String> producer;
-    private String localHost;
-    private String zfcode;
-    private String fileName;
-    private String topic;
+    private TransmitConfig config;
 
-    public KafkaSarsSender(String brokerList, String zfcode, String fileName, String topic) {
-        this.zfcode = zfcode;
-        this.fileName = fileName;
-        this.topic = topic;
-        List<String> localHosts = NetUtil.getLocalIPList();
-        localHost = localHosts.isEmpty() ? StringUtils.EMPTY : localHosts.get(0);
-        this.producer = initKafkaProducer(brokerList);
+    public KafkaSarsSender(TransmitConfig config) {
+        this.config = config;
+//        List<String> localHosts = NetUtil.getLocalIPList();
+//        localHost = localHosts.isEmpty() ? StringUtils.EMPTY : localHosts.get(0);
+        this.producer = initKafkaProducer(config.getBrokerList());
     }
 
     public void push(String text) {
@@ -43,7 +38,7 @@ public class KafkaSarsSender {
 //        jsonObject.put("log", text);
 //        jsonObject.put("ip", localHost);
 //        jsonObject.put("fileName", fileName);
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, ip, text);
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<>(config.getTopic(), ip, text);
         this.producer.send(producerRecord);
     }
 
@@ -67,6 +62,6 @@ public class KafkaSarsSender {
 
     @Override
     public String toString() {
-        return "{zfcode:" + this.zfcode + ",ip:" + this.localHost + ",topic:" + this.topic + ",fileName:" + this.fileName + "}";
+        return FastJson.toJSONString(config);
     }
 }
