@@ -47,8 +47,7 @@ public class SysAccountServiceProvider implements SysAccountService {
 //        model.setLocked(0);
 //        model.setStatus(StatusConstants.Status.VALID.getKey());
 //        writeService.save(model);
-//        return ActionResult.forSuccess(model);
-        return null;
+        return new RpcResult<>(model);
     }
 
     @Override

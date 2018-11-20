@@ -19,14 +19,14 @@ import java.util.Date;
 @Service
 public class AccountService {
 
-//    @Reference
+    @Reference
     private SysAccountService accountService;
 
     public ActionResult<SysAccountDto> save(SysAccountDto model) {
         model.setCreatetime(new Date());
         model.setCreator(1L);
-//        RpcResult<SysAccountDto> result = accountService.save(model);
-        return ActionResult.forSuccess();
+        RpcResult<SysAccountDto> result = accountService.save(model);
+        return ActionResult.forSuccess(result.getResult());
     }
 
     public ActionResult<PagingInfo<SysAccountDto>> findByPage(PagingInfo<SysAccountDto> pagingInfo) {

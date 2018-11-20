@@ -162,3 +162,4 @@ dubbo:
 #--spring.cloud.config.uri=http://localhost:8888
 logging:
   path: D:\opt\logs
+  config: classpath:logback-custom.xml

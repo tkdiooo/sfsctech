@@ -41,7 +41,7 @@ spring:
     view:
       suffix: .html
   application:
-    name: dubbox-test-website-abc
+    name: dubbox-test-website
 cache:
   redis:
 #    host: 172.16.225.98:
@@ -107,3 +107,4 @@ website:
 #          limit: 10
 logging:
   path: D:\opt\logs
+  config: classpath:logback-custom.xml

@@ -32,8 +32,9 @@ public class KafkaAppender extends AppenderBase<ILoggingEvent> {
         if (errors == 0) {
             super.start();
             if (pushUtil == null) {
-                pushUtil = PushUtil.getInstance(TransmitConfig.builder().brokerList(brokerList).topic(topic).build());
+                pushUtil = new PushUtil(TransmitConfig.builder().brokerList(brokerList).topic(topic).build());
             }
+            pushUtil.start();
         }
     }
 

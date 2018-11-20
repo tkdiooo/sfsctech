@@ -19,26 +19,15 @@ public class PushUtil extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(PushUtil.class);
 
-    private static PushUtil push;
 
     private BlockingQueue<String> logQueue;
     private KafkaSarsSender kafka;
     private boolean isRun = true;
 
-    private PushUtil(LinkedBlockingQueue<String> linkedBlockingQueue) {
-        logQueue = linkedBlockingQueue;
-    }
-
-    public static synchronized PushUtil getInstance(TransmitConfig config) {
-        if (push != null){
-            push.isRun = true;
-            return push;
-        }
-        push = new PushUtil(new LinkedBlockingQueue<>());
-        push.kafka = new KafkaSarsSender(config);
-        push.start();
-        logger.info("PushUtil initialize succeed[" + push.kafka.toString() + "]");
-        return push;
+    public PushUtil(TransmitConfig config) {
+        this.logQueue = new LinkedBlockingQueue<>();
+        this.kafka = new KafkaSarsSender(config);
+        logger.info("PushUtil initialize succeed[" + kafka.toString() + "]");
     }
 
     public void push(String txt) {
@@ -51,7 +40,6 @@ public class PushUtil extends Thread {
     }
 
     public void run() {
-        System.out.println(isRun);
         while (isRun) {
             try {
                 kafka.push(logQueue.take());

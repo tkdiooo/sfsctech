@@ -2,8 +2,6 @@ package com.sfsctech.core.logger.rmt.es.appender;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 /**
  * Class ESAppender
