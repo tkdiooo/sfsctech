@@ -49,7 +49,7 @@ public class SessionFilter extends BaseFilter {
         String index_url = WebsiteConstants.CONTEXT_PATH + this.welcomeFile;
         String form_url = HttpUtil.getFullUrl(request);
         if (StringUtil.isNotBlank(form_url)) {
-            index_url += LabelConstants.QUESTION + SessionConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
+            index_url += LabelConstants.QUESTION + SessionConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, form_url);
         }
         logger.info("User Session invalidation, jump page[" + index_url + "]");
         if (HttpUtil.isAjaxRequest(request)) {

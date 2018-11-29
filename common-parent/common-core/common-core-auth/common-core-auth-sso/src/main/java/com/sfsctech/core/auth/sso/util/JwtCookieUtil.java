@@ -32,9 +32,12 @@ public class JwtCookieUtil {
      * @return JwtToken
      */
     public static JwtToken getJwtTokenByCookie(CookieHelper helper) {
+        logger.info("通过Cookie获取Authorization信息");
         String token = helper.getCookieValue(SSOConstants.COOKIE_TOKEN_NAME);
+        logger.info("token:" + token);
         String saltCacheKey = helper.getCookieValue(SSOConstants.COOKIE_SALT_CACHE_KEY_NAME);
-        if (StringUtil.isNotBlank(token)) {
+        logger.info("saltCacheKey:" + saltCacheKey);
+        if (StringUtil.isNotBlank(token) && StringUtil.isNotBlank(saltCacheKey)) {
             try {
                 JwtToken jt = new JwtToken();
                 jt.setJwt(URLDecoder.decode(token, LabelConstants.UTF8));
@@ -45,11 +48,14 @@ public class JwtCookieUtil {
                 logger.error(ThrowableUtil.getRootMessage(e));
             }
         }
+        logger.info("用户Authorization信息获取为空");
         return null;
     }
 
     public static JwtToken getJwtTokenByHeader(HttpServletRequest request) {
+        logger.info("通过request header获取Authorization信息");
         String authorization = request.getHeader("Authorization");
+        logger.info("Authorization:" + authorization);
         if (StringUtil.isNotBlank(authorization)) {
             try {
                 String[] token = authorization.split(LabelConstants.POUND);
@@ -61,7 +67,7 @@ public class JwtCookieUtil {
                 logger.error(ThrowableUtil.getRootMessage(e));
             }
         }
-        logger.info("用户Authorization Token获取为空");
+        logger.info("用户Authorization信息获取为空");
         return null;
     }
 

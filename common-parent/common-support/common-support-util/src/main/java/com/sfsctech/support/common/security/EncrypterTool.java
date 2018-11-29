@@ -23,7 +23,7 @@ public class EncrypterTool {
     private static final Logger logger = LoggerFactory.getLogger(EncrypterTool.class);
 
     public enum Security {
-        Base64, Des3, Des3ECB, DEs3CBC, Md5, Aes, AesCBC
+        Base64, Des3, Des3ECBBase64, Des3ECBHex, DEs3CBCBase64, DEs3CBCHex, Md5, Aes, AesCBC
     }
 
     /**
@@ -34,10 +34,14 @@ public class EncrypterTool {
             return Base64.encrypt(info.getBytes());
         } else if (security.equals(Security.Des3)) {
             return Des3.encrypt(info);
-        } else if (security.equals(Security.Des3ECB)) {
-            return Des3.encryptECB(info);
-        } else if (security.equals(Security.DEs3CBC)) {
-            return Des3.encryptCBC(info);
+        } else if (security.equals(Security.Des3ECBBase64)) {
+            return Des3.encryptECBToBase64(info);
+        } else if (security.equals(Security.Des3ECBHex)) {
+            return Des3.encryptECBToHex(info);
+        } else if (security.equals(Security.DEs3CBCBase64)) {
+            return Des3.encryptCBCToBase64(info);
+        } else if (security.equals(Security.DEs3CBCHex)) {
+            return Des3.encryptCBCToHex(info);
         } else if (security.equals(Security.Md5)) {
             return Md5.encode(info);
         } else if (security.equals(Security.Aes)) {
@@ -56,10 +60,12 @@ public class EncrypterTool {
             return new String(Base64.decrypt(info));
         } else if (security.equals(Security.Des3)) {
             return Des3.decrypt(info);
-        } else if (security.equals(Security.Des3ECB)) {
-            return Des3.decryptECB(info);
-        } else if (security.equals(Security.DEs3CBC)) {
-            return Des3.decryptCBC(info);
+        } else if (security.equals(Security.Des3ECBBase64)) {
+            return Des3.decryptECBByBase64(info);
+        } else if (security.equals(Security.DEs3CBCBase64)) {
+            return Des3.decryptCBCByBase64(info);
+        } else if (security.equals(Security.DEs3CBCHex)) {
+            return Des3.decryptCBCByHex(info);
         } else if (security.equals(Security.Md5)) {
             return info;
         } else if (security.equals(Security.Aes)) {
@@ -121,6 +127,6 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Des3ECB, "shienwei"));
+        System.out.println(encrypt(Security.Des3ECBHex, "shienwei"));
     }
 }

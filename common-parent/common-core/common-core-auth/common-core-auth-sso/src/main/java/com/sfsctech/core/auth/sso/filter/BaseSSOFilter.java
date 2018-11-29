@@ -50,7 +50,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             try {
                 // 请求路径是无需校验的路径
                 if (FilterHandler.isExclusion(requestURI, super.excludesPattern)) {
-                    logger.info("Don't need to intercept the path:" + requestURI);
+                    logger.info("不需要拦截的路径:{}", requestURI);
                     chain.doFilter(request, response);
                     return;
                 }
@@ -60,7 +60,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
                     chain.doFilter(request, response);
                     return;
                 }
-                logger.info("Request path:" + requestURI);
+                logger.info("请求路径:{}", requestURI);
                 // JwtToken信息
                 CookieHelper helper = CookieHelper.getInstance(request, response);
                 if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
@@ -68,9 +68,11 @@ public abstract class BaseSSOFilter extends BaseFilter {
                 } else {
                     jt = JwtCookieUtil.getJwtTokenByHeader(request);
                 }
+                logger.info("获取JwtToken:{}", jt);
                 if (null != jt) {
                     RpcResult<JwtToken> result;
                     // Jwt 认证校验
+                    logger.info("Jwt校验方式:{}", ssoProperties.getAuth().getWay());
                     SSOCheckInterface check = getcheck();
                     if (ssoProperties.getAuth().getWay().equals(SSOProperties.AuthWay.Complex)) {
                         result = check.complexVerify(jt);
@@ -83,18 +85,24 @@ public abstract class BaseSSOFilter extends BaseFilter {
                         result.setSuccess(false);
                         result.setMessage("校验规则无法匹配");
                     }
-                    // 设置Session attribute
-                    Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
-                    if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
-
                     // 校验成功
                     if (result.isSuccess()) {
+                        logger.info("用户Session校验成功:{}", result.isSuccess());
+
+                        // 设置Session attribute
+                        logger.info("根据缓存key:{}，获取用户Session缓存属性", jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+                        Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+                        logger.info("用户Session缓存属性:{}", null != attribute ? attribute.size() : null);
+                        if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
+
                         jt = result.getResult();
                         try {
                             String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
                             Claims claims = JwtUtil.parseJWT(token);
+                            logger.info("自定义Session属性:generateSesssion");
                             generateSesssion(claims, request);
                             // 更新token
+                            logger.info("更新Jwt,更新策略:{}", ssoProperties.getAuth().getSessionKeep());
                             if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
                                 JwtCookieUtil.updateJwtToken(helper, jt);
                             } else {
@@ -103,20 +111,23 @@ public abstract class BaseSSOFilter extends BaseFilter {
                             chain.doFilter(request, response);
                             return;
                         } catch (Exception e) {
+                            logger.warn("Jwt处理异常:清理Jwt");
                             JwtCookieUtil.clearJwtToken(helper);
-                            logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                            logger.warn("异常信息:{}", ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
                         }
                     }
                     // 校验失败
                     else {
-                        logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                        logger.warn("校验失败:{}", result);
                     }
                 }
             } catch (Exception e) {
-                logger.error(ThrowableUtil.getRootMessage(e), e);
+                logger.error("异常:{}", ThrowableUtil.getRootMessage(e), e);
             } finally {
                 // 更新Session attribute
                 if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
+                    // TODO 需要验证Session 属性具体内容
+                    logger.info("更新Session attribute");
                     SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
                 }
             }
@@ -130,7 +141,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
             String redirect_url = null;
             // 后端模板应用session失效处理
             if (SSOProperties.AppType.Backend.equals(ssoProperties.getAuth().getAppType())) {
-                redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getDomain() + requestURI);
+                redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, ssoProperties.getDomain() + requestURI);
             }
             // 后端模板应用，回调页面处理
             else {
@@ -139,17 +150,17 @@ public abstract class BaseSSOFilter extends BaseFilter {
                 if (StringUtil.isNotBlank(form_url) && form_url.contains(ssoProperties.getDomain()) && !form_url.contains(ssoProperties.getHomePage())) {
                     // 项目类型是前端系统
                     if (SSOProperties.AppType.Frontend.equals(ssoProperties.getAuth().getAppType())) {
-                        redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
+                        redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, form_url);
                     }
                     // 项目类型是模板应用
                     else if (SSOProperties.AppType.Template.equals(ssoProperties.getAuth().getAppType())) {
-                        redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getHomePage() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + form_url);
+                        redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, ssoProperties.getHomePage() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + form_url);
                     }
                 }
             }
             // 登录页面拼接系统首页
             if (StringUtil.isBlank(redirect_url)) {
-                redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, ssoProperties.getHomePage());
+                redirect_url = ssoProperties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, ssoProperties.getHomePage());
             }
             // 登录超时处理
             ResponseUtil.setNoCacheHeaders(response);

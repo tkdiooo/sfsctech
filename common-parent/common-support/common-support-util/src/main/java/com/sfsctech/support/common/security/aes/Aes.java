@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 
 /**
@@ -45,12 +46,7 @@ public class Aes {
      * @return aes加密数据
      */
     public static String encrypt(String bef_aes, String salt) {
-        byte[] byteContent = null;
-        try {
-            byteContent = bef_aes.getBytes(LabelConstants.UTF8);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        byte[] byteContent = bef_aes.getBytes(StandardCharsets.UTF_8);
         return encrypt(byteContent, salt);
     }
 
@@ -101,7 +97,7 @@ public class Aes {
             SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");// 创建密码器
             cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(iv));// 初始化
-            byte[] result = cipher.doFinal(bef_aes.getBytes(LabelConstants.UTF8));
+            byte[] result = cipher.doFinal(bef_aes.getBytes(StandardCharsets.UTF_8));
             return new BASE64Encoder().encode(result);
         } catch (Exception e) {
             e.printStackTrace();
