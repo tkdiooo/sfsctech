@@ -28,7 +28,7 @@ public abstract class UUIDUtil {
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
-        return Base64.encodeBase64URLSafeString(bb.array());
+        return Base64.encodeBase64URLSafeString(bb.array()).trim();
     }
 
     public static String encodeBase64Uuid(String uuidString) {
@@ -49,7 +49,7 @@ public abstract class UUIDUtil {
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
-        return Base58.encode(bb.array());
+        return Base58.encode(bb.array()).trim();
     }
 
     public static String encodeBase58Uuid(String uuidString) {
