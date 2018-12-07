@@ -15,6 +15,7 @@
     <modules>
         <module>demo-test-redis</module>
         <module>demo-test-jenkins</module>
+        <module>demo-test-kafka</module>
     </modules>
     <packaging>pom</packaging>
 
