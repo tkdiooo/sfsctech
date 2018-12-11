@@ -11,7 +11,7 @@
 
     <properties>
         <sfsctech.common.version>2.1.0-SNAPSHOT</sfsctech.common.version>
-        <repository.url>http://172.16.225.98:8081</repository.url>
+        <repository.url>http://172.16.223.24:8081</repository.url>
     </properties>
 
     <dependencies>
