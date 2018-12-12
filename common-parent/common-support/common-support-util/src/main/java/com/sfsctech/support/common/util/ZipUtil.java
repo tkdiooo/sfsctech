@@ -101,6 +101,11 @@ public class ZipUtil {
     public static void createZipFile(String sourcePath, String zipPath) throws IOException {
         AssertUtil.isNotBlank("sourcePath", "数据文件路径为空");
         AssertUtil.isNotBlank("zipPath", "压缩文件路径为空");
+        createZipFile(new File(sourcePath), zipPath);
+    }
+
+    public static void createZipFile(File file, String zipPath) throws IOException {
+        AssertUtil.isNotBlank("zipPath", "压缩文件路径为空");
         OutputStream os = null;
         BufferedOutputStream bos = null;
         ZipOutputStream zos = null;
@@ -108,7 +113,6 @@ public class ZipUtil {
             os = new FileOutputStream(zipPath);
             bos = new BufferedOutputStream(os);
             zos = new ZipOutputStream(bos);
-            File file = new File(sourcePath);
             String basePath;
             if (file.isDirectory()) {
                 basePath = file.getPath();
@@ -121,6 +125,7 @@ public class ZipUtil {
             FileUtil.close(zos, bos, os);
         }
     }
+
 
     private static void zipFile(File source, String basePath, ZipOutputStream zos) throws IOException {
         File[] files;

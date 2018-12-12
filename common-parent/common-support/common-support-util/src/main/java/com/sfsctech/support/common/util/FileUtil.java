@@ -41,19 +41,19 @@ public class FileUtil extends FileUtils {
      * @param path File Address
      * @return Boolean
      */
-    public static boolean createFile(String path) {
+    public static File createFile(String path) {
         AssertUtil.isNotBlank(path, "路径为空");
         String filePath = convertPath(path);
-        boolean bool = false;
         if (createFolder(filePath)) {
             File file = new File(filePath);
             try {
-                bool = file.createNewFile();
+                file.createNewFile();
+                return file;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return bool;
+        return null;
     }
 
     /**
@@ -81,11 +81,11 @@ public class FileUtil extends FileUtils {
     /**
      * 把流对象内容写入文件
      *
-     * @param file File Address
+     * @param path File Address
      * @param is   InputStream
      */
-    public static void writeInputStreamToFile(String file, InputStream is) throws IOException {
-        if (createFile(file)) {
+    public static void writeInputStreamToPath(String path, InputStream is) throws IOException {
+        if (null != createFile(path)) {
             BufferedInputStream bis = null;
             FileOutputStream fos = null;
             try {
@@ -94,7 +94,7 @@ public class FileUtil extends FileUtils {
                 // 获取网络输入流
                 bis = new BufferedInputStream(is);
                 // 建立文件
-                fos = new FileOutputStream(file);
+                fos = new FileOutputStream(path);
                 // 保存文件
                 while ((size = bis.read(buf)) != -1)
                     fos.write(buf, 0, size);
