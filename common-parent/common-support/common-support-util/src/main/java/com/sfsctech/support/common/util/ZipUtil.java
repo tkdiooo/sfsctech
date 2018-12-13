@@ -1,10 +1,12 @@
 package com.sfsctech.support.common.util;
 
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -101,11 +103,12 @@ public class ZipUtil {
     public static void createZipFile(String sourcePath, String zipPath) throws IOException {
         AssertUtil.isNotBlank("sourcePath", "数据文件路径为空");
         AssertUtil.isNotBlank("zipPath", "压缩文件路径为空");
-        createZipFile(new File(sourcePath), zipPath);
+        createZipFile(Lists.newArrayList(new File(sourcePath)), zipPath);
     }
 
-    public static void createZipFile(File file, String zipPath) throws IOException {
+    public static void createZipFile(List<File> file, String zipPath) throws IOException {
         AssertUtil.isNotBlank("zipPath", "压缩文件路径为空");
+        FileUtil.createFolder(zipPath);
         OutputStream os = null;
         BufferedOutputStream bos = null;
         ZipOutputStream zos = null;
@@ -113,19 +116,21 @@ public class ZipUtil {
             os = new FileOutputStream(zipPath);
             bos = new BufferedOutputStream(os);
             zos = new ZipOutputStream(bos);
+
             String basePath;
-            if (file.isDirectory()) {
-                basePath = file.getPath();
-            } else {
-                basePath = file.getParent();
+            for (File f : file) {
+                if (f.isDirectory()) {
+                    basePath = f.getPath();
+                } else {
+                    basePath = f.getParent();
+                }
+                zipFile(f, basePath, zos);
             }
-            zipFile(file, basePath, zos);
             zos.closeEntry();
         } finally {
             FileUtil.close(zos, bos, os);
         }
     }
-
 
     private static void zipFile(File source, String basePath, ZipOutputStream zos) throws IOException {
         File[] files;
@@ -155,6 +160,7 @@ public class ZipUtil {
                         while ((length = bis.read(buf)) > 0) {
                             zos.write(buf, 0, length);
                         }
+                        is.close();
                     }
                 }
             }

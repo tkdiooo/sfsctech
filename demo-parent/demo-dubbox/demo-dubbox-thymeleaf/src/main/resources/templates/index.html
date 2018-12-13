@@ -8,11 +8,11 @@
 		<meta name="author" content="IKKI">
 		<meta name="copyright" content="外服信">
 		<title>OA办公平台</title>
-		<script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
-		<script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>
-		<script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>
-		<script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
-		<script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
+		<!--<script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>-->
+		<!--<script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>-->
+		<!--<script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>-->
+		<!--<script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>-->
+		<!--<script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>-->
 	</head>
 	<!--=== *** 重要：未换行和换行的部分都请保持原状，否则会引起低版本IE浏览器的布局差异！ *** ===-->
 	<body>
@@ -31,6 +31,11 @@
 		</section>
 		<img th:src="${application.static_resource} + '/static/sso/images/loader.gif'">
 		<div id="abc"></div>
+<form action="upload" method="post" enctype="multipart/form-data">
+	<input type="file" name="fileUpload"/>
+	<input type="file" name="fileUpload"/>
+	<button type="submit">submit</button>
+</form>
 		<footer>Powered by 外服信 &copy; 2017</footer>
 		<script th:inline="javascript">
 			$(function(){

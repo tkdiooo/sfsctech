@@ -42,6 +42,11 @@ spring:
       suffix: .html
   application:
     name: dubbox-test-website
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 8MB
+      max-request-size: 20MB
 cache:
   redis:
 #    host: 172.16.225.98:
