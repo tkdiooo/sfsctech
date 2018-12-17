@@ -83,7 +83,7 @@ dubbo:
 website:
   support:
     # 静态资源服务
-    static-resources: http://www.zzl.com/static-global
+    static-resources: http://localhost:8080
     # 首页路径
     welcome-file: /index
   session:

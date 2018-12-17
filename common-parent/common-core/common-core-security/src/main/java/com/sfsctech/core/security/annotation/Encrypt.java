@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Encrypt {
 
-    Security value() default Security.DEs3CBCHex;
+    Security value() default Security.Des3CBCHex;
 }

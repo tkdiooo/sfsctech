@@ -8,10 +8,6 @@ import com.sfsctech.support.common.security.des3.Des3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 /**
  * Class EncrypterTool
  *
@@ -23,7 +19,7 @@ public class EncrypterTool {
     private static final Logger logger = LoggerFactory.getLogger(EncrypterTool.class);
 
     public enum Security {
-        Base64, Des3, Des3ECBBase64, Des3ECBHex, DEs3CBCBase64, DEs3CBCHex, Md5, Aes, AesCBC
+        Base64, Des3, Des3ECBBase64, Des3ECBHex, Des3CBCBase64, Des3CBCHex, Md5, Aes, AesCBC
     }
 
     /**
@@ -38,9 +34,9 @@ public class EncrypterTool {
             return Des3.encryptECBToBase64(info);
         } else if (security.equals(Security.Des3ECBHex)) {
             return Des3.encryptECBToHex(info);
-        } else if (security.equals(Security.DEs3CBCBase64)) {
+        } else if (security.equals(Security.Des3CBCBase64)) {
             return Des3.encryptCBCToBase64(info);
-        } else if (security.equals(Security.DEs3CBCHex)) {
+        } else if (security.equals(Security.Des3CBCHex)) {
             return Des3.encryptCBCToHex(info);
         } else if (security.equals(Security.Md5)) {
             return Md5.encode(info);
@@ -62,9 +58,11 @@ public class EncrypterTool {
             return Des3.decrypt(info);
         } else if (security.equals(Security.Des3ECBBase64)) {
             return Des3.decryptECBByBase64(info);
-        } else if (security.equals(Security.DEs3CBCBase64)) {
+        } else if (security.equals(Security.Des3ECBHex)) {
+            return Des3.decryptECBByHex(info);
+        } else if (security.equals(Security.Des3CBCBase64)) {
             return Des3.decryptCBCByBase64(info);
-        } else if (security.equals(Security.DEs3CBCHex)) {
+        } else if (security.equals(Security.Des3CBCHex)) {
             return Des3.decryptCBCByHex(info);
         } else if (security.equals(Security.Md5)) {
             return info;
@@ -113,7 +111,48 @@ public class EncrypterTool {
     }
 
     public static void main(String[] args) {
-
+//        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
+//        System.out.println(data);
+//        new Thread(() -> {
+//            while (true) {
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
 //        try {
 ////            String key = URLEncoder.encode(encrypt(Security.AesCBC, "0000792773"), "UTF-8");
 ////            System.out.println(key);
@@ -127,6 +166,6 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Des3ECBHex, "redis"));
+//        System.out.println(encrypt(Security.Des3ECBHex, "redis"));
     }
 }

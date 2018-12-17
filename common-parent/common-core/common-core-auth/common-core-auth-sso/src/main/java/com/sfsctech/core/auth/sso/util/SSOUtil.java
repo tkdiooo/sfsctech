@@ -26,7 +26,7 @@ public class SSOUtil {
     public static RpcResult<JwtToken> generalVerify(JwtToken jt, Logger logger) {
         RpcResult<JwtToken> result = new RpcResult<>();
         // 解密salt_CacheKey
-        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
+        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
             saltCacheKey(result, jt.getSalt_CacheKey());
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
@@ -86,7 +86,7 @@ public class SSOUtil {
         SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, config.getExpiration().intValue());
         jwtToken.setJwt(token);
         jwtToken.setSalt(salt);
-        jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3, salt_CacheKey));
+        jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));
     }
 
     private static void saltCacheKey(RpcResult<JwtToken> result, String salt_CacheKey) {
