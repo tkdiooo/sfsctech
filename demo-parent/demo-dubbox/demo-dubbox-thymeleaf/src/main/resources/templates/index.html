@@ -14,6 +14,7 @@
     <script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/jquery/jquery.ajaxfileupload.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/jquery/jquery.form.min.js'"></script>
 </head>
 <!--=== *** 重要：未换行和换行的部分都请保持原状，否则会引起低版本IE浏览器的布局差异！ *** ===-->
 <body>
@@ -34,11 +35,15 @@
 </section>
 <img th:src="${application.static_resource} + '/static/sso/images/loader.gif'">
 <div id="abc"></div>
-<form action="upload" method="post" enctype="multipart/form-data">
-    <input type="file" id="fileUpload" name="fileUpload"/>
+<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
     <input type="file" name="fileUpload"/>
-    <button type="button" onclick="upload()">submit</button>
+    <input type="file" name="fileUpload"/>
+    <input type="button" value="Submit" id="btnSubmit"/>
 </form>
+<h1>Ajax Post Result</h1>
+<pre>
+    <span id="result"></span>
+</pre>
 <footer>Powered by 外服信 &copy; 2017</footer>
 <script th:inline="javascript">
     $(function () {
@@ -51,25 +56,93 @@
                 login();
             }
         });
+
+        $('#btnSubmit').click(function (e) {
+            e.preventDefault();
+            setTimeout(upload, 1000);
+        });
     });
 
     // 登录提交
     function login() {
-        var formParams = $("#contact-form").serializeJson();
-        ajax_action('http://www.zzl.com/static-global/index', formParams);
+        // var formParams = this.serializeJson();
+        // ajax_action(/*[[@{/login}]]*/ "", formParams);
+        $("#contact-form").ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: /*[[@{/login}]]*/ "", // 需要提交的 url
+            data: $("#contact-form").serializeJson(),
+            success: function (data) { // data 保存提交后返回的数据，一般为 json 数据
+                console.info(data)
+                // 此处可对 data 作相关处理
+                alert('提交成功！');
+            },
+            error: function (data) {
+                console.info(data)
+            }
+        });
+    }
+
+
+    function fire_ajax_submit() {
+
+        // Get form
+        var form = $('#fileUploadForm')[0];
+
+        var data = new FormData(form);
+
+        data.append("CustomField", "This is some extra data, testing");
+
+        // $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: /*[[@{/upload}]]*/ "",
+            data: data,
+            //http://api.jquery.com/jQuery.ajax/
+            //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
+            processData: false, //prevent jQuery from automatically transforming the data into a query string
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                $("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+        });
+
     }
 
     function upload() {
-        var params = {};
-        var opt = {
-            fileElementId: 'fileUpload',
-            handler: function (result) {
-                console.info(result)
-                // var url = /*[[@{/security/downloadVerify}]]*/ "";
-                // window.location.href = url + "?fileName=" + result.result;
+        $('#fileUploadForm').ajaxSubmit({
+            type: 'post', // 提交方式 get/post
+            url: /*[[@{/upload}]]*/ "", // 需要提交的 url
+            // data: $('form').serialize(),
+            success: function (data) { // data 保存提交后返回的数据，一般为 json 数据
+                console.info(data)
+                // 此处可对 data 作相关处理
+                alert('提交成功！');
+            },
+            error: function (data) {
+                if(data.readyState === 0){
+                    alert('文件过大');
+
+                }else if(data.readyState === 4){
+                    // 后台报错，
+                    alert(data.responseText);
+                }
             }
-        };
-        ajax_upload(/*[[@{/upload}]]*/ "", params, opt);
+        });
     };
 
 </script>

@@ -1,9 +1,9 @@
 package com.sfsctech.website.thymeleaf.controller;
 
 import com.sfsctech.core.cache.factory.CacheFactory;
-import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.core.security.annotation.Verify;
-import com.sfsctech.framework.model.dto.SysAccountDto;
+import com.sfsctech.core.web.domain.result.ActionResult;
+import com.sfsctech.support.common.util.StringUtil;
 import com.sfsctech.website.thymeleaf.model.UserInfo;
 import com.sfsctech.website.thymeleaf.rpc.provider.AccountService;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class IndexController {
 
     @PostMapping("upload")
     @ResponseBody
-    public ActionResult upload(@RequestParam(value = "fileUpload") MultipartFile[] files) {
+    public ActionResult upload(@RequestParam(value = "fileUpload") @Verify MultipartFile[] files, UserInfo userInfo) {
         return ActionResult.forSuccess();
     }
 
