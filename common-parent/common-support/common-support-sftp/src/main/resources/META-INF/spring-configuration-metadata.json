@@ -1,0 +1,65 @@
+{
+  "groups": [
+    {
+      "name": "sftp.support",
+      "type": "com.sfsctech.support.sftp.properties.SFTPProperties",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sftp.support.ip",
+      "type": "java.lang.String",
+      "description": "IP地址",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.port",
+      "type": "java.lang.Integer",
+      "description": "端口",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.username",
+      "type": "java.lang.String",
+      "description": "用户名",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.password",
+      "type": "java.lang.String",
+      "description": "密码",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.private-key",
+      "type": "java.lang.String",
+      "description": "私钥",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.download-sleep",
+      "type": "java.lang.Integer",
+      "description": "文件下载失败下次超时重试时间",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.download-retry",
+      "type": "java.lang.Integer",
+      "description": "文件下载失败重试次数",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.upload-sleep",
+      "type": "java.lang.Integer",
+      "description": "文件上传失败下次超时重试时间",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    },
+    {
+      "name": "sftp.support.upload-retry",
+      "type": "java.lang.Integer",
+      "description": "文件上传失败重试次数",
+      "sourceType": "com.sfsctech.support.sftp.properties.SFTPProperties"
+    }
+  ]
+}

@@ -232,6 +232,7 @@ public class FileUtil extends FileUtils {
             throw new RuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
         }
         File[] files = folder.listFiles(File::isDirectory);
+        assert files != null;
         return Arrays.asList(files);
     }
 
@@ -249,6 +250,7 @@ public class FileUtil extends FileUtils {
             throw new RuntimeException("(目录不存在。)folder [" + folder + "]not exist。");
         }
         File[] files = folder.listFiles(pathname -> pathname.getName().toLowerCase().lastIndexOf("." + suffix.toLowerCase()) != -1);
+        assert files != null;
         return Arrays.asList(files);
     }
 
