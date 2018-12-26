@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +32,7 @@ public class SFTPConnectionFactory {
         this.properties = properties;
     }
 
-    private ChannelSftp getConnection() {
+    public ChannelSftp getConnection() {
         if (client == null || session == null || !client.isConnected() || !session.isConnected()) {
             try {
                 JSch jsch = new JSch();
@@ -51,10 +50,8 @@ public class SFTPConnectionFactory {
                 if (StringUtil.isNotBlank(properties.getPassword())) {
                     session.setPassword(properties.getPassword());
                 }
-                Properties config = new Properties();
-                config.put("StrictHostKeyChecking", "no");
-                session.setConfig(config);
-                session.connect();
+                session.setConfig("StrictHostKeyChecking", "no");
+                session.connect(300000);
                 Channel channel = session.openChannel("sftp");
                 channel.connect();
                 client = (ChannelSftp) channel;
@@ -67,7 +64,7 @@ public class SFTPConnectionFactory {
         return client;
     }
 
-    private void close() {
+    public void close() {
         if (client != null) {
             if (client.isConnected()) {
                 client.disconnect();
@@ -96,9 +93,6 @@ public class SFTPConnectionFactory {
         try {
             if (!isDirExist(sftpDirectory)) {
                 ChannelSftp sftp = getConnection();
-//            if (isDirExist(sftpDirectory)) {
-//                sftp.cd(sftpDirectory);
-//            }
                 String dirs[] = sftpDirectory.split("/");
                 StringBuilder filePath = new StringBuilder("/");
                 for (String dir : dirs) {
@@ -139,7 +133,7 @@ public class SFTPConnectionFactory {
             ChannelSftp sftp = getConnection();
             try {
                 for (File file : files) {
-                    sftp.put(new FileInputStream(file), file.getName());
+                    sftp.put(new FileInputStream(file), sftpDirectory + file.getName());
                     logger.info("上传sftp文件成功，ftp路径:{},文件名称:{}", sftpDirectory, file.getName());
                 }
             } catch (Exception e) {
@@ -190,7 +184,7 @@ public class SFTPConnectionFactory {
         try {
             while (bool) {
                 try {
-                    sftp.put(new FileInputStream(file), file.getName());
+                    sftp.put(new FileInputStream(file), sftpDirectory + file.getName());
                     logger.info("{}sftp文件成功，ftp路径:{},文件名称:{}", (i > 0 ? "重试上传" : "上传"), sftpDirectory, file.getName());
                     bool = false;
                 } catch (Exception e) {

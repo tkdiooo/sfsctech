@@ -24,7 +24,7 @@ public class SFTPProperties {
     // SFTP 服务器地址IP地址
     private String ip;
     // SFTP 端口
-    private int port;
+    private int port = 22;
     // 文件下载失败下次超时重试时间
     private int downloadSleep = 0;
     // 文件下载失败重试次数
