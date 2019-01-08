@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.zip.*;
 
 /**
  * Class ZipUtil
@@ -167,5 +167,51 @@ public class ZipUtil {
         } finally {
             FileUtil.close(is);
         }
+    }
+
+    public static void unzip(File zipFile, String destDir) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        ZipFile zfile = null;
+        try {
+            zfile = new ZipFile(zipFile.getPath());
+            Enumeration zList = zfile.entries();
+            ZipEntry ze;
+            byte[] buf = new byte[1024];
+            while (zList.hasMoreElements()) {
+                //从ZipFile中得到一个ZipEntry
+                ze = (ZipEntry) zList.nextElement();
+                if (ze.isDirectory()) {
+                    continue;
+                }
+                //以ZipEntry为参数得到一个InputStream，并写到OutputStream中
+                os = new BufferedOutputStream(new FileOutputStream(getRealFileName(destDir, ze.getName())));
+                is = new BufferedInputStream(zfile.getInputStream(ze));
+                int readLen = 0;
+                while ((readLen = is.read(buf, 0, 1024)) != -1) {
+                    os.write(buf, 0, readLen);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            FileUtil.close(is, os, zfile);
+        }
+
+    }
+
+    private static File getRealFileName(String baseDir, String absFileName) {
+        String[] dirs = absFileName.split("/");
+        File ret = new File(baseDir);
+        if (dirs.length > 1) {
+            for (int i = 0; i < dirs.length - 1; i++) {
+                ret = new File(ret, dirs[i]);
+            }
+        }
+        if (!ret.exists()) {
+            ret.mkdirs();
+        }
+        ret = new File(ret, dirs[dirs.length - 1]);
+        return ret;
     }
 }
