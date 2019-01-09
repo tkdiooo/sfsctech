@@ -187,10 +187,13 @@ public class ZipUtil {
                 //以ZipEntry为参数得到一个InputStream，并写到OutputStream中
                 os = new BufferedOutputStream(new FileOutputStream(getRealFileName(destDir, ze.getName())));
                 is = new BufferedInputStream(zfile.getInputStream(ze));
-                int readLen = 0;
+                int readLen;
                 while ((readLen = is.read(buf, 0, 1024)) != -1) {
                     os.write(buf, 0, readLen);
                 }
+                os.flush();
+                os.close();
+                is.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
