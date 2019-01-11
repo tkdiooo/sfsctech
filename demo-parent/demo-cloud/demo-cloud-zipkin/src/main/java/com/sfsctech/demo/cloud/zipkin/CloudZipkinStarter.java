@@ -1,8 +1,8 @@
 package com.sfsctech.demo.cloud.zipkin;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import zipkin.server.EnableZipkinServer;
 
 /**
  * Class CloudRibbonStarter
@@ -11,10 +11,10 @@ import zipkin.server.EnableZipkinServer;
  * @version Description:
  */
 @SpringBootApplication
-@EnableZipkinServer
+//@EnableZipkinServer
 public class CloudZipkinStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(CloudZipkinStarter.class).web(true).run(args);
+        new SpringApplicationBuilder(CloudZipkinStarter.class).web(WebApplicationType.SERVLET).run(args);
     }
 }

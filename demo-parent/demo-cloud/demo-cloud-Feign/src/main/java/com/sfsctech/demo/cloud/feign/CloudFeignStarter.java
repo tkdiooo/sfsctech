@@ -1,6 +1,7 @@
 package com.sfsctech.demo.cloud.feign;
 
 import com.sfsctech.cloud.net.starter.EnableCloudController;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
@@ -13,6 +14,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class CloudFeignStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(CloudFeignStarter.class).web(true).run(args);
+        new SpringApplicationBuilder(CloudFeignStarter.class).web(WebApplicationType.SERVLET).run(args);
     }
 }

@@ -21,9 +21,7 @@
         <module>demo-dubbox-model</module>
         <module>demo-dubbox-service</module>
         <module>demo-dubbox-jsp</module>
-        <module>demo-dubbox-restful</module>
         <module>demo-dubbox-thymeleaf</module>
-        <module>demo-dubbox-weichat</module>
     </modules>
 
     <properties>

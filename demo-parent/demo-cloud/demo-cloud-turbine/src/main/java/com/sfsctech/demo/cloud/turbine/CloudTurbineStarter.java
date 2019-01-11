@@ -1,5 +1,6 @@
 package com.sfsctech.demo.cloud.turbine;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.turbine.EnableTurbine;
@@ -15,6 +16,6 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 public class CloudTurbineStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(CloudTurbineStarter.class).web(true).run(args);
+        new SpringApplicationBuilder(CloudTurbineStarter.class).web(WebApplicationType.SERVLET).run(args);
     }
 }

@@ -1,7 +1,7 @@
 package com.sfsctech.demo.cloud.feign.service;
 
 import com.sfsctech.demo.cloud.feign.service.impl.IndexServiceImpl;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

@@ -11,6 +11,7 @@
 
     <artifactId>common-support</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>common-support-util</module>
         <module>common-support-tools</module>

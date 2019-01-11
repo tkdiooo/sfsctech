@@ -28,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
         res.setGroupId(checkBindingReq.getBuCode() + ":ClientService");
         res.setReq(new CheckBindingReq());
         RpcResult<CheckBindingRes> result = new RpcResult<>();
-        result.setStatus(RpcConstants.Status.Failure);
+        result.setResult(res);
         loggers.info(JSON.toJSONString(result));
         return result;
     }

@@ -17,5 +17,8 @@
         <module>common-data-mybatis</module>
     </modules>
 
+    <properties>
+        <data.scource.druid.version>1.1.12</data.scource.druid.version>
+    </properties>
 
 </project>

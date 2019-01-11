@@ -3,14 +3,13 @@
  */
 package com.sfsctech.support.common.util;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
 
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
@@ -262,7 +261,7 @@ public class BeanUtil extends BeanUtils {
 
         try {
             for (Object obj : collection) {
-                list.add((T) PropertyUtils.getProperty(obj, propertyName));
+                list.add((T) getPropertyValue(obj, propertyName));
             }
         } catch (Exception e) {
             logger.error("[" + cls.getSimpleName() + "] " + e.getMessage());

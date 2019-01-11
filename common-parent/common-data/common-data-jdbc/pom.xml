@@ -21,11 +21,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.26</version>
+            <version>${data.scource.druid.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
     </dependencies>
 
