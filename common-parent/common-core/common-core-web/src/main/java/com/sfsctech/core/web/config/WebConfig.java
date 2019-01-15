@@ -5,20 +5,18 @@ import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.spring.config.SpringConfig;
 import com.sfsctech.core.web.filter.ActionFilter;
-import com.sfsctech.core.web.tools.cookie.Config;
 import com.sfsctech.core.web.initialize.PropertiesInitialize;
 import com.sfsctech.core.web.initialize.WebResourceInitialize;
 import com.sfsctech.core.web.properties.WebsiteProperties;
-import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import com.sfsctech.core.web.tools.cookie.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.MultipartProperties;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.server.ConfigurableWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -106,7 +104,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
+    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> errorPageRegistrar() {
         return (container -> {
             ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
@@ -114,10 +112,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
             ErrorPage error405Page = new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, (FilterHandler.ERROR_PATH + LabelConstants.FORWARD_SLASH + LabelConstants.INTERNAL_SERVER_ERROR));
             container.addErrorPages(error401Page, error403Page, error404Page, error405Page, error500Page);
-            if (container instanceof TomcatEmbeddedServletContainerFactory) {
-                ((TomcatEmbeddedServletContainerFactory) container)
-                        .addContextCustomizers((TomcatContextCustomizer) context -> context.setCookieProcessor(new LegacyCookieProcessor()));
-            }
         });
     }
 

@@ -1,6 +1,6 @@
 package com.sfsctech.framework;
 
-import com.sfsctech.data.mybatis.starter.EnableMybatis;
+import com.sfsctech.data.druid.starter.EnableDruid;
 import com.sfsctech.dubbo.starter.EnableDubboProviderService;
 import org.springframework.boot.SpringApplication;
 
@@ -11,7 +11,7 @@ import org.springframework.boot.SpringApplication;
  * @version Description:
  */
 @EnableDubboProviderService
-@EnableMybatis
+@EnableDruid
 public class ServiceRunner {
 
     public static void main(String[] args) {

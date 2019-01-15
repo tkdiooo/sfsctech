@@ -95,7 +95,7 @@ public class CommonRestTemplateFactory implements RestTemplateFactory {
             IOReactorConfig ioReactorConfig = IOReactorConfig.custom().setIoThreadCount(Runtime.getRuntime().availableProcessors()).build();
             // 设置连接池大小
             ConnectingIOReactor ioReactor = new DefaultConnectingIOReactor(ioReactorConfig);
-            PoolingNHttpClientConnectionManager conMgr = new PoolingNHttpClientConnectionManager(ioReactor, null, sessionStrategyRegistry, null);
+            PoolingNHttpClientConnectionManager conMgr = new PoolingNHttpClientConnectionManager(ioReactor, sessionStrategyRegistry);
             HttpAsyncClientBuilder httpAsyncClientBuilder = HttpAsyncClients.custom()
                     .setSSLContext(sslContext)
                     .setConnectionManager(conMgr)

@@ -6,8 +6,6 @@ import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
 import com.sfsctech.support.tools.excel.model.SheetModel;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -16,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -228,7 +225,7 @@ public abstract class ExcelHelper {
                 try {
                     Object obj = cls.newInstance();
                     for (String field : value.keySet()) {
-                        BeanUtil.setProperty(obj, field, value.get(field));
+                        BeanUtil.setFieldValue(obj, field, value.get(field));
                     }
                     list.add((T) obj);
                 } catch (Exception e) {

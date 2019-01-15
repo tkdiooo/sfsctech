@@ -5,7 +5,7 @@
     <parent>
         <artifactId>common-parent</artifactId>
         <groupId>com.sfsctech.common</groupId>
-        <version>2.1.0-SNAPSHOT</version>
+        <version>2.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,10 +15,8 @@
     <modules>
         <module>common-data-jdbc</module>
         <module>common-data-mybatis</module>
+        <module>common-data-durid</module>
+        <module>common-data-hikari</module>
     </modules>
-
-    <properties>
-        <data.scource.druid.version>1.1.12</data.scource.druid.version>
-    </properties>
 
 </project>

@@ -9,7 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
 
-import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
@@ -284,20 +283,6 @@ public class BeanUtil extends BeanUtils {
     }
 
     /**
-     * 转换字符串到相应类型.
-     *
-     * @param value 待转换的字符串
-     * @param clazz 转换目标类型
-     */
-    public static Object convertStringToObject(String value, Class<?> clazz) {
-        try {
-            return ConvertUtils.convert(value, clazz);
-        } catch (Exception e) {
-            throw ThrowableUtil.convertExceptionToUnchecked(e);
-        }
-    }
-
-    /**
      * 复制实体Bean
      *
      * @param source 数据Bean
@@ -377,7 +362,7 @@ public class BeanUtil extends BeanUtils {
     }
 
     public static <T, S> List<T> copyListForCglib(List<S> source, Class<T> target) {
-        if (ListUtil.isNotEmpty(source)) {
+        if (!ListUtil.isNotEmpty(source)) {
             List<T> list = new ArrayList<>();
             BeanCopier copier = getBeanCopier(source.get(0).getClass(), target);
             DeepCopyConverter converter = new DeepCopyConverter(target);
@@ -394,7 +379,6 @@ public class BeanUtil extends BeanUtils {
         }
         return null;
     }
-
 
     /**
      * 获取BeanCopier

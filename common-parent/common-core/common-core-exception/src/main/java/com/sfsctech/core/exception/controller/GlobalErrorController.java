@@ -3,10 +3,10 @@ package com.sfsctech.core.exception.controller;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -130,7 +133,7 @@ public class GlobalErrorController implements ErrorController {
      * @return
      */
     private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
+        WebRequest requestAttributes = new DispatcherServletWebRequest(request);
         return this.errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
     }
 

@@ -16,11 +16,11 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class SecurityUtil {
 
-    public static void Encrypt(Object obj) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static void Encrypt(Object obj) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
             if (null != encrypt) {
-                Object value = BeanUtil.getProperty(obj, field.getName());
+                Object value = BeanUtil.getPropertyValue(obj, field.getName());
                 if (field.getType().equals(String.class) && !ObjectUtil.isEmpty(value)) {
                     BeanUtil.setFieldValue(obj, field.getName(), EncrypterTool.encrypt(encrypt.value(), String.valueOf(value)));
                 }
@@ -28,11 +28,11 @@ public class SecurityUtil {
         }
     }
 
-    public static void Decrypt(Object obj) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public static void Decrypt(Object obj) {
         for (Field field : obj.getClass().getDeclaredFields()) {
             Encrypt encrypt = field.getAnnotation(Encrypt.class);
             if (null != encrypt) {
-                Object value = BeanUtil.getProperty(obj, field.getName());
+                Object value = BeanUtil.getPropertyValue(obj, field.getName());
                 if (field.getType().equals(String.class) && !ObjectUtil.isEmpty(value)) {
                     BeanUtil.setFieldValue(obj, field.getName(), EncrypterTool.decrypt(encrypt.value(), String.valueOf(value)));
                 }

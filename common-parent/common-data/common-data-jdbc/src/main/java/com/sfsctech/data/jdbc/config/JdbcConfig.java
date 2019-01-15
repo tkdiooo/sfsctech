@@ -1,11 +1,13 @@
 package com.sfsctech.data.jdbc.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
 
 /**
  * Class JdbcConfig
@@ -16,15 +18,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class JdbcConfig {
 
+    // TODO 需要开发
     @Bean(name = "masterDatasource")
     @Primary
-    @ConfigurationProperties(prefix = "spring.druid-datasource.master")
-    public DruidDataSource masterDatasource() {
-        return new DruidDataSource();
+    @ConfigurationProperties(prefix = "spring.hikari-datasource.master")
+    public DataSource masterDatasource() {
+        return new HikariDataSource();
     }
 
     @Bean(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(DruidDataSource ds) {
+    public JdbcTemplate jdbcTemplate(DataSource ds) {
         return new JdbcTemplate(ds);
     }
 }

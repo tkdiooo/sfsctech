@@ -45,7 +45,7 @@ public class MapUtil extends MapUtils {
         Map<String, V> map = new LinkedHashMap<>();
         list.forEach(v -> {
             try {
-                map.put(BeanUtil.getProperty(v, kp), v);
+                map.put(String.valueOf(BeanUtil.getPropertyValue(v, kp)), v);
             } catch (Exception e) {
                 logger.error(ThrowableUtil.getRootMessage(e));
             }

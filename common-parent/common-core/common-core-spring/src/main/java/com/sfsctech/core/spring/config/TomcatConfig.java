@@ -4,15 +4,16 @@ import com.sfsctech.core.spring.properties.TomcatProperties;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.apache.coyote.http11.Http11AprProtocol;
 import org.apache.coyote.http11.Http11NioProtocol;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 
 /**
  * Class TomcatConfig
@@ -29,9 +30,13 @@ public class TomcatConfig {
     private ServerProperties serverProperties;
 
     @Bean
-    public EmbeddedServletContainerFactory servletContainer(TomcatProperties properties) {
-        TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
+    public TomcatServletWebServerFactory servletContainer(TomcatProperties properties) {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         factory.setProtocol(properties.getConnector());
+        // 解析含有中文名的文件的url
+        if (null != serverProperties.getTomcat().getUriEncoding())
+            factory.setUriEncoding(serverProperties.getTomcat().getUriEncoding());
+        // 连接池策略
         TomcatConnectorCustomizer connectorCustomizer = connector -> {
             if (properties.getConnector().endsWith("Http11AprProtocol")) {
                 setConfig((Http11AprProtocol) connector.getProtocolHandler(), properties);
@@ -39,12 +44,10 @@ public class TomcatConfig {
                 setConfig((Http11NioProtocol) connector.getProtocolHandler(), properties);
             }
         };
-        // 解析含有中文名的文件的url
-        if (null != serverProperties.getTomcat().getUriEncoding())
-            factory.setUriEncoding(serverProperties.getTomcat().getUriEncoding());
         factory.addConnectorCustomizers(connectorCustomizer);
-
-        // TODO 需要添加相关代码
+        // cookie策略
+        factory.addContextCustomizers((context) -> context.setCookieProcessor(new LegacyCookieProcessor()));
+        // TODO SSL配置
 //        factory.addAdditionalTomcatConnectors(initiateHttpConnector());
         return factory;
     }

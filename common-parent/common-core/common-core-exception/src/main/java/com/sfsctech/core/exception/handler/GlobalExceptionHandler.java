@@ -12,7 +12,7 @@ import com.sfsctech.core.spring.util.ResourceUtil;
 import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.MultipartProperties;
+import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

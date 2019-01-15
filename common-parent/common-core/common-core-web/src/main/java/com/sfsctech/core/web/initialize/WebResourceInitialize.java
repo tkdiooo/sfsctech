@@ -36,8 +36,8 @@ public class WebResourceInitialize extends WebApplicationObjectSupport implement
         // 静态资源
         servletContext.setAttribute(CommonConstants.STATIC_RESOURCE_ATTRIBUTE, websiteProperties.getSupport().getStaticResources());
         // ContextPath
-        servletContext.setAttribute(CommonConstants.CONTEXT_PATH_ATTRIBUTE, serverProperties.getContextPath());
+        servletContext.setAttribute(CommonConstants.CONTEXT_PATH_ATTRIBUTE, serverProperties.getServlet().getContextPath());
         // 网站域名
-        servletContext.setAttribute(CommonConstants.WEBSITE_DOMAIN_ATTRIBUTE, serverProperties.getSession().getCookie().getDomain());
+        servletContext.setAttribute(CommonConstants.WEBSITE_DOMAIN_ATTRIBUTE, serverProperties.getServlet().getSession().getCookie().getDomain());
     }
 }
