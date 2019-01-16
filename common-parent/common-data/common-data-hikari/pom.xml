@@ -18,6 +18,11 @@
             <artifactId>common-data-mybatis</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-data-jdbc</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>javax.servlet</groupId>-->
             <!--<artifactId>javax.servlet-api</artifactId>-->

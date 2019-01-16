@@ -1,4 +1,4 @@
-package com.sfsctech.data.mybatis.starter;
+package com.sfsctech.data.hikari.starter;
 
 /**
  * Class EnableCloudServiceClient
@@ -7,7 +7,7 @@ package com.sfsctech.data.mybatis.starter;
  * @version Description:
  */
 
-import com.sfsctech.data.mybatis.config.MyBatisConfig;
+import com.sfsctech.data.hikari.config.HikariConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(MyBatisConfig.class)
-public @interface EnableMybatis {
+@Import(HikariConfig.class)
+public @interface EnableHikari {
 
 }

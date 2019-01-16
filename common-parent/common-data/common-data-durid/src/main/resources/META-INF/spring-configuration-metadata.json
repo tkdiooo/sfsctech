@@ -2,13 +2,13 @@
   "hints": [],
   "groups": [
     {
-      "sourceType": "com.sfsctech.configurer.MyBatisConfigurer",
+      "sourceType": "com.sfsctech.data.druid.config.DruidConfig",
       "name": "spring.druid-datasource.master",
       "sourceMethod": "masterDatasource()",
       "type": "com.alibaba.druid.pool.DruidDataSource"
     },
     {
-      "sourceType": "com.sfsctech.configurer.MyBatisConfigurer",
+      "sourceType": "com.sfsctech.data.druid.config.DruidConfig",
       "name": "spring.druid-datasource.slave",
       "sourceMethod": "slaveDatasource()",
       "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"

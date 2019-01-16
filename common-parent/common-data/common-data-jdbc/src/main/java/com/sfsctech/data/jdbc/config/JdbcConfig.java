@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 @Configuration
 public class JdbcConfig {
 
-    // TODO 需要开发
     @Bean(name = "masterDatasource")
     @Primary
     @ConfigurationProperties(prefix = "spring.hikari-datasource.master")

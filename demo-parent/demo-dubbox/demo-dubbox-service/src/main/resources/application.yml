@@ -9,9 +9,6 @@ server:
 #    logback-expose-webapp-root: true
 # datasource setting
 spring:
-  redis:
-    cluster:
-      nodes:
   profiles:
     active: dev
   application:

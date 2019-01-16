@@ -9,6 +9,7 @@ import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.data.mybatis.config.MyBatisConfig;
 import com.sfsctech.data.mybatis.datasource.aspect.DynamicDataSourceAspect;
 import com.sfsctech.support.common.util.HttpUtil;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -37,7 +38,7 @@ import java.util.Map;
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper"})
 @Import({DynamicDataSourceAspect.class, CacheConfig.class})
-@ConditionalOnClass(org.apache.ibatis.session.SqlSessionFactory.class)
+@ConditionalOnClass(SqlSessionFactory.class)
 public class DruidConfig extends MyBatisConfig {
 
     @Bean(name = "masterDatasource")
