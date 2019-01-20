@@ -39,10 +39,10 @@ public class WebsiteProperties {
 
         private String staticResources;
         private String welcomeFile;
-        private final Map<String, String> uploadPath;
+        private final Map<String, String> customConfig;
 
         public Support() {
-            uploadPath = new HashMap<>();
+            customConfig = new HashMap<>();
         }
 
         public String getStaticResources() {
@@ -61,8 +61,8 @@ public class WebsiteProperties {
             this.welcomeFile = welcomeFile;
         }
 
-        public Map<String, String> getUploadPath() {
-            return uploadPath;
+        public Map<String, String> getCustomConfig() {
+            return customConfig;
         }
     }
 

@@ -8,8 +8,8 @@ import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.handler.GlobalExceptionHandler;
 import com.sfsctech.core.security.factory.HandlerMethodFactory;
-import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.CORSFilter;
+import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
 import com.sfsctech.core.security.interceptor.AccessSecurityInterceptor;
 import com.sfsctech.core.security.properties.StartProperties;
@@ -21,10 +21,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.lang.Nullable;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -35,7 +37,7 @@ import java.util.List;
  */
 @Configuration
 @Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class})
-public class SecurityConfig extends WebMvcConfigurerAdapter {
+public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
     private StartProperties properties;
@@ -46,12 +48,11 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     /**
      * 自定义参数解析器
      *
-     * @param argumentResolvers HandlerMethodArgumentResolver
+     * @param resolvers HandlerMethodArgumentResolver
      */
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new RequestAttributeResolver());
-        super.addArgumentResolvers(argumentResolvers);
+    public void addArgumentResolvers(@Nullable @NotNull List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new RequestAttributeResolver());
     }
 
     /**
@@ -60,14 +61,14 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      * @param registry InterceptorRegistry
      */
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@Nullable @NotNull InterceptorRegistry registry) {
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户拦截排除
         registry.addInterceptor(new AccessSecurityInterceptor(properties.getProperties().getCSRF()))
                 .addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR)
                 .excludePathPatterns(FilterHandler.getCSRFExcludes());
-        super.addInterceptors(registry);
+//        super.addInterceptors(registry);
     }
 
     /**
@@ -84,7 +85,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
      */
     @Bean
     public FilterRegistrationBean XSSFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new XSSFilter());
+        FilterRegistrationBean<XSSFilter> registration = new FilterRegistrationBean<>(new XSSFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("XSSFilter");
         registration.setOrder(XSSFilter.FILTER_ORDER);
@@ -100,7 +101,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
         if (properties.getProperties().getCORS().getCrossDomain() == null) {
             throw new RuntimeException("website.security.cors 跨域请求已经激活，跨域访问路径不能为空，请设置website.security.cors.cross-domain");
         }
-        FilterRegistrationBean registration = new FilterRegistrationBean(new CORSFilter(MapUtil.toMap(properties.getProperties().getCORS().getCrossDomain(), "url")));
+        FilterRegistrationBean<CORSFilter> registration = new FilterRegistrationBean<>(new CORSFilter(MapUtil.toMap(properties.getProperties().getCORS().getCrossDomain(), "url")));
         registration.setName("CORSFilter");
         registration.setOrder(CORSFilter.FILTER_ORDER);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
@@ -114,7 +115,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
     @ConditionalOnProperty(name = "website.security.ddos.enabled", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
         DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS(), factory.getCacheClient().getRedisTemplate());
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+        FilterRegistrationBean<DDOCFilter> registration = new FilterRegistrationBean<>(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");
         registration.setOrder(DDOCFilter.FILTER_ORDER);

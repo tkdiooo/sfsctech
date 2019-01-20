@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>support-parent</artifactId>
-        <groupId>com.sfsctech.support</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>com.sfsctech.framework</groupId>
+        <artifactId>sfsctech-framework-parent</artifactId>
+        <version>2.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,26 +13,15 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-server -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
-            <version>1.4.3.RELEASE</version>
-        </dependency>
         <!-- config svn support -->
         <dependency>
             <groupId>org.tmatesoft.svnkit</groupId>
             <artifactId>svnkit</artifactId>
-            <version>1.8.10</version>
+            <version>1.9.3</version>
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-util</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
+            <artifactId>common-core-web</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
@@ -44,7 +33,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.sfsctech.config.ConfigStarter</mainClass>
+                    <mainClass>com.sfsctech.config.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>

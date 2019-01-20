@@ -32,9 +32,9 @@
       "sourceType": "com.sfsctech.core.web.properties.WebsiteProperties$Support"
     },
     {
-      "name": "website.support.uploadPath",
+      "name": "website.support.custom-config",
       "type": "java.util.Map<java.lang.String, java.lang.String>",
-      "description": "上传文件路径",
+      "description": "自定义配置",
       "sourceType": "java.util.Map<java.lang.String, java.lang.String>"
     },
     {

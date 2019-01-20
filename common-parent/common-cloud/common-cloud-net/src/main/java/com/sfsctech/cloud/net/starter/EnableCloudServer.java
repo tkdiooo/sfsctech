@@ -15,6 +15,7 @@ import com.sfsctech.core.web.config.WebConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -29,7 +30,8 @@ import java.lang.annotation.*;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableHystrix
-public @interface EnableCloudController {
+@EnableHystrixDashboard
+public @interface EnableCloudServer {
 
     String[] packages() default {};
 

@@ -1,8 +1,8 @@
 package com.sfsctech.config;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.config.server.EnableConfigServer;
 
 /**
  * Class ConfigService
@@ -10,12 +10,11 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * @author 张麒 2017/5/17.
  * @version Description:
  */
-@EnableConfigServer
 @SpringBootApplication
-public class ConfigStarter {
+public class Runner {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(ConfigStarter.class).web(true).run(args);
+        new SpringApplicationBuilder(Runner.class).web(WebApplicationType.SERVLET).run(args);
     }
 
 }

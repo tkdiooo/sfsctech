@@ -94,7 +94,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     @ExceptionHandler({MultipartException.class})
     public ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, MultipartException e) {
         logger.warn("文件上传异常:[{}]", ThrowableUtil.getStackTraceMessage(e));
-        BaseResult result = new BaseResult(Status.RequestEntityTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload.getCode(), request.getLocale(), multipart.getMaxFileSize()));
+        BaseResult result = new BaseResult(Status.RequestEntityTooLarge, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionUpload.getCode(), request.getLocale(), multipart.getMaxFileSize().toString()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

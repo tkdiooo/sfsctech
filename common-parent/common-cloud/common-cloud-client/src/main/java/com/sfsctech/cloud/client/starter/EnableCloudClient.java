@@ -25,6 +25,6 @@ import java.lang.annotation.*;
 @Import({SpringConfig.class, GlobalErrorController.class, ServiceExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
-public @interface EnableCloudService {
+public @interface EnableCloudClient {
 
 }

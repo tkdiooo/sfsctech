@@ -34,7 +34,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "error")
-@Import({ServerProperties.class})
 public class GlobalErrorController implements ErrorController {
 
     private ErrorAttributes errorAttributes;

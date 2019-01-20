@@ -34,6 +34,11 @@ public class InterfaceProxyFactoryConfiguration {
     @LoadBalanced
     @ConditionalOnMissingBean(AsyncRestTemplate.class)
     public AsyncRestTemplate asyncRestTemplate(RestTemplateFactory restTemplateFactory) {
+        // TODO Spring 5.0 异步
+//        Mono.fromCallable(() -> new RestTemplate().getForObject(url, String.class)).subscribeOn(Schedulers.elastic()).subscribe(res -> {
+//            System.out.println("monoRestTemplate响应为: " + res);
+//        });
+
         return restTemplateFactory.buildAsyncRest();
     }
 

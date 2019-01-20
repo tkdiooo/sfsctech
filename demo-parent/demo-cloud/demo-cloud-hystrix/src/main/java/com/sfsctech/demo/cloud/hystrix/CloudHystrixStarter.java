@@ -1,6 +1,6 @@
 package com.sfsctech.demo.cloud.hystrix;
 
-import com.sfsctech.cloud.net.starter.EnableCloudController;
+import com.sfsctech.cloud.net.starter.EnableCloudServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @EnableHystrix
 @EnableHystrixDashboard
-@EnableCloudController(packages = {"com.sfsctech.demo.*.inf.service"})
+@EnableCloudServer(packages = {"com.sfsctech.demo.*.inf.service"})
 public class CloudHystrixStarter {
 
     @Bean

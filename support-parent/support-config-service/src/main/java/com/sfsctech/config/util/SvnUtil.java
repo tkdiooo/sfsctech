@@ -1,12 +1,12 @@
 package com.sfsctech.config.util;
 
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.common.util.FileUtil;
-import com.sfsctech.common.util.ThrowableUtil;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.web.properties.WebsiteProperties;
+import com.sfsctech.support.common.util.FileUtil;
+import com.sfsctech.support.common.util.ThrowableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.SVNDepth;
 import org.tmatesoft.svn.core.SVNException;
@@ -30,9 +30,10 @@ public class SvnUtil {
 
     @Autowired
     private SvnHelper svnHelper;
+    @Autowired
+    private WebsiteProperties properties;
 
-    @Value("${logback.file.space}")
-    private String filespace;
+    private String filespace = properties.getSupport().getCustomConfig().get("svn-path");
 
     public String logbackLabel = "logback";
 

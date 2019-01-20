@@ -1,6 +1,6 @@
 package com.sfsctech.config.util;
 
-import com.sfsctech.common.util.ThrowableUtil;
+import com.sfsctech.support.common.util.ThrowableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tmatesoft.svn.core.*;

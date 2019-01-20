@@ -1,26 +1,12 @@
 server:
-  port: 10001
+  port: 10000
 spring:
   application:
     name: config-server
-  # config svn
-  profiles:
-    active: subversion
-  cloud:
-    config:
-      server:
-        svn:
-          uri: svn://172.16.225.98/repositories/service-config/
-          username: admin
-          password: 4880300
-#          uri: https://pc-20131011xrrb/svn/service-config/
-#          username: tkdiooo
-#          password: 4880300
-        # config git
-#        git:
-#          uri: https://github.com/tkdiooo/config.git
-#          search-paths: config
-
-logback:
-  file:
-    space: /opt/logback
+website:
+  support:
+    custom-config:
+      svn-uri: svn://172.16.225.98/repositories/service-config/
+      svn-username: admin
+      svn-password: 4880300
+      svn-path: D:\logback

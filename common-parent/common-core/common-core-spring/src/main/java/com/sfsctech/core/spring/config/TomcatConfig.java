@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ConditionalOnProperty(name = "server.tomcat.optimize", havingValue = "true")
-@Import({ServerProperties.class, TomcatProperties.class})
+@Import({TomcatProperties.class})
 public class TomcatConfig {
 
     @Autowired

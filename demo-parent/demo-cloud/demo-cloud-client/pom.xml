@@ -21,12 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-spring</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-logger</artifactId>
+            <artifactId>common-cloud-client</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->

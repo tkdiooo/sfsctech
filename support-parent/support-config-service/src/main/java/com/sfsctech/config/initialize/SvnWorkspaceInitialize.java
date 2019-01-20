@@ -21,10 +21,9 @@ public class SvnWorkspaceInitialize implements CommandLineRunner {
      * checkout workspace logback.xml
      *
      * @param args
-     * @throws Exception
      */
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         svnUtil.update(svnUtil.logbackLabel);
     }
 }

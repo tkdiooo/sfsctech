@@ -27,12 +27,14 @@ import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ import java.util.List;
  */
 @Configuration
 @Import({SpringConfig.class, WebsiteProperties.class, WebResourceInitialize.class, PropertiesInitialize.class})
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig implements WebMvcConfigurer {
 
     private final Logger logger = LoggerFactory.getLogger(WebConfig.class);
 
@@ -65,10 +67,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @param registry ViewControllerRegistry
      */
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
+    public void addViewControllers(@Nullable @NotNull ViewControllerRegistry registry) {
         registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:" + websiteProperties.getSupport().getWelcomeFile());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        super.addViewControllers(registry);
     }
 
     /**
@@ -77,7 +78,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @param configurer PathMatchConfigurer
      */
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
+    public void configurePathMatch(@Nullable @NotNull PathMatchConfigurer configurer) {
         configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(true);
     }
 
@@ -87,10 +88,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @param converters
      */
     @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    public void configureMessageConverters(@Nullable @NotNull List<HttpMessageConverter<?>> converters) {
         converters.add(new ByteArrayHttpMessageConverter());
         converters.add(fastJsonConverter);
-        super.configureMessageConverters(converters);
     }
 
     /**
@@ -125,7 +125,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
         // 404请求抛出NoHandlerFoundException
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
-        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
+        ServletRegistrationBean<DispatcherServlet> registration = new ServletRegistrationBean<>(dispatcherServlet);
         registration.addInitParameter("defaultHtmlEscape", LabelConstants.TRUE);
         // 上传文件配置
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -149,7 +149,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public FilterRegistrationBean ActionFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new ActionFilter());
+        FilterRegistrationBean<ActionFilter> registration = new FilterRegistrationBean<>(new ActionFilter());
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("ActionFilter");
         registration.setOrder(ActionFilter.FILTER_ORDER);
