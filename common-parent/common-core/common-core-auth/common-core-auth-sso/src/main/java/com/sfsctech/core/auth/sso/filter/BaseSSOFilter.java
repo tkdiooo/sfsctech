@@ -5,7 +5,6 @@ import com.sfsctech.core.auth.sso.inf.SSOCheckInterface;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
-import com.sfsctech.core.auth.sso.util.SSOUtil;
 import com.sfsctech.core.auth.sso.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;

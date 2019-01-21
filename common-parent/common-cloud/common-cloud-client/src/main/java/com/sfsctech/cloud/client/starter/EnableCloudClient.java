@@ -14,6 +14,8 @@ import com.sfsctech.core.logger.config.LogbackConfig;
 import com.sfsctech.core.spring.config.SpringConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -25,6 +27,8 @@ import java.lang.annotation.*;
 @Import({SpringConfig.class, GlobalErrorController.class, ServiceExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableHystrix
+@EnableHystrixDashboard
 public @interface EnableCloudClient {
 
 }

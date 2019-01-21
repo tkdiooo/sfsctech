@@ -362,7 +362,7 @@ public class BeanUtil extends BeanUtils {
     }
 
     public static <T, S> List<T> copyListForCglib(List<S> source, Class<T> target) {
-        if (!ListUtil.isNotEmpty(source)) {
+        if (ListUtil.isNotEmpty(source)) {
             List<T> list = new ArrayList<>();
             BeanCopier copier = getBeanCopier(source.get(0).getClass(), target);
             DeepCopyConverter converter = new DeepCopyConverter(target);

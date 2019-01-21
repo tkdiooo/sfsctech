@@ -1,10 +1,7 @@
 package com.sfsctech.core.security.interceptor;
 
-import com.alibaba.fastjson.JSON;
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.filter.FilterHandler;
-import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
-import com.sfsctech.core.security.csrf.CSRFTokenManager;
 import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.tools.SecurityUtil;
 import com.sfsctech.support.common.util.HttpUtil;
@@ -34,7 +31,7 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(AccessSecurityInterceptor.class);
 
-    private SecurityProperties.CSRF csrf;
+//    private SecurityProperties.CSRF csrf;
 
     private Set<String> verifyExcludePath;
 
@@ -42,7 +39,7 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
 
     public AccessSecurityInterceptor(SecurityProperties.CSRF csrf) {
         if (null != csrf) {
-            this.csrf = csrf;
+//            this.csrf = csrf;
             this.verifyExcludePath = csrf.getVerifyExcludePath();
             this.requiredVerifyPath = csrf.getRequiredVerifyPath();
         }
@@ -53,6 +50,10 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+        // 非控制器请求直接跳出
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
         final String requestURI = request.getRequestURI();
         final String domain = request.getServerName();
         final String ret_url = request.getHeader("Referer");
@@ -73,17 +74,17 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
             return false;
         }
-        // 如果CSRF防御打开
-        if (null != csrf && csrf.isEnabled()) {
-            boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
-            logger.info("requestURI:[" + requestURI + "]，requiredVerify:[" + required + "]");
-            // 当前请求路径需要验证 或者 当前路径必须验证，CSRF防御校验
-            if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
-                logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
-                return false;
-            }
-        }
+//        // 如果CSRF防御打开
+//        if (null != csrf && csrf.isEnabled()) {
+//            boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
+//            logger.info("requestURI:[" + requestURI + "]，requiredVerify:[" + required + "]");
+//            // 当前请求路径需要验证 或者 当前路径必须验证，CSRF防御校验
+//            if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
+//                logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
+//                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
+//                return false;
+//            }
+//        }
         return true;
     }
 
@@ -93,30 +94,31 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         logger.info("postHandle:[" + request.getRequestURI() + "] ");
-        if (null != csrf && csrf.isEnabled()) {
-            Method method = null;
-            if (handler instanceof HandlerMethod) {
-                HandlerMethod handlerMethod = (HandlerMethod) handler;
-                method = handlerMethod.getMethod();
-            }
-            // 如果是Ajax请求，返回类型是String，csrf参数设置至Header
-            if (HttpUtil.isAjaxRequest(request) && null != method && method.getReturnType() == String.class) {
-                response.setHeader(CSRFTokenManager.CSRF_TOKEN, JSON.toJSONString(CSRFTokenManager.generateCSRFToken(request, response)));
-            }
-            // 如果不是Ajax请求，返回类型是String，csrf参数设置至ModelAndView
-            else if (!HttpUtil.isAjaxRequest(request) && null != modelAndView && null != modelAndView.getModel()) {
-                // 加密敏感参数
-                Map<String, Object> model = modelAndView.getModel();
-                for (String key : model.keySet()) {
-                    Object obj = model.get(key);
-                    if (BaseDto.class.equals(obj.getClass().getSuperclass())) {
-                        SecurityUtil.Encrypt(obj);
-                    }
-                }
-                // 设置Csrf Token
-                model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request, response));
-            }
+//        if (null != csrf && csrf.isEnabled()) {
+        Method method = null;
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            method = handlerMethod.getMethod();
         }
+        // 如果是Ajax请求，返回类型是String，csrf参数设置至Header
+//            if (HttpUtil.isAjaxRequest(request) && null != method && method.getReturnType() == String.class) {
+//                response.setHeader(CSRFTokenManager.CSRF_TOKEN, JSON.toJSONString(CSRFTokenManager.generateCSRFToken(request, response)));
+//            }
+//            else
+        // 如果不是Ajax请求，返回类型是String，csrf参数设置至ModelAndView
+        if (!HttpUtil.isAjaxRequest(request) && null != modelAndView) {
+            // 加密敏感参数
+            Map<String, Object> model = modelAndView.getModel();
+            for (String key : model.keySet()) {
+                Object obj = model.get(key);
+                if (BaseDto.class.equals(obj.getClass().getSuperclass())) {
+                    SecurityUtil.Encrypt(obj);
+                }
+            }
+            // 设置Csrf Token
+//            model.put(CSRFTokenManager.CSRF_TOKEN, CSRFTokenManager.generateCSRFToken(request, response));
+        }
+//        }
         // 设置无缓存，防止浏览器回退操作
         ResponseUtil.setNoCacheHeaders(response);
     }

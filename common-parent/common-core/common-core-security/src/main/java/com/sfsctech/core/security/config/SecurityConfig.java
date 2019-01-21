@@ -36,7 +36,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class})
+@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, WebSecurityConfig.class})
 public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
