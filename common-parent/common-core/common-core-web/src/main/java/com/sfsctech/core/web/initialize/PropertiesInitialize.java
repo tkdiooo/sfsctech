@@ -35,8 +35,7 @@ public class PropertiesInitialize {
 
     @Autowired
     public void attribute(
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.mvc.static-path-pattern" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath,
-            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.profiles.active" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String active) {
+            @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.mvc.static-path-pattern" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath) {
         // 项目ContextPath
         WebsiteConstants.CONTEXT_PATH = serverProperties.getServlet().getContextPath();
         // 过滤器排除 - 项目视图模板

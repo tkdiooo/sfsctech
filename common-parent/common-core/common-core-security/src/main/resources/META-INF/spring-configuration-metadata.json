@@ -9,19 +9,19 @@
       "name": "website.security.csrf",
       "type": "com.sfsctech.core.security.properties.SecurityProperties$CSRF",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
-      "sourceMethod": "getCSRF()"
+      "sourceMethod": "CSRF()"
     },
     {
       "name": "website.security.ddos",
       "type": "com.sfsctech.core.security.properties.SecurityProperties$DDOS",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
-      "sourceMethod": "getDDOS()"
+      "sourceMethod": "DDOS()"
     },
     {
       "name": "website.security.cors",
       "type": "com.sfsctech.core.security.properties.SecurityProperties$CORS",
       "sourceType": "com.sfsctech.core.security.properties.SecurityProperties",
-      "sourceMethod": "getCORS()"
+      "sourceMethod": "CORS()"
     }
   ],
   "properties": [

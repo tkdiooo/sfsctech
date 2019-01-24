@@ -11,8 +11,8 @@ import com.sfsctech.core.security.factory.HandlerMethodFactory;
 import com.sfsctech.core.security.filter.CORSFilter;
 import com.sfsctech.core.security.filter.DDOCFilter;
 import com.sfsctech.core.security.filter.XSSFilter;
-import com.sfsctech.core.security.interceptor.AccessSecurityInterceptor;
-import com.sfsctech.core.security.properties.StartProperties;
+import com.sfsctech.core.security.interceptor.HttpRequestSecurityInterceptor;
+import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.resolver.RequestAttributeResolver;
 import com.sfsctech.support.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,11 +37,11 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({StartProperties.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, WebSecurityConfig.class})
+@Import({SecurityProperties.class, WebSecurityConfig.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, WebSecurityConfig.class})
 public class SecurityConfig implements WebMvcConfigurer {
 
     @Autowired
-    private StartProperties properties;
+    private SecurityProperties properties;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
@@ -63,12 +64,12 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(@Nullable @NotNull InterceptorRegistry registry) {
         // 多个拦截器组成一个拦截器链
-        // addPathPatterns 用于添加拦截规则
-        // excludePathPatterns 用户拦截排除
-        registry.addInterceptor(new AccessSecurityInterceptor(properties.getProperties().getCSRF()))
+        registry.addInterceptor(new HttpRequestSecurityInterceptor())
+                // addPathPatterns 用于添加拦截规则
                 .addPathPatterns(LabelConstants.SLASH_DOUBLE_STAR)
-                .excludePathPatterns(FilterHandler.getCSRFExcludes());
-//        super.addInterceptors(registry);
+                // excludePathPatterns 用户拦截排除
+                .excludePathPatterns(FilterHandler.getCSRFExcludes())
+                .excludePathPatterns(new ArrayList<>(properties.http().getInterceptExcludePath()));
     }
 
     /**
@@ -98,10 +99,10 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     @ConditionalOnProperty(name = "website.security.cors.enabled", havingValue = "true")
     public FilterRegistrationBean CORSFilter() {
-        if (properties.getProperties().getCORS().getCrossDomain() == null) {
+        if (properties.cors().getCrossDomain() == null) {
             throw new RuntimeException("website.security.cors 跨域请求已经激活，跨域访问路径不能为空，请设置website.security.cors.cross-domain");
         }
-        FilterRegistrationBean<CORSFilter> registration = new FilterRegistrationBean<>(new CORSFilter(MapUtil.toMap(properties.getProperties().getCORS().getCrossDomain(), "url")));
+        FilterRegistrationBean<CORSFilter> registration = new FilterRegistrationBean<>(new CORSFilter(MapUtil.toMap(properties.cors().getCrossDomain(), "url")));
         registration.setName("CORSFilter");
         registration.setOrder(CORSFilter.FILTER_ORDER);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
@@ -114,7 +115,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     @ConditionalOnProperty(name = "website.security.ddos.enabled", havingValue = "true")
     public FilterRegistrationBean DDOCFilter() {
-        DDOCFilter filter = new DDOCFilter(properties.getProperties().getDDOS(), factory.getCacheClient().getRedisTemplate());
+        DDOCFilter filter = new DDOCFilter(properties.ddos(), factory.getCacheClient().getRedisTemplate());
         FilterRegistrationBean<DDOCFilter> registration = new FilterRegistrationBean<>(filter);
         registration.addUrlPatterns(LabelConstants.SLASH_STAR);
         registration.setName("DDOCFilter");

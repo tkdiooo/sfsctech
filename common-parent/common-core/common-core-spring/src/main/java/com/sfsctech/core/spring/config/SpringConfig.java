@@ -74,13 +74,13 @@ public class SpringConfig {
      *
      * @return MessageSource
      */
-//    @Bean(name = "messageSource")
-//    public ResourceBundleMessageSource  messageSource() {
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasenames(CommonConstants.RESOURCES_I18N_PATH);
-//        messageSource.setDefaultEncoding(LabelConstants.UTF8);
-//        // 缓存时间(秒)
-//        messageSource.setCacheSeconds(600);
-//        return messageSource;
-//    }
+    @Bean(name = "messageSource")
+    public ResourceBundleMessageSource  messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames(CommonConstants.RESOURCES_I18N_PATH);
+        messageSource.setDefaultEncoding(LabelConstants.UTF8);
+        // 缓存时间(秒)
+        messageSource.setCacheSeconds(600);
+        return messageSource;
+    }
 }

@@ -1,8 +1,6 @@
 package com.sfsctech.core.security.interceptor;
 
 import com.sfsctech.core.base.domain.dto.BaseDto;
-import com.sfsctech.core.base.filter.FilterHandler;
-import com.sfsctech.core.security.properties.SecurityProperties;
 import com.sfsctech.core.security.tools.SecurityUtil;
 import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.common.util.ResponseUtil;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class SecurityInterceptor
@@ -27,23 +24,9 @@ import java.util.Set;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
+public class HttpRequestSecurityInterceptor extends HandlerInterceptorAdapter {
 
-    private final Logger logger = LoggerFactory.getLogger(AccessSecurityInterceptor.class);
-
-//    private SecurityProperties.CSRF csrf;
-
-    private Set<String> verifyExcludePath;
-
-    private Set<String> requiredVerifyPath;
-
-    public AccessSecurityInterceptor(SecurityProperties.CSRF csrf) {
-        if (null != csrf) {
-//            this.csrf = csrf;
-            this.verifyExcludePath = csrf.getVerifyExcludePath();
-            this.requiredVerifyPath = csrf.getRequiredVerifyPath();
-        }
-    }
+    private final Logger logger = LoggerFactory.getLogger(HttpRequestSecurityInterceptor.class);
 
     /**
      * 在请求处理之前进行调用（Controller方法调用之前）
@@ -54,7 +37,6 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        final String requestURI = request.getRequestURI();
         final String domain = request.getServerName();
         final String ret_url = request.getHeader("Referer");
         final String method = request.getMethod();
@@ -63,28 +45,14 @@ public class AccessSecurityInterceptor extends HandlerInterceptorAdapter {
             response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Request only permit GET POST or HEAD");
             return false;
         }
-        // 判断路径是否无需校验
-        boolean verify = FilterHandler.isExclusion(requestURI, verifyExcludePath);
-        logger.info("requestURI:[" + requestURI + "]，isExclusion:[" + verify + "]");
         logger.info("domain:" + domain);
         logger.info("Referer:" + ret_url);
         logger.info(String.valueOf((StringUtil.isNotBlank(ret_url) && !ret_url.startsWith("https://" + domain) && !ret_url.startsWith("http://" + domain))));
         // 访问劫持验证：路径需校验，并且上次请求不是当前服务域名
-        if (!verify && (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith("https://" + domain) && !ret_url.startsWith("http://" + domain))) {
+        if (StringUtil.isNotBlank(ret_url) && !ret_url.startsWith("https://" + domain) && !ret_url.startsWith("http://" + domain)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
             return false;
         }
-//        // 如果CSRF防御打开
-//        if (null != csrf && csrf.isEnabled()) {
-//            boolean required = FilterHandler.isExclusion(requestURI, requiredVerifyPath);
-//            logger.info("requestURI:[" + requestURI + "]，requiredVerify:[" + required + "]");
-//            // 当前请求路径需要验证 或者 当前路径必须验证，CSRF防御校验
-//            if ((!verify || required) && CSRFTokenManager.isValidCSRFToken(request, response)) {
-//                logger.error(VerifyExceptionTipsEnum.CsrfWrong.toString());
-//                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden illegal request");
-//                return false;
-//            }
-//        }
         return true;
     }
 
