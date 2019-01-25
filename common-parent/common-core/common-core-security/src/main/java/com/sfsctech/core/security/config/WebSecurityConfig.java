@@ -1,23 +1,16 @@
 package com.sfsctech.core.security.config;
 
 import com.sfsctech.core.security.csrf.CsrfSecurityRequestMatcher;
-import com.sfsctech.core.security.test.MyFilterSecurityInterceptor;
 import com.sfsctech.core.security.properties.SecurityProperties;
+import com.sfsctech.core.security.test.MyFilterSecurityInterceptor;
 import com.sfsctech.core.web.properties.WebsiteProperties;
 import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
@@ -35,53 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private WebsiteProperties websiteProperties;
-
-
-    /**
-     * 用户认证
-     *
-     * @return
-     */
-    @Bean("userDetailsService")
-    @ConditionalOnProperty(name = "website.security.csrf.enabled", havingValue = "Custom")
-    public UserDetailsService userDetailsService() {
-        try {
-            return properties.authentication().getUserDetailsService().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * 密码校验规则
-     *
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        if (null != properties.authentication().getPasswordEncoder()) {
-            try {
-                return properties.authentication().getPasswordEncoder().newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        }
-    }
-
-    /**
-     * 配置user-detail服务
-     *
-     * @param auth
-     * @throws Exception
-     */
-    @Override
-    @ConditionalOnBean(name = "userDetailsService")
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 自定义用户校验
-        auth.userDetailsService(userDetailsService());
-    }
 
     @Autowired
     private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
@@ -108,8 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         }
         http.csrf().disable();
-        http.csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .requireCsrfProtectionMatcher(new CsrfSecurityRequestMatcher());
     }
 }
