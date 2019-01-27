@@ -1,8 +1,7 @@
 package com.sfsctech.resources.controller;
 
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author 张麒 2018-6-4.
  * @version Description:
  */
-//@RestController
+@RestController
 public class IndexController {
 
-//    @PostMapping("index")
+    @PostMapping("index")
     public String index(HttpServletRequest request) {
         System.out.println(request.getParameter("userName"));
         return "index";
