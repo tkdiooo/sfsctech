@@ -237,3 +237,18 @@ function decimal(num, v) {
     var vv = Math.pow(10, v);
     return Math.round(num * vv) / vv;
 }
+
+function isJson(str) {
+    if (typeof str === 'string') {
+        try {
+            var obj = JSON.parse(str);
+            return !!(typeof obj === 'object' && obj);
+        } catch (e) {
+            return false;
+        }
+    }
+}
+
+function scrollPosition(container, scrollTo) {
+    container.animate({scrollTop: container.scrollTop() + scrollTo.offset().top - container.offset().top}, 500);
+}
