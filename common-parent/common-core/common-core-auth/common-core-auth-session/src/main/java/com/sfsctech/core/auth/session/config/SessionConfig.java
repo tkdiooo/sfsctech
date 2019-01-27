@@ -30,16 +30,16 @@ public class SessionConfig extends BaseWebSecurityConfig {
     @Autowired
     private AuthFilterConfig filterConfig;
 
-    @Bean
-    public FilterRegistrationBean SessionFilter() {
-        SessionFilter filter = new SessionFilter();
-        // Session认证排除路径
-        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
-        FilterRegistrationBean<SessionFilter> registration = new FilterRegistrationBean<>(filter);
-        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("SessionFilter");
-        registration.setOrder(5);
-        registration.addInitParameter("welcomeFile", filterConfig.getWelcomeFile());
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean SessionFilter() {
+//        SessionFilter filter = new SessionFilter();
+//        // Session认证排除路径
+//        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
+//        FilterRegistrationBean<SessionFilter> registration = new FilterRegistrationBean<>(filter);
+//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+//        registration.setName("SessionFilter");
+//        registration.setOrder(5);
+//        registration.addInitParameter("welcomeFile", filterConfig.getWelcomeFile());
+//        return registration;
+//    }
 }

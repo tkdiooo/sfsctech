@@ -5,8 +5,6 @@ import com.sfsctech.core.auth.base.point.LoginUrlAuthenticationEntryPoint;
 import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.support.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,13 +33,15 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      * @return
      */
     @Bean("userDetailsService")
-    @ConditionalOnProperty(name = "website.auth.pattern", havingValue = "Custom")
     public UserDetailsService userDetailsService() {
-        try {
-            return properties.getUserDetailsService().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+        if (null != properties.getLogin().getUserDetailsService()) {
+            try {
+                return properties.getLogin().getUserDetailsService().newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return null;
     }
 
     /**
@@ -51,9 +51,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        if (null != properties.getPasswordEncoder()) {
+        if (null != properties.getLogin().getPasswordEncoder()) {
             try {
-                return properties.getPasswordEncoder().newInstance();
+                return properties.getLogin().getPasswordEncoder().newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -69,10 +69,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      * @throws Exception
      */
     @Override
-    @ConditionalOnBean(name = "userDetailsService")
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 自定义用户校验
-        auth.userDetailsService(userDetailsService());
+        if (null != userDetailsService()) {
+            // 自定义用户校验
+            auth.userDetailsService(userDetailsService());
+        }
     }
 
     @Override
@@ -85,6 +86,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
             if (ListUtil.isNotEmpty(properties.getExcludePath())) {
                 configurer.antMatchers(properties.getExcludePath().toArray(new String[0])).permitAll();
             }
+            // 默认登录页面
+            configurer.antMatchers(properties.getLogin().getUrl()).permitAll();
             // 自定义登录处理
             LoginUrlAuthenticationEntryPoint point = new LoginUrlAuthenticationEntryPoint(properties.getLogin().getUrl());
             point.setForceHttps(properties.getLogin().isHttps());
@@ -99,6 +102,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
                 configurer.and().formLogin().successHandler(new LoginSuccessHandler());
             }
             // 自定义登出处理
+            configurer.anyRequest().authenticated();
         }
     }
 }

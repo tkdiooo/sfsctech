@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  * @version Description:
  */
 @Controller
-@RequestMapping("sso")
 public class SSOController {
 
     private final Logger logger = LoggerFactory.getLogger(SSOController.class);
@@ -30,6 +30,11 @@ public class SSOController {
     @GetMapping("test")
     public String test(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         return "index";
+    }
+
+    @GetMapping("login")
+    public String login(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        return "login";
     }
 
 }

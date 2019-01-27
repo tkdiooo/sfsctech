@@ -23,23 +23,13 @@ import java.util.Set;
 )
 public class AuthProperties {
 
-    // 认证模式
-    public enum Pattern {
-        None, Custom
-    }
-
     private boolean disable = true;
-    private Pattern pattern = Pattern.None;
     // 排除路径
     private Set<String> excludePath;
-    // 用户登录校验
-    private Class<UserDetailsService> userDetailsService = null;
-    // 用户密码校验
-    private Class<PasswordEncoder> passwordEncoder = null;
-    // 403响应处理
-    private Class<AccessDeniedHandler> accessDeniedHandler = null;
     // 请求权限校验
     private Class<Filter> authorityFilter = null;
+    // 403响应处理
+    private Class<AccessDeniedHandler> accessDeniedHandler = null;
     // 登录设置
     private final Login login;
     // 登出设置
@@ -57,6 +47,10 @@ public class AuthProperties {
         private boolean https = false;
         // 登录页面跳转模式：forward or redirect
         private boolean useForward = false;
+        // 用户登录校验
+        private Class<UserDetailsService> userDetailsService = null;
+        // 用户密码校验
+        private Class<PasswordEncoder> passwordEncoder = null;
         // 登录成功处理
         private Class<AuthenticationSuccessHandler> authenticationSuccessHandler = null;
         // 登录失败处理
@@ -86,6 +80,22 @@ public class AuthProperties {
             this.useForward = useForward;
         }
 
+        public Class<UserDetailsService> getUserDetailsService() {
+            return userDetailsService;
+        }
+
+        public void setUserDetailsService(Class<UserDetailsService> userDetailsService) {
+            this.userDetailsService = userDetailsService;
+        }
+
+        public Class<PasswordEncoder> getPasswordEncoder() {
+            return passwordEncoder;
+        }
+
+        public void setPasswordEncoder(Class<PasswordEncoder> passwordEncoder) {
+            this.passwordEncoder = passwordEncoder;
+        }
+
         public Class<AuthenticationSuccessHandler> getAuthenticationSuccessHandler() {
             return authenticationSuccessHandler;
         }
@@ -105,15 +115,14 @@ public class AuthProperties {
 
     public static class Logout {
         // 登出路径
-        private String path;
+        private String url = "/logout";
 
-
-        public String getPath() {
-            return path;
+        public String getUrl() {
+            return url;
         }
 
-        public void setPath(String path) {
-            this.path = path;
+        public void setUrl(String url) {
+            this.url = url;
         }
     }
 
@@ -125,36 +134,12 @@ public class AuthProperties {
         this.disable = disable;
     }
 
-    public Pattern getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
-    }
-
     public Set<String> getExcludePath() {
         return excludePath;
     }
 
     public void setExcludePath(Set<String> excludePath) {
         this.excludePath = excludePath;
-    }
-
-    public Class<UserDetailsService> getUserDetailsService() {
-        return userDetailsService;
-    }
-
-    public void setUserDetailsService(Class<UserDetailsService> userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    public Class<PasswordEncoder> getPasswordEncoder() {
-        return passwordEncoder;
-    }
-
-    public void setPasswordEncoder(Class<PasswordEncoder> passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
     }
 
     public Class<AccessDeniedHandler> getAccessDeniedHandler() {
