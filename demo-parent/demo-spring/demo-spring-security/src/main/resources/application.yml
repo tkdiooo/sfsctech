@@ -16,17 +16,17 @@ server:
     connector: org.apache.coyote.http11.Http11NioProtocol
     # tomcat优化
     optimize: true
-  servlet:
-    session:
-      cookie:
-        domain: www.zzl.com
-        # 只能在服务端设置
-        http-only: true
-        # 只能在 HTTPS 连接中被传递
-        #      secure: true
-        # cookie保持时间(秒) 30分钟
-        max-age: 1800s
-        path: /
+#  servlet:
+#    session:
+#      cookie:
+#        domain: www.zzl.com
+#        # 只能在服务端设置
+#        http-only: true
+#        # 只能在 HTTPS 连接中被传递
+#        #      secure: true
+#        # cookie保持时间(秒) 30分钟
+#        max-age: 1800s
+#        path: /
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
@@ -91,6 +91,9 @@ website:
   auth:
     disable: false
     exclude-path: /index, /login, /null/**, /img/**
+    login:
+      user-details-service: com.sfsctech.demo.spring.security.service.UserDetailsServiceImpl
   support:
     welcome-file: /index
+    static-resources: http://localhost:8080
 

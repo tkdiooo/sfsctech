@@ -1,5 +1,6 @@
 package com.sfsctech.zipkin;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 //import org.springframework.cloud.sleuth.zipkin.stream.EnableZipkinStreamServer;
@@ -15,7 +16,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class ZipkinStarter {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(ZipkinStarter.class).web(true).run(args);
+        new SpringApplicationBuilder(ZipkinStarter.class).web(WebApplicationType.SERVLET).run(args);
     }
 
 }

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/layout :: head"></head>
@@ -28,7 +27,7 @@
             <!-- 帐号 -->
             <div class="form-group">
                 <div class="col-lg-12">
-                    <input class="form-control" type="text" id="account" name="account" placeholder="账号" th:value="${account}"/>
+                    <input class="form-control" type="text" id="username" name="username" placeholder="账号" th:value="${username}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -56,7 +55,6 @@
         looking to <a href="#" target="_blank">create an account</a> ?
     </div>
 </div>
-<input type="hidden" id="_csrf" th:name="${_csrf} ? ${_csrf.parameterName}" th:value="${_csrf} ? ${_csrf.token}"/>
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
     (function () {
@@ -69,7 +67,7 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                account: {
+                username: {
                     validators: {
                         notEmpty: {
                             message: '账号不能为空'
@@ -109,14 +107,17 @@
     function login() {
         var form = $("#loginForm");
         var formValid = form.data('bootstrapValidator');
+        console.info(formValid)
         formValid.validate();
         if (formValid.isValid()) {
+            console.info(1)
             var formParams = form.serializeJson();
-            var key = getRSAKey();
-            var _csrf = $('#_csrf');
-            formParams.account = encryptedString(key, formParams.account);
-            formParams.password = encryptedString(key, formParams.password);
-            formParams[_csrf.attr('name')] = _csrf.val();
+            console.info(2)
+            // var key = getRSAKey();
+            // var _csrf = $('#_csrf');
+            // formParams.account = encryptedString(key, formParams.account);
+            // formParams.password = encryptedString(key, formParams.password);
+            // formParams[_csrf.attr('name')] = _csrf.val();
             var opt = {
                 handler: function (result) {
                     if (!result.success) {
@@ -128,7 +129,7 @@
                     }
                 }
             };
-            ajax_action(/*[[@{/sso/login}]]*/ '', formParams, opt);
+            ajax_action(/*[[@{/login}]]*/ '', formParams, opt);
         }
     }
 

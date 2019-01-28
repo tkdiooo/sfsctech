@@ -1,6 +1,7 @@
 package com.sfsctech.demo.spring.security;
 
 import com.sfsctech.core.auth.session.config.SessionConfig;
+import com.sfsctech.core.web.config.WebConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @SpringBootApplication
-@Import(SessionConfig.class)
+@Import({WebConfig.class, SessionConfig.class})
 public class Runner {
 
     public static void main(String[] args) {

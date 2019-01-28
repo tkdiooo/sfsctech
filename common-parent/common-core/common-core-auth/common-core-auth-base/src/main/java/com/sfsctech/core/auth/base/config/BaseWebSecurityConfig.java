@@ -70,9 +70,10 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        if (null != userDetailsService()) {
+        UserDetailsService userDetailsService = userDetailsService();
+        if (null != userDetailsService) {
             // 自定义用户校验
-            auth.userDetailsService(userDetailsService());
+            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         }
     }
 
@@ -101,6 +102,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
             else {
                 configurer.and().formLogin().successHandler(new LoginSuccessHandler());
             }
+            configurer.and().csrf().disable();
             // 自定义登出处理
             configurer.anyRequest().authenticated();
         }
