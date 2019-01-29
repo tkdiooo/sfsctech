@@ -1,5 +1,6 @@
 package com.sfsctech.core.auth.base.config;
 
+import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.base.filter.FilterHandler;
 import com.sfsctech.core.web.properties.WebsiteProperties;
 import com.sfsctech.support.common.util.ListUtil;
@@ -17,27 +18,38 @@ import java.util.Set;
  * @version Description:
  */
 @Configuration
-@Import(WebsiteProperties.class)
-public class AuthFilterConfig {
+@Import({WebsiteProperties.class, AuthProperties.class})
+public class AuthConfig {
 
     @Autowired
-    private WebsiteProperties websiteProperties;
+    private WebsiteProperties website;
+
+    @Autowired
+    private AuthProperties auth;
 
     private static Set<String> SESSION_EXCLUDES_PATTERNS;
 
-    public Set<String> getSessionExcludePath() {
+    public Set<String> getExcludePath() {
         if (null != SESSION_EXCLUDES_PATTERNS) {
             return SESSION_EXCLUDES_PATTERNS;
         }
+        // 默认静态资源路径
         SESSION_EXCLUDES_PATTERNS = new HashSet<>(FilterHandler.FILTER_EXCLUDES_PATTERNS);
-        if (ListUtil.isNotEmpty(websiteProperties.getSession().getExcludePath())) {
-            SESSION_EXCLUDES_PATTERNS.addAll(websiteProperties.getSession().getExcludePath());
+        // 自定义排除路径
+        if (ListUtil.isNotEmpty(auth.getExcludePath())) {
+            SESSION_EXCLUDES_PATTERNS.addAll(auth.getExcludePath());
         }
+        // 默认登录页面
+        SESSION_EXCLUDES_PATTERNS.add(auth.getLogin().getUrl());
         return SESSION_EXCLUDES_PATTERNS;
     }
 
     public String getWelcomeFile() {
-        return websiteProperties.getSupport().getWelcomeFile();
+        return website.getSupport().getWelcomeFile();
+    }
+
+    public AuthProperties auth() {
+        return this.auth;
     }
 
 }

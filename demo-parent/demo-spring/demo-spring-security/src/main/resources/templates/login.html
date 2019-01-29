@@ -110,9 +110,7 @@
         console.info(formValid)
         formValid.validate();
         if (formValid.isValid()) {
-            console.info(1)
             var formParams = form.serializeJson();
-            console.info(2)
             // var key = getRSAKey();
             // var _csrf = $('#_csrf');
             // formParams.account = encryptedString(key, formParams.account);
@@ -121,6 +119,7 @@
             var opt = {
                 handler: function (result) {
                     if (!result.success) {
+                        console.info(result.messages.join('<br/>'))
                         $('#warning_msg').text(result.messages.join('<br/>'));
                         $('.warn').show();
                     }

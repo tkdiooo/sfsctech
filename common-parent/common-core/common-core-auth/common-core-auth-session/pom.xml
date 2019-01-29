@@ -19,6 +19,10 @@
             <artifactId>common-core-auth-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
 

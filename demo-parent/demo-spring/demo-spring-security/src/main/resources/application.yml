@@ -1,6 +1,6 @@
 #server setting
 server:
-  port: 8101
+  port: 8102
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8
@@ -69,23 +69,25 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
-#  redis:
-#    password: 3936796F7636592D2D4D552E
-#    jedis:
-#      pool:
-#        max-active: 300
-#        max-wait: 10s
-#        max-idle: 100
-#        min-idle: 50
-#    cluster:
-#      max-redirects: 3
-#      nodes:
-#        - 172.16.229.204:6001
-#        - 172.16.229.204:6002
-#        - 172.16.229.204:6003
-#        - 172.16.229.204:6004
-#        - 172.16.229.204:6005
-#        - 172.16.229.204:6006
+  redis:
+    password: 3936796F7636592D2D4D552E
+    jedis:
+      pool:
+        max-active: 300
+        max-wait: 10s
+        max-idle: 100
+        min-idle: 50
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 172.16.229.204:6001
+        - 172.16.229.204:6002
+        - 172.16.229.204:6003
+        - 172.16.229.204:6004
+        - 172.16.229.204:6005
+        - 172.16.229.204:6006
+  session:
+    store-type: redis
 #common setting
 website:
   auth:

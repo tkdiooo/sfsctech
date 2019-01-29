@@ -261,9 +261,10 @@ function ajax_upload(url, data, opt) {
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
-            if (data.attachs) {
-                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
-            }
+            // TODO
+            // if (data.attachs) {
+            //     $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
+            // }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
             }
@@ -355,9 +356,10 @@ function ajax_action(url, data, opt) {
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
-            if (data.attachs) {
-                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
-            }
+            //  TODO
+            // if (data.attachs) {
+            //     $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
+            // }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
             }

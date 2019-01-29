@@ -5,6 +5,7 @@ import com.sfsctech.core.web.config.WebConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * Class WebRunner
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @SpringBootApplication
+@EnableRedisHttpSession
 @Import({WebConfig.class, SessionConfig.class})
 public class Runner {
 

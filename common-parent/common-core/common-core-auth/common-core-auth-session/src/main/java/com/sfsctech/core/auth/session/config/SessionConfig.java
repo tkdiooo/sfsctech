@@ -1,21 +1,12 @@
 package com.sfsctech.core.auth.session.config;
 
 import com.sfsctech.core.auth.base.config.BaseWebSecurityConfig;
-import com.sfsctech.core.auth.base.point.LoginUrlAuthenticationEntryPoint;
-import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.core.auth.base.config.AuthFilterConfig;
-import com.sfsctech.core.auth.session.filter.SessionFilter;
-import com.sfsctech.support.common.util.ListUtil;
-import com.sfsctech.support.common.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import com.sfsctech.core.auth.base.config.AuthConfig;
+import com.sfsctech.core.auth.session.handler.LoginSuccessHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 
 /**
  * Class AuthConfigurer
@@ -24,22 +15,21 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
  * @version Description:
  */
 @Configuration
-@Import(AuthFilterConfig.class)
+@Import(AuthConfig.class)
 public class SessionConfig extends BaseWebSecurityConfig {
 
-    @Autowired
-    private AuthFilterConfig filterConfig;
-
-//    @Bean
-//    public FilterRegistrationBean SessionFilter() {
-//        SessionFilter filter = new SessionFilter();
-//        // Session认证排除路径
-//        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
-//        FilterRegistrationBean<SessionFilter> registration = new FilterRegistrationBean<>(filter);
-//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-//        registration.setName("SessionFilter");
-//        registration.setOrder(5);
-//        registration.addInitParameter("welcomeFile", filterConfig.getWelcomeFile());
-//        return registration;
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        if (super.basicConfigure(http)) {
+            FormLoginConfigurer<HttpSecurity> formLogin = http.authorizeRequests().and().formLogin();
+            // 自定义登录成功处理
+            if (null != config.auth().getLogin().getAuthenticationSuccessHandler()) {
+                formLogin.successHandler(config.auth().getLogin().getAuthenticationSuccessHandler().newInstance());
+            }
+            // 默认登录成功处理
+            else {
+                formLogin.successHandler(new LoginSuccessHandler(config.getWelcomeFile()));
+            }
+        }
+    }
 }

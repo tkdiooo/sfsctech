@@ -26,18 +26,17 @@ public class AuthProperties {
     private boolean disable = true;
     // 排除路径
     private Set<String> excludePath;
-    // 请求权限校验
-    private Class<Filter> authorityFilter = null;
-    // 403响应处理
-    private Class<AccessDeniedHandler> accessDeniedHandler = null;
     // 登录设置
     private final Login login;
     // 登出设置
     private final Logout logout;
+    // 权限设置
+    private final Permit permit;
 
     public AuthProperties() {
         this.login = new Login();
         this.logout = new Logout();
+        this.permit = new Permit();
     }
 
     public static class Login {
@@ -126,6 +125,29 @@ public class AuthProperties {
         }
     }
 
+    public static class Permit {
+        // 请求权限校验
+        private Class<Filter> authorityFilter = null;
+        // 403响应处理
+        private Class<AccessDeniedHandler> accessDeniedHandler = null;
+
+        public Class<AccessDeniedHandler> getAccessDeniedHandler() {
+            return accessDeniedHandler;
+        }
+
+        public void setAccessDeniedHandler(Class<AccessDeniedHandler> accessDeniedHandler) {
+            this.accessDeniedHandler = accessDeniedHandler;
+        }
+
+        public Class<Filter> getAuthorityFilter() {
+            return authorityFilter;
+        }
+
+        public void setAuthorityFilter(Class<Filter> authorityFilter) {
+            this.authorityFilter = authorityFilter;
+        }
+    }
+
     public boolean isDisable() {
         return disable;
     }
@@ -142,22 +164,6 @@ public class AuthProperties {
         this.excludePath = excludePath;
     }
 
-    public Class<AccessDeniedHandler> getAccessDeniedHandler() {
-        return accessDeniedHandler;
-    }
-
-    public void setAccessDeniedHandler(Class<AccessDeniedHandler> accessDeniedHandler) {
-        this.accessDeniedHandler = accessDeniedHandler;
-    }
-
-    public Class<Filter> getAuthorityFilter() {
-        return authorityFilter;
-    }
-
-    public void setAuthorityFilter(Class<Filter> authorityFilter) {
-        this.authorityFilter = authorityFilter;
-    }
-
     public Login getLogin() {
         return login;
     }
@@ -165,4 +171,9 @@ public class AuthProperties {
     public Logout getLogout() {
         return logout;
     }
+
+    public Permit getPermit() {
+        return permit;
+    }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * Class SSOController
@@ -29,6 +30,12 @@ public class SSOController {
 
     @GetMapping("test")
     public String test(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getSession().getId());
+        System.out.println(request.getSession().getAttribute("test_key"));
+        Enumeration<String> enumeration = request.getSession().getAttributeNames();
+        while (enumeration.hasMoreElements()){
+            System.out.println(request.getSession().getAttribute(enumeration.nextElement()));
+        }
         return "index";
     }
 

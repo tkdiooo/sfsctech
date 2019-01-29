@@ -8,6 +8,8 @@ import com.sfsctech.core.spring.constants.I18NConstants;
 import com.sfsctech.core.spring.util.ResourceUtil;
 import com.sfsctech.core.web.tools.action.ActionHolder;
 
+import java.util.Locale;
+
 /**
  * Controller服务通信Ajax响应对象
  *
@@ -63,6 +65,12 @@ public class ActionResult<T> extends BaseResult {
         return result;
     }
 
+    public static <T> ActionResult<T> forSuccess(Locale locale) {
+        ActionResult<T> result = new ActionResult<>();
+        result.addMessages(ResourceUtil.getMessage(I18NConstants.Tips.OperateSuccess.getCode(), locale));
+        return result;
+    }
+
     public static <T> ActionResult<T> forSuccess(T t) {
         return new ActionResult<>(t, ResourceUtil.getMessage(I18NConstants.Tips.OperateSuccess.getCode(), ActionHolder.getRequest().getLocale()));
     }
@@ -79,6 +87,10 @@ public class ActionResult<T> extends BaseResult {
 
     public static <T> ActionResult<T> forFailure() {
         return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), ActionHolder.getRequest().getLocale()));
+    }
+
+    public static <T> ActionResult<T> forFailure(Locale locale) {
+        return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), locale));
     }
 
     public static <T> ActionResult<T> forFailure(T t) {

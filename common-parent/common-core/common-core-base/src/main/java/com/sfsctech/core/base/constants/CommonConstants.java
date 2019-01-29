@@ -35,7 +35,7 @@ public class CommonConstants {
     /**
      * 国际化文件路径
      */
-    public static final String[] RESOURCES_I18N_PATH = {"i18n/defaultMessages", "i18n/messages"};
+    public static final String[] RESOURCES_I18N_PATH = {"classpath:i18n/defaultMessages", "classpath:i18n/messages", "classpath:org/springframework/security/messages"};
 
     // Front UI Attribute
     //-------------------------------------------------------------------------------------------

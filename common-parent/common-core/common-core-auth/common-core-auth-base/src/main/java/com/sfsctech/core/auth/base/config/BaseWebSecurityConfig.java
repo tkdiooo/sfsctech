@@ -1,9 +1,9 @@
 package com.sfsctech.core.auth.base.config;
 
-import com.sfsctech.core.auth.base.handler.LoginSuccessHandler;
+import com.sfsctech.core.auth.base.handler.LoginFailureHandler;
+import com.sfsctech.core.auth.base.handler.LogoutSuccessHandler;
 import com.sfsctech.core.auth.base.point.LoginUrlAuthenticationEntryPoint;
 import com.sfsctech.core.auth.base.properties.AuthProperties;
-import com.sfsctech.support.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    protected AuthProperties properties;
+    protected AuthConfig config;
 
     /**
      * 用户认证
@@ -34,9 +35,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Bean("userDetailsService")
     public UserDetailsService userDetailsService() {
-        if (null != properties.getLogin().getUserDetailsService()) {
+        if (null != config.auth().getLogin().getUserDetailsService()) {
             try {
-                return properties.getLogin().getUserDetailsService().newInstance();
+                return config.auth().getLogin().getUserDetailsService().newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -51,9 +52,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        if (null != properties.getLogin().getPasswordEncoder()) {
+        if (null != config.auth().getLogin().getPasswordEncoder()) {
             try {
-                return properties.getLogin().getPasswordEncoder().newInstance();
+                return config.auth().getLogin().getPasswordEncoder().newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -77,34 +78,33 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         }
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        if (properties.isDisable()) {
+    protected boolean basicConfigure(HttpSecurity http) throws Exception {
+        if (config.auth().isDisable()) {
             http.httpBasic().disable();
         } else {
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer = http.authorizeRequests();
             // 任何人都可以访问
-            if (ListUtil.isNotEmpty(properties.getExcludePath())) {
-                configurer.antMatchers(properties.getExcludePath().toArray(new String[0])).permitAll();
-            }
-            // 默认登录页面
-            configurer.antMatchers(properties.getLogin().getUrl()).permitAll();
+            configurer.antMatchers(config.getExcludePath().toArray(new String[0])).permitAll();
             // 自定义登录处理
-            LoginUrlAuthenticationEntryPoint point = new LoginUrlAuthenticationEntryPoint(properties.getLogin().getUrl());
-            point.setForceHttps(properties.getLogin().isHttps());
-            point.setUseForward(properties.getLogin().isUseForward());
+            LoginUrlAuthenticationEntryPoint point = new LoginUrlAuthenticationEntryPoint(config.auth().getLogin().getUrl());
+            point.setForceHttps(config.auth().getLogin().isHttps());
+            point.setUseForward(config.auth().getLogin().isUseForward());
             configurer.and().exceptionHandling().authenticationEntryPoint(point);
-            // 自定义登录成功处理
-            if (null != properties.getLogin().getAuthenticationSuccessHandler()) {
-                configurer.and().formLogin().successHandler(properties.getLogin().getAuthenticationSuccessHandler().newInstance());
+            // 自定义登录失败处理
+            FormLoginConfigurer<HttpSecurity> formLogin = configurer.and().formLogin();
+            if (null != config.auth().getLogin().getAuthenticationFailureHandler()) {
+                formLogin.failureHandler(config.auth().getLogin().getAuthenticationFailureHandler().newInstance());
+            } else {
+                formLogin.failureHandler(new LoginFailureHandler());
             }
-            // 默认登录成功处理
-            else {
-                configurer.and().formLogin().successHandler(new LoginSuccessHandler());
-            }
-            configurer.and().csrf().disable();
             // 自定义登出处理
+            configurer.and().logout().logoutUrl(config.auth().getLogout().getUrl()).logoutSuccessHandler(new LogoutSuccessHandler(config.getWelcomeFile()));
+            // 其余所有请求都被拦截
             configurer.anyRequest().authenticated();
+            // csrf配置
+//            configurer.and().csrf().disable();
+            // cors配置
         }
+        return !config.auth().isDisable();
     }
 }
