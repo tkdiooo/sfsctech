@@ -8,6 +8,9 @@ import com.sfsctech.support.common.security.des3.Des3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Class EncrypterTool
  *
@@ -110,7 +113,7 @@ public class EncrypterTool {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
 //        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
 //        System.out.println(data);
 //        new Thread(() -> {
@@ -166,6 +169,7 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Des3ECBHex, "wangtaifeng"));
+        System.out.println(encrypt(Security.Aes, "{user_id:123,pk:123,company_no:123}"));
+        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
     }
 }
