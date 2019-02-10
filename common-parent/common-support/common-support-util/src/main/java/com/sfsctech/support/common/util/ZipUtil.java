@@ -169,38 +169,38 @@ public class ZipUtil {
         }
     }
 
-    public static void unzip(File zipFile, String destDir) throws IOException {
+    public static void unzip(String zipPath, String filePath) throws IOException {
+        ZipFile zipFile = new ZipFile(zipPath);
         InputStream is = null;
-        OutputStream os = null;
-        ZipFile zfile = null;
-        try {
-            zfile = new ZipFile(zipFile.getPath());
-            Enumeration zList = zfile.entries();
-            ZipEntry ze;
-            byte[] buf = new byte[1024];
-            while (zList.hasMoreElements()) {
-                //从ZipFile中得到一个ZipEntry
-                ze = (ZipEntry) zList.nextElement();
-                if (ze.isDirectory()) {
-                    continue;
-                }
-                //以ZipEntry为参数得到一个InputStream，并写到OutputStream中
-                os = new BufferedOutputStream(new FileOutputStream(getRealFileName(destDir, ze.getName())));
-                is = new BufferedInputStream(zfile.getInputStream(ze));
-                int readLen;
-                while ((readLen = is.read(buf, 0, 1024)) != -1) {
-                    os.write(buf, 0, readLen);
-                }
-                os.flush();
-                os.close();
-                is.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            FileUtil.close(is, os, zfile);
-        }
+        FileOutputStream os = null;
+        int readedBytes;
+        byte[] buf = new byte[1024];
 
+        for (Enumeration entries = zipFile.entries(); entries.hasMoreElements(); ) {
+            try {
+                ZipEntry entry = (ZipEntry) entries.nextElement();
+                File file = new File(filePath + entry.getName());
+
+                if (entry.isDirectory()) {
+                    file.mkdirs();
+                } else {
+                    //如果指定文件的目录不存在,则创建之.
+                    File parent = file.getParentFile();
+                    if (null != parent && !parent.exists()) {
+                        parent.mkdirs();
+                    }
+
+                    is = zipFile.getInputStream(entry);
+                    os = new FileOutputStream(file);
+                    while ((readedBytes = is.read(buf)) > 0) {
+                        os.write(buf, 0, readedBytes);
+                    }
+                }
+            } finally {
+                FileUtil.close(is, os);
+            }
+        }
+        zipFile.close();
     }
 
     private static File getRealFileName(String baseDir, String absFileName) {
