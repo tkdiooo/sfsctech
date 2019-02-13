@@ -36,7 +36,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper"})
+@MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper", "com.*.*.*.repository.mapper"})
 @Import({DynamicDataSourceAspect.class, CacheConfig.class})
 @ConditionalOnClass(SqlSessionFactory.class)
 public class DruidConfig extends MyBatisConfig {

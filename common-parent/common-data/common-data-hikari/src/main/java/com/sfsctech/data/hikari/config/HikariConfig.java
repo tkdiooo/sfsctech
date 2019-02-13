@@ -1,6 +1,5 @@
 package com.sfsctech.data.hikari.config;
 
-//import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.data.mybatis.config.MyBatisConfig;
@@ -27,7 +26,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper"})
+@MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper", "com.*.*.*.repository.mapper"})
 @Import({DynamicDataSourceAspect.class, CacheConfig.class})
 @ConditionalOnClass(SqlSessionFactory.class)
 public class HikariConfig extends MyBatisConfig {
