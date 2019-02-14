@@ -238,7 +238,7 @@ function ajax_upload(url, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
-    data = setCSRF(data);
+
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
 
@@ -267,13 +267,11 @@ function ajax_upload(url, data, opt) {
             // }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
-            }
-            else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
+            } else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
                 alert(data.messages.join('<br/>'), function () {
                     invoke(plugin.settings.callback, data);
                 });
-            }
-            else {
+            } else {
                 alert(data.messages.join('<br/>'));
             }
         },
@@ -332,7 +330,6 @@ function ajax_action(url, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
-    data = setCSRF(data);
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -347,7 +344,8 @@ function ajax_action(url, data, opt) {
         // xhrFields: {
         //     withCredentials: true
         // },
-        beforeSend: function () {
+        beforeSend: function (xhr) {
+            setCSRF(xhr);
             if (plugin.settings.waiting) {
                 showWaiting();
             }
@@ -362,13 +360,11 @@ function ajax_action(url, data, opt) {
             // }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
-            }
-            else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
+            } else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
                 alert(data.messages.join('<br/>'), function () {
                     invoke(plugin.settings.callback, data);
                 });
-            }
-            else {
+            } else {
                 alert(data.messages.join('<br/>'));
             }
         },
@@ -426,7 +422,6 @@ function load_url(url, container, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
-    data = setCSRF(data);
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -441,7 +436,8 @@ function load_url(url, container, data, opt) {
         // xhrFields: {
         //     withCredentials: true
         // },
-        beforeSend: function () {
+        beforeSend: function (xhr) {
+            setCSRF(xhr);
             if (plugin.settings.waiting) {
                 showWaiting();
             }
@@ -637,7 +633,7 @@ function matchAjaxTable(opt, destorys) {
         //行被创建回调
         createdRow: function (row, data, dataIndex) {
             // 构建列字段上操作按钮
-                if (settings.columnsButtons) {
+            if (settings.columnsButtons) {
                 $.each(settings.columnsButtons, function (i, value) {
                     $(row).find('td:last').append('<button type="button" class="' + value.class + '" onclick="' + value.action + '(\'' + data.id + '\');" data-original-title="' + value.text + '" data-placement="right">' + value.icon + value.text + '</button>');
                 });
@@ -736,15 +732,12 @@ function to_url(url) {
     }
 }
 
-function setCSRF(data) {
-    var csrf = $('#_csrf');
-    if (csrf.length > 0) {
-        if (data === undefined) {
-            data = {};
-        }
-        data[csrf.attr('name')] = csrf.val();
+function setCSRF(xhr) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    if (header && token) {
+        xhr.setRequestHeader(header, token);
     }
-    return data;
 }
 
 function showWaiting() {

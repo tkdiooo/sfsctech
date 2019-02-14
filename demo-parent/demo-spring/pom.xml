@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>demo-spring-security</module>
+        <module>demo-spring-session</module>
     </modules>
 
 

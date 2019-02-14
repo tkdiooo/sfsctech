@@ -28,11 +28,13 @@ public class LoginUrlAuthenticationEntryPoint extends org.springframework.securi
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        logger.info(HttpUtil.getFullUrl(request));
+        logger.info("Request URL：{}", HttpUtil.getFullUrl(request));
+        // forward调整或https协议，由Spring原生处理
         if (super.isUseForward() || !getLoginFormUrl().startsWith("http")) {
             super.commence(request, response, authException);
             return;
         }
+        // redirect方式跳转登录页面
         redirectStrategy.sendRedirect(request, response, getLoginFormUrl());
     }
 

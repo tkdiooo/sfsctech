@@ -107,7 +107,6 @@
     function login() {
         var form = $("#loginForm");
         var formValid = form.data('bootstrapValidator');
-        console.info(formValid)
         formValid.validate();
         if (formValid.isValid()) {
             var formParams = form.serializeJson();

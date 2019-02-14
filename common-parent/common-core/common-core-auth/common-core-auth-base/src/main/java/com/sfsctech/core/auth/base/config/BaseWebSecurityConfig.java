@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.FormLoginC
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * Class BaseWebSecurityConfig
@@ -85,16 +86,27 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry configurer = http.authorizeRequests();
             // 任何人都可以访问
             configurer.antMatchers(config.getExcludePath().toArray(new String[0])).permitAll();
-            // 自定义登录处理
+            // 自定义登录页面处理
             LoginUrlAuthenticationEntryPoint point = new LoginUrlAuthenticationEntryPoint(config.auth().getLogin().getUrl());
             point.setForceHttps(config.auth().getLogin().isHttps());
             point.setUseForward(config.auth().getLogin().isUseForward());
             configurer.and().exceptionHandling().authenticationEntryPoint(point);
-            // 自定义登录失败处理
+            // 自定义登录
             FormLoginConfigurer<HttpSecurity> formLogin = configurer.and().formLogin();
+            // 自定义登录成功处理
+            if (null != config.auth().getLogin().getAuthenticationSuccessHandler()) {
+                formLogin.successHandler(config.auth().getLogin().getAuthenticationSuccessHandler().newInstance());
+            }
+            // 默认登录成功处理
+            else {
+                formLogin.successHandler(authenticationSuccessHandler());
+            }
+            // 自定义登录失败处理
             if (null != config.auth().getLogin().getAuthenticationFailureHandler()) {
                 formLogin.failureHandler(config.auth().getLogin().getAuthenticationFailureHandler().newInstance());
-            } else {
+            }
+            // 默认登录失败处理
+            else {
                 formLogin.failureHandler(new LoginFailureHandler());
             }
             // 自定义登出处理
@@ -102,9 +114,12 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
             // 其余所有请求都被拦截
             configurer.anyRequest().authenticated();
             // csrf配置
-//            configurer.and().csrf().disable();
+            configurer.and().csrf().disable();
             // cors配置
+            configurer.and().cors().disable();
         }
         return !config.auth().isDisable();
     }
+
+    protected abstract AuthenticationSuccessHandler authenticationSuccessHandler();
 }

@@ -1,0 +1,2 @@
+基于spring security的普通session登录认证
+支持spring session共享

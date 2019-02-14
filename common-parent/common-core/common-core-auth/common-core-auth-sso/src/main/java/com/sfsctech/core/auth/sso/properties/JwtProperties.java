@@ -19,7 +19,7 @@ public class JwtProperties {
     // 发行方
     private String issuer;
     // 保持时间
-    private Long expiration;
+    private Long expiration = 1800000L;
 
     public String getSubject() {
         return subject;

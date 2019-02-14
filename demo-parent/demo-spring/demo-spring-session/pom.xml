@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-spring-security</artifactId>
+    <artifactId>demo-spring-session</artifactId>
 
     <dependencies>
         <!-- Test -->
@@ -18,22 +18,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- common-cache support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-cache</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
-
         <!-- Thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
