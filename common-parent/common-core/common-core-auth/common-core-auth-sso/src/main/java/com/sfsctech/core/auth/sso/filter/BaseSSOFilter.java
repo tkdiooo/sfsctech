@@ -92,14 +92,16 @@ public abstract class BaseSSOFilter extends BaseFilter {
                         // 设置Session attribute
                         logger.info("根据缓存key:{}，获取用户Session缓存属性", jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
                         Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
-                        logger.info("用户Session缓存属性:{}", null != attribute ? attribute.size() : null);
+                        logger.info("用户Session缓存属性数量:{}", null != attribute ? attribute.size() : null);
                         if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
 
                         jt = result.getResult();
                         try {
+                            logger.info("Jwt信息:{}", jt.toString());
                             String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
+                            logger.info("token信息:{}", token);
                             Claims claims = JwtUtil.parseJWT(token);
-                            logger.info("自定义Session属性:generateSesssion");
+                            logger.info("调用自定义方法:generateSesssion");
                             generateSesssion(claims, request);
                             // 更新token
                             logger.info("更新Jwt,更新策略:{}", ssoProperties.getAuth().getSessionKeep());
@@ -108,13 +110,13 @@ public abstract class BaseSSOFilter extends BaseFilter {
                             } else {
                                 JwtCookieUtil.updateJwtToken(response, jt);
                             }
-                            chain.doFilter(request, response);
-                            return;
                         } catch (Exception e) {
                             logger.warn("Jwt处理异常:清理Jwt");
                             JwtCookieUtil.clearJwtToken(helper);
-                            logger.warn("异常信息:{}", ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                            logger.warn("异常信息:{}", ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);
                         }
+                        chain.doFilter(request, response);
+                        return;
                     }
                     // 校验失败
                     else {

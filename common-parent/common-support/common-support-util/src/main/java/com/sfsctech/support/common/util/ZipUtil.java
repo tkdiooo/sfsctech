@@ -202,19 +202,4 @@ public class ZipUtil {
         }
         zipFile.close();
     }
-
-    private static File getRealFileName(String baseDir, String absFileName) {
-        String[] dirs = absFileName.split("/");
-        File ret = new File(baseDir);
-        if (dirs.length > 1) {
-            for (int i = 0; i < dirs.length - 1; i++) {
-                ret = new File(ret, dirs[i]);
-            }
-        }
-        if (!ret.exists()) {
-            ret.mkdirs();
-        }
-        ret = new File(ret, dirs[dirs.length - 1]);
-        return ret;
-    }
 }
