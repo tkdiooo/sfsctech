@@ -10,7 +10,7 @@ import com.sfsctech.core.base.jwt.JwtToken;
  * @author 张麒 2018-7-20.
  * @version Description:
  */
-public interface SSOCheckInterface {
+public interface SSOAuthorizationInterface {
 
     RpcResult<JwtToken> simpleVerify(JwtToken jt);
 

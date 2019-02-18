@@ -1,9 +1,7 @@
 package com.sfsctech.cloud.sso.filter;
 
-import com.sfsctech.cloud.sso.util.SingletonUtil;
 import com.sfsctech.core.auth.sso.filter.BaseSSOFilter;
-import com.sfsctech.core.auth.sso.inf.SSOCheckInterface;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import io.jsonwebtoken.Claims;
@@ -29,12 +27,12 @@ public class SSOFilter extends BaseSSOFilter {
 //    }
 
     @Override
-    protected SSOCheckInterface getcheck() {
+    protected SSOAuthorizationInterface getcheck() {
         return null;
     }
 
     @Override
-    protected void generateSesssion(Claims claims, HttpServletRequest request) {
+    protected void customSession(Claims claims, HttpServletRequest request) {
 
     }
 

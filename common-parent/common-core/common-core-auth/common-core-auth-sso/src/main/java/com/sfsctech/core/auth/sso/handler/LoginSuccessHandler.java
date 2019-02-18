@@ -1,16 +1,10 @@
 package com.sfsctech.core.auth.sso.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.support.common.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +20,6 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     private final Logger logger = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
-    private RequestCache requestCache = new HttpSessionRequestCache();
-
     private String successUrl;
 
     public LoginSuccessHandler(String successUrl) {
@@ -36,14 +28,7 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        logger.info("用户：{}登录成功!用户IP：{}", ((User) authentication.getPrincipal()).getUsername(), ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress());
-        logger.info("登录请求url：{}", HttpUtil.getFullUrl(request));
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        String targetUrl = this.successUrl;
-        if (null != savedRequest) {
-            targetUrl = savedRequest.getRedirectUrl();
-            logger.info("重定向url: {}", targetUrl);
-        }
+        init(request, response, authentication);
         // 通过权限定义登录成功跳转路径
         if (authentication.getAuthorities().size() > 0) {
             authentication.getAuthorities().forEach(authority -> {
@@ -64,6 +49,6 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
                 }
             });
         }
-        super.transfer(request, response, targetUrl);
+        super.transfer(request, response, this.successUrl);
     }
 }

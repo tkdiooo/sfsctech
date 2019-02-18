@@ -2,6 +2,7 @@ package com.sfsctech.core.auth.session.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
 import com.sfsctech.support.common.util.HttpUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -36,34 +37,27 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        logger.info("用户：{}登录成功!用户IP：{}", ((User) authentication.getPrincipal()).getUsername(), ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress());
-        logger.info("登录请求url：{}", HttpUtil.getFullUrl(request));
-        SavedRequest savedRequest = requestCache.getRequest(request, response);
-        String targetUrl = this.successUrl;
-        if (null != savedRequest) {
-            targetUrl = savedRequest.getRedirectUrl();
-            logger.info("重定向url: {}", targetUrl);
-        }
+        init(request, response, authentication);
         // 通过权限定义登录成功跳转路径
-        if (authentication.getAuthorities().size() > 0) {
-            authentication.getAuthorities().forEach(authority -> {
-                if (authority.getAuthority().equals("ROLE_USER")) {
-                    try {
-                        redirectStrategy.sendRedirect(request, response, "/user");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
-                    try {
-                        redirectStrategy.sendRedirect(request, response, "/admin");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    throw new IllegalStateException();
-                }
-            });
-        }
-        super.transfer(request, response, targetUrl);
+//        if (authentication.getAuthorities().size() > 0) {
+//            authentication.getAuthorities().forEach(authority -> {
+//                if (authority.getAuthority().equals("ROLE_USER")) {
+//                    try {
+//                        redirectStrategy.sendRedirect(request, response, "/user");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+//                    try {
+//                        redirectStrategy.sendRedirect(request, response, "/admin");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    throw new IllegalStateException();
+//                }
+//            });
+//        }
+        super.transfer(request, response, this.successUrl);
     }
 }
