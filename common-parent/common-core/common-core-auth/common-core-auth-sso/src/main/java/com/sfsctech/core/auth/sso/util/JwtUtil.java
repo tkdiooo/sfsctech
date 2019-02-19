@@ -4,10 +4,13 @@ import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.common.util.DateUtil;
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -17,6 +20,8 @@ import java.util.Map;
  * @version Description:
  */
 public class JwtUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     private static final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
 
@@ -35,17 +40,21 @@ public class JwtUtil {
      */
     public static String generalJwt(Map<String, Object> claims) {
         long nowMillis = System.currentTimeMillis();
+        Date begin = DateUtil.getTimeMillisDate(nowMillis);
+        Date end = DateUtil.getTimeMillisDate(config.getExpiration() + nowMillis);
         //返回的字符串便是我们的jwt串了
         JwtBuilder builder = Jwts.builder()
                 .setClaims(claims) // 设置内容
                 .setSubject(config.getSubject()) // 设置主题
                 .setIssuer(config.getIssuer()) // 发行方
-                .setIssuedAt(DateUtil.getTimeMillisDate(nowMillis)) // 发行时间
+                .setIssuedAt(begin) // 发行时间
+                .setExpiration(end)
                 .signWith(SignatureAlgorithm.HS512, getKey());
         // 过期时间
-        if (null != config.getExpiration() && config.getExpiration() >= 0) {
-            builder.setExpiration(DateUtil.getTimeMillisDate(config.getExpiration() + nowMillis));
-        }
+//        if (null != config.getExpiration() && config.getExpiration() >= 0) {
+//        builder.setExpiration(DateUtil.getTimeMillisDate(config.getExpiration() + nowMillis));
+//        }
+        logger.info("生成Jwt信息：{主题:{},发行方:{},发行时间:{},过期时间:{}}", config.getSubject(), config.getIssuer(), DateUtil.toDateTimeDash(begin), DateUtil.toDateTimeDash(end));
         return builder.compact();
     }
 
