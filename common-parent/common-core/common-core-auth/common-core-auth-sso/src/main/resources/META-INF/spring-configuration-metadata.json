@@ -118,7 +118,7 @@
     },
     {
       "name": "website.sso.jwt.expiration",
-      "type": "java.lang.Long",
+      "type": "java.lang.Integer",
       "description": "jwt 保持时间",
       "sourceType": "com.sfsctech.core.auth.sso.properties.JwtProperties"
     }

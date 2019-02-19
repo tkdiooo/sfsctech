@@ -31,7 +31,7 @@ public abstract class BaseSuccessHandler {
     protected RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
     private RequestCache requestCache = new HttpSessionRequestCache();
 
-    protected void init(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    protected void init(HttpServletRequest request, Authentication authentication) {
         logger.info("用户：{}登录成功!用户IP：{}", ((User) authentication.getPrincipal()).getUsername(), ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress());
         logger.info("登录请求url：{}", HttpUtil.getFullUrl(request));
 

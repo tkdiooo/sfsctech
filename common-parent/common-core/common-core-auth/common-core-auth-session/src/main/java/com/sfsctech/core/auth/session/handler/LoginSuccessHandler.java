@@ -37,7 +37,7 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        init(request, response, authentication);
+        init(request, authentication);
         // 通过权限定义登录成功跳转路径
 //        if (authentication.getAuthorities().size() > 0) {
 //            authentication.getAuthorities().forEach(authority -> {

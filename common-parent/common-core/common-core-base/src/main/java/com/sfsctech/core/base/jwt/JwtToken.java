@@ -9,6 +9,7 @@ import com.sfsctech.core.base.domain.dto.BaseDto;
  * @author 张麒 2017/8/28.
  * @version Description:
  */
+@Deprecated
 public class JwtToken extends BaseDto {
 
     private static final long serialVersionUID = 2763237712905519322L;

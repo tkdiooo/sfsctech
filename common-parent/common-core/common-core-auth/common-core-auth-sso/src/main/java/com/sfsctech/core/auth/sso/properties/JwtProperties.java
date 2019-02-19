@@ -19,7 +19,7 @@ public class JwtProperties {
     // 发行方
     private String issuer;
     // 保持时间
-    private Long expiration = 1800000L;
+    private Integer expiration = 1800000;
 
     public String getSubject() {
         return subject;
@@ -37,11 +37,11 @@ public class JwtProperties {
         this.issuer = issuer;
     }
 
-    public Long getExpiration() {
+    public Integer getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(Long expiration) {
+    public void setExpiration(Integer expiration) {
         this.expiration = expiration;
     }
 

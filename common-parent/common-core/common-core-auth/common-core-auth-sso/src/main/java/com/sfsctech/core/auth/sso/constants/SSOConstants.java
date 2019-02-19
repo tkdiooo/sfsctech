@@ -11,7 +11,6 @@ import com.sfsctech.core.auth.base.constants.SessionConstants;
 public class SSOConstants extends SessionConstants {
 
 
-
     public static final String LOGIN_ACCOUNT = "account";
     public static final String LOGIN_REMEMBER = "remember";
 
@@ -33,5 +32,7 @@ public class SSOConstants extends SessionConstants {
 
     public static final String JWT_USER_AUTH_INFO = "jwt_user_auth_info";
     public static final String JWT_PERMIT_ATTRIBUTE = "jwt_permit_attribute";
+
+    public static final String SSO_CACHE_IDENTIFY = "SSO_LOGIN_USER";
 
 }
