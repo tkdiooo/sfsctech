@@ -25,7 +25,8 @@ public class SSOConstants extends SessionConstants {
 
     public static final String COOKIE_REMEMBER_LOGIN_ACCOUNT = "sfsc_re_lo_ac";
 
-    public static final String COOKIE_TOKEN_NAME = "uams_tok_na";
+    public static final String COOKIE_CERTIFICATE_NAME = "uams_tok_na";
+    public static final String HEADER_CERTIFICATE_NAME = "Authorization";
     public static final String COOKIE_SALT_CACHE_KEY_NAME = "uams_tok_cac_na";
     // SSO验证参数名称
     public static final String UAMS_CHECK_PARAM_NAME = "uams_check_param";

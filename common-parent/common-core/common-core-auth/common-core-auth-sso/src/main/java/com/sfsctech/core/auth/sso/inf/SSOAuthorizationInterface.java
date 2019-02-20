@@ -12,9 +12,6 @@ import com.sfsctech.core.base.jwt.JwtToken;
  */
 public interface SSOAuthorizationInterface {
 
-    RpcResult<JwtToken> simpleVerify(JwtToken jt);
-
-
-    RpcResult<JwtToken> complexVerify(JwtToken jt);
+    RpcResult<JwtToken> tokenVerify(String token);
 
 }

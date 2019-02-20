@@ -3,6 +3,7 @@ package com.sfsctech.core.auth.sso.config;
 import com.sfsctech.core.auth.base.config.AuthConfig;
 import com.sfsctech.core.auth.base.config.BaseWebSecurityConfig;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.filter.CertificateFilter;
 import com.sfsctech.core.auth.sso.handler.LoginSuccessHandler;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
@@ -10,6 +11,7 @@ import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,10 +34,12 @@ public class SSOConfig extends BaseWebSecurityConfig {
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-//    @Bean
-//    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-//        return new JwtAuthenticationTokenFilter();
-//    }
+    @Bean
+    public CertificateFilter certificateFilter() {
+        SkipPathRequestMatcher requestMatcher = new SkipPathRequestMatcher();
+        CertificateFilter filter = new CertificateFilter();
+        return new JwtAuthenticationTokenFilter();
+    }
 
 
     @Override

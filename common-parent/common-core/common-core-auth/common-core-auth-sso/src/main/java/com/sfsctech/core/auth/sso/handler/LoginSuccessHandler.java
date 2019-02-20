@@ -3,7 +3,7 @@ package com.sfsctech.core.auth.sso.handler;
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
+import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
@@ -63,9 +63,9 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         logger.info("用户：" + user.getUsername() + "，生成token{" + token + "}。");
         CookieHelper helper = CookieHelper.getInstance(request, response);
         if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-            JwtCookieUtil.updateJwtToken(helper, token);
+            SessionKeepUtil.updateJwtToken(helper, token);
         } else {
-            JwtCookieUtil.updateJwtToken(response, token);
+            SessionKeepUtil.updateJwtToken(response, token);
         }
         super.transfer(request, response, this.successUrl);
     }

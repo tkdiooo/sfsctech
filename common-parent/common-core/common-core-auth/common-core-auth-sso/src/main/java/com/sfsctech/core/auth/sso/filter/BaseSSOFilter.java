@@ -3,8 +3,8 @@ package com.sfsctech.core.auth.sso.filter;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
+import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
 import com.sfsctech.core.auth.sso.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -53,12 +53,12 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
         // SessionInfo
         SessionInfo session = new SessionInfo();
         SessionHolder.setSessionInfo(session);
-        JwtToken jt = null;
         try {
             // 请求路径
             String requestURI = request.getRequestURI();
             logger.info("请求路径:{}", requestURI);
             try {
+                String token;
                 final String method = request.getMethod();
                 if (SingletonUtil.getApplication().getActive().equals("dev") && "OPTIONS".equals(method)) {
                     logger.info("开发环境跨域请求放行");
@@ -68,21 +68,19 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                 logger.info("Session保持类型:{}", properties.getAuth().getSessionKeep());
                 // JwtToken信息
                 if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-                    jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+                    token = SessionKeepUtil.getCertificateByCookie(helper);
                 } else {
-                    jt = JwtCookieUtil.getJwtTokenByHeader(request);
+                    token = SessionKeepUtil.getCertificateByHeader(request);
                 }
-                logger.info("获取JwtToken:{}", jt);
-                if (null != jt) {
+                logger.info("获取JwtToken:{}", token);
+                if (StringUtil.isNotBlank(token)) {
                     RpcResult<JwtToken> result;
                     // Jwt 认证校验
-                    logger.info("Jwt校验方式:{}", properties.getAuth().getWay());
-                    if (properties.getAuth().getWay().equals(SSOProperties.AuthWay.Complex)) {
-                        result = authorizationInterface.complexVerify(jt);
-                    } else if (properties.getAuth().getWay().equals(SSOProperties.AuthWay.Simple)) {
-                        result = authorizationInterface.simpleVerify(jt);
-                    } else if (properties.getAuth().getWay().equals(SSOProperties.AuthWay.Local)) {
-                        result = localVerify(jt);
+                    logger.info("Session类型:{}", properties.getAuth().getSessionType());
+                    if (properties.getAuth().getSessionType().equals(SSOProperties.SessionType.Token)) {
+                        result = authorizationInterface.tokenVerify(token);
+                    } else if (properties.getAuth().getSessionType().equals(SSOProperties.SessionType.Jwt)) {
+                        result = jwtVerify(token);
                     } else {
                         result = new RpcResult<>();
                         result.setSuccess(false);
@@ -91,23 +89,22 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                     logger.info("用户Session校验结果:{}", result);
                     // 校验成功
                     if (result.isSuccess()) {
-                        jt = result.getResult();
                         try {
-                            String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
-                            Claims claims = JwtUtil.parseJWT(token);
+                            JwtToken jt = result.getResult();
+                            Claims claims = JwtUtil.parseJWT(jt.getJwt());
                             logger.info("调用自定义方法:customSession");
                             customSession(claims, request);
                             // 更新token
                             logger.info("更新Jwt,更新策略:{}", properties.getAuth().getSessionKeep());
                             if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-                                JwtCookieUtil.updateJwtToken(helper, jt);
+                                SessionKeepUtil.updateCertificate(helper, jt.getCertificate());
                             } else {
-                                JwtCookieUtil.updateJwtToken(response, jt);
+                                SessionKeepUtil.updateCertificate(response, jt.getCertificate());
                             }
                         } catch (Exception e) {
                             logger.warn("Jwt处理异常:清理Jwt");
-                            JwtCookieUtil.clearJwtToken(helper);
-                            logger.warn("异常信息:{}", ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                            SessionKeepUtil.clearCertificate(helper);
+                            logger.warn("异常信息:{}", ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);
                         }
                         chain.doFilter(request, response);
                         return;
@@ -115,13 +112,6 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                 }
             } catch (Exception e) {
                 logger.error("异常:{}", ThrowableUtil.getRootMessage(e), e);
-            } finally {
-                // 更新Session attribute
-                if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
-                    // TODO 需要验证Session 属性具体内容
-                    logger.info("更新Session attribute");
-//                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
-                }
             }
             logger.info("用户Session失效");
             // 项目类型是单页应用
@@ -129,6 +119,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                 response.getWriter().write(LabelConstants.OPEN_CURLY_BRACE + LabelConstants.QUOTE + "result" + LabelConstants.QUOTE + LabelConstants.COLON + LabelConstants.QUOTE + "session" + LabelConstants.QUOTE + LabelConstants.CLOSE_CURLY_BRACE);
                 return;
             }
+
             // TODO
             String redirect_url = null;
             // 后端模板应用session失效处理
@@ -171,5 +162,6 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
 
     protected abstract void customSession(Claims claims, HttpServletRequest request);
 
-    protected abstract RpcResult<JwtToken> localVerify(JwtToken jt);
+    protected abstract RpcResult<JwtToken> jwtVerify(String token);
+
 }

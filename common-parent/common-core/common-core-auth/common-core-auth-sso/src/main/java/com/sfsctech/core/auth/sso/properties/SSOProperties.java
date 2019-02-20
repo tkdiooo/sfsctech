@@ -15,13 +15,18 @@ import org.springframework.stereotype.Component;
 )
 public class SSOProperties {
 
+    /**
+     * Session保持类型
+     */
     public enum SessionKeep {
         Cookie, Header
     }
 
-    // 校验方式
-    public enum AuthWay {
-        Simple, Complex, Local
+    /**
+     * Session类型
+     */
+    public enum SessionType {
+        Token, Jwt
     }
 
     // 应用类型
@@ -112,19 +117,19 @@ public class SSOProperties {
 
     public static class Authentication {
 
-        private AuthWay way = AuthWay.Simple;
+        private SessionType sessionType = SessionType.Jwt;
         private SessionKeep sessionKeep = SessionKeep.Cookie;
         private AppType appType;
 
         Authentication() {
         }
 
-        public AuthWay getWay() {
-            return way;
+        public SessionType getSessionType() {
+            return sessionType;
         }
 
-        public void setWay(AuthWay way) {
-            this.way = way;
+        public void setSessionType(SessionType sessionType) {
+            this.sessionType = sessionType;
         }
 
         public SessionKeep getSessionKeep() {
