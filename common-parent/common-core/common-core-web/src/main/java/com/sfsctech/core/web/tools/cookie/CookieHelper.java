@@ -50,8 +50,10 @@ public class CookieHelper {
         return cookies.getCookieValue(key);
     }
 
-    public void clearCookie(String key) {
-        cookies.remove(key, config.getDomain());
+    public void clearCookie(String... keys) {
+        for (String key : keys) {
+            cookies.remove(key, config.getDomain());
+        }
     }
 
     public Config getConfig() {

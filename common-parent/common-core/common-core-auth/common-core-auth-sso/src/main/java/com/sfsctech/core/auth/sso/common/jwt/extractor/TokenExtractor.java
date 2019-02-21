@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.server.jwt.extractor;
+package com.sfsctech.core.auth.sso.common.jwt.extractor;
 
 import com.sfsctech.core.base.constants.LabelConstants;
 

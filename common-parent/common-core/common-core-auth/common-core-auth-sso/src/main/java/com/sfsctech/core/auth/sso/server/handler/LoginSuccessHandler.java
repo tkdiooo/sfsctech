@@ -2,17 +2,16 @@ package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
-import com.sfsctech.core.auth.sso.server.jwt.extractor.TokenExtractor;
-import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.common.jwt.JwtTokenFactory;
+import com.sfsctech.core.auth.sso.common.jwt.extractor.TokenExtractor;
+import com.sfsctech.core.auth.sso.common.util.SessionKeepUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.security.EncrypterTool;
-import com.sfsctech.support.common.util.HexUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -54,23 +53,17 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         User user = ((User) authentication.getPrincipal());
         // 生成AccessJwt
         JwtToken accessJwt = jwtTokenFactory.generalAccessJwt(user);
-        logger.info("用户：" + user.getUsername() + "，生成AccessJwt{" + accessJwt + "}。");
-        // 生成RefreshJwt
-        JwtToken refreshJwt = jwtTokenFactory.generalRefreshJwt(user);
-        logger.info("用户：" + user.getUsername() + "，生成RefreshJwt{" + refreshJwt + "}。");
-        String salt = HexUtil.getEncryptKey();
-        logger.info("用户：" + user.getUsername() + "，生成盐值{" + salt + "}。");
-        String cache_key = TokenExtractor.HEADER_PREFIX + user.getUsername() + LabelConstants.DOUBLE_POUND + salt;
-        logger.info("用户：" + user.getUsername() + "，生成缓存KEY{" + cache_key + "}。");
-        factory.getCacheClient().putTimeOut(cache_key, accessJwt, jwtTokenFactory.getSettings().getExpiration());
-
-        String token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, cache_key + LabelConstants.DOUBLE_POUND + System.currentTimeMillis());
-        logger.info("用户：" + user.getUsername() + "，生成token{" + token + "}。");
+        logger.info("用户:{}，生成AccessJwt:{}", user.getUsername(), accessJwt.getJwt());
+        String Access_Jwt_Cache = SSOConstants.ACCESS_TOKEN_CACHE_IDENTIFY + LabelConstants.DOUBLE_POUND + user.getUsername();
+        logger.info("用户:{}，生成Access_Jwt_Cache:{}", user.getUsername(), Access_Jwt_Cache);
+        factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getJwt(), jwtTokenFactory.getSettings().getExpiration());
+        String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, TokenExtractor.HEADER_PREFIX + System.currentTimeMillis() + LabelConstants.PERIOD + Access_Jwt_Cache);
+        logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
         CookieHelper helper = CookieHelper.getInstance(request, response);
         if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-            SessionKeepUtil.updateCertificate(helper, token);
+            SessionKeepUtil.updateCertificate(helper, Access_Jwt_Token);
         } else {
-            SessionKeepUtil.updateCertificate(response, token);
+            SessionKeepUtil.updateCertificate(response, Access_Jwt_Token);
         }
         super.transfer(request, response, this.successUrl);
     }

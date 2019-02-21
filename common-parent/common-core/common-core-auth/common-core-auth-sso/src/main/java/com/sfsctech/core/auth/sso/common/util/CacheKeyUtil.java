@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.util;
+package com.sfsctech.core.auth.sso.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.core.base.constants.LabelConstants;

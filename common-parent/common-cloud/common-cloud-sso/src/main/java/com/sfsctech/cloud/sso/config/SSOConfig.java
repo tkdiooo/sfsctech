@@ -1,12 +1,8 @@
 package com.sfsctech.cloud.sso.config;
 
-import com.sfsctech.cloud.sso.filter.SSOFilter;
 import com.sfsctech.core.auth.base.config.AuthConfig;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -23,15 +19,15 @@ public class SSOConfig {
     @Autowired
     private AuthConfig config;
 
-    @Bean
-    public FilterRegistrationBean SSOFilter() {
-        SSOFilter filter = new SSOFilter();
-        // Session认证排除路径
-        filter.setExcludesPattern(config.getExcludePath());
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("CloudSSOFilter");
-        registration.setOrder(5);
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean SSOFilter() {
+//        SSOFilter filter = new SSOFilter();
+//        // Session认证排除路径
+//        filter.setExcludesPattern(config.getExcludePath());
+//        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+//        registration.setName("CloudSSOFilter");
+//        registration.setOrder(5);
+//        return registration;
+//    }
 }

@@ -1,7 +1,7 @@
 package com.sfsctech.core.auth.sso.filter;
 
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.common.util.SessionKeepUtil;
 import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.util.StringUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;

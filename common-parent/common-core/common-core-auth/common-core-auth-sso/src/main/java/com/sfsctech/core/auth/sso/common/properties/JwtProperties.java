@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.properties;
+package com.sfsctech.core.auth.sso.common.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

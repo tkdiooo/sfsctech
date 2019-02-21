@@ -3,11 +3,11 @@ package com.sfsctech.core.auth.sso.server.config;
 import com.sfsctech.core.auth.base.config.AuthConfig;
 import com.sfsctech.core.auth.base.config.BaseWebSecurityConfig;
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.filter.CertificateFilter;
+import com.sfsctech.core.auth.sso.common.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
+import com.sfsctech.core.auth.sso.common.jwt.JwtTokenFactory;
+import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -44,12 +44,12 @@ public class SSOConfig extends BaseWebSecurityConfig {
     }
 
 
-    @Bean
-    public CertificateFilter certificateFilter() {
-        SkipPathRequestMatcher requestMatcher = new SkipPathRequestMatcher();
-        CertificateFilter filter = new CertificateFilter();
-        return new JwtAuthenticationTokenFilter();
-    }
+//    @Bean
+//    public CertificateFilter certificateFilter() {
+//        SkipPathRequestMatcher requestMatcher = new SkipPathRequestMatcher();
+//        CertificateFilter filter = new CertificateFilter();
+//        return new JwtAuthenticationTokenFilter();
+//    }
 
 
     @Override
@@ -61,7 +61,7 @@ public class SSOConfig extends BaseWebSecurityConfig {
                     .and().headers().cacheControl();
             // jwt通过Cookie保持，登出后销毁Cookie
             if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-                http.logout().deleteCookies("JSESSIONID," + SSOConstants.COOKIE_TOKEN_NAME);
+                http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.COOKIE_ACCESS_TOKEN);
             }
 
             // 添加JWT filter

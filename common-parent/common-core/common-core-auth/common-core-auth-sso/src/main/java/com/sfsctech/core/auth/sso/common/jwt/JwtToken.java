@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.server.jwt;
+package com.sfsctech.core.auth.sso.common.jwt;
 
 
 import com.sfsctech.core.base.domain.dto.BaseDto;
@@ -25,8 +25,5 @@ public class JwtToken extends BaseDto {
     private Date beginDate;
 
     private Date endDate;
-
-    // token凭证
-    private String certificate;
 
 }

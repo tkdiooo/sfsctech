@@ -25,9 +25,8 @@ public class SSOConstants extends SessionConstants {
 
     public static final String COOKIE_REMEMBER_LOGIN_ACCOUNT = "sfsc_re_lo_ac";
 
-    public static final String COOKIE_CERTIFICATE_NAME = "uams_tok_na";
-    public static final String HEADER_CERTIFICATE_NAME = "Authorization";
-    public static final String COOKIE_SALT_CACHE_KEY_NAME = "uams_tok_cac_na";
+    public static final String COOKIE_ACCESS_TOKEN = "uams_ac_tok_na";
+    public static final String HEADER_ACCESS_TOKEN = "Authorization";
     // SSO验证参数名称
     public static final String UAMS_CHECK_PARAM_NAME = "uams_check_param";
 
@@ -35,6 +34,9 @@ public class SSOConstants extends SessionConstants {
     public static final String JWT_CLAIMS_SCOPES = "scopes";
     public static final String JWT_USER_AUTH_INFO = "jwt_user_auth_info";
     public static final String JWT_PERMIT_ATTRIBUTE = "jwt_permit_attribute";
+
+    public static final String ACCESS_TOKEN_CACHE_IDENTIFY = "access_token_id";
+    public static final String REFRESH_TOKEN_CACHE_IDENTIFY = "refresh_token_id";
 
     public enum Scopes {
         REFRESH_TOKEN;

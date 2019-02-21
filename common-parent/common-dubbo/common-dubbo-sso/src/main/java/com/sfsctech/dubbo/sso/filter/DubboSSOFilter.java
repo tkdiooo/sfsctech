@@ -1,8 +1,7 @@
 package com.sfsctech.dubbo.sso.filter;
 
 import com.sfsctech.core.auth.sso.filter.BaseSSOFilter;
-import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
-import com.sfsctech.dubbo.sso.util.SingletonUtil;
+import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
 
 /**
  * Class SSOFilter
@@ -13,8 +12,8 @@ import com.sfsctech.dubbo.sso.util.SingletonUtil;
 public abstract class DubboSSOFilter extends BaseSSOFilter {
 
     @Override
-    protected SSOAuthorizationInterface getcheck() {
-        return new SingletonUtil();
+    protected SSOInterface getcheck() {
+        return null;
     }
 
 

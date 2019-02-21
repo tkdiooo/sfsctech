@@ -3,7 +3,7 @@ package com.sfsctech.dubbo.base.serialize;
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.core.exception.ex.RpcException;

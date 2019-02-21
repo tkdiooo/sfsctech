@@ -3,7 +3,7 @@ package com.sfsctech.cloud.base.inf;
 
 import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

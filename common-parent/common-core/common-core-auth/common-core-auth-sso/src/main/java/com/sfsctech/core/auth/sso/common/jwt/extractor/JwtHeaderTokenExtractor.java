@@ -1,10 +1,8 @@
-package com.sfsctech.core.auth.sso.server.jwt.extractor;
+package com.sfsctech.core.auth.sso.common.jwt.extractor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.stereotype.Component;
 
-@Component
 public class JwtHeaderTokenExtractor implements TokenExtractor {
 
     @Override
@@ -17,6 +15,6 @@ public class JwtHeaderTokenExtractor implements TokenExtractor {
             throw new AuthenticationServiceException("Invalid authorization header size.");
         }
 
-        return header.substring(HEADER_PREFIX.length());
+        return header.substring(HEADER_PREFIX.length() + 14);
     }
 }

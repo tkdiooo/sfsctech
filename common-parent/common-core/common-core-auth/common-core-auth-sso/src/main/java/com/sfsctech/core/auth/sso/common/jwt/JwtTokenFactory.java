@@ -1,7 +1,7 @@
-package com.sfsctech.core.auth.sso.server.jwt;
+package com.sfsctech.core.auth.sso.common.jwt;
 
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.common.properties.JwtProperties;
 import com.sfsctech.support.common.util.DateUtil;
 import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.common.util.StringUtil;
@@ -16,7 +16,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
@@ -82,6 +81,7 @@ public class JwtTokenFactory {
         return jwtToken;
     }
 
+    // TODO
     public JwtToken generalRefreshJwt(User user) {
         if (StringUtils.isBlank(user.getUsername())) {
             throw new IllegalArgumentException("Cannot create JWT Token without username");

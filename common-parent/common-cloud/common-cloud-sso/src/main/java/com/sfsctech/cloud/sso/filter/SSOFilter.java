@@ -1,9 +1,8 @@
 package com.sfsctech.cloud.sso.filter;
 
-import com.sfsctech.core.auth.sso.filter.BaseSSOFilter;
-import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
+import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version Description:
  */
 // TODO 重新实现
-public class SSOFilter extends BaseSSOFilter {
+public class SSOFilter {
 
 //    @Override
 //    protected RpcResult<JwtToken> check(JwtToken jt, SSOProperties.AuthWay authWay) {
@@ -26,17 +25,17 @@ public class SSOFilter extends BaseSSOFilter {
 //        }
 //    }
 
-    @Override
-    protected SSOAuthorizationInterface getcheck() {
+//    @Override
+    protected SSOInterface getcheck() {
         return null;
     }
 
-    @Override
+//    @Override
     protected void customSession(Claims claims, HttpServletRequest request) {
 
     }
 
-    @Override
+    //    @Override
     protected RpcResult<JwtToken> localVerify(JwtToken jt) {
         return null;
     }

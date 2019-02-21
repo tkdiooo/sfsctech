@@ -1,14 +1,13 @@
 package com.sfsctech.core.auth.sso.filter;
 
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
-import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
-import com.sfsctech.core.auth.sso.util.SingletonUtil;
+import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.common.util.SessionKeepUtil;
+import com.sfsctech.core.auth.sso.common.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 import com.sfsctech.core.base.session.SessionHolder;
 import com.sfsctech.core.base.session.SessionInfo;
 import com.sfsctech.core.cache.factory.CacheFactory;
@@ -42,7 +41,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
     private SSOProperties properties;
 
     @Autowired
-    private SSOAuthorizationInterface authorizationInterface;
+    private SSOInterface authorizationInterface;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
@@ -78,7 +77,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                     // Jwt 认证校验
                     logger.info("Session类型:{}", properties.getAuth().getSessionType());
                     if (properties.getAuth().getSessionType().equals(SSOProperties.SessionType.Token)) {
-                        result = authorizationInterface.tokenVerify(token);
+                        result = authorizationInterface.verifyToken(token);
                     } else if (properties.getAuth().getSessionType().equals(SSOProperties.SessionType.Jwt)) {
                         result = jwtVerify(token);
                     } else {
@@ -91,15 +90,15 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                     if (result.isSuccess()) {
                         try {
                             JwtToken jt = result.getResult();
-                            Claims claims = JwtTokenFactory.parseJWT(jt.getJwt());
+//                            Claims claims = JwtTokenFactory.parseJWT(jt.getJwt());
                             logger.info("调用自定义方法:customSession");
-                            customSession(claims, request);
+//                            customSession(claims, request);
                             // 更新token
                             logger.info("更新Jwt,更新策略:{}", properties.getAuth().getSessionKeep());
                             if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-                                SessionKeepUtil.updateCertificate(helper, jt.getCertificate());
+//                                SessionKeepUtil.updateCertificate(helper, jt.getCertificate());
                             } else {
-                                SessionKeepUtil.updateCertificate(response, jt.getCertificate());
+//                                SessionKeepUtil.updateCertificate(response, jt.getCertificate());
                             }
                         } catch (Exception e) {
                             logger.warn("Jwt处理异常:清理Jwt");
@@ -158,7 +157,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
         }
     }
 
-    protected abstract SSOAuthorizationInterface getcheck();
+    protected abstract SSOInterface getcheck();
 
     protected abstract void customSession(Claims claims, HttpServletRequest request);
 

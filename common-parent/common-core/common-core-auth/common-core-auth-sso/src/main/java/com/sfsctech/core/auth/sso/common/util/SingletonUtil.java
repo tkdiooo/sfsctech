@@ -1,8 +1,8 @@
-package com.sfsctech.core.auth.sso.util;
+package com.sfsctech.core.auth.sso.common.util;
 
 import com.sfsctech.core.auth.sso.server.config.SSOConfig;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.common.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;

@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.properties;
+package com.sfsctech.core.auth.sso.common.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -118,7 +118,7 @@ public class SSOProperties {
     public static class Authentication {
 
         private SessionType sessionType = SessionType.Jwt;
-        private SessionKeep sessionKeep = SessionKeep.Cookie;
+        private SessionKeep sessionKeep = SessionKeep.Header;
         private AppType appType;
 
         Authentication() {
