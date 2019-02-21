@@ -1,10 +1,11 @@
 package com.sfsctech.core.auth.sso.util;
 
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.HexUtil;
@@ -67,7 +68,7 @@ public class SSOUtil {
 
     public static void refreshJwt(Claims claims, String account, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
         logger.info("刷新登录用户:" + account + "的Jwt信息");
-        String jwt = JwtUtil.generalJwt(claims);
+        String jwt = JwtTokenFactory.generalJwt(claims);
         logger.info("用户:" + account + "，生成新的jwt[" + jwt + "]。");
         // 生成新的salt
         String salt = HexUtil.getEncryptKey();

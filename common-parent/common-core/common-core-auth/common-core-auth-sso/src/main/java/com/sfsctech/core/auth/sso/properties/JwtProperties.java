@@ -14,19 +14,21 @@ import org.springframework.stereotype.Component;
         prefix = "website.sso.jwt"
 )
 public class JwtProperties {
-    // 主题
-    private String subject;
+    // 盐值
+    private String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
     // 发行方
     private String issuer;
     // 保持时间
     private Integer expiration = 1800000;
+    // 刷新token保存时间
+    private Integer refreshTime = 3600000;
 
-    public String getSubject() {
-        return subject;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getIssuer() {
@@ -45,4 +47,11 @@ public class JwtProperties {
         this.expiration = expiration;
     }
 
+    public Integer getRefreshTime() {
+        return refreshTime;
+    }
+
+    public void setRefreshTime(Integer refreshTime) {
+        this.refreshTime = refreshTime;
+    }
 }

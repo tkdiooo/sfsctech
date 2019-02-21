@@ -2,7 +2,7 @@ package com.sfsctech.dubbo.base.inf;
 
 
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 
 /**
  * Class VerifyService

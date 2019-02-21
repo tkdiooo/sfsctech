@@ -1,13 +1,12 @@
 package com.sfsctech.core.auth.sso.util;
 
-import com.sfsctech.core.auth.sso.config.SSOConfig;
+import com.sfsctech.core.auth.sso.server.config.SSOConfig;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
-import com.sfsctech.core.web.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

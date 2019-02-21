@@ -1,10 +1,12 @@
-package com.sfsctech.core.auth.sso.handler;
+package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
+import com.sfsctech.core.auth.sso.server.jwt.extractor.TokenExtractor;
 import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
-import com.sfsctech.core.auth.sso.util.JwtUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -20,8 +22,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class LoginSuccessHandler
@@ -37,10 +37,13 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     private SSOProperties properties;
 
+    private JwtTokenFactory jwtTokenFactory;
+
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, SSOProperties properties, String successUrl) {
+    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, JwtTokenFactory jwtTokenFactory, SSOProperties properties, String successUrl) {
         this.factory = factory;
+        this.jwtTokenFactory = jwtTokenFactory;
         this.properties = properties;
         this.successUrl = successUrl;
     }
@@ -49,23 +52,25 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         init(request, authentication);
         User user = ((User) authentication.getPrincipal());
-        // 生成Jwt
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(SSOConstants.JWT_USER_AUTH_INFO, user);
-        String jwt = JwtUtil.generalJwt(claims);
-        logger.info("用户：" + user.getUsername() + "，生成jwt{" + jwt + "}。");
+        // 生成AccessJwt
+        JwtToken accessJwt = jwtTokenFactory.generalAccessJwt(user);
+        logger.info("用户：" + user.getUsername() + "，生成AccessJwt{" + accessJwt + "}。");
+        // 生成RefreshJwt
+        JwtToken refreshJwt = jwtTokenFactory.generalRefreshJwt(user);
+        logger.info("用户：" + user.getUsername() + "，生成RefreshJwt{" + refreshJwt + "}。");
         String salt = HexUtil.getEncryptKey();
         logger.info("用户：" + user.getUsername() + "，生成盐值{" + salt + "}。");
-        String cache_key = SSOConstants.SSO_CACHE_IDENTIFY + LabelConstants.PERIOD + user.getUsername() + LabelConstants.DOUBLE_POUND + salt;
+        String cache_key = TokenExtractor.HEADER_PREFIX + user.getUsername() + LabelConstants.DOUBLE_POUND + salt;
         logger.info("用户：" + user.getUsername() + "，生成缓存KEY{" + cache_key + "}。");
-        factory.getCacheClient().putTimeOut(cache_key, jwt, JwtUtil.getConfig().getExpiration());
+        factory.getCacheClient().putTimeOut(cache_key, accessJwt, jwtTokenFactory.getSettings().getExpiration());
+
         String token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, cache_key + LabelConstants.DOUBLE_POUND + System.currentTimeMillis());
         logger.info("用户：" + user.getUsername() + "，生成token{" + token + "}。");
         CookieHelper helper = CookieHelper.getInstance(request, response);
         if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
-            SessionKeepUtil.updateJwtToken(helper, token);
+            SessionKeepUtil.updateCertificate(helper, token);
         } else {
-            SessionKeepUtil.updateJwtToken(response, token);
+            SessionKeepUtil.updateCertificate(response, token);
         }
         super.transfer(request, response, this.successUrl);
     }

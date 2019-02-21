@@ -2,9 +2,8 @@ package com.sfsctech.core.auth.sso.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.support.common.util.HexUtil;
-import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import io.jsonwebtoken.Claims;
 
 import java.util.Map;

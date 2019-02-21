@@ -1,6 +1,6 @@
 package com.sfsctech.core.auth.sso.util;
 
-import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.util.StringUtil;

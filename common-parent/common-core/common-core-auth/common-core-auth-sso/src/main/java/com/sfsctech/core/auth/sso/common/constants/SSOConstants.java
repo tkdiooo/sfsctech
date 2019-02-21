@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.constants;
+package com.sfsctech.core.auth.sso.common.constants;
 
 import com.sfsctech.core.auth.base.constants.SessionConstants;
 
@@ -31,9 +31,16 @@ public class SSOConstants extends SessionConstants {
     // SSO验证参数名称
     public static final String UAMS_CHECK_PARAM_NAME = "uams_check_param";
 
+
+    public static final String JWT_CLAIMS_SCOPES = "scopes";
     public static final String JWT_USER_AUTH_INFO = "jwt_user_auth_info";
     public static final String JWT_PERMIT_ATTRIBUTE = "jwt_permit_attribute";
 
-    public static final String SSO_CACHE_IDENTIFY = "SSO_LOGIN_USER";
+    public enum Scopes {
+        REFRESH_TOKEN;
 
+        public String authority() {
+            return "ROLE_" + this.name();
+        }
+    }
 }

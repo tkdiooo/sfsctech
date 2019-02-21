@@ -1,12 +1,13 @@
-package com.sfsctech.core.auth.sso.config;
+package com.sfsctech.core.auth.sso.server.config;
 
 import com.sfsctech.core.auth.base.config.AuthConfig;
 import com.sfsctech.core.auth.base.config.BaseWebSecurityConfig;
-import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.filter.CertificateFilter;
-import com.sfsctech.core.auth.sso.handler.LoginSuccessHandler;
+import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -32,7 +33,16 @@ public class SSOConfig extends BaseWebSecurityConfig {
     private SSOProperties ssoProperties;
 
     @Autowired
+    private JwtProperties properties;
+
+    @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
+
+    @Bean
+    public JwtTokenFactory jwtTokenFactory() {
+        return new JwtTokenFactory(properties);
+    }
+
 
     @Bean
     public CertificateFilter certificateFilter() {
@@ -61,6 +71,6 @@ public class SSOConfig extends BaseWebSecurityConfig {
 
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new LoginSuccessHandler(factory, ssoProperties, config.getWelcomeFile());
+        return new LoginSuccessHandler(factory, jwtTokenFactory(), ssoProperties, config.getWelcomeFile());
     }
 }

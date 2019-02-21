@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-@Import({SSOProperties.class, com.sfsctech.core.auth.sso.config.SSOConfig.class, AuthConfig.class})
+@Import({SSOProperties.class, com.sfsctech.core.auth.sso.server.config.SSOConfig.class, AuthConfig.class})
 public class SSOConfig {
 
     @Autowired

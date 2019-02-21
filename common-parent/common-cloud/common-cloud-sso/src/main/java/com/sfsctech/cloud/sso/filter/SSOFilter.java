@@ -3,7 +3,7 @@ package com.sfsctech.cloud.sso.filter;
 import com.sfsctech.core.auth.sso.filter.BaseSSOFilter;
 import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;

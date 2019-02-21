@@ -1,14 +1,14 @@
 package com.sfsctech.core.auth.sso.filter;
 
-import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.util.JwtUtil;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.auth.sso.util.SessionKeepUtil;
 import com.sfsctech.core.auth.sso.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 import com.sfsctech.core.base.session.SessionHolder;
 import com.sfsctech.core.base.session.SessionInfo;
 import com.sfsctech.core.cache.factory.CacheFactory;
@@ -91,7 +91,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                     if (result.isSuccess()) {
                         try {
                             JwtToken jt = result.getResult();
-                            Claims claims = JwtUtil.parseJWT(jt.getJwt());
+                            Claims claims = JwtTokenFactory.parseJWT(jt.getJwt());
                             logger.info("调用自定义方法:customSession");
                             customSession(claims, request);
                             // 更新token

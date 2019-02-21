@@ -3,7 +3,7 @@ package com.sfsctech.dubbo.sso.util;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.sfsctech.core.auth.sso.inf.SSOAuthorizationInterface;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.JwtToken;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.dubbo.base.inf.VerifyService;
 
