@@ -3,7 +3,7 @@ package com.sfsctech.core.auth.sso.filter;
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
 import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
-import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.auth.sso.common.util.SessionKeepUtil;
 import com.sfsctech.core.auth.sso.common.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
@@ -73,7 +73,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                 }
                 logger.info("获取JwtToken:{}", token);
                 if (StringUtil.isNotBlank(token)) {
-                    RpcResult<JwtToken> result;
+                    RpcResult<AccessJwtToken> result;
                     // Jwt 认证校验
                     logger.info("Session类型:{}", properties.getAuth().getSessionType());
                     if (properties.getAuth().getSessionType().equals(SSOProperties.SessionType.Token)) {
@@ -89,7 +89,7 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
                     // 校验成功
                     if (result.isSuccess()) {
                         try {
-                            JwtToken jt = result.getResult();
+                            AccessJwtToken jt = result.getResult();
 //                            Claims claims = JwtTokenFactory.parseJWT(jt.getJwt());
                             logger.info("调用自定义方法:customSession");
 //                            customSession(claims, request);
@@ -161,6 +161,6 @@ public abstract class BaseSSOFilter extends OncePerRequestFilter {
 
     protected abstract void customSession(Claims claims, HttpServletRequest request);
 
-    protected abstract RpcResult<JwtToken> jwtVerify(String token);
+    protected abstract RpcResult<AccessJwtToken> jwtVerify(String token);
 
 }

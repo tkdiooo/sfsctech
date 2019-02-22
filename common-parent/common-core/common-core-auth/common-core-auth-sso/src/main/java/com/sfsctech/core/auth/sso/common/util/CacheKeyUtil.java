@@ -31,6 +31,7 @@ public class CacheKeyUtil {
      * 获取用户鉴权数据
      *
      * @param claims Jwt Claims
+     * @param cls class
      * @return UserAuthData
      */
     @SuppressWarnings("unchecked")

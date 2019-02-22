@@ -20,6 +20,11 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-session</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-rpc</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
@@ -40,4 +45,45 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>server</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <classifier>server</classifier>
+                            <excludes>
+                                <exclude>com/sfsctech/core/auth/sso/client/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>client</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <classifier>client</classifier>
+                            <excludes>
+                                <exclude>com/sfsctech/core/auth/sso/server/**</exclude>
+                                <exclude>
+                                    <groupId>com.sfsctech.common</groupId>
+                                    <!--<artifactId>common-core-auth-session</artifactId>-->
+                                </exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Configuration
 @Import({WebsiteProperties.class, AuthProperties.class})
-public class AuthConfig {
+public class SkipPathConfig {
 
     @Autowired
     private WebsiteProperties website;

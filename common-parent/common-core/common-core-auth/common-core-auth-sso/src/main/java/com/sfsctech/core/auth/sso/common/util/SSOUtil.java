@@ -3,7 +3,7 @@ package com.sfsctech.core.auth.sso.common.util;
 import com.sfsctech.core.auth.sso.common.properties.JwtProperties;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
@@ -18,8 +18,8 @@ public class SSOUtil {
 
     private static JwtProperties config = SpringContextUtil.getBean(JwtProperties.class);
 
-    public static RpcResult<JwtToken> generalVerify(JwtToken jt, Logger logger) {
-        RpcResult<JwtToken> result = new RpcResult<>();
+    public static RpcResult<AccessJwtToken> generalVerify(AccessJwtToken jt, Logger logger) {
+        RpcResult<AccessJwtToken> result = new RpcResult<>();
 //        // 解密salt_CacheKey
 //        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jt.getSalt_CacheKey());
 //        if (StringUtil.isBlank(salt_CacheKey)) {
@@ -60,7 +60,7 @@ public class SSOUtil {
         return result;
     }
 
-    public static void refreshJwt(Claims claims, String account, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
+    public static void refreshJwt(Claims claims, String account, String salt_CacheKey, AccessJwtToken jwtToken, Logger logger) {
         logger.info("刷新登录用户:" + account + "的Jwt信息");
 //        String jwt = JwtTokenFactory.generalJwt(claims);
 //        logger.info("用户:" + account + "，生成新的jwt[" + jwt + "]。");
@@ -84,13 +84,13 @@ public class SSOUtil {
 //        jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));
     }
 
-    private static void saltCacheKey(RpcResult<JwtToken> result, String salt_CacheKey) {
+    private static void saltCacheKey(RpcResult<AccessJwtToken> result, String salt_CacheKey) {
         result.setMessage("用户校验失败:[" + salt_CacheKey + "] 无法解密出salt_CacheKey。");
         result.setSuccess(false);
         result.setStatus(RpcConstants.Status.Failure);
     }
 
-    private static void salt(RpcResult<JwtToken> result) {
+    private static void salt(RpcResult<AccessJwtToken> result) {
         result.setMessage("用户校验失败 :用户登录超时，已无法找到缓存中的解密salt！");
         result.setSuccess(false);
         result.setStatus(RpcConstants.Status.Failure);

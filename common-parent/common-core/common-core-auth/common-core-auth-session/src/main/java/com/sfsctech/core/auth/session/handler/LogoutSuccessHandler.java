@@ -1,5 +1,6 @@
-package com.sfsctech.core.auth.base.handler;
+package com.sfsctech.core.auth.session.handler;
 
+import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
 import com.sfsctech.support.common.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

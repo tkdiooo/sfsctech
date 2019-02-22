@@ -2,7 +2,7 @@ package com.sfsctech.core.auth.sso.common.inf;
 
 
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 
 /**
  * Class SSOCheckInterface
@@ -12,8 +12,8 @@ import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
  */
 public interface SSOInterface {
 
-    RpcResult<JwtToken> verifyToken(String token);
+    RpcResult<AccessJwtToken> verifyToken(String token);
 
-    RpcResult<JwtToken> refreshJwt();
+    RpcResult<AccessJwtToken> refreshJwt();
 
 }

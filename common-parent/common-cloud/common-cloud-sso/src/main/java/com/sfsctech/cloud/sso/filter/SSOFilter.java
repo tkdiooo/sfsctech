@@ -2,7 +2,7 @@ package com.sfsctech.cloud.sso.filter;
 
 import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class SSOFilter {
     }
 
     //    @Override
-    protected RpcResult<JwtToken> localVerify(JwtToken jt) {
+    protected RpcResult<AccessJwtToken> localVerify(AccessJwtToken jt) {
         return null;
     }
 }

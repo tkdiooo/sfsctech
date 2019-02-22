@@ -2,6 +2,7 @@ package com.sfsctech.core.auth.sso.common.jwt;
 
 import com.sfsctech.core.auth.sso.common.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.common.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.support.common.util.DateUtil;
 import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.common.util.StringUtil;
@@ -52,7 +53,7 @@ public class JwtTokenFactory {
      * @param user User
      * @return JwtToken
      */
-    public JwtToken generalAccessJwt(User user) {
+    public AccessJwtToken generalAccessJwt(User user) {
         if (StringUtil.isBlank(user.getUsername()))
             throw new IllegalArgumentException("Cannot create JWT Token without username");
 
@@ -64,7 +65,7 @@ public class JwtTokenFactory {
 
         LocalDateTime currentTime = LocalDateTime.now();
 
-        JwtToken jwtToken = JwtToken.builder()
+        AccessJwtToken jwtToken = AccessJwtToken.builder()
                 .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
                 .endDate(Date.from(currentTime.plusSeconds(settings.getExpiration()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -82,14 +83,14 @@ public class JwtTokenFactory {
     }
 
     // TODO
-    public JwtToken generalRefreshJwt(User user) {
+    public AccessJwtToken generalRefreshJwt(User user) {
         if (StringUtils.isBlank(user.getUsername())) {
             throw new IllegalArgumentException("Cannot create JWT Token without username");
         }
 
         LocalDateTime currentTime = LocalDateTime.now();
 
-        JwtToken jwtToken = JwtToken.builder()
+        AccessJwtToken jwtToken = AccessJwtToken.builder()
                 .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
                 .endDate(Date.from(currentTime.plusSeconds(settings.getRefreshTime()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
@@ -117,35 +118,10 @@ public class JwtTokenFactory {
      * 解密jwt
      *
      * @param jwt java web token
-     * @return Claims
+     * @return Jws
      */
-    public Claims parseJWT(String jwt) {
-        try {
-            return Jwts.parser()
-                    .requireIssuer(settings.getIssuer())
-                    .setSigningKey(getKey()).parseClaimsJws(jwt).getBody();
-        } catch (SignatureException | MalformedJwtException | ExpiredJwtException | MissingClaimException | IncorrectClaimException e) {
-            // 签名(Signature)验证失败
-            if (e instanceof SignatureException) {
-                throw new JwtException("Jwt验证错误：[签名(Signature)验证失败]", e);
-            }
-            // jwt 解析错误
-            else if (e instanceof MalformedJwtException) {
-                throw new JwtException("Jwt验证错误：[jwt解析错误]", e);
-            }
-            // jwt 已经过期，在设置jwt的时候如果设置了过期时间，这里会自动判断jwt是否已经过期，如果过期则会抛出这个异常。
-            else if (e instanceof ExpiredJwtException) {
-                throw new JwtException("Jwt验证错误：[jwt已经过期]", e);
-            }
-            // 需要的声明不存在
-            else if (e instanceof MissingClaimException) {
-                throw new JwtException("Jwt验证错误：[Claims需要的声明不存在]", e);
-            }
-            // 载荷(Payload) 有错误
-            else {
-                throw new JwtException("Jwt验证错误：[载荷(Payload) 有错误]", e);
-            }
-        }
+    public Jws<Claims> parseJWT(String jwt) {
+        return Jwts.parser().requireIssuer(settings.getIssuer()).setSigningKey(getKey()).parseClaimsJws(jwt);
     }
 
 }

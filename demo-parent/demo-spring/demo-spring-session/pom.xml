@@ -44,6 +44,12 @@
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+            <classifier>client</classifier>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>

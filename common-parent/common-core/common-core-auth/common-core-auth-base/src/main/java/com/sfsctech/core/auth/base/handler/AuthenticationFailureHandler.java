@@ -19,9 +19,9 @@ import java.io.IOException;
  * @author 张麒 2019-1-29.
  * @version Description:
  */
-public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginFailureHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationFailureHandler.class);
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

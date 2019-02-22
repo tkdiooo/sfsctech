@@ -3,7 +3,7 @@ package com.sfsctech.cloud.base.inf;
 
 import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.common.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public interface LoginService {
      * @return ActionResult&lt;JwtToken&gt;
      */
     @RequestMapping("login")
-    RpcResult<JwtToken> login(@RequestBody UserAuthData authData);
+    RpcResult<AccessJwtToken> login(@RequestBody UserAuthData authData);
 
     /**
      * 登出服务
@@ -34,5 +34,5 @@ public interface LoginService {
      * @param jt JwtToken
      */
     @RequestMapping("logout")
-    void logout(@RequestBody JwtToken jt);
+    void logout(@RequestBody AccessJwtToken jt);
 }

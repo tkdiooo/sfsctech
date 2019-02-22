@@ -3,7 +3,7 @@ package com.sfsctech.dubbo.sso.config;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.sfsctech.core.auth.base.config.AuthConfig;
+import com.sfsctech.core.auth.base.config.SkipPathConfig;
 import com.sfsctech.dubbo.base.inf.VerifyService;
 import com.sfsctech.dubbo.base.config.DubboxConfig;
 import com.sfsctech.dubbo.sso.properties.SSOProperties;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-@Import({SSOProperties.class, com.sfsctech.core.auth.sso.server.config.SSOConfig.class, AuthConfig.class, DubboxConfig.class})
+@Import({SSOProperties.class, com.sfsctech.core.auth.sso.server.config.SSOConfig.class, SkipPathConfig.class, DubboxConfig.class})
 public class SSOConfig {
 
     @Autowired
