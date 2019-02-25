@@ -1,8 +1,8 @@
 package com.sfsctech.cloud.sso.filter;
 
-import com.sfsctech.core.auth.sso.common.inf.SSOInterface;
+//import com.sfsctech.core.auth.base.sso.inf.SSOInterface;
+//import com.sfsctech.core.auth.base.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +26,9 @@ public class SSOFilter {
 //    }
 
 //    @Override
-    protected SSOInterface getcheck() {
-        return null;
-    }
+//    protected SSOInterface getcheck() {
+//        return null;
+//    }
 
 //    @Override
     protected void customSession(Claims claims, HttpServletRequest request) {
@@ -36,7 +36,7 @@ public class SSOFilter {
     }
 
     //    @Override
-    protected RpcResult<AccessJwtToken> localVerify(AccessJwtToken jt) {
-        return null;
-    }
+//    protected RpcResult<AccessJwtToken> localVerify(AccessJwtToken jt) {
+//        return null;
+//    }
 }

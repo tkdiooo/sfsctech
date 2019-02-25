@@ -3,7 +3,6 @@ package com.sfsctech.dubbo.base.serialize;
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.core.exception.ex.RpcException;
@@ -35,7 +34,7 @@ public class KryoSerializationOptimizer implements SerializationOptimizer {
         classes.add(RpcConstants.Status.class);
         classes.add(UserAuthData.class);
         classes.add(RpcResult.class);
-        classes.add(AccessJwtToken.class);
+//        classes.add(AccessJwtToken.class);
         classes.addAll(ClassUtil.getClassesByEndsWith(DubboConstants.KRYO_SERIALIZE_PATH, "dto"));
     }
 

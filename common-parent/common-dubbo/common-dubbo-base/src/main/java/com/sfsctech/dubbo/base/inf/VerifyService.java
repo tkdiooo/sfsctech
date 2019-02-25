@@ -2,7 +2,7 @@ package com.sfsctech.dubbo.base.inf;
 
 
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
+//import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 
 /**
  * Class VerifyService
@@ -18,7 +18,7 @@ public interface VerifyService {
      * @param jt JwtToken
      * @return ActionResult&lt;JwtToken&gt;
      */
-    RpcResult<AccessJwtToken> simpleVerify(AccessJwtToken jt);
+//    RpcResult<AccessJwtToken> simpleVerify(AccessJwtToken jt);
 
     /**
      * 复杂Session检验：校验token包含的数据，以及更新数据版本
@@ -26,6 +26,6 @@ public interface VerifyService {
      * @param jt JwtToken
      * @return ActionResult&lt;JwtToken&gt;
      */
-    RpcResult<AccessJwtToken> complexVerify(AccessJwtToken jt);
+//    RpcResult<AccessJwtToken> complexVerify(AccessJwtToken jt);
 
 }

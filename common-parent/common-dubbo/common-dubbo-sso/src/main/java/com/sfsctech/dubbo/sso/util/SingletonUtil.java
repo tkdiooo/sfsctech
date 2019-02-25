@@ -2,7 +2,7 @@ package com.sfsctech.dubbo.sso.util;
 
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
+//import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.dubbo.base.inf.VerifyService;
 
@@ -26,12 +26,12 @@ public class SingletonUtil {//implements SSOAuthorizationInterface {
     }
 
 //    @Override
-    public RpcResult<AccessJwtToken> simpleVerify(AccessJwtToken jt) {
-        return getVerifyService().simpleVerify(jt);
-    }
+//    public RpcResult<AccessJwtToken> simpleVerify(AccessJwtToken jt) {
+//        return getVerifyService().simpleVerify(jt);
+//    }
 
 //    @Override
-    public RpcResult<AccessJwtToken> complexVerify(AccessJwtToken jt) {
-        return getVerifyService().complexVerify(jt);
-    }
+//    public RpcResult<AccessJwtToken> complexVerify(AccessJwtToken jt) {
+//        return getVerifyService().complexVerify(jt);
+//    }
 }

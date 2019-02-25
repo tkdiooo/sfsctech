@@ -2,7 +2,7 @@ package com.sfsctech.dubbo.base.inf;
 
 
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
+//import com.sfsctech.core.auth.sso.server.jwt.AccessJwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 
 /**
@@ -19,12 +19,12 @@ public interface LoginService {
      * @param authData UserAuthData
      * @return ActionResult&lt;JwtToken&gt;
      */
-    RpcResult<AccessJwtToken> login(UserAuthData authData);
+//    RpcResult<AccessJwtToken> login(UserAuthData authData);
 
     /**
      * 登出服务
      *
      * @param jt JwtToken
      */
-    void logout(AccessJwtToken jt);
+//    void logout(AccessJwtToken jt);
 }

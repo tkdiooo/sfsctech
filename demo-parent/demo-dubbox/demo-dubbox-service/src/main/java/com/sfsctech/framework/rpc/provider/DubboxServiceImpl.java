@@ -2,7 +2,6 @@ package com.sfsctech.framework.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.framework.inf.DubboxService;
 import com.sfsctech.framework.service.read.AccountReadService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.sfsctech.cloud.sso.config;
 
-import com.sfsctech.core.auth.base.config.SkipPathConfig;
-import com.sfsctech.core.auth.sso.common.properties.SSOProperties;
+//import com.sfsctech.core.auth.base.common.config.SkipPathConfig;
+//import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-@Import({SSOProperties.class, com.sfsctech.core.auth.sso.server.config.SSOConfig.class, SkipPathConfig.class})
+//@Import({SSOProperties.class,  SkipPathConfig.class})
 public class SSOConfig {
 
-    @Autowired
-    private SkipPathConfig config;
+//    @Autowired
+//    private SkipPathConfig config;
 
 //    @Bean
 //    public FilterRegistrationBean SSOFilter() {
