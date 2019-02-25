@@ -16,7 +16,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>demo-spring-session</module>
+        <module>demo-security-session</module>
+        <module>demo-security-sso-client</module>
     </modules>
 
 

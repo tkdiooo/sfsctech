@@ -3,34 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>common-core-auth</artifactId>
+        <artifactId>common-core-auth-sso</artifactId>
         <groupId>com.sfsctech.common</groupId>
         <version>2.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-core-auth-sso</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>common-core-auth-sso-server</module>
-        <module>common-core-auth-sso-client</module>
-    </modules>
+    <artifactId>common-core-auth-sso-server</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-rpc</artifactId>
+            <artifactId>common-core-auth-session</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-cache</artifactId>
+            <artifactId>common-core-auth-base</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.7.0</version>
+            <classifier>sso</classifier>
         </dependency>
     </dependencies>
 
