@@ -1,7 +1,6 @@
 package com.sfsctech.core.auth.base.sso.jwt;
 
 
-import com.sfsctech.core.auth.base.sso.jwt.JwtToken;
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import lombok.Builder;
 import lombok.Data;

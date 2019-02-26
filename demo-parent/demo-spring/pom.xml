@@ -18,6 +18,7 @@
     <modules>
         <module>demo-security-session</module>
         <module>demo-security-sso-client</module>
+        <module>demo-security-sso-server</module>
     </modules>
 
 
