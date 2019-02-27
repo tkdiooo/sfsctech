@@ -2,9 +2,9 @@ package com.sfsctech.cloud.base.inf;
 
 
 import com.sfsctech.cloud.base.annotation.CloudService;
-import com.sfsctech.core.base.domain.result.RpcResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import com.sfsctech.core.base.domain.result.RpcResult;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

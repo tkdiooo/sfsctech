@@ -12,12 +12,12 @@
     <artifactId>common-cloud-base</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-sso</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-    </dependencies>
+    <!--<dependencies>-->
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>common-core-auth-sso</artifactId>-->
+            <!--<version>${sfsctech.common.version}</version>-->
+        <!--</dependency>-->
+    <!--</dependencies>-->
 
 </project>
