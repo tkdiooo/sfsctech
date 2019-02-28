@@ -40,7 +40,7 @@ public class HikariConfig extends MyBatisConfig {
 
     @Bean(name = "slaveDatasource")
     @ConfigurationProperties(prefix = "spring.hikari-datasource.slave")
-    public Map<String, Map<String, DataSource>> slaveDatasource() {
+    public Map<String, Map<String, Object>> slaveDatasource() {
         return new HashMap<>();
     }
 

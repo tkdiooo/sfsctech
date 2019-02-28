@@ -50,7 +50,7 @@ public class DruidConfig extends MyBatisConfig {
 
     @Bean(name = "slaveDatasource")
     @ConfigurationProperties(prefix = "spring.druid-datasource.slave")
-    public Map<String, Map<String, DataSource>> slaveDatasource() {
+    public Map<String, Map<String, Object>> slaveDatasource() {
         return new HashMap<>();
     }
 

@@ -1,12 +1,12 @@
 server:
   port: 8082
   address: localhost
-  context-path: /mybatis
   tomcat:
     uri-encoding: utf-8
-#  context-parameters:
-#    logback-config-location: http://172.16.225.98:8888/logback/framework/service
-#    logback-expose-webapp-root: true
+#  servlet:
+#    context-parameters:
+#      logback-config-location: http://172.16.225.98:8888/logback/framework/service
+#      logback-expose-webapp-root: true
 # datasource setting
 spring:
   profiles:

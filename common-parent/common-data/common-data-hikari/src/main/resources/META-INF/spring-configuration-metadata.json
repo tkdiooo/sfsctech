@@ -8,10 +8,10 @@
       "type": "com.zaxxer.hikari.HikariDataSource"
     },
     {
-      "sourceType": "com.sfsctech.configurer.MyBatisConfigurer",
+      "sourceType": "com.sfsctech.data.hikari.config.HikariConfig",
       "name": "spring.hikari-datasource.slave",
       "sourceMethod": "slaveDatasource()",
-      "type": "java.util.Map<java.lang.String,com.zaxxer.hikari.HikariDataSource>"
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     }
   ],
   "properties": [
@@ -199,7 +199,7 @@
     {
       "sourceType": "java.util.Map<java.lang.String,com.zaxxer.hikari.HikariDataSource>",
       "name": "spring.hikari-datasource.slave",
-      "type": "java.util.Map<java.lang.String,com.zaxxer.hikari.HikariDataSource>"
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     }
   ]
 }

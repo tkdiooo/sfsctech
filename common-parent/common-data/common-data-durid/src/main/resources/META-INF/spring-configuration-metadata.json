@@ -11,7 +11,7 @@
       "sourceType": "com.sfsctech.data.druid.config.DruidConfig",
       "name": "spring.druid-datasource.slave",
       "sourceMethod": "slaveDatasource()",
-      "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     }
   ],
   "properties": [
@@ -430,9 +430,9 @@
       "type": "java.util.Map<java.lang.String,java.lang.Object>"
     },
     {
-      "sourceType": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>",
+      "sourceType": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>",
       "name": "spring.druid-datasource.slave",
-      "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     },
     {
       "name": "spring.druid-datasource.spring-monitor.enabled",

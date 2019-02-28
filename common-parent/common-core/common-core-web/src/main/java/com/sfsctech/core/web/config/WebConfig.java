@@ -142,7 +142,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean()
-    @ConfigurationProperties(prefix = "server.session.cookie")
+    @ConfigurationProperties(prefix = "server.servlet.session.cookie")
     public Config cookieConfig() {
         return new Config();
     }

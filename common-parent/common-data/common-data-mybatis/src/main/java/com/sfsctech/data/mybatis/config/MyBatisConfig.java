@@ -22,7 +22,7 @@ public abstract class MyBatisConfig {
 
     protected abstract DataSource masterDatasource();
 
-    protected abstract Map<String, Map<String, DataSource>> slaveDatasource();
+    protected abstract Map<String, Map<String, Object>> slaveDatasource();
 
     @Bean(name = "dataSource")
     public DataSource dynamicDatasource() {
