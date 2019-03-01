@@ -71,12 +71,18 @@ spring:
       suffix: .html
   redis:
     password: 3936796F7636592D2D4D552E
-    jedis:
+    lettuce:
       pool:
+        #最大连接数
         max-active: 300
+        #最大连接阻塞等待时间(秒) 默认-1
         max-wait: 10s
+        #最大空闲连接 默认8
         max-idle: 100
+        #最小空闲连接
         min-idle: 50
+      # 关闭超时时间(秒) 默认100
+      shutdown-timeout: 100
     cluster:
       max-redirects: 3
       nodes:

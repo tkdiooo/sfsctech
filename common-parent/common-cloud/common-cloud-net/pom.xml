@@ -15,9 +15,29 @@
     <dependencies>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-security</artifactId>
+            <artifactId>common-core-web</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-rpc</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-rest</artifactId>
