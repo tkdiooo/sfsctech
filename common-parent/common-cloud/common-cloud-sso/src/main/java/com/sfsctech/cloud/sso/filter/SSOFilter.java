@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version Description:
  */
 // TODO 重新实现
-public class SSOFilter extends BaseSSOFilter {
+public class SSOFilter {//extends BaseSSOFilter {
 
 //    @Override
 //    protected RpcResult<JwtToken> check(JwtToken jt, SSOProperties.AuthWay authWay) {
@@ -28,17 +28,17 @@ public class SSOFilter extends BaseSSOFilter {
 //        }
 //    }
 
-    @Override
+//    @Override
     protected SSOCheckInterface getcheck() {
         return null;
     }
 
-    @Override
+//    @Override
     protected void generateSesssion(Claims claims, HttpServletRequest request) {
 
     }
 
-    @Override
+//    @Override
     protected RpcResult<JwtToken> localVerify(JwtToken jt) {
         return null;
     }

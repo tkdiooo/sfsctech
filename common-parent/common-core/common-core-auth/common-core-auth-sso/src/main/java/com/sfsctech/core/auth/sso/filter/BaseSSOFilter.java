@@ -5,7 +5,6 @@ import com.sfsctech.core.auth.sso.inf.SSOCheckInterface;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
-import com.sfsctech.core.auth.sso.util.SSOUtil;
 import com.sfsctech.core.auth.sso.util.SingletonUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -34,6 +33,12 @@ import java.util.Map;
  * @version Description:
  */
 public abstract class BaseSSOFilter extends BaseFilter {
+
+    private JwtUtil jwtUtil;
+
+    public BaseSSOFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public void doHandler(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException {
@@ -100,7 +105,7 @@ public abstract class BaseSSOFilter extends BaseFilter {
                             logger.info("Jwt信息:{}", jt.toString());
                             String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
                             logger.info("token信息:{}", token);
-                            Claims claims = JwtUtil.parseJWT(token);
+                            Claims claims = jwtUtil.parseJWT(token);
                             logger.info("调用自定义方法:generateSesssion");
                             generateSesssion(claims, request);
                             // 更新token

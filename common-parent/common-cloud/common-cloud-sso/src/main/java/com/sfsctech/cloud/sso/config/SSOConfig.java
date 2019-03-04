@@ -23,15 +23,15 @@ public class SSOConfig {
     @Autowired
     private AuthFilterConfig filterConfig;
 
-    @Bean
-    public FilterRegistrationBean SSOFilter() {
-        SSOFilter filter = new SSOFilter();
-        // Session认证排除路径
-        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-        registration.setName("CloudSSOFilter");
-        registration.setOrder(5);
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean SSOFilter() {
+//        SSOFilter filter = new SSOFilter();
+//        // Session认证排除路径
+//        filter.setExcludesPattern(filterConfig.getSessionExcludePath());
+//        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
+//        registration.setName("CloudSSOFilter");
+//        registration.setOrder(5);
+//        return registration;
+//    }
 }

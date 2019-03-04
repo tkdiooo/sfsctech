@@ -2,6 +2,7 @@ package com.sfsctech.core.auth.sso.config;
 
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
  * @version Description:
  */
 @Configuration
-@Import({SSOProperties.class, JwtProperties.class})
+@Import({SSOProperties.class, JwtProperties.class, JwtUtil.class})
 @PropertySource("classpath:/auth.properties")
 @ConfigurationProperties(prefix = "session")
 public class SSOConfig {

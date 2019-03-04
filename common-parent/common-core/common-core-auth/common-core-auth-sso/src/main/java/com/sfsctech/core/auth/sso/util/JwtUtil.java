@@ -6,6 +6,7 @@ import com.sfsctech.support.common.util.DateUtil;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -21,13 +22,14 @@ import java.util.Map;
  */
 public class JwtUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    private static final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
+    private final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
 
-    private static JwtProperties config = SpringContextUtil.getBean(JwtProperties.class);
+    @Autowired
+    private JwtProperties config;
 
-    private static Key getKey() {
+    private Key getKey() {
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(salt);
         return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
@@ -38,7 +40,7 @@ public class JwtUtil {
      * @param claims Map
      * @return java web token
      */
-    public static String generalJwt(Map<String, Object> claims) {
+    public String generalJwt(Map<String, Object> claims) {
         long nowMillis = System.currentTimeMillis();
         Date begin = DateUtil.getTimeMillisDate(nowMillis);
         Date end = DateUtil.getTimeMillisDate(config.getExpiration() + nowMillis);
@@ -64,7 +66,7 @@ public class JwtUtil {
      * @param jwt java web token
      * @return Claims
      */
-    public static Claims parseJWT(String jwt) {
+    public Claims parseJWT(String jwt) {
         try {
             return Jwts.parser()
                     .requireSubject(config.getSubject())
@@ -92,5 +94,9 @@ public class JwtUtil {
                 throw new JwtException("Jwt验证错误：[载荷(Payload) 有错误]");
             }
         }
+    }
+
+    public JwtProperties getConfig() {
+        return config;
     }
 }

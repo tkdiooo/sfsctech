@@ -1,6 +1,5 @@
 package com.sfsctech.core.auth.sso.util;
 
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -21,7 +20,7 @@ import org.slf4j.Logger;
  */
 public class SSOUtil {
 
-    private static JwtProperties config = SpringContextUtil.getBean(JwtProperties.class);
+    private static JwtUtil jwtUtil = SpringContextUtil.getBean(JwtUtil.class);
 
     public static RpcResult<JwtToken> generalVerify(JwtToken jt, Logger logger) {
         RpcResult<JwtToken> result = new RpcResult<>();
@@ -67,7 +66,7 @@ public class SSOUtil {
 
     public static void refreshJwt(Claims claims, String account, String salt_CacheKey, JwtToken jwtToken, Logger logger) {
         logger.info("刷新登录用户:" + account + "的Jwt信息");
-        String jwt = JwtUtil.generalJwt(claims);
+        String jwt = jwtUtil.generalJwt(claims);
         logger.info("用户:" + account + "，生成新的jwt[" + jwt + "]。");
         // 生成新的salt
         String salt = HexUtil.getEncryptKey();
@@ -81,9 +80,9 @@ public class SSOUtil {
         salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
         logger.info("用户:" + account + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
-        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, config.getExpiration().intValue());
+        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, jwtUtil.getConfig().getExpiration().intValue());
         // 缓存token
-        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, config.getExpiration().intValue());
+        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtUtil.getConfig().getExpiration().intValue());
         jwtToken.setJwt(token);
         jwtToken.setSalt(salt);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));
