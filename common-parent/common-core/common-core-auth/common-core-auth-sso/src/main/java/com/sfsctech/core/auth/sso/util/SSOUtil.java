@@ -80,9 +80,9 @@ public class SSOUtil {
         salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
         logger.info("用户:" + account + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
-        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, jwtUtil.getConfig().getExpiration().intValue());
+        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey, salt, jwtUtil.getConfig().getExpirationBySecond());
         // 缓存token
-        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtUtil.getConfig().getExpiration().intValue());
+        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtUtil.getConfig().getExpirationBySecond());
         jwtToken.setJwt(token);
         jwtToken.setSalt(salt);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));

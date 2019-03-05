@@ -41,6 +41,10 @@ public class JwtProperties {
         return expiration;
     }
 
+    public Integer getExpirationBySecond() {
+        return Math.toIntExact((expiration / 1000));
+    }
+
     public void setExpiration(Long expiration) {
         this.expiration = expiration;
     }

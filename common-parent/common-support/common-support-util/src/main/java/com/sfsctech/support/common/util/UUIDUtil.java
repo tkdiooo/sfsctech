@@ -1,7 +1,10 @@
 package com.sfsctech.support.common.util;
 
 
+import com.sfsctech.core.base.constants.LabelConstants;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -14,7 +17,9 @@ import java.util.UUID;
  * @author 张麒 2017/7/19.
  * @version Description:
  */
-public abstract class UUIDUtil {
+public class UUIDUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(UUIDUtil.class);
 
     public static String uuid() {
         return UUID.randomUUID().toString();
@@ -49,7 +54,11 @@ public abstract class UUIDUtil {
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
-        return Base58.encode(bb.array()).trim();
+        String guid = Base58.encode(bb.array()).trim();
+        if (guid.contains(LabelConstants.SPACE)) {
+            logger.info("Guid：{}包含空格，trim后返回{}", guid, guid.trim());
+        }
+        return guid.trim();
     }
 
     public static String encodeBase58Uuid(String uuidString) {
@@ -208,5 +217,82 @@ public abstract class UUIDUtil {
 
             return range;
         }
+    }
+
+    public static void main(String[] args) {
+
+        new Thread(() -> {
+            System.out.println("1:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+            int i = 0;
+            while (i <= 10000000) {
+                String guid = UUIDUtil.base58Uuid();
+                if (guid.trim().contains(" ")) {
+                    System.out.println(guid + "$");
+                }
+                i++;
+            }
+            System.out.println("1:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+        }).start();
+        new Thread(() -> {
+            System.out.println("2:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+            int i = 0;
+            while (i <= 10000000) {
+                String guid = UUIDUtil.base58Uuid();
+                if (guid.trim().contains(" ")) {
+                    System.out.println(guid + "$");
+                }
+                i++;
+            }
+            System.out.println("2:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+        }).start();
+        new Thread(() -> {
+            System.out.println("3:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+            int i = 0;
+            while (i <= 10000000) {
+                String guid = UUIDUtil.base58Uuid();
+                if (guid.trim().contains(" ")) {
+                    System.out.println(guid + "$");
+                }
+                i++;
+            }
+            System.out.println("3:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+        }).start();
+        new Thread(() -> {
+            System.out.println("4:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+            int i = 0;
+            while (i <= 10000000) {
+                String guid = UUIDUtil.base58Uuid();
+                if (guid.trim().contains(" ")) {
+                    System.out.println(guid + "$");
+                }
+                i++;
+            }
+            System.out.println("4:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+        }).start();
+        new Thread(() -> {
+            System.out.println("5:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+            int i = 0;
+            while (i <= 10000000) {
+                String guid = UUIDUtil.base58Uuid();
+                if (guid.trim().contains(" ")) {
+                    System.out.println(guid + "$");
+                }
+                i++;
+            }
+            System.out.println("5:" + DateUtil.toDateTimeDash(DateUtil.getCurrentDate()));
+        }).start();
+//        String guid = UUIDUtil.base58Uuid();
+//        System.out.println(guid);
+//        UUID uuid = UUID.fromString("051e355a-dc06-4da6-9bf5-0deacc20f93f");
+//        System.out.println(UUIDUtil.base58Uuid(uuid));
+//        System.out.println(UUIDUtil.encodeBase58Uuid("df2MR9wveyAFeQrafknBp "));
+//        System.out.println(UUIDUtil.encodeBase64Uuid("df2MR9wveyAFeQrafknBp "));
+//        System.out.println("df2MR9wveyAFeQrafknBp ".trim());
+//        while (true) {
+//            String guid = UUIDUtil.base58Uuid();
+//            if ("df2MR9wveyAFeQrafknBp ".trim().contains(" ")) {
+//                System.out.println(guid + "$");
+//            }
+//        }
     }
 }
