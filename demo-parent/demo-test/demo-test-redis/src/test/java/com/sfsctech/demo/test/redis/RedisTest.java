@@ -32,15 +32,23 @@ public class RedisTest {
 
 
     @Test
-    public void testRedis() {
-        List<String> keys = new ArrayList<>();
-        for (int i = 0; i < 300; i++) {
-            keys.add(CacheKeyUtil.getSaltCacheKey());
-        }
-
-        keys.forEach(key -> factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent()));
-
-        keys.forEach(key -> System.out.println(factory.get(key).toString()));
+    public void testRedis() throws InterruptedException {
+//        List<String> keys = new ArrayList<>();
+//        for (int i = 0; i < 300; i++) {
+//            keys.add(CacheKeyUtil.getSaltCacheKey());
+//        }
+//
+//        keys.forEach(key -> {
+//            factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent());
+//            System.out.println(factory.get(key).toString());
+//            System.out.println(factory.getCacheClient().ttl(key));
+//        });
+//
+//        keys.forEach(key -> System.out.println(factory.get(key).toString()));
+//        String key = CacheKeyUtil.getSaltCacheKey();
+//        factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent());
+//        System.out.println(factory.get(key).toString());
+//        System.out.println(factory.getCacheClient().ttl("ukc6twTVirQaCp9l2X5yokjK##%!##@$%|$#$%(^)$}$*{^*+%"));
 
 
 

@@ -114,53 +114,53 @@ public class EncrypterTool {
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
-        System.out.println(data);
-        new Thread(() -> {
-            while (true) {
-                System.out.println(1);
-                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
-                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
-                    System.out.println("error:" + value);
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                System.out.println(2);
-                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
-                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
-                    System.out.println("error:" + value);
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                System.out.println(3);
-                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
-                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
-                    System.out.println("error:" + value);
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                System.out.println(4);
-                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
-                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
-                    System.out.println("error:" + value);
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                System.out.println(5);
-                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
-                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
-                    System.out.println("error:" + value);
-                }
-            }
-        }).start();
+//        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
+//        System.out.println(data);
+//        new Thread(() -> {
+//            while (true) {
+//                System.out.println(1);
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                System.out.println(2);
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                System.out.println(3);
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                System.out.println(4);
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
+//        new Thread(() -> {
+//            while (true) {
+//                System.out.println(5);
+//                String value = EncrypterTool.decrypt(Security.Des3ECBHex, data);
+//                if (!value.equals("待加密的字符串@#@#SSS23s2433!*(")) {
+//                    System.out.println("error:" + value);
+//                }
+//            }
+//        }).start();
 //        try {
 ////            String key = URLEncoder.encode(encrypt(Security.AesCBC, "0000792773"), "UTF-8");
 ////            System.out.println(key);
@@ -174,7 +174,7 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-//        System.out.println(encrypt(Security.Aes, "{user_id:123,pk:123,company_no:123}"));
+        System.out.println(encrypt(Security.Aes, "wangjian"));
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
     }
 }
