@@ -27,7 +27,7 @@ public class JwtUtil {
 
     private final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
 
-//    @Autowired
+    @Autowired
     private JwtProperties config;
 
     private Key getKey() {
@@ -101,9 +101,9 @@ public class JwtUtil {
         return config;
     }
 
-    public void setConfig(JwtProperties config) {
-        this.config = config;
-    }
+//    public void setConfig(JwtProperties config) {
+//        this.config = config;
+//    }
 
     public static void main(String[] args) {
 //        JwtProperties properties = new JwtProperties();
