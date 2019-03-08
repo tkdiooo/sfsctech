@@ -1,9 +1,6 @@
 package com.sfsctech.cloud.sso.filter;
 
-import com.sfsctech.cloud.sso.util.SingletonUtil;
-import com.sfsctech.core.auth.sso.filter.BaseSSOFilter;
 import com.sfsctech.core.auth.sso.inf.SSOCheckInterface;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import io.jsonwebtoken.Claims;

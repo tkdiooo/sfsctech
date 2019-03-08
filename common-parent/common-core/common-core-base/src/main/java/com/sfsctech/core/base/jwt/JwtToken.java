@@ -43,5 +43,4 @@ public class JwtToken extends BaseDto {
     public void setSalt_CacheKey(String salt_CacheKey) {
         this.salt_CacheKey = salt_CacheKey;
     }
-
 }

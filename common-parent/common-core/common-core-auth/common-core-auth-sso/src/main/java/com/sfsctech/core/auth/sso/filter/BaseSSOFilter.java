@@ -102,10 +102,11 @@ public abstract class BaseSSOFilter extends BaseFilter {
 
                         jt = result.getResult();
                         try {
-                            logger.info("Jwt信息:{}", jt.toString());
-                            String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
-                            logger.info("token信息:{}", token);
-                            Claims claims = jwtUtil.parseJWT(token);
+                            logger.info("JwtToken信息:{}", jt.toString());
+                            String jwt_CacheKey = String.valueOf(result.getAttachs().get("jwt_CacheKey"));
+                            String jwt = String.valueOf(SingletonUtil.getCacheFactory().getCacheClient().get(jwt_CacheKey));
+                            logger.info("jwt信息:{}", jwt);
+                            Claims claims = jwtUtil.parseJWT(jwt);
                             logger.info("调用自定义方法:generateSesssion");
                             generateSesssion(claims, request);
                             // 更新token
