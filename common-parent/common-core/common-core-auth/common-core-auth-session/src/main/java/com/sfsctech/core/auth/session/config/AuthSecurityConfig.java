@@ -71,8 +71,7 @@ public abstract class AuthSecurityConfig extends BaseWebSecurityConfig {
     }
 
     protected boolean authConfigure(HttpSecurity http) throws Exception {
-        boolean bool = super.basicConfigure(http);
-        if (bool) {
+        if (super.basicConfigure(http)) {
             // 自定义登录
             FormLoginConfigurer<HttpSecurity> formLogin = http.formLogin();
             // 自定义登录成功处理
@@ -92,8 +91,9 @@ public abstract class AuthSecurityConfig extends BaseWebSecurityConfig {
                 formLogin.failureHandler(new AuthenticationFailureHandler());
             }
             http.logout().logoutSuccessHandler(new LogoutSuccessHandler(config.getWelcomeFile()));
+            return true;
         }
-        return bool;
+        return false;
     }
 
 

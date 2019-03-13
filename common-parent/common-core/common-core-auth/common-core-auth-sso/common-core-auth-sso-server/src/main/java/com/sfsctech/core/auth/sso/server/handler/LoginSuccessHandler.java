@@ -1,12 +1,12 @@
 package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
-import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
+import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
+import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
 import com.sfsctech.core.auth.base.sso.jwt.extractor.TokenExtractor;
 import com.sfsctech.core.auth.base.sso.util.SessionKeepUtil;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -36,13 +36,13 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     private String successUrl;
 
-    private SSOProperties properties;
+    private AuthProperties properties;
 
     private JwtTokenFactory jwtTokenFactory;
 
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, JwtTokenFactory jwtTokenFactory, SSOProperties properties, String successUrl) {
+    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, JwtTokenFactory jwtTokenFactory, AuthProperties properties, String successUrl) {
         this.factory = factory;
         this.jwtTokenFactory = jwtTokenFactory;
         this.properties = properties;
@@ -58,11 +58,11 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         logger.info("用户:{}，生成AccessJwt:{}", user.getUsername(), accessJwt.getToken());
         String Access_Jwt_Cache = SSOConstants.ACCESS_TOKEN_CACHE_IDENTIFY + LabelConstants.DOUBLE_POUND + user.getUsername();
         logger.info("用户:{}，生成Access_Jwt_Cache:{}", user.getUsername(), Access_Jwt_Cache);
-        factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), jwtTokenFactory.getSettings().getExpiration());
+        factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), (int)jwtTokenFactory.getSettings().getExpiration().getSeconds());
         String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, TokenExtractor.HEADER_PREFIX + System.currentTimeMillis() + LabelConstants.PERIOD + Access_Jwt_Cache);
         logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
         CookieHelper helper = CookieHelper.getInstance(request, response);
-        if (properties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
+        if (properties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
             SessionKeepUtil.updateCertificate(helper, Access_Jwt_Token);
         } else {
             SessionKeepUtil.updateCertificate(response, Access_Jwt_Token);

@@ -1,12 +1,13 @@
 package com.sfsctech.core.auth.sso.server.config;
 
 import com.sfsctech.core.auth.base.config.SkipPathConfig;
-import com.sfsctech.core.auth.session.config.AuthSecurityConfig;
+import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.session.config.AuthSecurityConfig;
 import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
@@ -30,9 +31,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SSOConfig extends AuthSecurityConfig {
 
     @Autowired
-    private SSOProperties ssoProperties;
-
-    @Autowired
     private JwtProperties properties;
 
     @Autowired
@@ -45,13 +43,13 @@ public class SSOConfig extends AuthSecurityConfig {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        if (super.basicConfigure(http)) {
+        if (super.authConfigure(http)) {
             // 无状态session策略
             http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     // 禁用缓存
                     .and().headers().cacheControl();
             // jwt通过Cookie保持，登出后销毁Cookie
-            if (ssoProperties.getAuth().getSessionKeep().equals(SSOProperties.SessionKeep.Cookie)) {
+            if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
                 http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.COOKIE_ACCESS_TOKEN);
             }
         }
@@ -59,6 +57,6 @@ public class SSOConfig extends AuthSecurityConfig {
 
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new LoginSuccessHandler(factory, jwtTokenFactory(), ssoProperties, config.getWelcomeFile());
+        return new LoginSuccessHandler(factory, jwtTokenFactory(), authProperties, config.getWelcomeFile());
     }
 }

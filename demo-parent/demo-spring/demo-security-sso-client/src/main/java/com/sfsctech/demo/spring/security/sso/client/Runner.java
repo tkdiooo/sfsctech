@@ -3,7 +3,7 @@ package com.sfsctech.demo.spring.security.sso.client;
 //import com.sfsctech.core.auth.session.starter.EnableHttpSession;
 //import com.sfsctech.core.exception.handler.GlobalExceptionHandler;
 
-import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
+//import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
 
 /**
  * Class WebRunner
@@ -17,7 +17,7 @@ import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
 public class Runner {
 
     public static void main(String[] args) {
-        System.out.println(AccessJwtToken.class);
+//        System.out.println(AccessJwtToken.class);
 //        SSOConstants.COOKIE_ACCESS_TOKEN
 //        SpringApplication.run(Runner.class, args);
     }

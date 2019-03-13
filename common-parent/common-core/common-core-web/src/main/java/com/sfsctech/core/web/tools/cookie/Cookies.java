@@ -143,8 +143,8 @@ public class Cookies {
 
     public void setCookieConfig(Cookie cookie, Config config) {
         if (null != config) {
-            if (null != config.getMaxAge() && config.getMaxAge() != 0) {
-                cookie.setMaxAge(config.getMaxAge());
+            if (null != config.getMaxAge() && config.getMaxAge().getSeconds() != 0) {
+                cookie.setMaxAge((int)config.getMaxAge().getSeconds());
             }
             if (StringUtil.isNotBlank(config.getDomain())) {
                 cookie.setDomain(config.getDomain());

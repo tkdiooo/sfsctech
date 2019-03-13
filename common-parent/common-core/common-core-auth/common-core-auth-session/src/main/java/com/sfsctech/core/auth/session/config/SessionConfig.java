@@ -1,12 +1,15 @@
 package com.sfsctech.core.auth.session.config;
 
-import com.sfsctech.core.auth.base.config.SkipPathConfig;
+import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.session.handler.LoginSuccessHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.session.web.http.CookieHttpSessionIdResolver;
+import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
+import org.springframework.session.web.http.HttpSessionIdResolver;
 
 /**
  * Class AuthConfigurer
@@ -15,7 +18,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @version Description:
  */
 @Configuration
-@Import(SkipPathConfig.class)
 public class SessionConfig extends AuthSecurityConfig {
 
     @Override
@@ -26,8 +28,17 @@ public class SessionConfig extends AuthSecurityConfig {
         }
     }
 
+    @Bean
+    public HttpSessionIdResolver httpSessionIdResolver() {
+        if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+            return new CookieHttpSessionIdResolver();
+        } else {
+            return HeaderHttpSessionIdResolver.xAuthToken();
+        }
+    }
+
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new LoginSuccessHandler(config.getWelcomeFile());
+        return new LoginSuccessHandler(config.getWelcomeFile(), authProperties.getSessionKeep());
     }
 }

@@ -32,6 +32,12 @@
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
     },
     {
+      "name": "website.auth.session-keep",
+      "type": "com.sfsctech.core.auth.base.properties.AuthProperties.SessionKeep",
+      "description": "Session保持方式",
+      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
+    },
+    {
       "name": "website.auth.access-denied-handler",
       "type": "java.lang.Class<org.springframework.security.web.access.AccessDeniedHandler>",
       "description": "403响应处理类",
@@ -94,15 +100,15 @@
   ],
   "hints": [
     {
-      "name": "website.auth.pattern",
+      "name": "website.auth.session-keep",
       "values": [
         {
-          "value": "None",
-          "description": "关闭"
+          "value": "Cookie",
+          "description": "Cookie"
         },
         {
-          "value": "Custom",
-          "description": "自定义"
+          "value": "Header",
+          "description": "Header"
         }
       ]
     }

@@ -1,6 +1,6 @@
 #server setting
 server:
-  port: 8102
+  port: 8100
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8
@@ -92,9 +92,9 @@ spring:
 website:
   auth:
     disable: false
-    exclude-path: /index, /login, /null/**, /img/**
+    exclude-path: /index, /login
     login:
-      user-details-service: com.sfsctech.demo.spring.security.service.UserDetailsServiceImpl
+      user-details-service: com.sfsctech.demo.spring.security.sso.server.service.UserDetailsServiceImpl
   support:
     welcome-file: /index
     static-resources: http://localhost:8080

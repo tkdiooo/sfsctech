@@ -13,10 +13,36 @@
 
 
     <dependencies>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-auth-sso-server</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sfsctech.common</groupId>-->
+            <!--<artifactId>common-core-auth-session</artifactId>-->
+            <!--<version>${sfsctech.common.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

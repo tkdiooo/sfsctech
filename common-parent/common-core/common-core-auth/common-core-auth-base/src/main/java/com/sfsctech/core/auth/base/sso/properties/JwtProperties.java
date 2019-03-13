@@ -3,6 +3,8 @@ package com.sfsctech.core.auth.base.sso.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 /**
  * Class Playload
  *
@@ -19,9 +21,9 @@ public class JwtProperties {
     // 发行方
     private String issuer;
     // 保持时间
-    private Integer expiration = 1800000;
+    private Duration expiration = Duration.ofMillis(1800000);
     // 刷新token保存时间
-    private Integer refreshTime = 3600000;
+    private Duration refreshTime = Duration.ofMillis(3600000);
 
     public String getSalt() {
         return salt;
@@ -39,19 +41,19 @@ public class JwtProperties {
         this.issuer = issuer;
     }
 
-    public Integer getExpiration() {
+    public Duration getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(Integer expiration) {
+    public void setExpiration(Duration expiration) {
         this.expiration = expiration;
     }
 
-    public Integer getRefreshTime() {
+    public Duration getRefreshTime() {
         return refreshTime;
     }
 
-    public void setRefreshTime(Integer refreshTime) {
+    public void setRefreshTime(Duration refreshTime) {
         this.refreshTime = refreshTime;
     }
 }

@@ -3,6 +3,8 @@ package com.sfsctech.core.web.tools.cookie;
 
 import com.sfsctech.core.base.constants.LabelConstants;
 
+import java.time.Duration;
+
 /**
  * Class CookiesConfig
  *
@@ -17,7 +19,7 @@ public class Config {
     private String comment;
     private boolean httpOnly;
     private boolean secure;
-    private Integer maxAge;
+    private Duration maxAge;
 
     public String getName() {
         return name;
@@ -67,11 +69,11 @@ public class Config {
         this.secure = secure;
     }
 
-    public Integer getMaxAge() {
+    public Duration getMaxAge() {
         return maxAge;
     }
 
-    public void setMaxAge(Integer maxAge) {
+    public void setMaxAge(Duration maxAge) {
         this.maxAge = maxAge;
     }
 }

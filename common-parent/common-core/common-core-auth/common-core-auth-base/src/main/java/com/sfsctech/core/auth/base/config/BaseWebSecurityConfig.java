@@ -14,11 +14,13 @@ import org.springframework.security.config.annotation.web.configurers.Expression
  * @author 张麒 2019-1-25.
  * @version Description:
  */
-@Import(AuthProperties.class)
+@Import({AuthProperties.class, SkipPathConfig.class})
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected SkipPathConfig config;
+    @Autowired
+    protected AuthProperties authProperties;
 
     protected boolean basicConfigure(HttpSecurity http) throws Exception {
         if (config.auth().isDisable()) {

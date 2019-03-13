@@ -16,13 +16,6 @@ import org.springframework.stereotype.Component;
 public class SSOProperties {
 
     /**
-     * Session保持类型
-     */
-    public enum SessionKeep {
-        Cookie, Header
-    }
-
-    /**
      * Session类型
      */
     public enum SessionType {
@@ -118,7 +111,6 @@ public class SSOProperties {
     public static class Authentication {
 
         private SessionType sessionType = SessionType.Jwt;
-        private SessionKeep sessionKeep = SessionKeep.Header;
         private AppType appType;
 
         Authentication() {
@@ -130,14 +122,6 @@ public class SSOProperties {
 
         public void setSessionType(SessionType sessionType) {
             this.sessionType = sessionType;
-        }
-
-        public SessionKeep getSessionKeep() {
-            return sessionKeep;
-        }
-
-        public void setSessionKeep(SessionKeep sessionKeep) {
-            this.sessionKeep = sessionKeep;
         }
 
         public AppType getAppType() {

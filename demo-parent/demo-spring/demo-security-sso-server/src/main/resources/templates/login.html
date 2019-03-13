@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="common/layout :: head"></head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+<!-- Preloader -->
+<div id="preloader">
+    <div id="load"></div>
+</div>
+<!-- Section: intro -->
+<section id="intro" class="intro">
+    <div class="slogan">
+        <h2>WELCOME TO <span class="text_color">family zzl</span></h2>
+        <h4>This is our family platform, here are our dribs and drabs of life</h4>
+    </div>
+    <div class="page-scroll">
+    </div>
+</section>
+<!-- /Section: intro -->
+
+<!-- 主要内容 -->
+<div id="main_panel" class="login-panel">
+    <div class="form">
+        <div class="title">
+            <h2>Sign In</h2>
+        </div>
+        <form id="loginForm" method="post" class="form-horizontal" autocomplete="off">
+            <!-- 帐号 -->
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <input class="form-control" type="text" id="username" name="username" placeholder="账号" th:value="${username}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <input class="form-control" type="password" id="password" name="password" placeholder="密码"/>
+                </div>
+            </div>
+            <div class="forget">
+                <a href="#" target="_blank" class="ext">forget you password?</a>
+            </div>
+            <div class="options">
+                <input class="ipt-c" id="rmbUser" name="remember" type="checkbox" th:checked="${remember}"/>
+                <label for="rmbUser">Remember me</label>
+                <input type="button" class="login-button" value="SIGN-IN" onclick="login();"/>
+            </div>
+        </form>
+    </div>
+    <div class="widget">
+        <div class="warn corner-all">
+            <img th:src="${application.static_resource} + '/static/portal/images/warning.png'"/>
+            <span id="warning_msg"></span>
+        </div>
+    </div>
+    <div class="register">
+        looking to <a href="#" target="_blank">create an account</a> ?
+    </div>
+</div>
+<div th:include="common/layout :: script"></div>
+<script th:inline="javascript">
+    (function () {
+        showLogin();
+        $('#loginForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: '账号不能为空'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 20,
+                            message: '密码长度必须是6-20位之间'
+                        }
+                    }
+                }
+            }
+        });
+    })(jQuery);
+
+    function showLogin() {
+        var opt = {
+            title: false,
+            closeBtn: 0,
+            skin: 'login-model',
+            maxWidth: 340,
+            anim: -1,
+            shadeClose: false,
+            resize: false,
+            content: $('#main_panel')
+        };
+        openDialog(opt);
+    }
+
+    function login() {
+        var form = $("#loginForm");
+        var formValid = form.data('bootstrapValidator');
+        formValid.validate();
+        if (formValid.isValid()) {
+            var formParams = form.serializeJson();
+            // var key = getRSAKey();
+            // var _csrf = $('#_csrf');
+            // formParams.account = encryptedString(key, formParams.account);
+            // formParams.password = encryptedString(key, formParams.password);
+            // formParams[_csrf.attr('name')] = _csrf.val();
+            var opt = {
+                handler: function (result) {
+                    if (!result.success) {
+                        console.info(result.messages.join('<br/>'))
+                        $('#warning_msg').text(result.messages.join('<br/>'));
+                        $('.warn').show();
+                    }
+                    else {
+                        to_url(result.attachs.from_url);
+                    }
+                }
+            };
+            ajax_action(/*[[@{/login}]]*/ '', formParams, opt);
+        }
+    }
+
+    function getRSAKey() {
+        setMaxDigits([[${Digits}]]);
+        return new RSAKeyPair([[${Exponent}]], "", [[${Modulus}]]);
+    }
+</script>
+</body>
+</html>
