@@ -60,8 +60,8 @@ public class JwtTokenFactory {
         if (StringUtil.isBlank(user.getUsername()))
             throw new IllegalArgumentException("Cannot create JWT Token without username");
 
-        if (ListUtil.isEmpty(user.getAuthorities()))
-            throw new IllegalArgumentException("User doesn't have any privileges");
+//        if (ListUtil.isEmpty(user.getAuthorities()))
+//            throw new IllegalArgumentException("User doesn't have any privileges");
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put(SSOConstants.JWT_CLAIMS_SCOPES, user.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
