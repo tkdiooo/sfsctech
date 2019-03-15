@@ -70,7 +70,7 @@ public class JwtTokenFactory {
 
         AccessJwtToken jwtToken = AccessJwtToken.builder()
                 .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .endDate(Date.from(currentTime.plusSeconds(settings.getExpiration().toMillis()).atZone(ZoneId.systemDefault()).toInstant()))
+                .endDate(Date.from(currentTime.plusSeconds(settings.getExpiration().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         String jwt = Jwts.builder()
@@ -95,7 +95,7 @@ public class JwtTokenFactory {
 
         AccessJwtToken jwtToken = AccessJwtToken.builder()
                 .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .endDate(Date.from(currentTime.plusSeconds(settings.getRefreshTime().toMillis()).atZone(ZoneId.systemDefault()).toInstant()))
+                .endDate(Date.from(currentTime.plusSeconds(settings.getRefreshTime().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());

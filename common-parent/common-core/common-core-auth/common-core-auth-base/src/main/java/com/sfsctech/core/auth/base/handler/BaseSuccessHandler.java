@@ -1,9 +1,11 @@
 package com.sfsctech.core.auth.base.handler;
 
 import com.sfsctech.core.auth.base.constants.SessionConstants;
+import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.common.util.ResponseUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 /**
  * Class BaseSuccessHandler
@@ -41,6 +44,9 @@ public abstract class BaseSuccessHandler {
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         if (null != savedRequest) {
             targetUrl = savedRequest.getRedirectUrl();
+            logger.info("重定向url: {}", targetUrl);
+        } else if (StringUtil.isNotBlank(targetUrl = request.getHeader("Referer"))) {
+            targetUrl = URLDecoder.decode(targetUrl.substring(targetUrl.lastIndexOf(LabelConstants.EQUAL) + 1), LabelConstants.UTF8);
             logger.info("重定向url: {}", targetUrl);
         }
         // ajax访问

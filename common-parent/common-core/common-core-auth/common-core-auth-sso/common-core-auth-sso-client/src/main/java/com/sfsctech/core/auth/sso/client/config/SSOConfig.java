@@ -10,8 +10,8 @@ import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.client.filter.JwtTokenAuthenticationProcessingFilter;
 import com.sfsctech.core.auth.sso.client.matcher.SkipPathRequestMatcher;
 import com.sfsctech.core.auth.sso.client.provider.JwtAuthenticationProvider;
-import com.sfsctech.core.base.constants.WebsiteConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.support.common.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -39,8 +38,15 @@ public class SSOConfig extends BaseWebSecurityConfig {
     private AuthenticationManager authenticationManager;
 
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
-        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(config.getExcludePath(), WebsiteConstants.CONTEXT_PATH);
-        JwtTokenAuthenticationProcessingFilter filter = new JwtTokenAuthenticationProcessingFilter(new AuthenticationFailureHandler(), tokenExtractor(), settings, matcher);
+        JwtTokenAuthenticationProcessingFilter filter = new JwtTokenAuthenticationProcessingFilter(
+                // 认证失败处理（跳转登录页）
+                new AuthenticationFailureHandler(authProperties.getLogin().getUrl()),
+                // token提取器
+                tokenExtractor(),
+                // Jwt配置
+                settings,
+                // 拦截映射
+                new SkipPathRequestMatcher(config.getExcludePath(), HttpUtil.getRootPattern()));
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }
@@ -65,9 +71,9 @@ public class SSOConfig extends BaseWebSecurityConfig {
     protected void configure(HttpSecurity http) throws Exception {
         if (super.basicConfigure(http)) {
             // 无状态session策略
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    // 禁用缓存
-                    .and().headers().cacheControl();
+//            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            // 禁用缓存
+//                    .and().headers().cacheControl();
 
             // 添加JWT filter
             http.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -3,6 +3,7 @@ package com.sfsctech.support.common.util;
 
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.WebsiteConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
@@ -15,6 +16,10 @@ import java.net.UnknownHostException;
  * @version Description:
  */
 public class HttpUtil {
+
+    public static String getRootPattern() {
+        return StringUtil.isNotBlank(WebsiteConstants.CONTEXT_PATH) ? WebsiteConstants.CONTEXT_PATH + LabelConstants.SLASH_DOUBLE_STAR : LabelConstants.SLASH_DOUBLE_STAR;
+    }
 
     public static String buildUrl(String ipAddress, int port) {
         return ipAddress + ":" + port;

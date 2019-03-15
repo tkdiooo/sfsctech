@@ -58,7 +58,7 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         logger.info("用户:{}，生成AccessJwt:{}", user.getUsername(), accessJwt.getToken());
         String Access_Jwt_Cache = SSOConstants.ACCESS_TOKEN_CACHE_IDENTIFY + LabelConstants.DOUBLE_POUND + user.getUsername();
         logger.info("用户:{}，生成Access_Jwt_Cache:{}", user.getUsername(), Access_Jwt_Cache);
-        factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), (int)jwtTokenFactory.getSettings().getExpiration().getSeconds());
+        factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), (int) jwtTokenFactory.getSettings().getExpiration().getSeconds());
         String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, TokenExtractor.HEADER_PREFIX + System.currentTimeMillis() + LabelConstants.PERIOD + Access_Jwt_Cache);
         logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
         CookieHelper helper = CookieHelper.getInstance(request, response);

@@ -88,7 +88,7 @@ public abstract class AuthSecurityConfig extends BaseWebSecurityConfig {
             }
             // 默认登录失败处理
             else {
-                formLogin.failureHandler(new AuthenticationFailureHandler());
+                formLogin.failureHandler(new AuthenticationFailureHandler(config.getWelcomeFile()));
             }
             http.logout().logoutSuccessHandler(new LogoutSuccessHandler(config.getWelcomeFile()));
             return true;

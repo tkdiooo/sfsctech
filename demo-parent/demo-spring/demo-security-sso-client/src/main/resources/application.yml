@@ -1,6 +1,6 @@
 #server setting
 server:
-  port: 8100
+  port: 8101
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8
@@ -56,7 +56,7 @@ server:
 #spring mvc setting
 spring:
   application:
-    name: sso-website
+    name: sso-client
   #  boot:
   #    admin:
   #      client:
@@ -92,9 +92,9 @@ spring:
 website:
   auth:
     disable: false
-    exclude-path: /index, /login, /img/**
+    exclude-path: /img/**
     login:
-      user-details-service: com.sfsctech.demo.spring.security.sso.server.service.UserDetailsServiceImpl
+      url: http://localhost:8100/login
   support:
     welcome-file: /index
     static-resources: http://localhost:8080

@@ -29,7 +29,7 @@ public abstract class BaseExceptionHandler {
     protected ModelAndView handleError(HttpServletRequest request, HttpServletResponse response, BaseResult result, String viewName, HttpStatus status) {
         String ret_url = request.getHeader("Referer");
         // 如果上一次请求路径为空，跳转首页。(首页需要配置)
-        if (StringUtil.isBlank(ret_url)) {
+        if (StringUtil.isBlank(ret_url) && StringUtil.isNotBlank(WebsiteConstants.CONTEXT_PATH)) {
             ret_url = WebsiteConstants.CONTEXT_PATH;
         }
         result.addAttach("url", ret_url);

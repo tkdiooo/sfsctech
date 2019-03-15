@@ -44,10 +44,10 @@ public class SSOConfig extends AuthSecurityConfig {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         if (super.authConfigure(http)) {
-            // 无状态session策略
-            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    // 禁用缓存
-                    .and().headers().cacheControl();
+//            // 无状态session策略
+//            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                    // 禁用缓存
+//                    .and().headers().cacheControl();
             // jwt通过Cookie保持，登出后销毁Cookie
             if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
                 http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.COOKIE_ACCESS_TOKEN);
