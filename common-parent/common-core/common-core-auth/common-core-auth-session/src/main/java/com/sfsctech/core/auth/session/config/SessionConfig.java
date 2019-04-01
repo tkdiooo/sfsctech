@@ -1,6 +1,5 @@
 package com.sfsctech.core.auth.session.config;
 
-import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.session.handler.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.session.web.http.CookieHttpSessionIdResolver;
-import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 import org.springframework.session.web.http.HttpSessionIdResolver;
 
 /**
@@ -30,15 +28,11 @@ public class SessionConfig extends AuthSecurityConfig {
 
     @Bean
     public HttpSessionIdResolver httpSessionIdResolver() {
-        if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
-            return new CookieHttpSessionIdResolver();
-        } else {
-            return HeaderHttpSessionIdResolver.xAuthToken();
-        }
+        return new CookieHttpSessionIdResolver();
     }
 
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new LoginSuccessHandler(config.getWelcomeFile(), authProperties.getSessionKeep());
+        return new LoginSuccessHandler(config.getWelcomeFile());
     }
 }

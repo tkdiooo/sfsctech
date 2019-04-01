@@ -1,7 +1,6 @@
 package com.sfsctech.core.auth.session.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.core.auth.base.properties.AuthProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -22,18 +21,14 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
     private final Logger logger = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
     private String successUrl;
-    private AuthProperties.SessionKeep sessionKeep;
 
-    public LoginSuccessHandler(String successUrl, AuthProperties.SessionKeep sessionKeep) {
+    public LoginSuccessHandler(String successUrl) {
         this.successUrl = successUrl;
-        this.sessionKeep = sessionKeep;
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         init(request, authentication);
-        if (sessionKeep.equals(AuthProperties.SessionKeep.Header))
-            response.setHeader("X-Auth-Token", request.getSession().getId());
         // 通过权限定义登录成功跳转路径
 //        if (authentication.getAuthorities().size() > 0) {
 //            authentication.getAuthorities().forEach(authority -> {

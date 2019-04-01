@@ -23,17 +23,9 @@ import java.util.Set;
 )
 public class AuthProperties {
 
-    /**
-     * Session保持类型
-     */
-    public enum SessionKeep {
-        Cookie, Header
-    }
-
     private boolean disable = true;
     // 排除路径
     private Set<String> excludePath;
-    private SessionKeep sessionKeep = SessionKeep.Cookie;
     // 登录设置
     private final Login login;
     // 登出设置
@@ -170,14 +162,6 @@ public class AuthProperties {
 
     public void setExcludePath(Set<String> excludePath) {
         this.excludePath = excludePath;
-    }
-
-    public SessionKeep getSessionKeep() {
-        return sessionKeep;
-    }
-
-    public void setSessionKeep(SessionKeep sessionKeep) {
-        this.sessionKeep = sessionKeep;
     }
 
     public Login getLogin() {

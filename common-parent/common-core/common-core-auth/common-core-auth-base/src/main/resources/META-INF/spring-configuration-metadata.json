@@ -16,6 +16,34 @@
       "type": "com.sfsctech.core.auth.base.properties.AuthProperties$Logout",
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties",
       "sourceMethod": "getLogout()"
+    },
+    {
+      "name": "website.auth.permit",
+      "type": "com.sfsctech.core.auth.base.properties.AuthProperties$Permit",
+      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties",
+      "sourceMethod": "getPermit()"
+    },
+    {
+      "name": "website.sso",
+      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties"
+    },
+    {
+      "name": "website.sso.auth",
+      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties$Authentication",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "website.sso.reference",
+      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties$Reference",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
+      "sourceMethod": "getReference()"
+    },
+    {
+      "name": "website.sso.jwt",
+      "type": "com.sfsctech.core.auth.base.sso.properties.JwtProperties",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
     }
   ],
   "properties": [
@@ -29,24 +57,6 @@
       "name": "website.auth.exclude-path",
       "type": "java.util.Set<java.lang.String>",
       "description": "认证排除路径",
-      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
-    },
-    {
-      "name": "website.auth.session-keep",
-      "type": "com.sfsctech.core.auth.base.properties.AuthProperties.SessionKeep",
-      "description": "Session保持方式",
-      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
-    },
-    {
-      "name": "website.auth.access-denied-handler",
-      "type": "java.lang.Class<org.springframework.security.web.access.AccessDeniedHandler>",
-      "description": "403响应处理类",
-      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
-    },
-    {
-      "name": "website.auth.authority-filter",
-      "type": "java.lang.Class<javax.servlet.Filter>",
-      "description": "用户权限校验",
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
     },
     {
@@ -96,21 +106,36 @@
       "type": "java.lang.String",
       "description": "登出url",
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties$Logout"
-    }
-  ],
-  "hints": [
+    },
     {
-      "name": "website.auth.session-keep",
-      "values": [
-        {
-          "value": "Cookie",
-          "description": "Cookie"
-        },
-        {
-          "value": "Header",
-          "description": "Header"
-        }
-      ]
+      "name": "website.auth.permit.authority-filter",
+      "type": "java.lang.Class<javax.servlet.Filter>",
+      "description": "用户权限校验",
+      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties$Permit"
+    },
+    {
+      "name": "website.auth.permit.access-denied-handler",
+      "type": "java.lang.Class<org.springframework.security.web.access.AccessDeniedHandler>",
+      "description": "403响应处理类",
+      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties$Permit"
+    },
+    {
+      "name": "website.sso.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "jwt 发行方",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.expiration",
+      "type": "java.time.Duration",
+      "description": "jwt 保持有效时间",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.refresh",
+      "type": "java.time.Duration",
+      "description": "jwt 刷新有效时间",
+      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
     }
   ]
 }
