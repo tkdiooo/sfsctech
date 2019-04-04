@@ -60,6 +60,12 @@
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
     },
     {
+      "name": "website.auth.session-keep",
+      "type": "com.sfsctech.core.auth.base.properties.AuthProperties.SessionKeep",
+      "description": "Session保持方式",
+      "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties"
+    },
+    {
       "name": "website.auth.login.url",
       "type": "java.lang.String",
       "description": "登录页面url",
@@ -136,6 +142,21 @@
       "type": "java.time.Duration",
       "description": "jwt 刷新有效时间",
       "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
+    }
+  ],
+  "hints": [
+    {
+      "name": "website.auth.session-keep",
+      "values": [
+        {
+          "value": "Cookie",
+          "description": "Cookie"
+        },
+        {
+          "value": "Header",
+          "description": "Header"
+        }
+      ]
     }
   ]
 }

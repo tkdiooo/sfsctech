@@ -45,8 +45,7 @@ public abstract class BaseSuccessHandler {
         if (null != savedRequest) {
             targetUrl = savedRequest.getRedirectUrl();
             logger.info("重定向url: {}", targetUrl);
-        } else if (StringUtil.isNotBlank(request.getHeader("Referer"))) {
-            targetUrl = request.getHeader("Referer");
+        } else if (StringUtil.isNotBlank(targetUrl = request.getHeader("Referer"))) {
             targetUrl = URLDecoder.decode(targetUrl.substring(targetUrl.lastIndexOf(LabelConstants.EQUAL) + 1), LabelConstants.UTF8);
             logger.info("重定向url: {}", targetUrl);
         }

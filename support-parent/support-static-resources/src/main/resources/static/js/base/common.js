@@ -351,7 +351,7 @@ function ajax_action(url, data, opt) {
             }
         },
         success: function (data, textStatus, request) {
-            var token = request.getResponseHeader("Authorization");
+            var sessionid = request.getResponseHeader("X-Auth-Token");
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -359,7 +359,7 @@ function ajax_action(url, data, opt) {
             // if (data.attachs) {
             //     $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
             // }
-            data["token"] = token;
+            data["session"] = sessionid;
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
             } else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {

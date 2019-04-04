@@ -64,8 +64,19 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), (int) jwtTokenFactory.getSettings().getExpiration().getSeconds());
         String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, Access_Jwt_Cache);
         logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
-        // 设置token保存至表头
-        SessionKeepUtil.updateCertificate(response, Access_Jwt_Token);
+        // 装载token
+        tokenLoader.loader(request, response, SSOConstants.TOKEN_PREFIX + Access_Jwt_Token);
+
+        // 装载tokenStore
+        String tokenStoreKey = factory.generateCacheKey(applicationInitialize.getAppName(), SSOConstants.JWT_KEYS_LIST);
+        Map<String, JwtTokenStore> tokenStore = factory.get(tokenStoreKey);
+        if (tokenStore == null) {
+            tokenStore = new HashMap<>();
+        }
+        tokenStore.put(user.getUsername(), JwtTokenStore.builder().user(user).beginDate(accessJwt.getBeginDate()).endDate(accessJwt.getEndDate()).build());
+        factory.getCacheClient().put(tokenStoreKey, tokenStore);
+
+        // 页面跳转
         super.transfer(request, response, this.successUrl);
 
         clearAuthenticationAttributes(request);

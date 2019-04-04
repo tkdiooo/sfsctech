@@ -23,7 +23,7 @@ public class JwtProperties {
     // 保持时间
     private Duration expiration = Duration.ofMillis(1800000);
     // 刷新token保存时间
-    private Duration refresh = Duration.ofMillis(3600000);
+    private Duration refreshTime = Duration.ofMillis(3600000);
 
     public String getSalt() {
         return salt;
@@ -49,11 +49,11 @@ public class JwtProperties {
         this.expiration = expiration;
     }
 
-    public Duration getRefresh() {
-        return refresh;
+    public Duration getRefreshTime() {
+        return refreshTime;
     }
 
-    public void setRefresh(Duration refresh) {
-        this.refresh = refresh;
+    public void setRefreshTime(Duration refreshTime) {
+        this.refreshTime = refreshTime;
     }
 }

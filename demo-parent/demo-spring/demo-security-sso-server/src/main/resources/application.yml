@@ -98,8 +98,5 @@ website:
   support:
     welcome-file: /index
     static-resources: http://localhost:8080
-  sso:
-    jwt:
-      issuer: ${spring.application.name}
 
 

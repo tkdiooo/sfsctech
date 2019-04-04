@@ -95,7 +95,7 @@ public class JwtTokenFactory {
 
         AccessJwtToken jwtToken = AccessJwtToken.builder()
                 .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .endDate(Date.from(currentTime.plusSeconds(settings.getRefresh().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
+                .endDate(Date.from(currentTime.plusSeconds(settings.getRefreshTime().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
@@ -107,7 +107,7 @@ public class JwtTokenFactory {
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
                 .setExpiration(Date.from(currentTime
-                        .plusMinutes(settings.getRefresh().toMillis())
+                        .plusMinutes(settings.getRefreshTime().toMillis())
                         .atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(SignatureAlgorithm.HS512, getKey())
                 .compact();

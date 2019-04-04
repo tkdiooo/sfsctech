@@ -24,7 +24,7 @@ public class SSOConstants extends SessionConstants {
     // 登出
     public static final String LOGOUT_URL = "logoutUrl";
 
-    public static final String COOKIE_REMEMBER_LOGIN_ACCOUNT = "re_lo_ac";
+    public static final String COOKIE_REMEMBER_LOGIN_ACCOUNT = "sfsc_re_lo_ac";
 
     public static final String TOKEN_PREFIX = "Bearer" + LabelConstants.PERIOD;
     public static final String TOKEN_IDENTIFY_COOKIE = "uams_ac_tok_na";

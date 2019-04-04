@@ -65,7 +65,9 @@ public class SSOConfig extends AuthSecurityConfig {
                     // 禁用缓存
                     .and().headers().cacheControl();
             // jwt通过Cookie保持，登出后销毁Cookie
-            http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.COOKIE_ACCESS_TOKEN);
+            if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+                http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.TOKEN_IDENTIFY_COOKIE);
+            }
         }
     }
 
