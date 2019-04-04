@@ -1,16 +1,14 @@
 package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
-import com.sfsctech.core.auth.base.sso.jwt.extractor.TokenExtractor;
-import com.sfsctech.core.auth.base.sso.util.SessionKeepUtil;
+import com.sfsctech.core.auth.base.sso.token.loader.TokenLoader;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
-import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.auth.sso.server.jwt.JwtTokenStore;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
-import com.sfsctech.core.web.tools.cookie.CookieHelper;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.support.common.security.EncrypterTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class LoginSuccessHandler
@@ -36,17 +36,20 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
 
     private String successUrl;
 
-    private AuthProperties properties;
+    private TokenLoader tokenLoader;
 
     private JwtTokenFactory jwtTokenFactory;
 
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, JwtTokenFactory jwtTokenFactory, AuthProperties properties, String successUrl) {
+    private ApplicationInitialize applicationInitialize;
+
+    public LoginSuccessHandler(CacheFactory<RedisProxy<String, Object>> factory, JwtTokenFactory jwtTokenFactory, TokenLoader tokenLoader, String successUrl, ApplicationInitialize applicationInitialize) {
         this.factory = factory;
         this.jwtTokenFactory = jwtTokenFactory;
-        this.properties = properties;
+        this.tokenLoader = tokenLoader;
         this.successUrl = successUrl;
+        this.applicationInitialize = applicationInitialize;
     }
 
     @Override
@@ -56,10 +59,10 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         // 生成AccessJwt
         AccessJwtToken accessJwt = jwtTokenFactory.generalAccessJwt(user);
         logger.info("用户:{}，生成AccessJwt:{}", user.getUsername(), accessJwt.getToken());
-        String Access_Jwt_Cache = SSOConstants.ACCESS_TOKEN_CACHE_IDENTIFY + LabelConstants.DOUBLE_POUND + user.getUsername();
+        String Access_Jwt_Cache = factory.generateCacheKey(applicationInitialize.getAppName(), SSOConstants.CACHE_IDENTIFY_ACCESS_TOKEN, user.getUsername());
         logger.info("用户:{}，生成Access_Jwt_Cache:{}", user.getUsername(), Access_Jwt_Cache);
         factory.getCacheClient().putTimeOut(Access_Jwt_Cache, accessJwt.getToken(), (int) jwtTokenFactory.getSettings().getExpiration().getSeconds());
-        String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, TokenExtractor.HEADER_PREFIX + System.currentTimeMillis() + LabelConstants.PERIOD + Access_Jwt_Cache);
+        String Access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, Access_Jwt_Cache);
         logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
         // 设置token保存至表头
         SessionKeepUtil.updateCertificate(response, Access_Jwt_Token);

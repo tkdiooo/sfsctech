@@ -1,11 +1,18 @@
 package com.sfsctech.core.auth.sso.client.filter;
 
 import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.base.sso.jwt.extractor.TokenExtractor;
+import com.sfsctech.core.auth.base.sso.token.extractor.TokenExtractor;
 import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.client.jwt.JwtAuthenticationToken;
 import com.sfsctech.core.auth.sso.client.jwt.RawAccessJwtToken;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.support.common.util.HttpUtil;
+import com.sfsctech.support.common.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
@@ -25,22 +32,35 @@ import java.io.IOException;
  */
 public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenAuthenticationProcessingFilter.class);
+
     private final AuthenticationFailureHandler failureHandler;
     private final TokenExtractor tokenExtractor;
     private final JwtProperties settings;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     @Autowired
-    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, TokenExtractor tokenExtractor, JwtProperties settings, RequestMatcher matcher) {
+    public JwtTokenAuthenticationProcessingFilter(CacheFactory<RedisProxy<String, Object>> factory, AuthenticationFailureHandler failureHandler, TokenExtractor tokenExtractor, JwtProperties settings, RequestMatcher matcher) {
         super(matcher);
         this.failureHandler = failureHandler;
         this.tokenExtractor = tokenExtractor;
         this.settings = settings;
+        this.factory = factory;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String tokenPayload = request.getHeader(SSOConstants.HEADER_ACCESS_TOKEN);
-        RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload), settings);
+        logger.info("请求路径:{}", HttpUtil.getFullUrl(request));
+        logger.info("Session保持类型:{}", tokenExtractor.getClass());
+        String Access_Jwt_Cache = tokenExtractor.extract(request, response);
+        String jwt = factory.get(Access_Jwt_Cache);
+        if (StringUtil.isBlank(jwt)) {
+            throw new AuthenticationServiceException("用户登录认证失败,Jwt信息为空!");
+        } else if (jwt.equals(SSOConstants.JWT_CANCEL_MSG)) {
+            throw new AuthenticationServiceException("用户登录认证失败," + SSOConstants.JWT_CANCEL_MSG + "!");
+        }
+        logger.info("获取JwtToken:{}", jwt);
+        RawAccessJwtToken token = new RawAccessJwtToken(jwt, settings);
         return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
     }
 

@@ -45,4 +45,8 @@ public class RawAccessJwtToken implements JwtToken {
     public String getToken() {
         return jwt;
     }
+
+    public JwtProperties getSettings(){
+        return settings;
+    }
 }

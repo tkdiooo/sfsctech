@@ -772,6 +772,11 @@ public class DateUtil extends DateUtils {
         return result;
     }
 
+    /**
+     * 获取一天的起始时间
+     * @param date
+     * @return
+     */
     public static String getDayByStart(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -783,10 +788,20 @@ public class DateUtil extends DateUtils {
         return toDateTimeDash(calendar.getTime());
     }
 
+    /**
+     * 获取一天的起始时间
+     * @param date
+     * @return
+     */
     public static String getDayByStart(String date) {
         return getDayByStart(parseDate(date));
     }
 
+    /**
+     * 获取一天最后时间
+     * @param date
+     * @return
+     */
     public static String getDayByEnd(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -798,8 +813,41 @@ public class DateUtil extends DateUtils {
         return toDateTimeDash(calendar.getTime());
     }
 
+    /**
+     * 获取一天最后时间
+     * @param date
+     * @return
+     */
     public static String getDayByEnd(String date) {
         return getDayByStart(parseDate(date));
     }
 
+    public static Date getDateSubCondition(Date date, DateConstants.DateType dateType, int condition) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        switch (dateType) {
+            case Year:
+                //当前时间减去年
+                calendar.add(Calendar.YEAR, -condition);
+                break;
+            case Month:
+                //当前时间减去月
+                calendar.add(Calendar.MONTH, -condition);
+                break;
+            case Day:
+                //当前时间减去天，即一天前的时间
+                calendar.add(Calendar.DAY_OF_MONTH, -condition);
+                break;
+            case Hour:
+                //当前时间减去小时
+                calendar.add(Calendar.HOUR_OF_DAY, -condition);
+                break;
+            case Minute:
+                // 当前时间减去分钟
+                calendar.add(Calendar.MINUTE, -condition);
+                break;
+            default:
+        }
+        return calendar.getTime();
+    }
 }

@@ -31,7 +31,7 @@ public class SessionKeepUtil {
      */
     public static String getCertificateByCookie(CookieHelper helper) {
         logger.info("通过Cookie获取Authorization信息");
-        String certificate = helper.getCookieValue(SSOConstants.COOKIE_ACCESS_TOKEN);
+        String certificate = helper.getCookieValue(SSOConstants.TOKEN_IDENTIFY_COOKIE);
         logger.info("session certificate:{}", certificate);
         if (StringUtil.isBlank(certificate)) {
             logger.info("用户certificate信息获取为空");
@@ -41,7 +41,7 @@ public class SessionKeepUtil {
 
     public static String getCertificateByHeader(HttpServletRequest request) {
         logger.info("通过request header获取Authorization信息");
-        String certificate = request.getHeader(SSOConstants.HEADER_ACCESS_TOKEN);
+        String certificate = request.getHeader(SSOConstants.TOKEN_IDENTIFY_HEADER);
         logger.info("session certificate:{}", certificate);
         if (StringUtil.isBlank(certificate)) {
             logger.info("用户certificate信息获取为空");
@@ -56,7 +56,7 @@ public class SessionKeepUtil {
      * @param certificate 凭证
      */
     public static void updateCertificate(CookieHelper helper, String certificate) {
-        updateCertificate(helper, SSOConstants.COOKIE_ACCESS_TOKEN, certificate);
+        updateCertificate(helper, SSOConstants.TOKEN_IDENTIFY_COOKIE, certificate);
     }
 
     /**
@@ -66,7 +66,7 @@ public class SessionKeepUtil {
      * @param certificate 凭证
      */
     public static void updateCertificate(HttpServletResponse response, String certificate) {
-        response.setHeader(SSOConstants.HEADER_ACCESS_TOKEN, certificate);
+        response.setHeader(SSOConstants.TOKEN_IDENTIFY_HEADER, certificate);
     }
 
     /**
@@ -92,6 +92,6 @@ public class SessionKeepUtil {
      * @param helper CookieHelper
      */
     public static void clearCertificate(CookieHelper helper) {
-        helper.clearCookie(SSOConstants.COOKIE_ACCESS_TOKEN);
+        helper.clearCookie(SSOConstants.TOKEN_IDENTIFY_COOKIE);
     }
 }

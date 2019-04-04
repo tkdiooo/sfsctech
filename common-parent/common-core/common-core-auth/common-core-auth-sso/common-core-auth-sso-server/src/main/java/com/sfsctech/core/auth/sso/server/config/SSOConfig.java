@@ -5,6 +5,9 @@ import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.base.sso.token.loader.JwtCookieTokenLoader;
+import com.sfsctech.core.auth.base.sso.token.loader.JwtHeaderTokenLoader;
+import com.sfsctech.core.auth.base.sso.token.loader.TokenLoader;
 import com.sfsctech.core.auth.session.config.AuthSecurityConfig;
 import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
@@ -12,6 +15,7 @@ import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +31,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @version Description:
  */
 @Configuration
-@Import({SkipPathConfig.class, SSOProperties.class, JwtProperties.class, CacheConfig.class})
+@Import({SkipPathConfig.class, SSOProperties.class, JwtProperties.class, CacheConfig.class, ApplicationInitialize.class})
 public class SSOConfig extends AuthSecurityConfig {
 
     @Autowired
@@ -36,9 +40,21 @@ public class SSOConfig extends AuthSecurityConfig {
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
 
+    @Autowired
+    private ApplicationInitialize applicationInitialize;
+
     @Bean
     public JwtTokenFactory jwtTokenFactory() {
         return new JwtTokenFactory(properties);
+    }
+
+    @Bean
+    public TokenLoader tokenLoader() {
+        if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+            return new JwtCookieTokenLoader();
+        } else {
+            return new JwtHeaderTokenLoader();
+        }
     }
 
     @Override
@@ -55,6 +71,6 @@ public class SSOConfig extends AuthSecurityConfig {
 
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new LoginSuccessHandler(factory, jwtTokenFactory(), authProperties, config.getWelcomeFile());
+        return new LoginSuccessHandler(factory, jwtTokenFactory(), tokenLoader(), config.getWelcomeFile(), applicationInitialize);
     }
 }

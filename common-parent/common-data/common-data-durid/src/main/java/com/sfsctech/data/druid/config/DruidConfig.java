@@ -59,7 +59,6 @@ public class DruidConfig extends MyBatisConfig {
      *
      * @return ServletRegistrationBean
      */
-    // TODO 需要添加配置
     @Bean
     public ServletRegistrationBean DruidStatViewServlet() {
         //org.springframework.boot.context.embedded.ServletRegistrationBean提供类的进行注册.
