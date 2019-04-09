@@ -1,10 +1,9 @@
 package com.sfsctech.core.auth.sso.server.jwt;
 
-import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
-import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
-import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.base.jwt.AccessJwtToken;
+import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import com.sfsctech.support.common.util.DateUtil;
-import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

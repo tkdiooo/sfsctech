@@ -1,9 +1,9 @@
 package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.base.handler.BaseSuccessHandler;
-import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.base.sso.jwt.AccessJwtToken;
-import com.sfsctech.core.auth.base.sso.token.loader.TokenLoader;
+import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.base.jwt.AccessJwtToken;
+import com.sfsctech.core.auth.sso.base.token.loader.TokenLoader;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenStore;
 import com.sfsctech.core.cache.factory.CacheFactory;

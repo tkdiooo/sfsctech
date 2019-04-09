@@ -14,6 +14,7 @@
     <modules>
         <module>common-core-auth-sso-server</module>
         <module>common-core-auth-sso-client</module>
+        <module>common-core-auth-sso-base</module>
     </modules>
 
     <dependencies>

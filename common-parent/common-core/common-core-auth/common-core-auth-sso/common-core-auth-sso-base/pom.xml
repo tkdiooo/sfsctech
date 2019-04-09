@@ -9,18 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-core-auth-sso-server</artifactId>
+    <artifactId>common-core-auth-sso-base</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-sso-base</artifactId>
+            <artifactId>common-core-auth-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-session</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

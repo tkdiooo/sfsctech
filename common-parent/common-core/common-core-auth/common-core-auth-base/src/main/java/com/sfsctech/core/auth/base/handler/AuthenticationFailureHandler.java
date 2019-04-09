@@ -1,7 +1,6 @@
 package com.sfsctech.core.auth.base.handler;
 
 import com.sfsctech.core.auth.base.constants.SessionConstants;
-import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.support.common.util.HttpUtil;
@@ -47,7 +46,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
             logger.info("以json方式返回result：{}", result.toString());
             ResponseUtil.writeJson(result, response);
         } else {
-            String redirectUrl = defaultFailureUrl + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + URLEncoder.encode(requestUrl, LabelConstants.UTF8);
+            String redirectUrl = defaultFailureUrl + LabelConstants.QUESTION + SessionConstants.PARAM_FROM_URL + LabelConstants.EQUAL + URLEncoder.encode(requestUrl, LabelConstants.UTF8);
             logger.info("以redirect方式返回路径：{}", redirectUrl);
             super.setDefaultFailureUrl(redirectUrl);
             super.onAuthenticationFailure(request, response, exception);

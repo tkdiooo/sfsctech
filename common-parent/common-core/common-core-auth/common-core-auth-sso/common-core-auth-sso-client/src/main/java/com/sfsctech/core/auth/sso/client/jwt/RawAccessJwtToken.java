@@ -1,8 +1,8 @@
 package com.sfsctech.core.auth.sso.client.jwt;
 
-import com.sfsctech.core.auth.base.sso.exceptions.JwtExpiredTokenException;
-import com.sfsctech.core.auth.base.sso.jwt.JwtToken;
-import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.base.exceptions.JwtExpiredTokenException;
+import com.sfsctech.core.auth.sso.base.jwt.JwtToken;
+import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class RawAccessJwtToken implements JwtToken {
         return jwt;
     }
 
-    public JwtProperties getSettings(){
+    public JwtProperties getSettings() {
         return settings;
     }
 }

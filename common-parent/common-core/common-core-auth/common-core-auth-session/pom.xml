@@ -18,7 +18,6 @@
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-core-auth-base</artifactId>
             <version>${sfsctech.common.version}</version>
-            <classifier>basic</classifier>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>

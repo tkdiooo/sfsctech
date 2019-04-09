@@ -1,7 +1,7 @@
 package com.sfsctech.core.auth.sso.client.provider;
 
-import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.base.sso.exceptions.JwtExpiredTokenException;
+import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.base.inf.SSOInterface;
 import com.sfsctech.core.auth.sso.client.jwt.JwtAuthenticationToken;
 import com.sfsctech.core.auth.sso.client.jwt.RawAccessJwtToken;
 import com.sfsctech.core.base.constants.DateConstants;
@@ -25,12 +25,21 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
+    private final SSOInterface service;
+
+    public JwtAuthenticationProvider(SSOInterface service) {
+        this.service = service;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
         Jws<Claims> jwsClaims = rawAccessToken.parseClaims();
+        // 获取刷新时间
         Date refresh = DateUtil.getDateSubCondition(jwsClaims.getBody().getExpiration(), DateConstants.DateType.Minute, (int) (rawAccessToken.getSettings().getExpiration().toMinutes() / 2));
+        // 如果系统当前时间大于刷新时间
         if (DateUtil.compareDate(DateUtil.getCurrentDate(), refresh) > 0) {
+            System.out.println(service);
             System.out.println("刷新token");
         }
         String subject = jwsClaims.getBody().getSubject();

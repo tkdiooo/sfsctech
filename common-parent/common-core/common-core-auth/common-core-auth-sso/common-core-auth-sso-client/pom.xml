@@ -14,9 +14,8 @@
     <dependencies>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-base</artifactId>
+            <artifactId>common-core-auth-sso-base</artifactId>
             <version>${sfsctech.common.version}</version>
-            <classifier>sso</classifier>
         </dependency>
     </dependencies>
 </project>

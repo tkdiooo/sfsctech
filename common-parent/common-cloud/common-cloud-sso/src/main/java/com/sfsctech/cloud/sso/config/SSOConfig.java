@@ -1,8 +1,9 @@
 package com.sfsctech.cloud.sso.config;
 
-//import com.sfsctech.core.auth.base.common.config.SkipPathConfig;
-//import com.sfsctech.core.auth.base.sso.properties.SSOProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sfsctech.cloud.net.config.InterfaceProxyFactoryConfiguration;
+import com.sfsctech.cloud.sso.provider.SSOProvider;
+import com.sfsctech.core.auth.sso.base.inf.SSOInterface;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -13,21 +14,12 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Configuration
-//@Import({SSOProperties.class,  SkipPathConfig.class})
+@Import({InterfaceProxyFactoryConfiguration.class, com.sfsctech.core.auth.sso.client.config.SSOConfig.class})
 public class SSOConfig {
 
-//    @Autowired
-//    private SkipPathConfig config;
+    @Bean
+    public SSOInterface ssoInterface() {
+        return new SSOProvider();
+    }
 
-//    @Bean
-//    public FilterRegistrationBean SSOFilter() {
-//        SSOFilter filter = new SSOFilter();
-//        // Session认证排除路径
-//        filter.setExcludesPattern(config.getExcludePath());
-//        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-//        registration.addUrlPatterns(LabelConstants.SLASH_STAR);
-//        registration.setName("CloudSSOFilter");
-//        registration.setOrder(5);
-//        return registration;
-//    }
 }

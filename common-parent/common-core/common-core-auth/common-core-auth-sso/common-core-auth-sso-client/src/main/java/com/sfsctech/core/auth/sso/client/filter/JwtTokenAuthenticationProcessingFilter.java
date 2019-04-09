@@ -1,8 +1,8 @@
 package com.sfsctech.core.auth.sso.client.filter;
 
-import com.sfsctech.core.auth.base.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.base.sso.token.extractor.TokenExtractor;
-import com.sfsctech.core.auth.base.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.base.token.extractor.TokenExtractor;
 import com.sfsctech.core.auth.sso.client.jwt.JwtAuthenticationToken;
 import com.sfsctech.core.auth.sso.client.jwt.RawAccessJwtToken;
 import com.sfsctech.core.cache.factory.CacheFactory;

@@ -22,28 +22,6 @@
       "type": "com.sfsctech.core.auth.base.properties.AuthProperties$Permit",
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties",
       "sourceMethod": "getPermit()"
-    },
-    {
-      "name": "website.sso",
-      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties"
-    },
-    {
-      "name": "website.sso.auth",
-      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties$Authentication",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
-      "sourceMethod": "getAuth()"
-    },
-    {
-      "name": "website.sso.reference",
-      "type": "com.sfsctech.core.auth.base.sso.properties.SSOProperties$Reference",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.SSOProperties",
-      "sourceMethod": "getReference()"
-    },
-    {
-      "name": "website.sso.jwt",
-      "type": "com.sfsctech.core.auth.base.sso.properties.JwtProperties",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
     }
   ],
   "properties": [
@@ -124,24 +102,6 @@
       "type": "java.lang.Class<org.springframework.security.web.access.AccessDeniedHandler>",
       "description": "403响应处理类",
       "sourceType": "com.sfsctech.core.auth.base.properties.AuthProperties$Permit"
-    },
-    {
-      "name": "website.sso.jwt.issuer",
-      "type": "java.lang.String",
-      "description": "jwt 发行方",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.expiration",
-      "type": "java.time.Duration",
-      "description": "jwt 保持有效时间",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.refresh",
-      "type": "java.time.Duration",
-      "description": "jwt 刷新有效时间",
-      "sourceType": "com.sfsctech.core.auth.base.sso.properties.JwtProperties"
     }
   ],
   "hints": [
