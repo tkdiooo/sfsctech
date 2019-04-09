@@ -1,6 +1,5 @@
 package com.sfsctech.cloud.sso.inf;
 
-
 import com.sfsctech.core.auth.sso.base.jwt.AccessJwtToken;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.session.UserAuthData;
