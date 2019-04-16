@@ -19,7 +19,8 @@
         <module>support-static-resources</module>
         <module>support-turbine-service</module>
         <module>support-zipkin-service</module>
-        <module>support-eureka-service</module>
+        <module>support-eureka</module>
+        <module>support-admin</module>
     </modules>
 
 </project>

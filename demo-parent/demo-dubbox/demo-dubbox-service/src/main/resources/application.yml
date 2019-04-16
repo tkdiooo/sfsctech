@@ -163,3 +163,4 @@ dubbo:
 logging:
   path: D:\opt\logs
   config: classpath:logback-custom.xml
+  brokerList:

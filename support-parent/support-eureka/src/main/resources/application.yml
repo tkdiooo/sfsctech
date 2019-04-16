@@ -1,0 +1,22 @@
+app:
+  id: support.eureka
+apollo:
+  bootstrap:
+    #初始bootstrap阶段注入配置
+    enabled: true
+    #排越前面优先级越高
+    namespaces: application, eureka.Greenwich.SR1, admin.2.1.1
+  meta: http://172.16.223.25:10080 #apollo的config项目路径
+eureka:
+  instance:
+    ip-address: localhost
+    hostname: ${eureka.instance.ip-address}
+    instance-id: ${eureka.instance.ip-address}:${server.port}-version:@project.version@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
