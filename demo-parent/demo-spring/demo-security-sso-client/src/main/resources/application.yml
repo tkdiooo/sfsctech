@@ -95,6 +95,8 @@ website:
     exclude-path: /img/**
     login:
       url: http://localhost:8100/login
+    logout:
+      url: http://localhost:8100/logout
   support:
     welcome-file: /index
     static-resources: http://localhost:8080

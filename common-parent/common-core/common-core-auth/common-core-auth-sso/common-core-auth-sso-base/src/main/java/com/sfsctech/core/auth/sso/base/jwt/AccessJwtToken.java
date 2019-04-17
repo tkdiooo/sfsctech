@@ -24,7 +24,7 @@ public class AccessJwtToken extends BaseDto implements JwtToken {
     // jwt信息（根据盐值加密）
     private String token;
 
-    private Date beginDate;
+    private Date beginTime;
 
-    private Date endDate;
+    private Date endTime;
 }

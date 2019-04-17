@@ -68,18 +68,18 @@ public class JwtTokenFactory {
         LocalDateTime currentTime = LocalDateTime.now();
 
         AccessJwtToken jwtToken = AccessJwtToken.builder()
-                .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .endDate(Date.from(currentTime.plusSeconds(settings.getExpiration().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
+                .beginTime(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
+                .endTime(Date.from(currentTime.plusSeconds(settings.getExpiration().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         String jwt = Jwts.builder()
                 .setClaims(claims)
                 .setIssuer(settings.getIssuer())
-                .setIssuedAt(jwtToken.getBeginDate())
-                .setExpiration(jwtToken.getEndDate())
+                .setIssuedAt(jwtToken.getBeginTime())
+                .setExpiration(jwtToken.getEndTime())
                 .signWith(SignatureAlgorithm.HS512, getKey())
                 .compact();
-        logger.info("生成AccessJwt信息：{主题:{},发行方:{},发行时间:{},过期时间:{}}", user.getUsername(), settings.getIssuer(), DateUtil.toDateTimeDash(jwtToken.getBeginDate()), DateUtil.toDateTimeDash(jwtToken.getEndDate()));
+        logger.info("生成AccessJwt信息：{主题:{},发行方:{},发行时间:{},过期时间:{}}", user.getUsername(), settings.getIssuer(), DateUtil.toDateTimeDash(jwtToken.getBeginTime()), DateUtil.toDateTimeDash(jwtToken.getEndTime()));
         jwtToken.setToken(jwt);
         return jwtToken;
     }
@@ -93,8 +93,8 @@ public class JwtTokenFactory {
         LocalDateTime currentTime = LocalDateTime.now();
 
         AccessJwtToken jwtToken = AccessJwtToken.builder()
-                .beginDate(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .endDate(Date.from(currentTime.plusSeconds(settings.getRefreshTime().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
+                .beginTime(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
+                .endTime(Date.from(currentTime.plusSeconds(settings.getRefreshTime().getSeconds()).atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
         Claims claims = Jwts.claims().setSubject(user.getUsername());
@@ -110,7 +110,7 @@ public class JwtTokenFactory {
                         .atZone(ZoneId.systemDefault()).toInstant()))
                 .signWith(SignatureAlgorithm.HS512, getKey())
                 .compact();
-        logger.info("生成RefreshJwt信息：{主题:{},发行方:{},发行时间:{},过期时间:{}}", user.getUsername(), settings.getIssuer(), DateUtil.toDateTimeDash(jwtToken.getBeginDate()), DateUtil.toDateTimeDash(jwtToken.getEndDate()));
+        logger.info("生成RefreshJwt信息：{主题:{},发行方:{},发行时间:{},过期时间:{}}", user.getUsername(), settings.getIssuer(), DateUtil.toDateTimeDash(jwtToken.getBeginTime()), DateUtil.toDateTimeDash(jwtToken.getEndTime()));
         jwtToken.setToken(jwt);
 
         return jwtToken;

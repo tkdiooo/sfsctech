@@ -6,12 +6,15 @@ import com.sfsctech.core.auth.session.config.AuthSecurityConfig;
 import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.base.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.base.token.extractor.JwtCookieTokenExtractor;
+import com.sfsctech.core.auth.sso.base.token.extractor.JwtHeaderTokenExtractor;
+import com.sfsctech.core.auth.sso.base.token.extractor.TokenExtractor;
 import com.sfsctech.core.auth.sso.base.token.loader.JwtCookieTokenLoader;
 import com.sfsctech.core.auth.sso.base.token.loader.JwtHeaderTokenLoader;
 import com.sfsctech.core.auth.sso.base.token.loader.TokenLoader;
 import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
+import com.sfsctech.core.auth.sso.server.handler.LogoutExecuteHandler;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
-import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -50,10 +53,19 @@ public class SSOConfig extends AuthSecurityConfig {
 
     @Bean
     public TokenLoader tokenLoader() {
-        if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+        if (config.auth().getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
             return new JwtCookieTokenLoader();
         } else {
             return new JwtHeaderTokenLoader();
+        }
+    }
+
+    @Bean
+    public TokenExtractor tokenExtractor() {
+        if (config.auth().getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+            return new JwtCookieTokenExtractor();
+        } else {
+            return new JwtHeaderTokenExtractor();
         }
     }
 
@@ -64,9 +76,11 @@ public class SSOConfig extends AuthSecurityConfig {
             http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     // 禁用缓存
                     .and().headers().cacheControl();
+            // 登出处理
+            http.logout().addLogoutHandler(new LogoutExecuteHandler(tokenExtractor(), jwtTokenFactory(), applicationInitialize, factory));
             // jwt通过Cookie保持，登出后销毁Cookie
-            if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
-                http.logout().deleteCookies("JSESSIONID" + LabelConstants.COMMA + SSOConstants.TOKEN_IDENTIFY_COOKIE);
+            if (config.auth().getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+                http.logout().deleteCookies(SSOConstants.TOKEN_IDENTIFY_COOKIE);
             }
         }
     }

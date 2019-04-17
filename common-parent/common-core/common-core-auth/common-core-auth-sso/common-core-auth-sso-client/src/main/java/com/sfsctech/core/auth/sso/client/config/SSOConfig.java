@@ -11,6 +11,7 @@ import com.sfsctech.core.auth.sso.base.token.extractor.JwtCookieTokenExtractor;
 import com.sfsctech.core.auth.sso.base.token.extractor.JwtHeaderTokenExtractor;
 import com.sfsctech.core.auth.sso.base.token.extractor.TokenExtractor;
 import com.sfsctech.core.auth.sso.client.filter.JwtTokenAuthenticationProcessingFilter;
+import com.sfsctech.core.auth.sso.client.handler.LogoutPrepareHandler;
 import com.sfsctech.core.auth.sso.client.matcher.SkipPathRequestMatcher;
 import com.sfsctech.core.auth.sso.client.provider.JwtAuthenticationProvider;
 import com.sfsctech.core.cache.config.CacheConfig;
@@ -20,11 +21,15 @@ import com.sfsctech.support.common.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Class SSOConfig
@@ -44,14 +49,14 @@ public class SSOConfig extends BaseWebSecurityConfig {
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    @Autowired
+    @Autowired(required = false)
     private SSOInterface ssoInterface;
 
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() {
         JwtTokenAuthenticationProcessingFilter filter = new JwtTokenAuthenticationProcessingFilter(
                 factory,
                 // 认证失败处理（跳转登录页）
-                new AuthenticationFailureHandler(authProperties.getLogin().getUrl()),
+                new AuthenticationFailureHandler(config.auth().getLogin().getUrl()),
                 // token提取器
                 tokenExtractor(),
                 // Jwt配置
@@ -64,7 +69,7 @@ public class SSOConfig extends BaseWebSecurityConfig {
 
     @Bean
     public TokenExtractor tokenExtractor() {
-        if (authProperties.getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
+        if (config.auth().getSessionKeep().equals(AuthProperties.SessionKeep.Cookie)) {
             return new JwtCookieTokenExtractor();
         } else {
             return new JwtHeaderTokenExtractor();
@@ -91,6 +96,9 @@ public class SSOConfig extends BaseWebSecurityConfig {
                     .and().headers().cacheControl();
             // 添加JWT filter
             http.addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+            // logout路径重定向
+            http.logout()
+                    .addLogoutHandler(new LogoutPrepareHandler(config.auth().getLogout().getUrl()));
         }
     }
 }

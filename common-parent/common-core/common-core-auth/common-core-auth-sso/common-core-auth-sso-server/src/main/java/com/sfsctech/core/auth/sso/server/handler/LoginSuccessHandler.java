@@ -66,14 +66,13 @@ public class LoginSuccessHandler extends BaseSuccessHandler implements Authentic
         logger.info("用户:{}，生成Access_Jwt_Token:{}", user.getUsername(), Access_Jwt_Token);
         // 装载token
         tokenLoader.loader(request, response, SSOConstants.TOKEN_PREFIX + Access_Jwt_Token);
-
         // 装载tokenStore
         String tokenStoreKey = factory.generateCacheKey(applicationInitialize.getAppName(), SSOConstants.JWT_KEYS_LIST);
         Map<String, JwtTokenStore> tokenStore = factory.get(tokenStoreKey);
         if (tokenStore == null) {
             tokenStore = new HashMap<>();
         }
-        tokenStore.put(user.getUsername(), JwtTokenStore.builder().user(user).beginDate(accessJwt.getBeginDate()).endDate(accessJwt.getEndDate()).build());
+        tokenStore.put(user.getUsername(), JwtTokenStore.builder().username(user.getUsername()).beginTime(accessJwt.getBeginTime()).endTime(accessJwt.getEndTime()).build());
         factory.getCacheClient().put(tokenStoreKey, tokenStore);
 
         // 页面跳转

@@ -1,7 +1,7 @@
 package com.sfsctech.core.auth.sso.server.jwt;
 
-import lombok.Builder;
-import lombok.Data;
+import com.sfsctech.core.base.domain.dto.BaseDto;
+import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Date;
@@ -14,12 +14,19 @@ import java.util.Date;
  */
 @Data
 @Builder
-public class JwtTokenStore {
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class JwtTokenStore extends BaseDto {
 
-    private User user;
+    private static final long serialVersionUID = 5838366730081150504L;
 
-    private Date beginDate;
+    private String username;
 
-    private Date endDate;
+    private Date beginTime;
+
+    private Date endTime;
+
+    private Date logoutTime;
 
 }

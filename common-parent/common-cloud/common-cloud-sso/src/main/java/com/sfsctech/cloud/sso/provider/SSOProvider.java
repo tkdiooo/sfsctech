@@ -19,12 +19,12 @@ public class SSOProvider implements SSOInterface {
 
     @Override
     public RpcResult<AccessJwtToken> verify(String token) {
-        return null;
+        return new RpcResult<>();
     }
 
     @Override
     public RpcResult<AccessJwtToken> refresh(String token) {
         System.out.println(restTemplate);
-        return null;
+        return new RpcResult<>();
     }
 }

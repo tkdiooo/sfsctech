@@ -19,8 +19,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     @Autowired
     protected SkipPathConfig config;
-    @Autowired
-    protected AuthProperties authProperties;
 
     protected boolean basicConfigure(HttpSecurity http) throws Exception {
         if (config.auth().isDisable()) {
@@ -34,8 +32,6 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
             point.setForceHttps(config.auth().getLogin().isHttps());
             point.setUseForward(config.auth().getLogin().isUseForward());
             configurer.and().exceptionHandling().authenticationEntryPoint(point);
-            // 自定义登出页面
-            configurer.and().logout().logoutUrl(config.auth().getLogout().getUrl());
             // 其余所有请求都被拦截
             configurer.anyRequest().authenticated();
             // csrf配置

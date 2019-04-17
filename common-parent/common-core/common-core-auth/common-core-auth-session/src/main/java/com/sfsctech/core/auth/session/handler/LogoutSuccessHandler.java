@@ -30,7 +30,9 @@ public class LogoutSuccessHandler extends BaseSuccessHandler implements org.spri
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        logger.info("用户：{}登出成功!用户IP：{}", ((User) authentication.getPrincipal()).getUsername(), ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress());
+        if (null != authentication) {
+            logger.info("用户：{}登出成功!用户IP：{}", ((User) authentication.getPrincipal()).getUsername(), ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress());
+        }
         logger.info("登录请求url：{}", HttpUtil.getFullUrl(request));
         super.transfer(request, response, targetUrl);
 

@@ -45,8 +45,8 @@ public abstract class BaseSuccessHandler {
         if (null != savedRequest) {
             targetUrl = savedRequest.getRedirectUrl();
             logger.info("重定向url: {}", targetUrl);
-        } else if (StringUtil.isNotBlank(targetUrl = request.getHeader("Referer"))) {
-            targetUrl = URLDecoder.decode(targetUrl.substring(targetUrl.lastIndexOf(LabelConstants.EQUAL) + 1), LabelConstants.UTF8);
+        } else if (StringUtil.isNotBlank(request.getHeader("Referer"))) {
+            targetUrl = URLDecoder.decode(request.getHeader("Referer").substring(request.getHeader("Referer").lastIndexOf(LabelConstants.EQUAL) + 1), LabelConstants.UTF8);
             logger.info("重定向url: {}", targetUrl);
         }
         // ajax访问
