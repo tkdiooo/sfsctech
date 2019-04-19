@@ -11,6 +11,7 @@
 
     <artifactId>common-core-auth-sso</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>common-core-auth-sso-server</module>
         <module>common-core-auth-sso-client</module>

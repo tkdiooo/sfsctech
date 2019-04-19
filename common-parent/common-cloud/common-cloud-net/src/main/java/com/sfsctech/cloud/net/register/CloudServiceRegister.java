@@ -23,11 +23,12 @@ public class CloudServiceRegister implements ImportBeanDefinitionRegistrar, Reso
     private ResourceLoader resourceLoader;
     private static final Class SCAN_ANNOTATION_CLASS = EnableCloudServer.class;
     private static final String BASE_PACKAGES_KEY = "packages";
+    private static final String DEFAULT_PACKAGES = "com.sfsctech.*.inf";
 
     @Override
     public void registerBeanDefinitions(@Nullable @NotNull AnnotationMetadata annotationMetadata, @Nullable @NotNull BeanDefinitionRegistry beanDefinitionRegistry) {
         if (annotationMetadata.hasAnnotation(SCAN_ANNOTATION_CLASS.getName())) {
-            String[] basePackages = (String[]) annotationMetadata.getAnnotationAttributes(SCAN_ANNOTATION_CLASS.getName()).get(BASE_PACKAGES_KEY);
+            String[] basePackages = ArrayUtil.add((String[]) annotationMetadata.getAnnotationAttributes(SCAN_ANNOTATION_CLASS.getName()).get(BASE_PACKAGES_KEY), DEFAULT_PACKAGES);
             if (ArrayUtil.isNotEmpty(basePackages)) {
                 CloudServiceScanner commonNetApiScanner = new CloudServiceScanner(beanDefinitionRegistry);
                 if (this.resourceLoader != null) commonNetApiScanner.setResourceLoader(this.resourceLoader);
