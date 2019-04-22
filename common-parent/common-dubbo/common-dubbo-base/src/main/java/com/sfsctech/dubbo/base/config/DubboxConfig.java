@@ -173,7 +173,7 @@ public class DubboxConfig {
     @Bean
     public ProviderConfig providerConfig() {
         ProviderConfig config = new ProviderConfig();
-        config.setFilter("-exception,HystrixHandler,ExceptionHandler");
+        config.setFilter("-exception,ExceptionHandler");
         Map<String, String> params = new HashMap<>();
         params.put(DubboConstants.HYSTRIX_CONCURRENCY, properties.getRpc().getConcurrency().toString());
         config.setParameters(params);
