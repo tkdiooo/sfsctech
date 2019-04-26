@@ -9,6 +9,8 @@ package com.sfsctech.cloud.net.starter;
 
 import com.sfsctech.cloud.net.config.InterfaceProxyFactoryConfiguration;
 import com.sfsctech.cloud.net.register.CloudServiceRegister;
+import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.core.exception.handler.GlobalExceptionHandler;
 import com.sfsctech.core.logger.config.LogbackConfig;
 import com.sfsctech.core.web.config.WebConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +27,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class, WebConfig.class, LogbackConfig.class})
+@Import({InterfaceProxyFactoryConfiguration.class, CloudServiceRegister.class, WebConfig.class, GlobalExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableHystrix

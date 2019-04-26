@@ -32,7 +32,7 @@ public class CloudServiceRegister implements ImportBeanDefinitionRegistrar, Reso
                 CloudServiceScanner commonNetApiScanner = new CloudServiceScanner(beanDefinitionRegistry);
                 if (this.resourceLoader != null) commonNetApiScanner.setResourceLoader(this.resourceLoader);
                 commonNetApiScanner.registerIncludeFilters();
-                commonNetApiScanner.doScan(ArrayUtil.add(basePackages, ""));
+                commonNetApiScanner.doScan(basePackages);
             }
         }
     }
