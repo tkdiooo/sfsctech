@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.*.*.mapper", "com.*.*.*.mapper", "com.*.*.*.repository.mapper"})
+@MapperScan(basePackages = {"com.sfsctech.*.*.repository.mapper", "com.sfsctech.*.*.*.repository.mapper", "com.*.*.mapper", "com.*.*.*.mapper"})
 @Import({DynamicDataSourceAspect.class, CacheConfig.class})
 @ConditionalOnClass(SqlSessionFactory.class)
 public class HikariConfig extends MyBatisConfig {

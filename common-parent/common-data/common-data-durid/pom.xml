@@ -12,10 +12,6 @@
     <artifactId>common-data-durid</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <data.scource.druid.version>1.1.10</data.scource.druid.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
@@ -25,7 +21,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${data.scource.druid.version}</version>
+            <version>1.1.16</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
