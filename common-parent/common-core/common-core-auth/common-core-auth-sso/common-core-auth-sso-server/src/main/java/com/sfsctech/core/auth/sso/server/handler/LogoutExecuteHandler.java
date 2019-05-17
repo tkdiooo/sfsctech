@@ -54,7 +54,7 @@ public class LogoutExecuteHandler implements LogoutHandler {
             Jws<Claims> jwsClaims = jwtTokenFactory.parseJWT(jwt);
             Date date = DateUtil.getCurrentDate();
             // 设置用户登出时间
-            String tokenStoreKey = factory.generateCacheKey(applicationInitialize.getAppName(), SSOConstants.JWT_KEYS_LIST);
+            String tokenStoreKey = factory.buildCacheKey(applicationInitialize.getAppName(), SSOConstants.JWT_KEYS_LIST);
             Map<String, JwtTokenStore> tokenStore = factory.get(tokenStoreKey);
             if (null != tokenStore) {
                 JwtTokenStore jwtTokenStore = tokenStore.get(jwsClaims.getBody().getSubject());

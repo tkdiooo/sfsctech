@@ -18,4 +18,6 @@ public @interface CloudService {
 
     @AliasFor("value")
     String appName() default "";
+
+    String contextPath() default "";
 }

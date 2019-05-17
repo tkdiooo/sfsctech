@@ -32,7 +32,7 @@ public class CacheFactory<I extends CacheProxy<String, Object>> implements Cache
         return (List<T>) getCacheClient().get(key);
     }
 
-    public String generateCacheKey(String... keys) {
+    public String buildCacheKey(String... keys) {
         StringBuilder sb = new StringBuilder();
         for (String key : keys) {
             if (sb.length() != 0) {

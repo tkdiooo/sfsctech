@@ -68,6 +68,7 @@
                 <pattern>
                     <pattern>
                         {
+                        "timestamp": "%d",
                         <!-- log level -->
                         "severity": "%level",
                         <!-- the name of the application that logged the span -->

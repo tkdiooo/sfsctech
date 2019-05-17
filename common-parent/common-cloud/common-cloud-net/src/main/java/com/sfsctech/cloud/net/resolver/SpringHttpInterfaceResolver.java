@@ -60,7 +60,7 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
 
 
     private String buildServicePoint(Class interfaceClass, Method method) {
-        return SERVICE_POINT_PREFIX + getAppName(interfaceClass) + LabelConstants.FORWARD_SLASH + getServiceRootPath(interfaceClass) + LabelConstants.FORWARD_SLASH + getServiceRelativePath(method);
+        return SERVICE_POINT_PREFIX + getAppName(interfaceClass) + getContextPath(interfaceClass) + getServiceRootPath(interfaceClass) + getServiceRelativePath(method);
     }
 
     private String getAppName(Class interfaceClass) {
@@ -68,14 +68,21 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
             throw new AppNameNotExistsException(interfaceClass);
         }
         CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
-        if (StringUtil.isNotBlank(annotation.appName())) return annotation.appName();
-        else return annotation.value();
+        if (StringUtil.isNotBlank(annotation.appName())) return annotation.appName() + LabelConstants.FORWARD_SLASH;
+        else return annotation.value() + LabelConstants.FORWARD_SLASH;
+    }
+
+    private String getContextPath(Class interfaceClass) {
+        CloudService annotation = (CloudService) interfaceClass.getAnnotation(CloudService.class);
+        if (StringUtil.isNotBlank(annotation.contextPath()))
+            return annotation.contextPath() + LabelConstants.FORWARD_SLASH;
+        else return "";
     }
 
     private String getServiceRootPath(Class interfaceClass) {
         if (interfaceClass.isAnnotationPresent(RequestMapping.class)) {
             RequestMapping requestMappingAnnotation = (RequestMapping) interfaceClass.getAnnotation(RequestMapping.class);
-            return getRequestMappingPath(requestMappingAnnotation);
+            return getRequestMappingPath(requestMappingAnnotation) + LabelConstants.FORWARD_SLASH;
         }
         return "";
     }
