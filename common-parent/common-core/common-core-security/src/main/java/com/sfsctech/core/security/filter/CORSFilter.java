@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class CORSFilter extends BaseFilter {
 
-    public static final int FILTER_ORDER = 2;
+    public static final int FILTER_ORDER = 3;
 
     private final Logger logger = LoggerFactory.getLogger(CORSFilter.class);
 

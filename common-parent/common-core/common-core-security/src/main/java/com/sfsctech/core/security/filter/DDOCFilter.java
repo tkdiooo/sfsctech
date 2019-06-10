@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DDOCFilter extends BaseFilter {
 
-    public static final int FILTER_ORDER = 1;
+    public static final int FILTER_ORDER = 2;
 
     private RedisTemplate<String, ?> redisTemplate;
 

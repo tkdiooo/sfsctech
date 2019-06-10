@@ -33,6 +33,11 @@
             <artifactId>common-core-web</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-core</artifactId>
+            <version>5.0.12</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -24,7 +24,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Class BaseSSOFilter
@@ -95,10 +94,10 @@ public abstract class BaseSSOFilter extends BaseFilter {
                         logger.info("用户Session校验成功:{}", result.isSuccess());
 
                         // 设置Session attribute
-                        logger.info("根据缓存key:{}，获取用户Session缓存属性", jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
-                        Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
-                        logger.info("用户Session缓存属性数量:{}", null != attribute ? attribute.size() : null);
-                        if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
+//                        logger.info("根据缓存key:{}，获取用户Session缓存属性", jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+//                        Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+//                        logger.info("用户Session缓存属性数量:{}", null != attribute ? attribute.size() : null);
+//                        if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
 
                         jt = result.getResult();
                         try {
@@ -131,14 +130,14 @@ public abstract class BaseSSOFilter extends BaseFilter {
                 }
             } catch (Exception e) {
                 logger.error("异常:{}", ThrowableUtil.getRootMessage(e), e);
-            } finally {
-                // 更新Session attribute
-                if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
-                    // TODO 需要验证Session 属性具体内容
-                    logger.info("更新Session attribute");
-                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
-                }
             }
+//            finally {
+                // 更新Session attribute
+//                if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
+//                    logger.info("更新Session attribute");
+//                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthConfig().getExpiration());
+//                }
+//            }
             logger.info("用户Session失效");
             // 项目类型是单页应用
             if (SSOProperties.AppType.RestAPI.equals(ssoProperties.getAuth().getAppType())) {

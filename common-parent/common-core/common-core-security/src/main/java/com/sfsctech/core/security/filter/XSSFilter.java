@@ -29,19 +29,19 @@ public class XSSFilter extends BaseFilter {
     @Override
     public void doHandler(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         XSSHttpServletRequestWrapper xssRequest = new XSSHttpServletRequestWrapper((HttpServletRequest) request);
-        if ("POST".equalsIgnoreCase(xssRequest.getMethod())) {
-            String param = this.getBodyString(xssRequest.getReader());
-            if (StringUtil.isNotBlank(param)) {
-                if (HtmlEscapeUtil.checkXSSAndSql(param)) {
-                    ResponseUtil.writeJson("访问的页面请求中有违反安全规则元素存在，拒绝访问!", (HttpServletResponse) response);
-                    return;
-                }
-            }
-        }
-        if (this.checkParameter(xssRequest)) {
-            ResponseUtil.writeJson("访问的页面请求中有违反安全规则元素存在，拒绝访问!", (HttpServletResponse) response);
-            return;
-        }
+//        if ("POST".equalsIgnoreCase(xssRequest.getMethod())) {
+//            String param = this.getBodyString(xssRequest.getReader());
+//            if (StringUtil.isNotBlank(param)) {
+//                if (HtmlEscapeUtil.checkXSSAndSql(param)) {
+//                    ResponseUtil.writeJson("访问的页面请求中有违反安全规则元素存在，拒绝访问!", (HttpServletResponse) response);
+//                    return;
+//                }
+//            }
+//        }
+//        if (this.checkParameter(xssRequest)) {
+//            ResponseUtil.writeJson("访问的页面请求中有违反安全规则元素存在，拒绝访问!", (HttpServletResponse) response);
+//            return;
+//        }
         chain.doFilter(xssRequest, response);
     }
 
