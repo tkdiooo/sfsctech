@@ -33,11 +33,11 @@ public enum ExceptionTypeEnum implements BaseEnum<Integer, String> {
     }
 
     public static String getValueByKey(Integer key) {
-        return BaseEnum.findValue(values(), key);
+        return BaseEnum.findValue(key, values());
     }
 
     public static Integer getKeyByValue(String value) {
-        return BaseEnum.findKey(values(), value);
+        return BaseEnum.findKey(value, values());
     }
 
     @Override

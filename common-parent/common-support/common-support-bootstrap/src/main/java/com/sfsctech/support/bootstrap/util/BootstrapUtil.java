@@ -26,13 +26,11 @@ public class BootstrapUtil {
     /**
      * 匹配下拉列表options
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <K, V> List<Map<String, Object>> matchOptions(String cacheKey, BaseEnum<K, V>... enums) {
-        List<Map<String, Object>> options = null;
-        if (StringUtil.isNotBlank(cacheKey)) {
-            options = (List<Map<String, Object>>) factory.getCacheClient().get(cacheKey);
-        }
-        if (null != options) {
+    @SafeVarargs
+    @SuppressWarnings("unchecked")
+    public static <K, V> List<Map<String, Object>> options(String cacheKey, BaseEnum<K, V>... enums) {
+        List<Map<String, Object>> options;
+        if (StringUtil.isNotBlank(cacheKey) && null != (options = (List<Map<String, Object>>) factory.getCacheClient().get(cacheKey))) {
             return options;
         }
         options = new ArrayList<>();
@@ -49,13 +47,10 @@ public class BootstrapUtil {
         return options;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <T> List<Map<String, Object>> matchOptions(String cacheKey, List<T> list, String valProperty, String textProperty) {
-        List<Map<String, Object>> options = null;
-        if (StringUtil.isNotBlank(cacheKey)) {
-            options = (List<Map<String, Object>>) factory.getCacheClient().get(cacheKey);
-        }
-        if (null != options) {
+    @SuppressWarnings("unchecked")
+    public static <T> List<Map<String, Object>> options(String cacheKey, List<T> list, String valProperty, String textProperty) {
+        List<Map<String, Object>> options;
+        if (StringUtil.isNotBlank(cacheKey) && null != (options = (List<Map<String, Object>>) factory.getCacheClient().get(cacheKey))) {
             return options;
         }
         options = new ArrayList<>();

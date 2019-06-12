@@ -55,4 +55,8 @@ public class Breadcrumb {
         factory.getCacheClient().put(key, list);
         return list;
     }
+
+    public void addParams(String key, String value) {
+        this.params.put(key, value);
+    }
 }

@@ -67,7 +67,7 @@ public class JDBCConstants {
         }
 
         public static DataSource getDataSource(String driver) {
-            return BaseEnum.findValue(values(), driver);
+            return BaseEnum.findValue(driver, values());
         }
     }
 
