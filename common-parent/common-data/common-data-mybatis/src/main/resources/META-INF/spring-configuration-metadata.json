@@ -2,441 +2,204 @@
   "hints": [],
   "groups": [
     {
-      "sourceType": "com.sfsctech.configurer.MyBatisConfigurer",
-      "name": "spring.druid-datasource.master",
+      "sourceType": "com.sfsctech.data.hikari.config.HikariConfig",
+      "name": "spring.hikari-datasource.master",
       "sourceMethod": "masterDatasource()",
-      "type": "com.alibaba.druid.pool.DruidDataSource"
+      "type": "com.zaxxer.hikari.HikariDataSource"
     },
     {
-      "sourceType": "com.sfsctech.configurer.MyBatisConfigurer",
-      "name": "spring.druid-datasource.slave",
+      "sourceType": "com.sfsctech.data.hikari.config.HikariConfig",
+      "name": "spring.hikari-datasource.slave",
       "sourceMethod": "slaveDatasource()",
-      "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     }
   ],
   "properties": [
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.type",
-      "type": "java.lang.Class<javax.sql.DataSource>"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.allow-pool-suspension",
+      "type": "java.lang.Boolean"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.filters",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.auto-commit",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.catalog",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.connectionProperties",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.connection-init-sql",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.access-to-underlying-connection-allowed",
-      "type": "java.lang.Boolean"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.connection-test-query",
+      "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.active-connection-stack-trace",
-      "type": "java.util.List<java.lang.String>"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.connection-timeout",
+      "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.active-connections",
-      "type": "java.util.Set<com.alibaba.druid.pool.DruidPooledConnection>"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.data-source-class-name",
+      "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.async-close-connection-enable",
-      "type": "java.lang.Boolean"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.data-source-j-n-d-i",
+      "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.break-after-acquire-failure",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.clear-filters-enable",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.connect-properties",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.data-source-properties",
       "type": "java.util.Properties"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.connection-error-retry-attempts",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.connection-init-sqls",
-      "type": "java.util.Collection<java.lang.String>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.create-scheduler",
-      "type": "java.util.concurrent.ScheduledExecutorService"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.db-type",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.driver-class-name",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.default-auto-commit",
-      "type": "java.lang.Boolean"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.health-check-properties",
+      "type": "java.util.Properties"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.default-catalog",
-      "type": "java.lang.String"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.health-check-registry",
+      "type": "java.lang.Object"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.default-read-only",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.default-transaction-isolation",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.destroy-scheduler",
-      "type": "java.util.concurrent.ScheduledExecutorService"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.driver",
-      "type": "java.sql.Driver"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.driver-class-name",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.dup-close-log-enable",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.enable",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.exception-sorter",
-      "type": "com.alibaba.druid.pool.ExceptionSorter"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.exception-sorter-class-name",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.fail-fast",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.filter-class-names",
-      "type": "java.util.List<java.lang.String>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.initial-size",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.log-abandoned",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.log-different-thread",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.login-timeout",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-active",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-create-task-count",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-evictable-idle-time-millis",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.idle-timeout",
       "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
       "deprecated": true,
-      "name": "spring.druid-datasource.master.max-idle",
-      "type": "java.lang.Integer",
+      "name": "spring.hikari-datasource.master.initialization-fail-fast",
+      "type": "java.lang.Boolean",
       "deprecation": {}
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-open-prepared-statements",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-pool-prepared-statement-per-connection-size",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-wait",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.initialization-fail-timeout",
       "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.max-wait-thread-count",
-      "type": "java.lang.Integer"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.isolate-internal-queries",
+      "type": "java.lang.Boolean"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.min-evictable-idle-time-millis",
-      "type": "java.lang.Long"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.min-idle",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.name",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.jdbc-url",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.not-full-timeout-retry-count",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
       "deprecated": true,
-      "name": "spring.druid-datasource.master.num-tests-per-eviction-run",
-      "type": "java.lang.Integer",
+      "name": "spring.hikari-datasource.master.jdbc4-connection-test",
+      "type": "java.lang.Boolean",
       "deprecation": {}
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.object-name",
-      "type": "javax.management.ObjectName"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.oracle",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.password",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.password-callback",
-      "type": "javax.security.auth.callback.PasswordCallback"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.phy-timeout-millis",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.leak-detection-threshold",
       "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.pool-prepared-statements",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.pooling-connection-info",
-      "type": "java.util.List<java.util.Map<java.lang.String,java.lang.Object>>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.proxy-filters",
-      "type": "java.util.List<com.alibaba.druid.filter.Filter>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.query-timeout",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.login-timeout",
       "type": "java.lang.Integer"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.remove-abandoned",
-      "type": "java.lang.Boolean"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.max-lifetime",
+      "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.remove-abandoned-timeout",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.maximum-pool-size",
       "type": "java.lang.Integer"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.remove-abandoned-timeout-millis",
-      "type": "java.lang.Long"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.metric-registry",
+      "type": "java.lang.Object"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.reset-stat-enable",
-      "type": "java.lang.Boolean"
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.metrics-tracker-factory",
+      "type": "com.zaxxer.hikari.metrics.MetricsTrackerFactory"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.share-prepared-statements",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.sql-stat-map",
-      "type": "java.util.Map<java.lang.String,com.alibaba.druid.stat.JdbcSqlStat>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.stat-data",
-      "type": "java.util.Map<java.lang.String,java.lang.Object>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.stat-data-for-m-bean",
-      "type": "java.util.Map<java.lang.String,java.lang.Object>"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.stat-logger",
-      "type": "com.alibaba.druid.pool.DruidDataSourceStatLogger"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.test-on-borrow",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.test-on-return",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.test-while-idle",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.time-between-connect-error-millis",
-      "type": "java.lang.Long"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.time-between-eviction-runs-millis",
-      "type": "java.lang.Long"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.time-between-log-stats-millis",
-      "type": "java.lang.Long"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.transaction-query-timeout",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.minimum-idle",
       "type": "java.lang.Integer"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.transaction-threshold-millis",
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.pool-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.read-only",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.register-mbeans",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.scheduled-executor",
+      "type": "java.util.concurrent.ScheduledExecutorService"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "deprecated": true,
+      "name": "spring.hikari-datasource.master.scheduled-executor-service",
+      "type": "java.util.concurrent.ScheduledThreadPoolExecutor",
+      "deprecation": {}
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.schema",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.transaction-isolation",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.username",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.zaxxer.hikari.HikariDataSource",
+      "name": "spring.hikari-datasource.master.validation-timeout",
       "type": "java.lang.Long"
     },
     {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.url",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.use-global-data-source-stat",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.use-local-session-state",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.use-oracle-implicit-cache",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.use-unfair-lock",
-      "type": "java.lang.Boolean"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.user-callback",
-      "type": "javax.security.auth.callback.NameCallback"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.username",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.valid-connection-checker",
-      "type": "com.alibaba.druid.pool.ValidConnectionChecker"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.valid-connection-checker-class-name",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.validation-query",
-      "type": "java.lang.String"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.validation-query-timeout",
-      "type": "java.lang.Integer"
-    },
-    {
-      "sourceType": "com.alibaba.druid.pool.DruidDataSource",
-      "name": "spring.druid-datasource.master.wall-stat-map",
-      "type": "java.util.Map<java.lang.String,java.lang.Object>"
-    },
-    {
-      "sourceType": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>",
-      "name": "spring.druid-datasource.slave",
-      "type": "java.util.Map<java.lang.String,com.alibaba.druid.pool.DruidDataSource>"
-    },
-    {
-      "name": "spring.druid-datasource.spring-monitor.enabled",
-      "type": "java.lang.Boolean"
+      "sourceType": "java.util.Map<java.lang.String,com.zaxxer.hikari.HikariDataSource>",
+      "name": "spring.hikari-datasource.slave",
+      "type": "java.util.Map<java.lang.String,java.util.LinkedHashMap<java.lang.String,java.lang.Object>>"
     }
   ]
 }
