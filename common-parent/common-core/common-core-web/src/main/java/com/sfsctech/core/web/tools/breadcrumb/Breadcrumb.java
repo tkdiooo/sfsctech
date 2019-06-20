@@ -48,7 +48,7 @@ public class Breadcrumb {
             String praent_key = key.substring(0, key.length() - position);
             // 获取父级节点，如果父级节点为空，则抛出异常
             if (null == (list = factory.getList(praent_key))) {
-                throw new BizException("父级节点缓存数据为空");
+                throw new BizException("父级节点{}缓存数据为空", praent_key);
             }
             list.add(breadcrumb);
         }

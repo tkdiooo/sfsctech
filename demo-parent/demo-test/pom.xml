@@ -16,6 +16,7 @@
         <module>demo-test-redis</module>
         <module>demo-test-jenkins</module>
         <module>demo-test-kafka</module>
+        <module>demo-test-GeoLite2</module>
     </modules>
     <packaging>pom</packaging>
 

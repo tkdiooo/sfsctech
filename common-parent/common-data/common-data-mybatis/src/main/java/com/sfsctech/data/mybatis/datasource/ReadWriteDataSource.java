@@ -186,6 +186,7 @@ public class ReadWriteDataSource extends AbstractDataSource implements Initializ
             return this.dataSourceLookup.getDataSource((String) dataSource);
         } else if (dataSource instanceof LinkedHashMap) {
             String type = String.valueOf(((LinkedHashMap) dataSource).get("type"));
+            AssertUtil.isNotBlank(type, "SlaveDataSources property type is blank");
             return (DataSource) JSON.parseObject(JSON.toJSONString(dataSource), Class.forName(type));
         } else {
             throw new IllegalArgumentException("Illegal data source value - only [javax.sql.DataSource] and String supported: " + dataSource);
