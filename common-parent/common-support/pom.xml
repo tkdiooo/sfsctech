@@ -18,6 +18,7 @@
         <module>common-support-saml</module>
         <module>common-support-bootstrap</module>
         <module>common-support-sftp</module>
+        <module>common-support-apollo</module>
     </modules>
 
 </project>

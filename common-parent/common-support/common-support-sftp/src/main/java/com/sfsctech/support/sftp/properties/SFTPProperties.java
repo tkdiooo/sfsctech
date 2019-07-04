@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 )
 public class SFTPProperties {
 
+    // 系统名称
+    private String appName;
     // SFTP 登录用户名
     private String username;
     // SFTP 登录密码
@@ -33,6 +35,14 @@ public class SFTPProperties {
     private int uploadSleep = 0;
     // 文件上传失败重试次数
     private int uploadRettry = 0;
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
     public String getUsername() {
         return username;

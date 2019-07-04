@@ -209,4 +209,8 @@ public abstract class UUIDUtil {
             return range;
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println(UUIDUtil.base58Uuid());
+    }
 }

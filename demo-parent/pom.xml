@@ -18,4 +18,8 @@
     </modules>
 
 
+    <properties>
+        <sfsctech.common.version>2.2.0-SNAPSHOT</sfsctech.common.version>
+    </properties>
+
 </project>
