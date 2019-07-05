@@ -1,4 +1,4 @@
-package com.sfsctech.cloud.gateway.refresh;
+package com.sfsctech.cloud.gateway.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -7,9 +7,7 @@ import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 /**
@@ -18,8 +16,6 @@ import reactor.core.publisher.Mono;
  * @author 张麒 2019-6-27.
  * @version Description:
  */
-@Service
-@Lazy
 public class DynamicRouteService implements ApplicationEventPublisherAware {
 
     @Autowired

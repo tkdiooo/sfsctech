@@ -7,7 +7,8 @@ package com.sfsctech.cloud.gateway.starter;
  * @version Description:
  */
 
-import org.springframework.context.annotation.ComponentScan;
+import com.sfsctech.cloud.gateway.config.GatewayConfig;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -17,6 +18,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@ComponentScan("com.sfsctech.cloud.gateway.refresh")
-public @interface EnableRefreshGateway {
+@Import(GatewayConfig.class)
+public @interface EnableGatewayRefresh {
 }

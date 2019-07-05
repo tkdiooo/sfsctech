@@ -1,16 +1,20 @@
-package com.sfsctech.cloud.gateway.refresh;
+package com.sfsctech.cloud.gateway.config;
 
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
+import com.sfsctech.cloud.gateway.service.DynamicRouteService;
+import com.sfsctech.core.spring.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Class GatewayPropertiesRefresher
@@ -18,18 +22,18 @@ import org.springframework.stereotype.Component;
  * @author 张麒 2019-6-27.
  * @version Description:
  */
-@Component
-@Lazy
-public class GatewayPropertiesRefresher implements ApplicationContextAware {
+@Configuration
+@EnableApolloConfig(value = "application", order = 10)
+public class GatewayConfig implements ApplicationContextAware {
 
-    private final Logger logger = LoggerFactory.getLogger(GatewayPropertiesRefresher.class);
+    private final Logger logger = LoggerFactory.getLogger(GatewayConfig.class);
+    @Autowired
+    private DynamicRouteService dynamicRouteService;
     private ApplicationContext applicationContext;
-    private final GatewayProperties gatewayProperties;
-    private final DynamicRouteService dynamicRouteService;
 
-    public GatewayPropertiesRefresher(DynamicRouteService dynamicRouteService, GatewayProperties gatewayProperties) {
-        this.dynamicRouteService = dynamicRouteService;
-        this.gatewayProperties = gatewayProperties;
+    @Bean
+    public DynamicRouteService routeService() {
+        return new DynamicRouteService();
     }
 
     @Override
@@ -68,7 +72,7 @@ public class GatewayPropertiesRefresher implements ApplicationContextAware {
         //更新配置
         this.applicationContext.publishEvent(new EnvironmentChangeEvent(changeEvent.changedKeys()));
         //更新路由
-        gatewayProperties.getRoutes().forEach(dynamicRouteService::update);
+        SpringContextUtil.getBean(GatewayProperties.class).getRoutes().forEach(dynamicRouteService::update);
         logger.info("Gateway properties refreshed!");
     }
 
