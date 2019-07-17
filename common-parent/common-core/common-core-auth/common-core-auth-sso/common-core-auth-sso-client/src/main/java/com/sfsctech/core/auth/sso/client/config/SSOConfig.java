@@ -5,7 +5,6 @@ import com.sfsctech.core.auth.base.config.SkipPathConfig;
 import com.sfsctech.core.auth.base.handler.AuthenticationFailureHandler;
 import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.sso.base.inf.SSOInterface;
-import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.base.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.base.token.extractor.JwtCookieTokenExtractor;
 import com.sfsctech.core.auth.sso.base.token.extractor.JwtHeaderTokenExtractor;
@@ -14,22 +13,22 @@ import com.sfsctech.core.auth.sso.client.filter.JwtTokenAuthenticationProcessing
 import com.sfsctech.core.auth.sso.client.handler.LogoutPrepareHandler;
 import com.sfsctech.core.auth.sso.client.matcher.SkipPathRequestMatcher;
 import com.sfsctech.core.auth.sso.client.provider.JwtAuthenticationProvider;
+import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.support.common.util.HttpUtil;
+import com.sfsctech.support.jwt.handler.JwtFactory;
+import com.sfsctech.support.jwt.properties.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Class SSOConfig
@@ -41,13 +40,21 @@ import javax.servlet.http.HttpServletResponse;
 public class SSOConfig extends BaseWebSecurityConfig {
 
     @Autowired
-    private JwtProperties settings;
+    private JwtProperties properties;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
+
+    @Autowired
+    private ApplicationInitialize applicationInitialize;
+
+    @Bean
+    public JwtFactory jwtFactory() {
+        return new JwtFactory(applicationInitialize.getAppName(), properties, factory);
+    }
 
     @Autowired(required = false)
     private SSOInterface ssoInterface;
@@ -59,10 +66,10 @@ public class SSOConfig extends BaseWebSecurityConfig {
                 new AuthenticationFailureHandler(config.auth().getLogin().getUrl()),
                 // token提取器
                 tokenExtractor(),
-                // Jwt配置
-                settings,
+                // Jwt工厂
+                jwtFactory(),
                 // 拦截映射
-                new SkipPathRequestMatcher(config.getExcludePath(), HttpUtil.getRootPattern()));
+                new SkipPathRequestMatcher(config.getExcludePath(), LabelConstants.SLASH_DOUBLE_STAR));
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }

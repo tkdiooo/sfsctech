@@ -8,6 +8,7 @@ import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.json.FastJson;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.support.dozer.config.DozerMapperConfig;
 import org.hibernate.validator.HibernateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -31,7 +31,7 @@ import java.util.List;
  * @version Description:
  */
 @Configuration
-@Import({SpringContextUtil.class, TomcatConfig.class, ApplicationInitialize.class})
+@Import({SpringContextUtil.class, TomcatConfig.class, ApplicationInitialize.class, DozerMapperConfig.class})
 public class SpringConfig {
 
     private final Logger logger = LoggerFactory.getLogger(SpringConfig.class);

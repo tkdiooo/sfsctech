@@ -17,5 +17,10 @@
             <artifactId>common-core-auth-sso-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-support-jwt</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 </project>

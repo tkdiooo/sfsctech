@@ -16,32 +16,9 @@
       "type": "com.sfsctech.core.auth.sso.base.properties.SSOProperties$Reference",
       "sourceType": "com.sfsctech.core.auth.sso.base.properties.SSOProperties",
       "sourceMethod": "getReference()"
-    },
-    {
-      "name": "website.sso.jwt",
-      "type": "com.sfsctech.core.auth.sso.base.properties.JwtProperties",
-      "sourceType": "com.sfsctech.core.auth.sso.base.properties.JwtProperties"
     }
   ],
   "properties": [
-    {
-      "name": "website.sso.jwt.issuer",
-      "type": "java.lang.String",
-      "description": "jwt 发行方",
-      "sourceType": "com.sfsctech.core.auth.sso.base.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.expiration",
-      "type": "java.time.Duration",
-      "description": "jwt 保持有效时间",
-      "sourceType": "com.sfsctech.core.auth.sso.base.properties.JwtProperties"
-    },
-    {
-      "name": "website.sso.jwt.refresh",
-      "type": "java.time.Duration",
-      "description": "jwt 刷新有效时间",
-      "sourceType": "com.sfsctech.core.auth.sso.base.properties.JwtProperties"
-    }
   ],
   "hints": [
     {

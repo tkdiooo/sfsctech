@@ -4,7 +4,6 @@ import com.sfsctech.core.auth.base.config.SkipPathConfig;
 import com.sfsctech.core.auth.base.properties.AuthProperties;
 import com.sfsctech.core.auth.session.config.AuthSecurityConfig;
 import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.base.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.base.token.extractor.JwtCookieTokenExtractor;
 import com.sfsctech.core.auth.sso.base.token.extractor.JwtHeaderTokenExtractor;
@@ -14,11 +13,12 @@ import com.sfsctech.core.auth.sso.base.token.loader.JwtHeaderTokenLoader;
 import com.sfsctech.core.auth.sso.base.token.loader.TokenLoader;
 import com.sfsctech.core.auth.sso.server.handler.LoginSuccessHandler;
 import com.sfsctech.core.auth.sso.server.handler.LogoutExecuteHandler;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
+import com.sfsctech.support.jwt.handler.JwtFactory;
+import com.sfsctech.support.jwt.properties.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,8 +47,8 @@ public class SSOConfig extends AuthSecurityConfig {
     private ApplicationInitialize applicationInitialize;
 
     @Bean
-    public JwtTokenFactory jwtTokenFactory() {
-        return new JwtTokenFactory(properties);
+    public JwtFactory jwtTokenFactory() {
+        return new JwtFactory(applicationInitialize.getAppName(), properties, factory);
     }
 
     @Bean

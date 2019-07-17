@@ -1,27 +1,27 @@
 package com.sfsctech.core.auth.sso.client.jwt;
 
+import com.sfsctech.support.jwt.token.RawAccessJwt;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
 /**
  *
  */
-public class JwtAuthenticationToken extends AbstractAuthenticationToken {
+public class JwtAuthenticationToken<T> extends AbstractAuthenticationToken {
     private static final long serialVersionUID = 2877954820905567501L;
 
-    private RawAccessJwtToken rawAccessToken;
-    private User user;
+    private RawAccessJwt rawAccessJwt;
+    private T user;
 
-    public JwtAuthenticationToken(RawAccessJwtToken unsafeToken) {
+    public JwtAuthenticationToken(RawAccessJwt unsafeToken) {
         super(null);
-        this.rawAccessToken = unsafeToken;
+        this.rawAccessJwt = unsafeToken;
         this.setAuthenticated(false);
     }
 
-    public JwtAuthenticationToken(User user, Collection<? extends GrantedAuthority> authorities) {
+    public JwtAuthenticationToken(T user, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.eraseCredentials();
         this.user = user;
@@ -39,7 +39,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return rawAccessToken;
+        return rawAccessJwt;
     }
 
     @Override
@@ -50,6 +50,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     @Override
     public void eraseCredentials() {        
         super.eraseCredentials();
-        this.rawAccessToken = null;
+        this.rawAccessJwt = null;
     }
 }

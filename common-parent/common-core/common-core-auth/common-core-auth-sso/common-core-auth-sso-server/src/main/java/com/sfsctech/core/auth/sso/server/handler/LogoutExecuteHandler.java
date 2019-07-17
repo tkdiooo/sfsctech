@@ -2,13 +2,13 @@ package com.sfsctech.core.auth.sso.server.handler;
 
 import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.base.token.extractor.TokenExtractor;
-import com.sfsctech.core.auth.sso.server.jwt.JwtTokenFactory;
 import com.sfsctech.core.auth.sso.server.jwt.JwtTokenStore;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.support.common.util.DateUtil;
 import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.jwt.handler.JwtFactory;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.slf4j.Logger;
@@ -31,13 +31,13 @@ public class LogoutExecuteHandler implements LogoutHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(LogoutExecuteHandler.class);
     private final TokenExtractor tokenExtractor;
-    private JwtTokenFactory jwtTokenFactory;
+    private JwtFactory jwtFactory;
     private ApplicationInitialize applicationInitialize;
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    public LogoutExecuteHandler(TokenExtractor tokenExtractor, JwtTokenFactory jwtTokenFactory, ApplicationInitialize applicationInitialize, CacheFactory<RedisProxy<String, Object>> factory) {
+    public LogoutExecuteHandler(TokenExtractor tokenExtractor, JwtFactory jwtFactory, ApplicationInitialize applicationInitialize, CacheFactory<RedisProxy<String, Object>> factory) {
         this.tokenExtractor = tokenExtractor;
-        this.jwtTokenFactory = jwtTokenFactory;
+        this.jwtFactory = jwtFactory;
         this.applicationInitialize = applicationInitialize;
         this.factory = factory;
     }
@@ -51,7 +51,7 @@ public class LogoutExecuteHandler implements LogoutHandler {
             logger.info("用户登出失败,Jwt信息为空");
         } else {
             logger.info("获取JwtToken:{}", jwt);
-            Jws<Claims> jwsClaims = jwtTokenFactory.parseJWT(jwt);
+            Jws<Claims> jwsClaims = jwtFactory.parseJWT(jwt);
             Date date = DateUtil.getCurrentDate();
             // 设置用户登出时间
             String tokenStoreKey = factory.buildCacheKey(applicationInitialize.getAppName(), SSOConstants.JWT_KEYS_LIST);

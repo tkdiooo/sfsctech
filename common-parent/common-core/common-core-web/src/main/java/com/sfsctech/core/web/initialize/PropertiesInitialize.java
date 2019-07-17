@@ -26,11 +26,11 @@ public class PropertiesInitialize {
     @Autowired
     private WebMvcProperties webMvcProperties;
 
-    private String getViewTemplate() {
+    // 过滤器排除 - 项目视图模板
+    private void setViewTemplate() {
         if (null != webMvcProperties && StringUtils.isNotBlank(webMvcProperties.getView().getSuffix())) {
-            return LabelConstants.STAR + webMvcProperties.getView().getSuffix() + LabelConstants.COMMA;
+            FilterHandler.addFilterExcludes(LabelConstants.STAR + webMvcProperties.getView().getSuffix() + LabelConstants.COMMA);
         }
-        return "";
     }
 
     @Autowired
@@ -38,8 +38,7 @@ public class PropertiesInitialize {
             @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + "spring.mvc.static-path-pattern" + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE) String staticPath) {
         // 项目ContextPath
         WebsiteConstants.CONTEXT_PATH = serverProperties.getServlet().getContextPath();
-        // 过滤器排除 - 项目视图模板
-        FilterHandler.addFilterExcludes(getViewTemplate());
+        setViewTemplate();
         // 项目静态资源路径
         if (StringUtil.isNotBlank(staticPath)) {
             // CSRF防御拦截排除 - 项目静态资源

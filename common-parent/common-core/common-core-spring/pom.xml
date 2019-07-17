@@ -19,6 +19,11 @@
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-support-dozer</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>

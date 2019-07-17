@@ -1,6 +1,5 @@
 package com.sfsctech.demo.test.redis;
 
-import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.base.constants.CacheConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;

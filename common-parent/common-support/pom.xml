@@ -19,6 +19,8 @@
         <module>common-support-bootstrap</module>
         <module>common-support-sftp</module>
         <module>common-support-apollo</module>
+        <module>common-support-dozer</module>
+        <module>common-support-jwt</module>
     </modules>
 
 </project>

@@ -1,4 +1,4 @@
-package com.sfsctech.core.auth.sso.base.properties;
+package com.sfsctech.support.jwt.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -20,9 +20,9 @@ public class JwtProperties {
     private String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
     // 发行方
     private String issuer;
-    // 保持时间
+    // token有效时间
     private Duration expiration = Duration.ofMillis(1800000);
-    // 刷新token保存时间
+    // token刷新时间
     private Duration refreshTime = Duration.ofMillis(3600000);
 
     public String getSalt() {

@@ -1,17 +1,16 @@
 package com.sfsctech.core.auth.sso.client.filter;
 
 import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.base.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.base.token.extractor.TokenExtractor;
 import com.sfsctech.core.auth.sso.client.jwt.JwtAuthenticationToken;
-import com.sfsctech.core.auth.sso.client.jwt.RawAccessJwtToken;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.jwt.handler.JwtFactory;
+import com.sfsctech.support.jwt.token.RawAccessJwt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -36,15 +35,14 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
 
     private final AuthenticationFailureHandler failureHandler;
     private final TokenExtractor tokenExtractor;
-    private final JwtProperties settings;
+    private final JwtFactory jwtFactory;
     private CacheFactory<RedisProxy<String, Object>> factory;
 
-    @Autowired
-    public JwtTokenAuthenticationProcessingFilter(CacheFactory<RedisProxy<String, Object>> factory, AuthenticationFailureHandler failureHandler, TokenExtractor tokenExtractor, JwtProperties settings, RequestMatcher matcher) {
+    public JwtTokenAuthenticationProcessingFilter(CacheFactory<RedisProxy<String, Object>> factory, AuthenticationFailureHandler failureHandler, TokenExtractor tokenExtractor, JwtFactory jwtFactory, RequestMatcher matcher) {
         super(matcher);
         this.failureHandler = failureHandler;
         this.tokenExtractor = tokenExtractor;
-        this.settings = settings;
+        this.jwtFactory = jwtFactory;
         this.factory = factory;
     }
 
@@ -60,7 +58,7 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
             throw new AuthenticationServiceException("用户登录认证失败," + SSOConstants.JWT_CANCEL_MSG + "!");
         }
         logger.info("获取JwtToken:{}", jwt);
-        RawAccessJwtToken token = new RawAccessJwtToken(jwt, settings);
+        RawAccessJwt token = jwtFactory.getRawAccessJwt(jwt);
         return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
     }
 

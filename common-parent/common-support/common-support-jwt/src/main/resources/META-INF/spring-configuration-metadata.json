@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "name": "website.sso.jwt",
+      "type": "com.sfsctech.support.jwt.properties.JwtProperties",
+      "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "website.sso.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "jwt 发行方",
+      "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.expiration",
+      "type": "java.time.Duration",
+      "description": "jwt 保持有效时间",
+      "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
+    },
+    {
+      "name": "website.sso.jwt.refresh",
+      "type": "java.time.Duration",
+      "description": "jwt 刷新有效时间",
+      "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
+    }
+  ],
+  "hints": []
+}

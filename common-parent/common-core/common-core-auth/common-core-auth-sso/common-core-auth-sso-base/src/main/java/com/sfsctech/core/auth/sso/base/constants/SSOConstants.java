@@ -40,13 +40,4 @@ public class SSOConstants extends SessionConstants {
     public static final String JWT_KEYS_LIST = "jwt_keys_list";
 
     public static final String CACHE_IDENTIFY_ACCESS_TOKEN = "access_token_id";
-
-
-    public enum Scopes {
-        REFRESH_TOKEN;
-
-        public String authority() {
-            return "ROLE_" + this.name();
-        }
-    }
 }
