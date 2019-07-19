@@ -28,8 +28,7 @@ public class ExcelImportHelper extends ExcelHelper {
 
     public ExcelImportHelper(ExcelModel model) throws IOException, InvalidFormatException {
         AssertUtil.notNull(model, "model 对象为空");
-        AssertUtil.isNotBlank(model.getFilePath(), "文件路径为空");
-        Workbook workbook = createWorkbook(model.getFilePath());
+        Workbook workbook = createWorkbook(model);
         super.setWorkbook(workbook);
         this.setModel(model);
     }
@@ -49,34 +48,6 @@ public class ExcelImportHelper extends ExcelHelper {
         model.setSheets(sheets);
     }
 
-    /**
-     * 读取Sheet信息
-     *
-     * @param sheet      Sheet
-     * @param sheetModel SheetModel
-     */
-    public void readSheet(Sheet sheet, SheetModel sheetModel) {
-        AssertUtil.notNull(sheet, "sheet 对象为空");
-        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
-        Map<Integer, Map<String, Object>> rows = sheetModel.getRows();
-        // 有标题读取
-        if (null != sheetModel.getHeaderIndex()) {
-            validHeader(sheet, sheetModel);
-            Map<String, Object> verify = rows.get(sheetModel.getHeaderIndex());
-            List<String> header = new ArrayList<>(verify.keySet());
-            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-                if (sheetModel.getHeaderIndex() != i && null != sheet.getRow(i)) {
-                    rows.put(i, readRow(sheet.getRow(i), header));
-                }
-            }
-        }
-        // 无标题读取
-        else {
-            for (int i = 0; i < sheet.getLastRowNum(); i++) {
-                rows.put(i, MapUtil.toMap(readRow(sheet.getRow(i))));
-            }
-        }
-    }
 
     /**
      * 读取标题

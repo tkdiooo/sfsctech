@@ -80,7 +80,7 @@ public class JwtFactory {
         String jwt = buildAccessJwt(proxy);
         logger.info("用户:{}，生成AccessJwt:{}", proxy.getClaims().getSubject(), jwt);
         // 生成缓存key（鉴权jwt）
-        String access_Jwt_Cache = factory.buildCacheKey(appName, JwtConstants.CACHE_IDENTIFY_ACCESS_TOKEN, proxy.getClaims().getSubject());
+        String access_Jwt_Cache = factory.buildCacheKey(appName, JwtConstants.CACHE_IDENTIFY_ACCESS_TOKEN, proxy.getClaims().getSubject(), DateUtil.toMSDateTimeDash(new Date()));
         logger.info("用户:{}，生成Access_Jwt_Cache:{}", proxy.getClaims().getSubject(), access_Jwt_Cache);
         // 缓存鉴权jwt
         factory.getCacheClient().putTimeOut(access_Jwt_Cache, jwt, (int) settings.getExpiration().getSeconds());
@@ -93,7 +93,7 @@ public class JwtFactory {
         // 加密鉴权jwt的缓存key，以作为token使用
         String refresh_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, refreshJwt);
         logger.info("用户:{}，生成Refresh_Jwt_Token(加密):{}", proxy.getClaims().getSubject(), refresh_Jwt_Token);
-        return JwtResult.builder().accessToken(access_Jwt_Token).refreshJwt(refresh_Jwt_Token).build();
+        return JwtResult.builder().accessToken(JwtConstants.TOKEN_PREFIX + access_Jwt_Token).refreshJwt(refresh_Jwt_Token).build();
     }
 
     /**

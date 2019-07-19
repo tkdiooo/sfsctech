@@ -41,7 +41,7 @@ public class ExcelExportHelper extends ExcelHelper {
         Workbook workbook;
         // 如果文件存在
         if (FileUtil.isExists(getModel().getFilePath())) {
-            workbook = createWorkbook(getModel().getFilePath());
+            workbook = createWorkbook(getModel());
         } else {
             workbook = createWorkbook(getModel().getVersion());
         }

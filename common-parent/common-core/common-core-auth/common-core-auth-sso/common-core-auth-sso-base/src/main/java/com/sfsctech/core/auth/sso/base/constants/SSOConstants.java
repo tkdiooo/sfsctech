@@ -39,5 +39,5 @@ public class SSOConstants extends SessionConstants {
     public static final String JWT_CANCEL_MSG = "登录用户已被管理员手动注销";
     public static final String JWT_KEYS_LIST = "jwt_keys_list";
 
-    public static final String CACHE_IDENTIFY_ACCESS_TOKEN = "access_token_id";
+//    public static final String CACHE_IDENTIFY_ACCESS_TOKEN = "access_token_id";
 }

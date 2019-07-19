@@ -1,5 +1,7 @@
 package com.sfsctech.support.tools.excel.model;
 
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,39 +11,24 @@ import java.util.Map;
  * @author 张麒 2016/4/17.
  * @version Description:
  */
-public class SheetModel {
+@Data
+public class SheetModel<T> {
 
+    /**
+     * sheet名称
+     */
+    private String sheetName;
+    /**
+     * 当前sheet标题行号，如果是-1表示没有标题
+     */
+    private Integer titleLine = -1;
+    /**
+     * 每行数据
+     */
+    private Map<Integer, T> rowData = new HashMap<>();
 
-    private Integer headerIndex;
-
-    private Map<Integer, Map<String, Object>> rows;
-
-    public SheetModel(Integer headerIndex) {
-        this.headerIndex = headerIndex;
-    }
-
-    public SheetModel(Integer headerIndex, Map<Integer, Map<String, Object>> rows) {
-        this.headerIndex = headerIndex;
-        this.rows = rows;
-    }
-
-    public Integer getHeaderIndex() {
-        return headerIndex;
-    }
-
-    public void setHeaderIndex(Integer headerIndex) {
-        this.headerIndex = headerIndex;
-    }
-
-    public Map<Integer, Map<String, Object>> getRows() {
-        if (rows == null) {
-            rows = new HashMap<>();
-        }
-        return rows;
-    }
-
-    public void setRows(Map<Integer, Map<String, Object>> rows) {
-        this.rows = rows;
+    public SheetModel(String sheetName) {
+        this.sheetName = sheetName;
     }
 
 }

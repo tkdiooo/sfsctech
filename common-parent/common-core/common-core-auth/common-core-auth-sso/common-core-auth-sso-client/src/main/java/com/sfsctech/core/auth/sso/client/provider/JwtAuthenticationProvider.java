@@ -1,8 +1,10 @@
 package com.sfsctech.core.auth.sso.client.provider;
 
+import com.google.common.collect.Lists;
 import com.sfsctech.core.auth.sso.base.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.base.inf.SSOInterface;
 import com.sfsctech.core.auth.sso.client.jwt.JwtAuthenticationToken;
+import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.jwt.token.RawAccessJwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -51,9 +53,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 //            System.out.println("刷新token");
 //        }
         String subject = jwsClaims.getBody().getSubject();
+        User context;
         List<String> scopes = jwsClaims.getBody().get(SSOConstants.JWT_CLAIMS_SCOPES, List.class);
-        List<GrantedAuthority> authorities = scopes.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-        User context = new User(subject, "", authorities);
+        if (ListUtil.isNotEmpty(scopes)) {
+            context = new User(subject, "", scopes.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+        } else {
+            context = new User(subject, "", Lists.newArrayList());
+        }
         return new JwtAuthenticationToken<>(context, context.getAuthorities());
     }
 
