@@ -13,6 +13,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class Runner {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(Runner.class).web(true).run(args);
+        new SpringApplicationBuilder(Runner.class).run(args);
     }
 }

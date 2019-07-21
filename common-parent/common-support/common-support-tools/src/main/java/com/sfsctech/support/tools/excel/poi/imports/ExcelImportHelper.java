@@ -1,19 +1,20 @@
 package com.sfsctech.support.tools.excel.poi.imports;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
+import com.sfsctech.support.common.util.AssertUtil;
+import com.sfsctech.support.tools.excel.annotation.ExcelHeader;
+import com.sfsctech.support.tools.excel.constants.ExcelConstants;
+import com.sfsctech.support.tools.excel.inf.ComplexDataMapping;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
 import com.sfsctech.support.tools.excel.model.SheetModel;
 import com.sfsctech.support.tools.excel.poi.ExcelHelper;
-import com.sfsctech.support.common.util.AssertUtil;
-import com.sfsctech.support.common.util.MapUtil;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,70 +27,84 @@ public class ExcelImportHelper extends ExcelHelper {
 
     private ExcelModel model;
 
-    public ExcelImportHelper(ExcelModel model) throws IOException, InvalidFormatException {
+    private Map<Class<?>, ComplexDataMapping> complex = new HashMap<>();
+
+    public ExcelImportHelper(ExcelModel model) throws IOException {
         AssertUtil.notNull(model, "model 对象为空");
-        Workbook workbook = createWorkbook(model);
-        super.setWorkbook(workbook);
-        this.setModel(model);
+        super.setWorkbook(createWorkbook(model));
+        logger.info("创建Workbook");
+        this.model = model;
+        logger.info("初始化ExcelModel对象:{}", model);
     }
+
 
     /**
      * 导入Excel
      */
     public void importExcel() {
-        super.validSheet();
-        Map<String, SheetModel> sheets = getModel().getSheets();
-        Workbook workbook = super.getWorkbook();
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            Sheet sheet = workbook.getSheetAt(i);
-            SheetModel sheetModel = sheets.get(sheet.getSheetName());
-            readSheet(sheet, sheetModel);
+        logger.info("准备导入Excel,校验规则:{}", model.getVerify());
+        // 强校验
+        if (model.getVerify().equals(ExcelConstants.Verify.Strong)) {
+            super.validSheet();
         }
-        model.setSheets(sheets);
+        // 弱校验
+        else {
+            super.matchSheet();
+        }
+        // 加载sheet数据
+        model.getPrototypeSheet().forEach((key, value) -> model.getSheets().put(value.name(), readSheet(getWorkbook().getSheet(value.name()), value.titleLine(), key)));
     }
 
 
     /**
-     * 读取标题
+     * 读取Sheet信息
      *
-     * @param row Row
-     * @return List
+     * @param sheet Sheet
      */
-    @Override
-    public List<String> readHeader(Row row) {
-        return super.readHeader(row);
+    private <T> SheetModel<T> readSheet(Sheet sheet, int titleLine, Class<T> cls) {
+        AssertUtil.notNull(sheet, "sheet 对象为空");
+        logger.info("Sheet[{}]标题行号:{}", sheet.getSheetName(), titleLine);
+        // 获取数据原型的标题信息（key : sheet标题名称、value : 数据原型属性名称）
+        Map<Field, String> dataTitle = getHeader(cls);
+        // 创建sheet对象
+        SheetModel<T> sheetModel = new SheetModel<>(sheet.getSheetName());
+        // 当前sheet标题行号
+        sheetModel.setTitleLine(titleLine);
+        // excel的sheet标题（key : sheet标题名称、value : 标题的列号）
+        Map<String, Integer> excelTitle;
+        // 有标题读取
+        if (sheetModel.getTitleLine() >= 0) {
+            // 读取标题
+            excelTitle = readHeader(sheet.getRow(sheetModel.getTitleLine()));
+            // 验证标题
+            if (this.getModel().getVerify().equals(ExcelConstants.Verify.Strong)) {
+                validHeader(sheet, excelTitle, dataTitle);
+            }
+        }
+        // 无标题读取
+        else {
+            final Integer[] count = {0};
+            excelTitle = Maps.newLinkedHashMap();
+            dataTitle.forEach((key, value) -> excelTitle.put(value, count[0]++));
+        }
+        // sheet数据集合
+        Map<Integer, T> rows = sheetModel.getRowData();
+        // 读取数据
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+            if (sheetModel.getTitleLine() != i && null != sheet.getRow(i)) {
+                JSONObject jo = readRow(sheet.getRow(i), dataTitle, excelTitle);
+                rows.put(i, jo.toJavaObject(cls));
+                logger.info(jo.toString());
+            }
+        }
+        return sheetModel;
     }
 
-    /**
-     * 读取行数据
-     *
-     * @param row    Row
-     * @param header 标题
-     * @return Map
-     */
-    public Map<String, Object> readRow(Row row, List<String> header) {
+    private JSONObject readRow(Row row, Map<Field, String> dataTitle, Map<String, Integer> excelTitle) {
         AssertUtil.notNull(row, "row 对象为空");
-        AssertUtil.notEmpty(header, "header 集合为空");
-        Map<String, Object> data = new HashMap<>();
-        for (int i = 0; i < row.getLastCellNum(); i++) {
-            data.put(header.get(i), getCellValue(row.getCell(i)));
-        }
-        return data;
-    }
-
-    /**
-     * 读取行数据
-     *
-     * @param row Row
-     * @return List
-     */
-    public List<Object> readRow(Row row) {
-        AssertUtil.notNull(row, "row 对象为空");
-        List<Object> data = new ArrayList<>();
-        for (int i = 0; i < row.getLastCellNum(); i++) {
-            data.add(getCellValue(row.getCell(i)));
-        }
-        return data;
+        JSONObject jo = new JSONObject();
+        dataTitle.forEach((key, value) -> jo.put(key.getName(), getCellValue(key, row.getCell(excelTitle.get(value)))));
+        return jo;
     }
 
     @Override
@@ -97,7 +112,15 @@ public class ExcelImportHelper extends ExcelHelper {
         return model;
     }
 
-    public void setModel(ExcelModel model) {
-        this.model = model;
+    @Override
+    protected <T, S> T complexData(ExcelHeader excelHeader, S value) {
+        if (!complex.containsKey(excelHeader.complexMapping())) {
+            try {
+                complex.put(excelHeader.complexMapping(), excelHeader.complexMapping().newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return (T) complex.get(excelHeader.complexMapping()).mapping(value);
     }
 }

@@ -1,22 +1,23 @@
 package com.sfsctech.support.tools.excel.poi;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sfsctech.support.common.util.DateUtil;
 import com.sfsctech.support.common.util.*;
 import com.sfsctech.support.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
-import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
 import com.sfsctech.support.tools.excel.model.SheetModel;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class ExcelHelper
@@ -26,76 +27,38 @@ import java.util.*;
  */
 public abstract class ExcelHelper {
 
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
     private Workbook workbook;
 
     public abstract ExcelModel getModel();
 
+    protected abstract <T, S> T complexData(ExcelHeader excelHeader, S value);
+
     /**
-     * 加载Sheet
+     * 数据原型匹配sheet
      */
-    protected void loadSheet() {
+    protected void matchSheet() {
         ExcelModel excel = getModel();
-        Map<String, SheetModel<?>> sheets = excel.getSheets();
-        // 遍历sheet
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            Sheet sheet = workbook.getSheetAt(i);
-            sheets.put(sheet.getSheetName(), readSheet(sheet));
-        }
-    }
-
-
-    /**
-     * 读取Sheet信息
-     *
-     * @param sheet Sheet
-     */
-    public SheetModel<?> readSheet(Sheet sheet) {
-        AssertUtil.notNull(sheet, "sheet 对象为空");
-        // key : sheet标题名称、value : 数据原型属性名称
-        LinkedHashMap<String, String> header = new LinkedHashMap<>();
-        SheetModel<?> sheetModel;
-        // 根据sheet name配置数据原型
-        for (Class cls : getModel().getPrototype()) {
-            if (cls.isAnnotationPresent(ExcelSheet.class)) {
+        List<Class<?>> prototype = excel.getPrototype();
+        AssertUtil.notEmpty(prototype, "ExcelModel内prototype数据原型集合为空");
+        // 初始化
+        for (Class<?> cls : prototype) {
+            if (!cls.isAnnotationPresent(ExcelSheet.class)) {
                 throw new IllegalArgumentException("Class [" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
             }
-            ExcelSheet excelSheet = (ExcelSheet) cls.getAnnotation(ExcelSheet.class);
-            if (sheet.getSheetName().equals(excelSheet.name())) {
-                sheetModel = new SheetModel<>(sheet.getSheetName());
-                // 当前sheet标题行号
-                sheetModel.setTitleLine(excelSheet.titleLine());
-                // 根据原型获取当前sheet读取那几列的数据
-                Field[] fields = cls.getDeclaredFields();
-                for (Field field : fields) {
-                    ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
-                    if (null != excelHeader) {
-                        header.put(field.getName(), excelHeader.value());
-                    }
-                }
-                AssertUtil.notEmpty(header, "Class [" + cls.getSimpleName() + "]没有配置注解[ExcelHeader]");
-                // 读取sheet数据
-                Map<Integer, ?> rows = sheetModel.getRowData();
-                // 有标题读取
-                if (sheetModel.getTitleLine() >= 0) {
-                    // 验证标题
-                    validHeader(sheet, sheetModel);
-                    Map<String, Object> verify = rows.get(sheetModel.getHeaderIndex());
-                    List<String> header = new ArrayList<>(verify.keySet());
-                    for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-                        if (sheetModel.getHeaderIndex() != i && null != sheet.getRow(i)) {
-                            rows.put(i, readRow(sheet.getRow(i), header));
-                        }
-                    }
-                }
-                // 无标题读取
-                else {
-                    for (int i = 0; i < sheet.getLastRowNum(); i++) {
-                        rows.put(i, MapUtil.toMap(readRow(sheet.getRow(i))));
-                    }
+            ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
+            // 遍历sheet
+            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+                Sheet sheet = workbook.getSheetAt(i);
+                // 根据sheet名称匹配数据原型
+                if (sheet.getSheetName().equals(excelSheet.name())) {
+                    excel.getPrototypeSheet().put(cls, excelSheet);
                 }
             }
         }
     }
+
 
     /**
      * 读取标题
@@ -103,11 +66,11 @@ public abstract class ExcelHelper {
      * @param row Row
      * @return List
      */
-    protected List<String> readHeader(Row row) {
+    protected Map<String, Integer> readHeader(Row row) {
         AssertUtil.notNull(row, "row 对象为空");
-        List<String> header = new ArrayList<>();
+        Map<String, Integer> header = Maps.newLinkedHashMap();
         for (int i = 0; i < row.getLastCellNum(); i++) {
-            header.add(getCellValue(row.getCell(i)));
+            header.put(row.getCell(i).getRichStringCellValue().toString(), i);
         }
         return header;
     }
@@ -116,54 +79,49 @@ public abstract class ExcelHelper {
      * 校验Sheet
      */
     protected void validSheet() {
-        Map<String, SheetModel> sheets = getModel().getSheets();
-        AssertUtil.notEmpty(sheets, "ExcelModel内sheets 集合为空");
+        ExcelModel excel = getModel();
         Workbook workbook = getWorkbook();
-        if (workbook.getNumberOfSheets() != sheets.size()) {
-            throw new RuntimeException("ExcelModel内sheets对象size与Model配置的sheet size不符，请调整后再次操作。");
+        if (workbook.getNumberOfSheets() != excel.getPrototype().size()) {
+            throw new RuntimeException("ExcelModel内prototype数据原型集合size与Excel的sheet size不符，请调整后再次操作。");
         }
+        matchSheet();
+        // 遍历sheet
         for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+            boolean bool = true;
             Sheet sheet = workbook.getSheetAt(i);
-            if (!sheets.containsKey(sheet.getSheetName().trim())) {
-                throw new RuntimeException("ExcelModel内sheets对象不包含sheet name [" + sheet.getSheetName() + "]");
+            for (Class<?> cls : excel.getPrototypeSheet().keySet()) {
+                // 根据sheet名称匹配数据原型
+                if (sheet.getSheetName().equals(excel.getPrototypeSheet().get(cls).name())) {
+                    bool = false;
+                    break;
+                }
+            }
+            if (bool) {
+                throw new RuntimeException("在数据原型集合" + excel.getPrototype() + "中找不到sheet name [" + sheet.getSheetName() + "]");
             }
         }
+        logger.info("Excel Sheet校验通过,sheet:[{}]", getModel().getPrototypeSheet().values());
     }
-
 
     /**
      * 校验Header
      *
      * @param sheet      Sheet
-     * @param sheetModel SheetModel
+     * @param excelTitle Sheet的标题
+     * @param dataTitle  数据原型的标题
      */
-    protected void validHeader(Sheet sheet, int titleLine, Map<String, String> verify) {
-        // 读取标题：标题显示中文名称
-        List<String> header = readHeader(sheet.getRow(titleLine));
-        AssertUtil.notEmpty(verify, "sheetModel中rows标题行为空");
+    protected void validHeader(Sheet sheet, Map<String, Integer> excelTitle, Map<Field, String> dataTitle) {
+        AssertUtil.notEmpty(dataTitle, "sheetModel中rows标题行为空");
         // 验证长度是否匹配
-        if (this.getModel().getSheetVerify().equals(ExcelConstants.SheetVerify.Full) && header.size() != verify.size()) {
+        if (excelTitle.size() != dataTitle.size()) {
             throw new RuntimeException("[" + sheet.getSheetName() + "] Sheet的标题数与Model配置的标题数量不符");
         }
-        if (this.getModel().getSheetVerify().equals(ExcelConstants.SheetVerify.Full) && !ListUtil.equals(header, ListUtil.toList(verify))) {
+        List title = dataTitle.keySet().stream().map(Field::getName).collect(Collectors.toList());
+        // 验证标题名称是否匹配
+        if (!ListUtil.equals(Lists.newArrayList(excelTitle.keySet()), title)) {
             throw new RuntimeException("[" + sheet.getSheetName() + "] Sheet的标题名称与Model配置的标题名称不符");
         }
     }
-
-//    /**
-//     * 获取不包含文件流的Workbook对象，根据枚举ExcelVersion生成对应版本
-//     * <p>
-//     * //     * @param ev ExcelVersion
-//     *
-//     * @return Workbook
-//     */
-//    public static Workbook createWorkbook(ExcelConstants.ExcelVersion ev) {
-//        if (ExcelConstants.ExcelVersion.xls.equals(ev))
-//            return new HSSFWorkbook();
-//        else
-//            return new XSSFWorkbook();
-//
-//    }
 
     /**
      * 获取Workbook对象，自动获取对应版本
@@ -194,13 +152,13 @@ public abstract class ExcelHelper {
      * @param rower      标题行标
      */
     public static void setSheetHeader(ExcelModel excelModel, Map<String, Object> header, String sheetName, int rower) {
-        AssertUtil.notNull(excelModel, "excelModel 对象为空");
-        AssertUtil.notNull(header, "header 对象为空");
-        AssertUtil.notNull(sheetName, "sheetName 对象为空");
-        // 创建SheetModel
-        SheetModel sheetModel = new SheetModel(rower, new HashMap<>());
-        sheetModel.getRows().put(sheetModel.getHeaderIndex(), header);
-        excelModel.getSheets().put(sheetName, sheetModel);
+//        AssertUtil.notNull(excelModel, "excelModel 对象为空");
+//        AssertUtil.notNull(header, "header 对象为空");
+//        AssertUtil.notNull(sheetName, "sheetName 对象为空");
+//        // 创建SheetModel
+//        SheetModel sheetModel = new SheetModel(rower, new HashMap<>());
+//        sheetModel.getRows().put(sheetModel.getHeaderIndex(), header);
+//        excelModel.getSheets().put(sheetName, sheetModel);
     }
 
     /**
@@ -211,12 +169,12 @@ public abstract class ExcelHelper {
      * @param <T>        范型类
      */
     public static <T> void setSheetHeader(ExcelModel excelModel, Class<T> cls) {
-        AssertUtil.notNull(excelModel, "excelModel 对象为空");
-        AssertUtil.notNull(cls, "Class<T> 对象为空");
-        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
-        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
-        AssertUtil.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
-        setSheetHeader(excelModel, getHeader(cls), excelSheet.name(), excelSheet.rower());
+//        AssertUtil.notNull(excelModel, "excelModel 对象为空");
+//        AssertUtil.notNull(cls, "Class<T> 对象为空");
+//        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
+//        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
+//        AssertUtil.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
+//        setSheetHeader(excelModel, getHeader(cls), excelSheet.name(), excelSheet.rower());
     }
 
     /**
@@ -245,31 +203,32 @@ public abstract class ExcelHelper {
      * @param <T>      范型类
      */
     public static <T> SheetModel getSheetModelByList(List<T> dataRows, Class<T> cls) {
-        AssertUtil.notNull(cls, "Class<T> 对象为空");
-        AssertUtil.notEmpty(dataRows, "dataRows 集合为空");
-        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
-        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
-        SheetModel sheetModel = new SheetModel(excelSheet.rower(), new HashMap<>());
-        Integer rower = 0;
-        // 设置标题
-        sheetModel.getRows().put(sheetModel.getHeaderIndex(), getHeader(cls));
-        // 设置数据行
-        for (T t : dataRows) {
-            Map<String, Object> map = new HashMap<>();
-            Field[] fields = cls.getDeclaredFields();
-            for (Field field : fields) {
-                ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
-                if (null != excelHeader) {
-                    map.put(field.getName(), BeanUtil.getPropertyValue(t, field.getName()));
-                }
-            }
-            // 如果标题行标等于当前行标，当前行标+1
-            if (sheetModel.getHeaderIndex().equals(rower)) {
-                rower++;
-            }
-            sheetModel.getRows().put(rower++, map);
-        }
-        return sheetModel;
+//        AssertUtil.notNull(cls, "Class<T> 对象为空");
+//        AssertUtil.notEmpty(dataRows, "dataRows 集合为空");
+//        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
+//        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
+//        SheetModel sheetModel = new SheetModel(excelSheet.rower(), new HashMap<>());
+//        Integer rower = 0;
+//        // 设置标题
+//        sheetModel.getRows().put(sheetModel.getHeaderIndex(), getHeader(cls));
+//        // 设置数据行
+//        for (T t : dataRows) {
+//            Map<String, Object> map = new HashMap<>();
+//            Field[] fields = cls.getDeclaredFields();
+//            for (Field field : fields) {
+//                ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
+//                if (null != excelHeader) {
+//                    map.put(field.getName(), BeanUtil.getPropertyValue(t, field.getName()));
+//                }
+//            }
+//            // 如果标题行标等于当前行标，当前行标+1
+//            if (sheetModel.getHeaderIndex().equals(rower)) {
+//                rower++;
+//            }
+//            sheetModel.getRows().put(rower++, map);
+//        }
+//        return sheetModel;
+        return null;
     }
 
     /**
@@ -282,24 +241,24 @@ public abstract class ExcelHelper {
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
-        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
-        AssertUtil.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");
-        AssertUtil.notNull(cls, "Class<T> 对象为空");
+//        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
+//        AssertUtil.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");
+//        AssertUtil.notNull(cls, "Class<T> 对象为空");
         List<T> list = new ArrayList<>();
-        sheetModel.getRows().forEach((key, value) -> {
-            // 不读取标题
-            if (!key.equals(sheetModel.getHeaderIndex())) {
-                try {
-                    Object obj = cls.newInstance();
-                    for (String field : value.keySet()) {
-                        BeanUtil.setFieldValue(obj, field, value.get(field));
-                    }
-                    list.add((T) obj);
-                } catch (Exception e) {
-                    throw new RuntimeException(("Class [" + cls.getSimpleName() + "] newInstance error :" + ThrowableUtil.getRootMessage(e)));
-                }
-            }
-        });
+//        sheetModel.getRows().forEach((key, value) -> {
+//            // 不读取标题
+//            if (!key.equals(sheetModel.getHeaderIndex())) {
+//                try {
+//                    Object obj = cls.newInstance();
+//                    for (String field : value.keySet()) {
+//                        BeanUtil.setFieldValue(obj, field, value.get(field));
+//                    }
+//                    list.add((T) obj);
+//                } catch (Exception e) {
+//                    throw new RuntimeException(("Class [" + cls.getSimpleName() + "] newInstance error :" + ThrowableUtil.getRootMessage(e)));
+//                }
+//            }
+//        });
         return list;
     }
 
@@ -310,16 +269,17 @@ public abstract class ExcelHelper {
      * @param <T> 范型类
      * @return LinkedHashMap&lt;String, Object&gt;
      */
-    public static <T> LinkedHashMap<String, Object> getHeader(Class<T> cls) {
-        LinkedHashMap<String, Object> header = new LinkedHashMap<>();
+    protected <T> LinkedHashMap<Field, String> getHeader(Class<T> cls) {
+        LinkedHashMap<Field, String> header = new LinkedHashMap<>();
         Field[] fields = cls.getDeclaredFields();
         for (Field field : fields) {
             ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
             if (null != excelHeader) {
-                header.put(field.getName(), excelHeader.value());
+                header.put(field, excelHeader.value());
             }
         }
         AssertUtil.notEmpty(header, "Class [" + cls.getSimpleName() + "]没有配置注解[ExcelHeader]");
+        logger.info("标题:" + header.values());
         return header;
     }
 
@@ -389,64 +349,81 @@ public abstract class ExcelHelper {
      * @param cell Cell
      * @return Cell Value
      */
-    public String getCellValue(Cell cell) {
+    public <T> T getCellValue(Field field, Cell cell) {
         AssertUtil.notNull(cell, "cell 对象为空");
-        String result = "";
+        ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
         // 数字类型
         if (cell.getCellType().equals(CellType.NUMERIC)) {
             // 处理日期格式、时间格式
             if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                System.out.println(cell.getCellStyle().getDataFormat());
-                // 可以判断得到的Date是日期时间、日期还是时间，可以通过cell.getCellStyle().getDataFormat()来判断，这个返回值没有一个常量值来对应，我本机是excel2013，测试结果是日期时间(yyyy-MM-dd HH:mm:ss) - 22，日期(yyyy-MM-dd) - 14，时间(HH:mm:ss) - 21，年月(yyyy-MM) - 17，时分(HH:mm) - 20，月日(MM-dd) - 58
-                switch (cell.getCellStyle().getDataFormat()) {
-                    case 22:
-                        break;
-                    default:
+//                System.out.println(cell.getCellStyle().getDataFormat());
+//                // 可以判断得到的Date是日期时间、日期还是时间，可以通过cell.getCellStyle().getDataFormat()来判断，这个返回值没有一个常量值来对应，我本机是excel2013，测试结果是日期时间(yyyy-MM-dd HH:mm:ss) - 22，日期(yyyy-MM-dd) - 14，时间(HH:mm:ss) - 21，年月(yyyy-MM) - 17，时分(HH:mm) - 20，月日(MM-dd) - 58
+//                switch (cell.getCellStyle().getDataFormat()) {
+//                    case 22:
+//                        break;
+//                    default:
+//                }
+//                if (cell.getCellStyle().getDataFormat() == 58) {
+//                    // 处理自定义日期格式：m月d日(通过判断单元格的格式id解决，id的值是58)
+//                    double value = cell.getNumericCellValue();
+//                    Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
+//                    result = DateUtil.toDateDash(date);
+//                } else {
+//                    double value = cell.getNumericCellValue();
+//                    CellStyle style = cell.getCellStyle();
+//                    DecimalFormat format = new DecimalFormat();
+//                    String temp = style.getDataFormatString();
+//                    // 单元格设置成常规
+//                    if (temp.equals("General")) {
+//                        format.applyPattern("#");
+//                    }
+//                    result = format.format(value);
+//                }
+                if (!ExcelHeader.None.class.equals(excelHeader.complexMapping())) {
+                    return (T) complexData(excelHeader, cell.getDateCellValue());
+                } else if (Date.class.equals(field.getType())) {
+                    return (T) cell.getDateCellValue();
+                } else if (String.class.equals(field.getType())) {
+                    return (T) DateUtil.toMSDateTimeDash(cell.getDateCellValue());
                 }
-                if (cell.getCellStyle().getDataFormat() == 58) {
-                    // 处理自定义日期格式：m月d日(通过判断单元格的格式id解决，id的值是58)
-                    double value = cell.getNumericCellValue();
-                    Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
-                    result = DateUtil.toDateDash(date);
-                } else {
-                    double value = cell.getNumericCellValue();
-                    CellStyle style = cell.getCellStyle();
-                    DecimalFormat format = new DecimalFormat();
-                    String temp = style.getDataFormatString();
-                    // 单元格设置成常规
-                    if (temp.equals("General")) {
-                        format.applyPattern("#");
-                    }
-                    result = format.format(value);
-                }
-//                Date date = cell.getDateCellValue();
-//                result = DateUtil.toDateTime(date);
             } else {
                 double doubleVal = cell.getNumericCellValue();
-                long longVal = Math.round(cell.getNumericCellValue());
-                if (Double.parseDouble(longVal + ".0") == doubleVal)
-                    result = String.valueOf(longVal);
-                else
-                    result = String.valueOf(doubleVal);
+                throw new IllegalArgumentException(String.valueOf(doubleVal));
+//                long longVal = Math.round(cell.getNumericCellValue());
+//                if (Double.parseDouble(longVal + ".0") == doubleVal)
+//                    result = String.valueOf(longVal);
+//                else
+//                    result = String.valueOf(doubleVal);
             }
         }
         // String类型
         else if (cell.getCellType().equals(CellType.STRING)) {
-            result = cell.getRichStringCellValue().toString();
+            if (!ExcelHeader.None.class.equals(excelHeader.complexMapping())) {
+                return (T) complexData(excelHeader, cell.getRichStringCellValue().toString());
+            } else if (String.class.equals(field.getType())) {
+                return (T) cell.getRichStringCellValue().toString();
+            }
         }
         // 布尔类型
         else if (cell.getCellType().equals(CellType.BOOLEAN)) {
-            result = String.valueOf(cell.getBooleanCellValue());
+            if (Boolean.class.equals(field.getType())) {
+                return (T) Boolean.valueOf(cell.getBooleanCellValue());
+            } else if (String.class.equals(field.getType())) {
+                return (T) cell.getRichStringCellValue().toString();
+            }
         }
         // 表达式
-        else if (cell.getCellType().equals(CellType.FORMULA)) {
-            result = cell.getCellFormula();
+        else if (cell.getCellType().equals(CellType.FORMULA) && String.class.equals(field.getType())) {
+            return (T) cell.getCellFormula();
         }
         // 空类型
         else if (cell.getCellType().equals(CellType.BLANK)) {
-            result = "";
+            if (String.class.equals(field.getType())) {
+                return (T) "";
+            } else {
+                return null;
+            }
         }
-        if (StringUtil.isNotBlank(result)) return result.trim();
-        else return result;
+        throw new IllegalArgumentException("Cell:" + cell.getRichStringCellValue() + ",与实体Field:" + field.getName() + "类型:" + field.getType() + "不匹配");
     }
 }

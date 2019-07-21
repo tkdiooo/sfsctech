@@ -1,5 +1,6 @@
 package com.sfsctech.support.tools.excel.poi.exports;
 
+import com.sfsctech.support.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
@@ -14,6 +15,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -34,20 +36,20 @@ public class ExcelExportHelper extends ExcelHelper {
     private CellStyles style;
 
     public ExcelExportHelper(ExcelModel model) throws IOException, InvalidFormatException {
-        AssertUtil.notNull(model, "model 对象为空");
-        AssertUtil.notNull(model.getVersion(), "model内[version] 对象为空");
-
-        this.setModel(model);
-        Workbook workbook;
-        // 如果文件存在
-        if (FileUtil.isExists(getModel().getFilePath())) {
-            workbook = createWorkbook(getModel());
-        } else {
-            workbook = createWorkbook(getModel().getVersion());
-        }
-        this.style = model.getStyle();
-        this.style.initStyle(workbook);
-        super.setWorkbook(workbook);
+//        AssertUtil.notNull(model, "model 对象为空");
+//        AssertUtil.notNull(model.getVersion(), "model内[version] 对象为空");
+//
+//        this.setModel(model);
+//        Workbook workbook;
+//        // 如果文件存在
+//        if (FileUtil.isExists(getModel().getFilePath())) {
+//            workbook = createWorkbook(getModel());
+//        } else {
+//            workbook = createWorkbook(getModel().getVersion());
+//        }
+//        this.style = model.getStyle();
+//        this.style.initStyle(workbook);
+//        super.setWorkbook(workbook);
     }
 
     /**
@@ -89,7 +91,7 @@ public class ExcelExportHelper extends ExcelHelper {
         // 读取需要追加的Excel信息
         ExcelImportHelper helper = new ExcelImportHelper(source);
         helper.importExcel();
-        getModel().setSheets(source.getSheets());
+//        getModel().setSheets(source.getSheets());
         appendReady();
     }
 
@@ -112,32 +114,32 @@ public class ExcelExportHelper extends ExcelHelper {
 
     private void appendReady() throws IOException {
         // 获取所有SheetModel集合
-        Map<String, SheetModel> sheets = getModel().getSheets();
-        if (sheets.size() > 0) {
-            // 遍历需要追加的数据集合
-            sheets.forEach((sheetName, sheetModel) -> {
-                // 数据集合不为空
-                if (sheetModel.getRows().size() > 0) {
-                    // 获取需要写入的sheet对象
-                    Sheet sheet = getWorkbook().getSheet(sheetName);
-                    // 如果sheet不存在，属于新增sheet操作，直接写入Excel。否则换算追加行标
-                    if (sheet != null) {
-                        int rowIndex = sheet.getLastRowNum() + 1;
-                        Map<Integer, Map<String, Object>> map = new HashMap<>();
-                        for (int rower : sheetModel.getRows().keySet()) {
-                            if (rower == sheetModel.getHeaderIndex()) {
-                                rowIndex -= 1;
-                                map.put(rower, sheetModel.getRows().get(rower));
-                            } else {
-                                map.put((rower + rowIndex), sheetModel.getRows().get(rower));
-                            }
-                        }
-                        getModel().getSheets().put(sheetName, new SheetModel(sheetModel.getHeaderIndex(), map));
-                    }
-                }
-            });
-            exportExcel();
-        }
+//        Map<String, SheetModel> sheets = getModel().getSheets();
+//        if (sheets.size() > 0) {
+//            // 遍历需要追加的数据集合
+//            sheets.forEach((sheetName, sheetModel) -> {
+//                // 数据集合不为空
+//                if (sheetModel.getRows().size() > 0) {
+//                    // 获取需要写入的sheet对象
+//                    Sheet sheet = getWorkbook().getSheet(sheetName);
+//                    // 如果sheet不存在，属于新增sheet操作，直接写入Excel。否则换算追加行标
+//                    if (sheet != null) {
+//                        int rowIndex = sheet.getLastRowNum() + 1;
+//                        Map<Integer, Map<String, Object>> map = new HashMap<>();
+//                        for (int rower : sheetModel.getRows().keySet()) {
+//                            if (rower == sheetModel.getHeaderIndex()) {
+//                                rowIndex -= 1;
+//                                map.put(rower, sheetModel.getRows().get(rower));
+//                            } else {
+//                                map.put((rower + rowIndex), sheetModel.getRows().get(rower));
+//                            }
+//                        }
+//                        getModel().getSheets().put(sheetName, new SheetModel(sheetModel.getHeaderIndex(), map));
+//                    }
+//                }
+//            });
+//            exportExcel();
+//        }
     }
 
     /**
@@ -148,20 +150,20 @@ public class ExcelExportHelper extends ExcelHelper {
      * @param model     SheetModel
      */
     public void createSheet(Workbook wb, String sheetName, SheetModel model) {
-        AssertUtil.notNull(wb, "wb 对象为空");
-        AssertUtil.isNotBlank(sheetName, "sheetName 对象为空");
-        AssertUtil.notNull(model, "model 对象为空");
-        super.setWorkbook(wb);
-        Sheet sheet = super.getWorkbook().getSheet(sheetName);
-        if (null == sheet) {
-            sheet = super.getWorkbook().createSheet(sheetName);
-        }
-        createRow(sheet, model.getHeaderIndex(), model.getRows());
-        // 设置列宽自适应
-        int columnCount = sheet.getRow(sheet.getLastRowNum()).getLastCellNum();
-        for (int i = 0; i < columnCount; i++) {
-            sheet.autoSizeColumn(i, true);
-        }
+//        AssertUtil.notNull(wb, "wb 对象为空");
+//        AssertUtil.isNotBlank(sheetName, "sheetName 对象为空");
+//        AssertUtil.notNull(model, "model 对象为空");
+//        super.setWorkbook(wb);
+//        Sheet sheet = super.getWorkbook().getSheet(sheetName);
+//        if (null == sheet) {
+//            sheet = super.getWorkbook().createSheet(sheetName);
+//        }
+//        createRow(sheet, model.getHeaderIndex(), model.getRows());
+//        // 设置列宽自适应
+//        int columnCount = sheet.getRow(sheet.getLastRowNum()).getLastCellNum();
+//        for (int i = 0; i < columnCount; i++) {
+//            sheet.autoSizeColumn(i, true);
+//        }
     }
 
     /**
@@ -295,6 +297,12 @@ public class ExcelExportHelper extends ExcelHelper {
     public ExcelModel getModel() {
         return model;
     }
+
+    @Override
+    protected <T, S> T complexData(ExcelHeader excelHeader, S value) {
+        return null;
+    }
+
 
     public void setModel(ExcelModel model) {
         this.model = model;

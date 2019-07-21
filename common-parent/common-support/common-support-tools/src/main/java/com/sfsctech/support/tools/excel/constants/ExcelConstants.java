@@ -11,9 +11,9 @@ import com.sfsctech.core.base.constants.DateConstants;
  */
 public class ExcelConstants {
 
-    public enum SheetVerify {
-        Full,
-        Match
+    public enum Verify {
+        Strong,
+        Weak
     }
 
     public enum CellStyle {

@@ -2,8 +2,10 @@ package excel;
 
 import com.sfsctech.support.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Class UserExcel
@@ -13,6 +15,8 @@ import lombok.Data;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ExcelSheet(name = "Sheet1")
 public class UserExcel {
 

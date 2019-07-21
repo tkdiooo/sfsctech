@@ -1,5 +1,7 @@
 package com.sfsctech.support.tools.excel.annotation;
 
+import com.sfsctech.support.tools.excel.inf.ComplexDataMapping;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,4 +19,12 @@ public @interface ExcelHeader {
 
     String value();
 
+    Class<? extends ComplexDataMapping> complexMapping() default ExcelHeader.None.class;
+
+
+    abstract class None implements ComplexDataMapping {
+
+        private None() {
+        }
+    }
 }
