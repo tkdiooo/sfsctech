@@ -56,7 +56,6 @@ public class DozerFactory {
         AssertUtil.notNull(s);
         List<T> list = Lists.newArrayList();
         s.forEach(v -> list.add(this.dozerMapper.map(v, clz)));
-        System.out.println(Lists.newArrayList(s.stream().map(v -> this.dozerMapper.map(v, clz)).iterator()));
         return list;
     }
 
@@ -64,7 +63,6 @@ public class DozerFactory {
         AssertUtil.notNull(s);
         Set<T> set = Sets.newHashSet();
         s.forEach(v -> set.add(this.dozerMapper.map(v, clz)));
-        System.out.println(Sets.newHashSet(s.stream().map(v -> this.dozerMapper.map(v, clz)).iterator()));
         return set;
     }
 
