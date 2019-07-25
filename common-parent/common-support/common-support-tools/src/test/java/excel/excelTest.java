@@ -1,6 +1,7 @@
 package excel;
 
 import com.google.common.collect.Lists;
+import com.sfsctech.support.common.util.UUIDUtil;
 import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
 import com.sfsctech.support.tools.excel.model.SheetModel;
@@ -42,19 +43,19 @@ public class excelTest {
 
     @Test
     public void importExcel() throws Exception {
-        ExcelModel excelModel = new ExcelModel("D:\\user20190618.xls", Lists.newArrayList(UserExcel.class, testModel.class));
-        excelModel.setVerify(ExcelConstants.Verify.Weak);
-
-//        LinkedHashMap<String, Object> header = ExcelHelper.getHeader(UserExcel.class);
-//        ExcelHelper.setSheetHeader(excelModel, header, "项目数据", 0);
-
-        ExcelImportHelper helper = new ExcelImportHelper(excelModel);
-
-
-        helper.importExcel();
-        SheetModel<UserExcel> s = excelModel.getSheetModel(UserExcel.class);
-        System.out.println(s);
-//        exportExcel(excelModel.getSheets());
+        System.out.println(UUIDUtil.base58Uuid());
+//        ExcelModel excelModel = new ExcelModel("D:\\user20190618.xls", Lists.newArrayList(UserExcel.class, testModel.class));
+//        excelModel.setVerify(ExcelConstants.Verify.Weak);
+//
+////        LinkedHashMap<String, Object> header = ExcelHelper.getHeader(UserExcel.class);
+////        ExcelHelper.setSheetHeader(excelModel, header, "项目数据", 0);
+//
+//        ExcelImportHelper helper = new ExcelImportHelper(excelModel);
+//
+//
+//        helper.importExcel();
+//        SheetModel<UserExcel> s = excelModel.getSheetModel(UserExcel.class);
+//        System.out.println(s);
     }
 
     @Test

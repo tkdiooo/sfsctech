@@ -1,5 +1,6 @@
 package com.sfsctech.support.bootstrap.util;
 
+import com.sfsctech.core.base.constants.CacheConstants;
 import com.sfsctech.core.base.enums.BaseEnum;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.spring.util.SpringContextUtil;
@@ -43,7 +44,7 @@ public class BootstrapUtil {
             }
             options.add(map);
         }
-        factory.getCacheClient().put(cacheKey, options);
+        factory.getCacheClient().putTimeOut(cacheKey, options, CacheConstants.Second.Minutes30.getContent());
         return options;
     }
 
@@ -60,7 +61,7 @@ public class BootstrapUtil {
             map.put("text", BeanUtil.getPropertyValue(t, textProperty));
             options.add(map);
         }
-        factory.getCacheClient().put(cacheKey, options);
+        factory.getCacheClient().putTimeOut(cacheKey, options, CacheConstants.Second.Minutes30.getContent());
         return options;
     }
 
