@@ -5,6 +5,7 @@ import com.sfsctech.support.common.security.des3.Des3Manager;
 import com.sfsctech.support.common.security.md5.Md5;
 import com.sfsctech.support.common.security.base64.Base64;
 import com.sfsctech.support.common.security.des3.Des3;
+import com.sfsctech.support.common.util.UUIDUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -174,7 +175,8 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Aes, "weishiyao"));
+//        System.out.println(encrypt(Security.Aes, "weishiyao"));
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
+        System.out.println(UUIDUtil.base58Uuid());
     }
 }

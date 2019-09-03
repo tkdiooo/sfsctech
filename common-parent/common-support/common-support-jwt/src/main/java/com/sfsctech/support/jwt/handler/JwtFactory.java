@@ -113,7 +113,8 @@ public class JwtFactory {
      * @return RawRefreshJwt
      */
     public RawRefreshJwt getRawRefreshJwt(String jwt) {
-        return new RawRefreshJwt(parseJWT(jwt));
+        String token = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jwt);
+        return new RawRefreshJwt(parseJWT(token));
     }
 
     /**

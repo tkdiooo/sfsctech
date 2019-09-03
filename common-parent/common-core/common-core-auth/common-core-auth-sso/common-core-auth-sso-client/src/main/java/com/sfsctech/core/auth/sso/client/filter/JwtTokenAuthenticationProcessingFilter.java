@@ -49,6 +49,7 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         logger.info("请求路径:{}", HttpUtil.getFullUrl(request));
+        logger.info("请求Method:{}", request.getMethod());
         logger.info("token提取类:{}", tokenExtractor.getClass());
         String Access_Jwt_Cache = tokenExtractor.extract(request, response);
         String jwt = factory.get(Access_Jwt_Cache);
