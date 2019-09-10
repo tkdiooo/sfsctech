@@ -19,6 +19,12 @@ public class CacheKeyUtil {
 
     private static final String CACHE_API_KEY = "%!##@$%|$#$%(^)$}$*{^*+%";
 
+    private static final String FAILURE_KEY = "#Failure";
+
+    public static String getFailureKey(String cacheKey) {
+        return cacheKey + FAILURE_KEY;
+    }
+
     /**
      * 据用户鉴权数据生成salt缓存的key
      *

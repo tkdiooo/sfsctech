@@ -1,5 +1,6 @@
 package com.sfsctech.core.auth.sso.util;
 
+import com.sfsctech.core.base.constants.DateConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -11,6 +12,8 @@ import com.sfsctech.support.common.util.ListUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class SSOUtil
@@ -74,10 +77,11 @@ public class SSOUtil {
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jwtToken.getSalt_CacheKey());
         String salt = SingletonUtil.getCacheFactory().get(salt_CacheKey);
         String jwt_CacheKey = EncrypterTool.decrypt(jwtToken.getJwt(), salt);
-        // 清除salt_CacheKey
-        SingletonUtil.getCacheFactory().getCacheClient().remove(salt_CacheKey);
-        // 清除jwt_CacheKey
-        SingletonUtil.getCacheFactory().getCacheClient().remove(jwt_CacheKey);
+        String jwt_Failure_CacheKey = CacheKeyUtil.getFailureKey(jwt_CacheKey);
+        // 设置salt_CacheKey保留2分钟
+        SingletonUtil.getCacheFactory().getCacheClient().expire(salt_CacheKey, 120);
+        // 设置jwt_CacheKey保留2分钟
+        SingletonUtil.getCacheFactory().getCacheClient().expire(jwt_CacheKey, 120);
         logger.info("刷新登录用户:" + account + "的Jwt信息");
         String jwt = jwtUtil.generalJwt(claims);
         logger.info("用户:" + account + "，生成新的jwt[" + jwt + "]。");
@@ -100,6 +104,8 @@ public class SSOUtil {
         jwtToken.setSalt(salt);
         jwtToken.setJwt(token);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));
+        // 标记jwt_CacheKey将要失效
+        SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jwt_Failure_CacheKey, jwtToken, 120);
     }
 
 //    private static void saltCacheKey(RpcResult<JwtToken> result, String salt_CacheKey) {
