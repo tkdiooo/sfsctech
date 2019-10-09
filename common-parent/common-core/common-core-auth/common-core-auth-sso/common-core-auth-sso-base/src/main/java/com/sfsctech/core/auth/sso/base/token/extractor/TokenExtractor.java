@@ -15,7 +15,7 @@ public interface TokenExtractor {
     String extract(HttpServletRequest request, HttpServletResponse response);
 
     default String decrypt(String payload) {
-        String token = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, payload);
+        String token = EncrypterTool.decrypt(EncrypterTool.Security.AesCBC, payload);
         if (StringUtil.isBlank(token)) {
             throw new AuthenticationServiceException("解密失败,token为空!");
         }

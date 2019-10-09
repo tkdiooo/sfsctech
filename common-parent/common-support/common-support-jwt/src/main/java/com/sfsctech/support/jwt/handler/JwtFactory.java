@@ -85,13 +85,13 @@ public class JwtFactory {
         // 缓存鉴权jwt
         factory.getCacheClient().putTimeOut(access_Jwt_Cache, jwt, (int) settings.getExpiration().getSeconds());
         // 加密鉴权jwt的缓存key，以作为token使用
-        String access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, access_Jwt_Cache);
+        String access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, access_Jwt_Cache);
         logger.info("用户:{}，生成Access_Jwt_Token(加密):{}", proxy.getClaims().getSubject(), access_Jwt_Token);
         // 刷新jwt
         String refreshJwt = buildRefreshJwt(proxy);
         logger.info("用户:{}，生成RefreshJwt:{}", proxy.getClaims().getSubject(), refreshJwt);
         // 加密鉴权jwt的缓存key，以作为token使用
-        String refresh_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, refreshJwt);
+        String refresh_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, refreshJwt);
         logger.info("用户:{}，生成Refresh_Jwt_Token(加密):{}", proxy.getClaims().getSubject(), refresh_Jwt_Token);
         return JwtResult.builder().accessToken(JwtConstants.TOKEN_PREFIX + access_Jwt_Token).refreshJwt(refresh_Jwt_Token).build();
     }
@@ -113,7 +113,7 @@ public class JwtFactory {
      * @return RawRefreshJwt
      */
     public RawRefreshJwt getRawRefreshJwt(String jwt) {
-        String token = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jwt);
+        String token = EncrypterTool.decrypt(EncrypterTool.Security.AesCBC, jwt);
         return new RawRefreshJwt(parseJWT(token));
     }
 

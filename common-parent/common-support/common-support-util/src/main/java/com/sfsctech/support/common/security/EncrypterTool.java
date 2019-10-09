@@ -175,8 +175,8 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-//        System.out.println(encrypt(Security.Aes, "weishiyao"));
+        System.out.println(encrypt(Security.Aes, "juhui").substring(16));
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
-        System.out.println(UUIDUtil.base58Uuid());
+//        System.out.println(UUIDUtil.base58Uuid());
     }
 }
