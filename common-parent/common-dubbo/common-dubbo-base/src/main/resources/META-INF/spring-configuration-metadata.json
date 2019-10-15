@@ -98,6 +98,24 @@
       "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$Protocol"
     },
     {
+      "name": "dubbo.protocol.threadPool",
+      "type": "com.sfsctech.dubbo.base.properties.DubboProperties.ThreadPool",
+      "description": "dubbo线程池类型配置",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$Protocol"
+    },
+    {
+      "name": "dubbo.protocol.threads",
+      "type": "java.lang.Integer",
+      "description": "dubbo服务最大线程池",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$Protocol"
+    },
+    {
+      "name": "dubbo.protocol.dispatcher",
+      "type": "com.sfsctech.dubbo.base.properties.DubboProperties.Dispatcher",
+      "description": "dubbo信息线程模型派发方式配置",
+      "sourceType": "com.sfsctech.dubbo.base.properties.DubboProperties$Protocol"
+    },
+    {
       "name": "dubbo.protocol.single.name",
       "type": "java.lang.String",
       "description": "协议名称",
@@ -184,6 +202,40 @@
         {
           "value": "Kryo",
           "description": "dubbo采用Kryo序列化"
+        }
+      ]
+    },
+    {
+      "name": "dubbo.protocol.threadPool",
+      "values": [
+        {
+          "value": "fixed",
+          "description": "固定大小线程池，启动时建立线程，不关闭，一直持有"
+        },
+        {
+          "value": "cached",
+          "description": "缓存线程池，空闲一分钟自动删除，需要时重建"
+        },
+        {
+          "value": "limited",
+          "description": "可伸缩线程池，但池中的线程数只会增长不会收缩"
+        },
+        {
+          "value": "eager",
+          "description": "优先创建Worker线程池"
+        }
+      ]
+    },
+    {
+      "name": "dubbo.protocol.dispatcher",
+      "values": [
+        {
+          "value": "message",
+          "description": "只有请求响应消息派发到线程池，其它连接断开事件，心跳等消息，直接在 IO 线程上执行"
+        },
+        {
+          "value": "connection",
+          "description": "在 IO 线程上，将连接断开事件放入队列，有序逐个执行，其它消息派发到线程池"
         }
       ]
     },

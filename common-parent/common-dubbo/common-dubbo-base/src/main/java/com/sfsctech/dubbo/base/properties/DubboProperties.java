@@ -30,6 +30,24 @@ public class DubboProperties {
         Kryo
     }
 
+    public enum ThreadPool {
+        // 固定大小线程池，启动时建立线程，不关闭，一直持有（缺省）
+        fixed,
+        // 缓存线程池，空闲一分钟自动删除，需要时重建
+        cached,
+        // 可伸缩线程池，但池中的线程数只会增长不会收缩（为避免收缩时突然来了大流量引起的性能问题）
+        limited,
+        // 优先创建Worker线程池
+        eager
+    }
+
+    public enum Dispatcher {
+        // 只有请求响应消息派发到线程池，其它连接断开事件，心跳等消息，直接在 IO 线程上执行
+        message,
+        // 在 IO 线程上，将连接断开事件放入队列，有序逐个执行，其它消息派发到线程池
+        connection
+    }
+
     private final DubboProperties.Application application;
     private final DubboProperties.Registry registry;
     private final DubboProperties.Protocol protocol;
@@ -154,6 +172,9 @@ public class DubboProperties {
     public static class Protocol {
         private SerializeOptimizer optimizer;
         private Config config;
+        private ThreadPool threadPool;
+        private Integer threads;
+        private Dispatcher dispatcher;
 
         private final Protocol.Single single;
         private final Map<String, ProtocolConfig> multiple;
@@ -185,6 +206,30 @@ public class DubboProperties {
 
         public Map<String, ProtocolConfig> getMultiple() {
             return multiple;
+        }
+
+        public ThreadPool getThreadPool() {
+            return threadPool;
+        }
+
+        public void setThreadPool(ThreadPool threadPool) {
+            this.threadPool = threadPool;
+        }
+
+        public Integer getThreads() {
+            return threads;
+        }
+
+        public void setThreads(Integer threads) {
+            this.threads = threads;
+        }
+
+        public Dispatcher getDispatcher() {
+            return dispatcher;
+        }
+
+        public void setDispatcher(Dispatcher dispatcher) {
+            this.dispatcher = dispatcher;
         }
 
         public static class Single {

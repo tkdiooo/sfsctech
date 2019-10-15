@@ -161,6 +161,18 @@ public class DubboxConfig {
             config.setSerialization(DubboConstants.SERIALIZE_KRYO);
             config.setOptimizer(KryoSerializationOptimizer.class.getName());
         }
+        // 线程池类型
+        if (null != properties.getProtocol().getThreadPool()) {
+            config.setThreadpool(properties.getProtocol().getThreadPool().name());
+        }
+        // 服务最大线程池
+        if (null != properties.getProtocol().getThreads()) {
+            config.setThreads(properties.getProtocol().getThreads());
+        }
+        // 信息线程模型派发方式
+        if (null != properties.getProtocol().getDispatcher()) {
+            config.setDispatcher(properties.getProtocol().getDispatcher().name());
+        }
         logger.info("dubbo 服务协议配置：" + config.toString());
         return config;
     }
