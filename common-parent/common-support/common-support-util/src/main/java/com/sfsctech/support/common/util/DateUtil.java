@@ -175,7 +175,7 @@ public class DateUtil extends DateUtils {
      * 格式化日期
      *
      * @param date Date
-     * @return yyyyMMdd HH:mm:ss
+     * @return yyyyMMddHHmmss
      */
     public static String toDateTime(Date date) {
         return format(date, DateConstants.PATTERN_DEFAULT);
@@ -258,7 +258,7 @@ public class DateUtil extends DateUtils {
      * @return HH:mm:ss
      */
     public static String toTime(Date date) {
-        return format(date, DateConstants.PATTERN_HMS);
+        return format(date, DateConstants.PATTERN_HMSM);
     }
 
     /**
@@ -268,7 +268,7 @@ public class DateUtil extends DateUtils {
      * @return HH时mm分ss秒
      */
     public static String toTimeCN(Date date) {
-        return format(date, DateConstants.PATTERN_HMS_CN);
+        return format(date, DateConstants.PATTERN_HMSM_CN);
     }
 
     /**
@@ -295,7 +295,7 @@ public class DateUtil extends DateUtils {
      * 格式化日期
      *
      * @param date Date
-     * @return yyyyMMdd HH:mm:ss.SSS
+     * @return yyyyMMddHHmmssSSS
      */
     public static String toMSDateTime(Date date) {
         return format(date, DateConstants.PATTERN_FULL);
@@ -338,7 +338,7 @@ public class DateUtil extends DateUtils {
      * @return HH:mm:ss.SSS
      */
     public static String toMSTime(Date date) {
-        return format(date, DateConstants.PATTERN_HMSM);
+        return format(date, DateConstants.PATTERN_HMSSM);
     }
 
     /**
@@ -348,7 +348,7 @@ public class DateUtil extends DateUtils {
      * @return HH时mm分ss秒SSS毫秒
      */
     public static String toMSTimeCN(Date date) {
-        return format(date, DateConstants.PATTERN_HMSM_CN);
+        return format(date, DateConstants.PATTERN_HMSSM_CN);
     }
 
     /**
