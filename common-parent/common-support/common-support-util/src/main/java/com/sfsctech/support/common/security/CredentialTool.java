@@ -1,16 +1,13 @@
 package com.sfsctech.support.common.security;
 
-import org.apache.commons.codec.binary.Hex;
+import com.sfsctech.support.common.util.AssertUtil;
+import com.sfsctech.support.common.util.CredentialUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.crypto.Cipher;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.Signature;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 /**
@@ -21,127 +18,89 @@ import java.security.cert.X509Certificate;
  */
 public class CredentialTool {
 
+    private static Logger logger = LoggerFactory.getLogger(CredentialTool.class);
+
+    private String cerPath;
+    private String ksPath;
+    private String ksPass;
+    private KeyStore keyStore;
+    private X509Certificate x509Certificate;
+    private PrivateKey privateKey;
+    private PublicKey publicKey;
+    private String alias;
+
+    public CredentialTool(String cerPath) throws Exception {
+        assertCer();
+        this.cerPath = cerPath;
+        initPublicKey();
+    }
+
+    public CredentialTool(String ksPath, String ksPass) throws Exception {
+        assertKeyStore();
+        this.ksPath = ksPath;
+        this.ksPass = ksPass;
+        initPrivateKey();
+        this.x509Certificate = CredentialUtil.getX509Certificate(keyStore, alias);
+        this.publicKey = x509Certificate.getPublicKey();
+    }
+
+    private void assertKeyStore() {
+        AssertUtil.isNotBlank(ksPath, "密钥库文件路径为空");
+        AssertUtil.isNotBlank(ksPass, "密钥库密码为空");
+    }
+
+    private void assertCer() {
+        AssertUtil.isNotBlank(cerPath, "证书文件路径为空");
+    }
+
+    private void initPrivateKey() throws Exception {
+        this.keyStore = CredentialUtil.getKeyStore(ksPath, ksPass);
+        this.alias = CredentialUtil.getAlias(keyStore);
+        this.privateKey = CredentialUtil.getPrikeyByKeyStore(keyStore, ksPass, alias);
+    }
+
+    private void initPublicKey() throws Exception {
+        this.x509Certificate = CredentialUtil.getX509Certificate(cerPath);
+        this.publicKey = x509Certificate.getPublicKey();
+    }
+
+
     /**
-     * 由密钥库获得私钥
+     * 获取密钥库对象（KeyStore）
      *
-     * @param keyStorePath 密钥库路径
-     * @param password     密码
-     * @param alias        别名
+     * @return KeyStore
+     * @throws Exception
+     */
+    public KeyStore getKeyStore() {
+        return this.keyStore;
+    }
+
+    /**
+     * 根据证书对象（X509Certificate）
+     *
+     * @return
+     */
+    public X509Certificate getX509Certificate() {
+        return this.x509Certificate;
+    }
+
+    /**
+     * 获取私钥
+     *
      * @return PrivateKey
      */
-    public static PrivateKey getPrikeyByKeyStore(String keyStorePath, String password, String alias) throws Exception {
-        //实例化密钥库
-        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        FileInputStream is = new FileInputStream(keyStorePath);
-        //加载密钥库
-        ks.load(is, password.toCharArray());
-        is.close();
-        return (PrivateKey) ks.getKey(alias, password.toCharArray());
+    public PrivateKey getPrivateKey() {
+        return this.privateKey;
     }
 
     /**
-     * 由证书获得公钥
+     * 获取公钥
      *
-     * @param cerPath 证书路径
      * @return PublicKey
      */
-    public static PublicKey getPubKeyByCer(String cerPath) throws Exception {
-        FileInputStream in = new FileInputStream(cerPath);
-        return getPubKeyByInputStream(in);
+    public PublicKey getPublicKey() {
+        return this.publicKey;
     }
 
-    public static PublicKey getPubKeyByInputStream(InputStream in) throws Exception {
-        //实例化证书工厂
-        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-        Certificate certificate = certificateFactory.generateCertificate(in);
-        in.close();
-        return certificate.getPublicKey();
-    }
-
-    /**
-     * 由密钥库生成签名
-     *
-     * @param data         签名信息
-     * @param keyStorePath 密钥库路径
-     * @param password     密码
-     * @param alias        别名
-     * @param cerPath      证书路径
-     * @return 签名对象
-     */
-    public static byte[] sign(byte[] data, String keyStorePath, String password, String alias, String cerPath) throws Exception {
-        //获得证书
-        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-        FileInputStream in = new FileInputStream(cerPath);
-        Certificate certificate = certificateFactory.generateCertificate(in);
-        in.close();
-        X509Certificate x509certificate = (X509Certificate) certificate;
-        //构建签名
-        Signature signature = Signature.getInstance(x509certificate.getSigAlgName());
-        PrivateKey privateKey = getPrikeyByKeyStore(keyStorePath, password, alias);
-        //初始化签名
-        signature.initSign(privateKey);
-        signature.update(data);
-        return signature.sign();
-    }
-
-    /**
-     * 验证签名
-     *
-     * @param data    签名信息
-     * @param sign    签名对象
-     * @param cerPath 证书路径
-     * @return boolean
-     */
-    public static boolean verify(byte[] data, byte[] sign, String cerPath) throws Exception {
-        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-        FileInputStream in = new FileInputStream(cerPath);
-        Certificate certificate = certificateFactory.generateCertificate(in);
-        in.close();
-        X509Certificate x509certificate = (X509Certificate) certificate;
-        //构建签名
-        Signature signature = Signature.getInstance(x509certificate.getSigAlgName());
-        signature.initVerify(x509certificate);
-        signature.update(data);
-        return signature.verify(sign);
-    }
-
-    /**
-     * 通过证书加密数据
-     *
-     * @param data    明文数据
-     * @param cerPath 证书路径
-     * @return 密文
-     */
-    public static byte[] encryptByCer(byte[] data, String cerPath) throws Exception {
-        // 取得公钥
-        PublicKey publicKey = getPubKeyByCer(cerPath);
-        // 对数据加密
-        Cipher cipher = Cipher.getInstance(publicKey.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        return cipher.doFinal(data);
-
-    }
-
-
-    public static void main(String[] args) throws Exception {
-
-        String keyStorePath = "d:/gus.keystore";
-        String cerPath = "d:/gus.cer";
-        String password = "hello!@#";
-        String alias = "www.gus.com";
-
-        PrivateKey prikey = getPrikeyByKeyStore(keyStorePath, password, alias);
-        System.err.println("私钥：\n" + prikey);
-
-        PublicKey pubkey = getPubKeyByCer(cerPath);
-        System.err.println("公钥：\n" + pubkey);
-
-        byte[] sign = sign("待签名的".getBytes(), keyStorePath, password, alias, cerPath);
-
-        System.out.println(Hex.encodeHex(sign));
-
-        //传来的数据最好加密
-        System.out.println(verify("待签名的".getBytes(), sign, cerPath));
-    }
 
 }

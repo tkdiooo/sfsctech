@@ -71,7 +71,7 @@ public class ClassUtil extends ClassUtils {
         return getClasses(basePackage, endsWith, null);
     }
 
-    public static Set<Class<?>> getClassesByAnnotation(final String basePackage, final Class<Annotation> annotation) {
+    public static Set<Class<?>> getClassesByAnnotation(final String basePackage, final Class<? extends Annotation> annotation) {
         return getClasses(basePackage, null, annotation);
     }
 
@@ -85,7 +85,7 @@ public class ClassUtil extends ClassUtils {
      * @param basePackage
      * @return
      */
-    private static Set<Class<?>> getClasses(final String basePackage, String endsWith, Class<Annotation> annotation) {
+    private static Set<Class<?>> getClasses(final String basePackage, String endsWith, Class<? extends Annotation> annotation) {
         // 第一个class类的集合
         Set<Class<?>> classes = new LinkedHashSet<>();
         if (StringUtil.isBlank(basePackage)) {
@@ -180,7 +180,7 @@ public class ClassUtil extends ClassUtils {
     /**
      * 以文件的形式来获取包下的所有Class
      */
-    private static void findAndAddClassesInPackageByFile(String packageName, String filePath, Set<Class<?>> classes, String endsWith, Class<Annotation> annotation) {
+    private static void findAndAddClassesInPackageByFile(String packageName, String filePath, Set<Class<?>> classes, String endsWith, Class<? extends Annotation> annotation) {
         // 获取此包的目录 建立一个File
         File dir = new File(filePath);
         // 如果不存在或者 也不是目录就直接返回

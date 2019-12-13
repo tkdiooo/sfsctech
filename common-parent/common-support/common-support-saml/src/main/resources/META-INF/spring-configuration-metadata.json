@@ -1,0 +1,60 @@
+{
+  "groups": [
+    {
+      "name": "saml",
+      "type": "com.sfsctech.saml.core.properties.SamlConfig",
+      "sourceType": "com.sfsctech.saml.core.properties.SamlConfig"
+    },
+    {
+      "name": "saml.sp",
+      "type": "com.sfsctech.saml.core.properties.SpConfig",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "saml.sp-config",
+      "type": "java.util.Map<java.lang.String, com.sfsctech.saml.core.properties.SpConfig>",
+      "description": "自定义配置",
+      "sourceType": "com.sfsctech.saml.core.properties.SamlConfig"
+    },
+    {
+      "name": "saml.sp.idp-sso-url",
+      "type": "java.lang.String",
+      "description": "目标URL：目标地址，IDP地址",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    },
+    {
+      "name": "saml.sp.protocol-binding",
+      "type": "java.lang.String",
+      "description": "传输SAML断言所需要的绑定：也就是用何种协议来取回真正的认证信息",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    },
+    {
+      "name": "saml.sp.assertion-consumer-service-url",
+      "type": "java.lang.String",
+      "description": "SP地址： SAML断言返回的地址",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    },
+    {
+      "name": "saml.sp.sp-entity-id",
+      "type": "java.lang.String",
+      "description": "发行人信息，也就是SP的ID，一般是SP的域名",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    },
+    {
+      "name": "saml.sp.key-store",
+      "type": "java.lang.String",
+      "description": "jks文件路径",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    },
+    {
+      "name": "saml.sp.key-pass",
+      "type": "java.lang.String",
+      "description": "jks密码",
+      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+    }
+  ],
+  "hints": [
+  ]
+}
