@@ -35,7 +35,10 @@ public class CredentialUtil {
      * @throws Exception Exception
      */
     public static KeyStore getKeyStore(String ksPath, String password) throws Exception {
-        FileInputStream in = new FileInputStream(ksPath);
+        return getKeyStore(new FileInputStream(ksPath), password);
+    }
+
+    public static KeyStore getKeyStore(FileInputStream in, String password) throws Exception {
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
         ks.load(in, password.toCharArray());
         in.close();
@@ -50,8 +53,11 @@ public class CredentialUtil {
      * @throws Exception Exception
      */
     public static X509Certificate getX509Certificate(String cerPath) throws Exception {
+        return getX509Certificate(new FileInputStream(cerPath));
+    }
+
+    public static X509Certificate getX509Certificate(InputStream in) throws Exception {
         CertificateFactory factory = CertificateFactory.getInstance("X.509");
-        InputStream in = new FileInputStream(cerPath);
         X509Certificate certificate = (X509Certificate) factory.generateCertificate(in);
         in.close();
         return certificate;
