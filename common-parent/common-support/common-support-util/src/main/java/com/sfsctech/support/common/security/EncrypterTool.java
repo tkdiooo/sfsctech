@@ -1,16 +1,15 @@
 package com.sfsctech.support.common.security;
 
 import com.sfsctech.support.common.security.aes.Aes;
-import com.sfsctech.support.common.security.des3.Des3Manager;
-import com.sfsctech.support.common.security.md5.Md5;
 import com.sfsctech.support.common.security.base64.Base64;
 import com.sfsctech.support.common.security.des3.Des3;
-import com.sfsctech.support.common.util.UUIDUtil;
+import com.sfsctech.support.common.security.des3.Des3Manager;
+import com.sfsctech.support.common.security.md5.Md5;
+import com.sfsctech.support.common.util.Cn2SpellUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * Class EncrypterTool
@@ -175,7 +174,15 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(encrypt(Security.Aes, "gaofeng").substring(16));
+        String[] params = {"周诚", "王信", "陶江燕", "顾莉杨"};
+        StringBuilder sb = new StringBuilder();
+        for (String param : params) {
+            String name = Cn2SpellUtil.converterToSpell(param);
+            sb.append(name + ",");
+            System.out.println(name);
+            System.out.println(encrypt(Security.Aes, name).substring(16));
+        }
+        System.out.println(sb);
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
 //        System.out.println(UUIDUtil.base58Uuid());
     }

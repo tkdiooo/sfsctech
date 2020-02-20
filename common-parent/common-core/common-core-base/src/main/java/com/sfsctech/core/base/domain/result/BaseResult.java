@@ -3,6 +3,7 @@ package com.sfsctech.core.base.domain.result;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.sfsctech.core.base.constants.RpcConstants.Status;
 import com.sfsctech.core.base.domain.dto.BaseDto;
+import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -25,7 +26,7 @@ public class BaseResult extends BaseDto {
     /**
      * 响应状态
      */
-    protected Status status = Status.Successful;
+    protected StatusEnum<Integer, String, Boolean> status = Status.Successful;
     /**
      * 响应消息列表
      */
@@ -34,7 +35,7 @@ public class BaseResult extends BaseDto {
     public BaseResult() {
     }
 
-    public BaseResult(Status status, String... messages) {
+    public BaseResult(StatusEnum<Integer, String, Boolean> status, String... messages) {
         this.success = status.getSuccessful();
         this.status = status;
         if (ArrayUtils.isNotEmpty(messages)) {
@@ -61,7 +62,7 @@ public class BaseResult extends BaseDto {
     }
 
     @JSONField(deserialize = false)
-    public Status getStatus() {
+    public StatusEnum<Integer, String, Boolean> getStatus() {
         return status;
     }
 
@@ -106,5 +107,4 @@ public class BaseResult extends BaseDto {
     public String toString() {
         return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("statusCode").toString();
     }
-
 }

@@ -2,6 +2,11 @@ package com.sfsctech.core.base.domain.result;
 
 import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.ex.GenericException;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * RPC服务通信接口响应对象
@@ -65,5 +70,24 @@ public class RpcResult<T> extends BaseResult {
     public void setMessage(String message) {
         super.getMessages().clear();
         super.addMessages(message);
+    }
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+        list.add("statusCode");
+        if (!(null != super.getAttachs() && super.getAttachs().size() > 0)) {
+            list.add("attachs");
+        }
+        if (!(null != super.getMessages() && super.getMessages().size() > 0)) {
+            list.add("messages");
+        }
+        if (null == this.exception) {
+            list.add("exception");
+        }
+        if (null == this.result) {
+            list.add("result");
+        }
+        return new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE).setExcludeFieldNames(list.toArray(new String[]{})).toString();
     }
 }

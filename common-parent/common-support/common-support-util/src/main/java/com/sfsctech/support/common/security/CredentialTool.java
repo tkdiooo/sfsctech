@@ -23,11 +23,11 @@ public class CredentialTool {
     private String cerPath;
     private String ksPath;
     private String ksPass;
+    private String alias;
     private KeyStore keyStore;
     private X509Certificate x509Certificate;
     private PrivateKey privateKey;
     private PublicKey publicKey;
-    private String alias;
 
     public CredentialTool(String cerPath) throws Exception {
         assertCer();
@@ -63,7 +63,6 @@ public class CredentialTool {
         this.x509Certificate = CredentialUtil.getX509Certificate(cerPath);
         this.publicKey = x509Certificate.getPublicKey();
     }
-
 
     /**
      * 获取密钥库对象（KeyStore）
@@ -102,5 +101,7 @@ public class CredentialTool {
         return this.publicKey;
     }
 
-
+    public String getAlias() {
+        return alias;
+    }
 }

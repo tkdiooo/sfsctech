@@ -6,9 +6,9 @@ package com.sfsctech.core.base.enums;
  * @author 张麒 2018-5-24.
  * @version Description:
  */
-public interface StatusEnum<K, V> extends BaseEnum<K, V> {
+public interface StatusEnum<K, V, B> extends BaseEnum<K, V> {
 
-    boolean getSuccessful();
+    B getSuccessful();
 
     static <K, V> BaseEnum<K, V> getByCode(BaseEnum<K, V>[] enums, K key) {
         BaseEnum<K, V> value = null;

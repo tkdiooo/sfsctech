@@ -1,6 +1,6 @@
 package com.sfsctech.support.saml.properties;
 
-import com.sfsctech.support.saml.secret.SpCredentials;
+import com.sfsctech.support.saml.secret.SPCredentials;
 
 /**
  * Class AuthnRequestPropertyies
@@ -16,7 +16,7 @@ public class SpConfig {
     private String spEntityId;
     private String keyStore;
     private String keyPass;
-    private SpCredentials spCredential;
+    private SPCredentials spCredential;
 
     public String getIdpSsoUrl() {
         return idpSsoUrl;
@@ -50,11 +50,11 @@ public class SpConfig {
         this.assertionConsumerServiceUrl = assertionConsumerServiceUrl;
     }
 
-    public SpCredentials getSpCredential() {
+    public SPCredentials getSpCredential() {
         if (null == spCredential) {
             synchronized (this) {
                 try {
-                    spCredential = new SpCredentials(this.keyStore, this.keyPass);
+                    spCredential = new SPCredentials(this.keyStore, this.keyPass);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

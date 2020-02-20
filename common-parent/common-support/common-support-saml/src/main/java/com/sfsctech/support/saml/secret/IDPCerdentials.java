@@ -3,34 +3,33 @@ package com.sfsctech.support.saml.secret;
 import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.support.common.security.CredentialTool;
 import com.sfsctech.support.common.util.ThrowableUtil;
-import org.opensaml.security.credential.BasicCredential;
+import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.CredentialSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class SpCredential
+ * Class IDPCerdentials
  *
- * @author 张麒 2019-12-4.
+ * @author 张麒 2019-12-27.
  * @version Description:
  */
-public class SpCredentials {
+public class IDPCerdentials {
 
-    private static Logger logger = LoggerFactory.getLogger(SpCredentials.class);
+    private static Logger logger = LoggerFactory.getLogger(IDPCerdentials.class);
 
-    private BasicCredential basicCredential;
+    private Credential credential;
 
-    public SpCredentials(String keyStore, String keyPass) {
+    public IDPCerdentials(String keyStore, String keyPass) {
         try {
             CredentialTool credentialTool = new CredentialTool(keyStore, keyPass);
-            basicCredential = CredentialSupport.getSimpleCredential(credentialTool.getX509Certificate(), credentialTool.getPrivateKey());
+            credential = CredentialSupport.getSimpleCredential(credentialTool.getPublicKey(), credentialTool.getPrivateKey());
         } catch (Exception e) {
             throw new BizException(ThrowableUtil.getRootMessage(e), e);
         }
     }
 
-    public BasicCredential getBasicCredential() {
-        return basicCredential;
+    public Credential getCredential() {
+        return credential;
     }
-
 }

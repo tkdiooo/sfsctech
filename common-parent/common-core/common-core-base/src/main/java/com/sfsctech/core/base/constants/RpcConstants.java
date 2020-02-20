@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RpcConstants {
 
-    public enum Status implements StatusEnum<Integer, String> {
+    public enum Status implements StatusEnum<Integer, String, Boolean> {
 
         Successful,
         Failure(300, "操作失败", false),
@@ -46,7 +46,7 @@ public class RpcConstants {
 
         private int code;
         private String description;
-        private boolean successful;
+        private Boolean successful;
 
         @Override
         public Integer getCode() {
@@ -59,7 +59,7 @@ public class RpcConstants {
         }
 
         @Override
-        public boolean getSuccessful() {
+        public Boolean getSuccessful() {
             return successful;
         }
 
