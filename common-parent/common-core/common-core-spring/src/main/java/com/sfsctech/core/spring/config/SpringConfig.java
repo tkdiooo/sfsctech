@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.json.FastJson;
+import com.sfsctech.core.base.json.FastJsonFilter;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.dozer.config.DozerMapperConfig;
@@ -55,12 +56,16 @@ public class SpringConfig {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.PrettyFormat,
                 SerializerFeature.QuoteFieldNames,
                 SerializerFeature.WriteDateUseDateFormat,
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteEnumUsingToString
         );
+        // TODO 需要动态添加过滤器代码
+        fastJsonConfig.setSerializeFilters(new FastJsonFilter());
         fastJsonConfig.setSerializeConfig(FastJson.getSerializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
         List<MediaType> fastMediaTypes = new ArrayList<>();

@@ -75,7 +75,6 @@ public class RpcResult<T> extends BaseResult {
     @Override
     public String toString() {
         List<String> list = new ArrayList<>();
-        list.add("statusCode");
         if (!(null != super.getAttachs() && super.getAttachs().size() > 0)) {
             list.add("attachs");
         }

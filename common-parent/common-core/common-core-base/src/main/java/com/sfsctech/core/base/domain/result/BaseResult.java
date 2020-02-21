@@ -51,23 +51,13 @@ public class BaseResult extends BaseDto {
         this.success = hasErrors;
     }
 
-    @JSONField(name = "statusCode")
-    public int getStatusCode() {
-        return status.getCode();
-    }
-
-    @JSONField(name = "statusCode")
-    public void setStatusCode(int code) {
-        this.status = Status.getEnum(code);
-    }
-
     @JSONField(deserialize = false)
     public StatusEnum<Integer, String, Boolean> getStatus() {
         return status;
     }
 
     @JSONField(deserialize = false)
-    public void setStatus(Status status) {
+    public void setStatus(StatusEnum<Integer, String, Boolean> status) {
         this.status = status;
     }
 

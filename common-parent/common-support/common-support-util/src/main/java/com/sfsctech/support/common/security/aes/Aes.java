@@ -245,19 +245,19 @@ public class Aes {
         System.out.println("明文：" + content);
         String password = "84fde0de80864730bd0783a626e23285";
         System.out.println("密钥：" + password);
-        try {
+//        try {
             String token = UUIDUtil.base64Uuid();
             System.out.println("原始token：" + token);
-            String mytoken = encryptCBC(String.valueOf(System.currentTimeMillis()), "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes());
-            System.out.println("加密后token：" + mytoken);
-            System.out.println("网络传输编码后token：" + URLEncoder.encode(mytoken, "UTF-8"));
+            System.out.println("加密后token：" + encryptCBC("300093", "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
+            System.out.println("加密后time：" + encryptCBC(String.valueOf(System.currentTimeMillis()), "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
+//            System.out.println("网络传输编码后token：" + URLEncoder.encode(mytoken, "UTF-8"));
             RpcResult<String> result = new RpcResult<>();
             result.setResult("");
             System.out.println(result);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
 //        System.out.println("AES加密");
 //        // 加密
 //        String s = encrypt(content, password);

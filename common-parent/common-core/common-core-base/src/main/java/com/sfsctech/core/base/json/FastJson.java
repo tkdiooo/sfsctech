@@ -17,6 +17,7 @@ public class FastJson {
 
     static {
         config = new SerializeConfig();
+        // TODO 需要添加动态配置枚举类
         config.configEnumAsJavaBean(RpcConstants.Status.class);
     }
 
