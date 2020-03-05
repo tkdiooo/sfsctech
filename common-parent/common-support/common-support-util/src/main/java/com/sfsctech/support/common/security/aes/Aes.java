@@ -1,18 +1,12 @@
 package com.sfsctech.support.common.security.aes;
 
-import com.sfsctech.core.base.domain.result.RpcResult;
-import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.security.base64.Base64;
-import com.sfsctech.support.common.util.RandomUtil;
-import com.sfsctech.support.common.util.UUIDUtil;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
@@ -228,32 +222,29 @@ public class Aes {
     }
 
     public static void main(String[] args) {
-        String access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, "fsg-itss-datamonitor:access_token_id:admin:2020-02-13 14:20:10.123");
-        System.out.println(access_Jwt_Token);
-        System.out.println(EncrypterTool.decrypt(EncrypterTool.Security.AesCBC, access_Jwt_Token));
-        StringBuilder sb = new StringBuilder("{");
-        for (byte aByte : "b41f7ad90a4f4330".getBytes()) {
-            String hex = Integer.toHexString(aByte & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
-            }
-            sb.append("0x" + hex + ", ");
-        }
-        sb.append("}");
+//        String access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, "fsg-itss-datamonitor:access_token_id:admin:2020-02-13 14:20:10.123");
+//        System.out.println(access_Jwt_Token);
+//        System.out.println(EncrypterTool.decrypt(EncrypterTool.Security.AesCBC, access_Jwt_Token));
+//        StringBuilder sb = new StringBuilder("{");
+//        for (byte aByte : "b41f7ad90a4f4330".getBytes()) {
+//            String hex = Integer.toHexString(aByte & 0xFF);
+//            if (hex.length() == 1) {
+//                hex = '0' + hex;
+//            }
+//            sb.append("0x" + hex + ", ");
+//        }
+//        sb.append("}");
 //        String content = "tes发的时刻开房大厦fkldsfjslkdjfsd8538432-942jldskds fds jffld!@#$%^&*()_t";
         String content = "Timestamp=" + System.currentTimeMillis();
         System.out.println("明文：" + content);
         String password = "84fde0de80864730bd0783a626e23285";
         System.out.println("密钥：" + password);
 //        try {
-            String token = UUIDUtil.base64Uuid();
+            String token = "token";
             System.out.println("原始token：" + token);
             System.out.println("加密后token：" + encryptCBC("300093", "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
             System.out.println("加密后time：" + encryptCBC(String.valueOf(System.currentTimeMillis()), "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
 //            System.out.println("网络传输编码后token：" + URLEncoder.encode(mytoken, "UTF-8"));
-            RpcResult<String> result = new RpcResult<>();
-            result.setResult("");
-            System.out.println(result);
 
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
@@ -272,7 +263,7 @@ public class Aes {
 
         System.out.println("解密后：" + decryptCBC(new String(Base64.decrypt(s1)), password, "b41f7ad90a4f4330".getBytes()));
 //        System.out.println("密钥：" + CBC_SALT);
-        System.out.println("向量：" + sb.toString());
+//        System.out.println("向量：" + sb.toString());
         System.out.println("向量：{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}");
 //
 //        System.out.println(new String(new byte[]{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}));
