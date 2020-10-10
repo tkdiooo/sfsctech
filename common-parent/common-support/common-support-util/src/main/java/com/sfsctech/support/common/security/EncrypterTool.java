@@ -174,13 +174,13 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        String[] params = {"杨雨润"};
+        String[] params = {"代雪韵", "徐萌", "申少康", "蔡洪福", "陈志勇", "赵祯仕", "宋雨", "曹智勇"};
         StringBuilder sb = new StringBuilder();
         for (String param : params) {
             String name = Cn2SpellUtil.converterToSpell(param);
             sb.append(name + ",");
             System.out.println(name);
-            System.out.println(encrypt(Security.Aes, name).substring(16));
+            System.out.println(encrypt(Security.Aes, name).substring(0, 16));
         }
         System.out.println(sb);
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;

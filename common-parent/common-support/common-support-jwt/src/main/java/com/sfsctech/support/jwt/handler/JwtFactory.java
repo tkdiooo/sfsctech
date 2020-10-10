@@ -1,5 +1,6 @@
 package com.sfsctech.support.jwt.handler;
 
+import com.auth0.jwt.JWT;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.support.common.security.EncrypterTool;
@@ -173,6 +174,7 @@ public class JwtFactory {
     }
 
     private String buildJwt(JwtProxy proxy, Date beginTime, Date endTime) {
+        JWT.create().withIssuedAt(beginTime).withExpiresAt(endTime);
         return Jwts.builder()
                 .setClaims(proxy.getClaims())
                 .setIssuer(proxy.getIssuer())

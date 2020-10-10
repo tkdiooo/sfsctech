@@ -65,7 +65,7 @@ public class SpringConfig {
                 SerializerFeature.WriteEnumUsingToString
         );
         // TODO 需要动态添加过滤器代码
-        fastJsonConfig.setSerializeFilters(new FastJsonFilter());
+//        fastJsonConfig.setSerializeFilters(new FastJsonFilter());
         fastJsonConfig.setSerializeConfig(FastJson.getSerializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
         List<MediaType> fastMediaTypes = new ArrayList<>();

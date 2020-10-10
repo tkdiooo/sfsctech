@@ -1,58 +1,83 @@
 {
   "groups": [
     {
-      "name": "saml",
-      "type": "com.sfsctech.saml.core.properties.SamlConfig",
-      "sourceType": "com.sfsctech.saml.core.properties.SamlConfig"
+      "name": "saml.sp",
+      "type": "com.sfsctech.support.saml.properties.SpPropertyies",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies"
     },
     {
-      "name": "saml.sp",
-      "type": "com.sfsctech.saml.core.properties.SpConfig",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "name": "saml.sp.config",
+      "type": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig",
+      "description": "自定义SP配置",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     }
   ],
   "properties": [
     {
-      "name": "saml.sp-config",
-      "type": "java.util.Map<java.lang.String, com.sfsctech.saml.core.properties.SpConfig>",
+      "name": "saml.sp.config",
+      "type": "java.util.Map<java.lang.String, com.sfsctech.support.saml.properties.SpPropertyies$SpConfig>",
       "description": "自定义配置",
-      "sourceType": "com.sfsctech.saml.core.properties.SamlConfig"
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies"
     },
     {
-      "name": "saml.sp.idp-sso-url",
+      "name": "saml.sp.config.ipd-sso-destination",
       "type": "java.lang.String",
       "description": "目标URL：目标地址，IDP地址",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
-      "name": "saml.sp.protocol-binding",
+      "name": "saml.sp.config.protocol-binding",
       "type": "java.lang.String",
       "description": "传输SAML断言所需要的绑定：也就是用何种协议来取回真正的认证信息",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
-      "name": "saml.sp.assertion-consumer-service-url",
+      "name": "saml.sp.config.assertion-consumer-service-url",
       "type": "java.lang.String",
       "description": "SP地址： SAML断言返回的地址",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
-      "name": "saml.sp.sp-entity-id",
+      "name": "saml.sp.config.entity-id",
       "type": "java.lang.String",
       "description": "发行人信息，也就是SP的ID，一般是SP的域名",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
-      "name": "saml.sp.key-store",
+      "name": "saml.sp.config.cer-path",
       "type": "java.lang.String",
-      "description": "jks文件路径",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "description": "SP证书文件路径",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
-      "name": "saml.sp.key-pass",
+      "name": "saml.sp.config.key-path",
       "type": "java.lang.String",
-      "description": "jks密码",
-      "sourceType": "com.sfsctech.saml.core.properties.SpConfig"
+      "description": "SP证书私钥文件路径",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.attribute-name",
+      "type": "java.lang.String",
+      "description": "IDP Response验证参数",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.redirect-url",
+      "type": "java.lang.String",
+      "description": "服务重定向路径",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.verify-destination-lifetime",
+      "type": "java.lang.Boolean",
+      "description": "是否验证目的地址和有效期",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.verify-assertion-signature",
+      "type": "java.lang.Boolean",
+      "description": "是否验证断言签名",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     }
   ],
   "hints": [

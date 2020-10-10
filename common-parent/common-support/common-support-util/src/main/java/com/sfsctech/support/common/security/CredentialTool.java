@@ -30,15 +30,15 @@ public class CredentialTool {
     private PublicKey publicKey;
 
     public CredentialTool(String cerPath) throws Exception {
-        assertCer();
         this.cerPath = cerPath;
+        assertCer();
         initPublicKey();
     }
 
     public CredentialTool(String ksPath, String ksPass) throws Exception {
-        assertKeyStore();
         this.ksPath = ksPath;
         this.ksPass = ksPass;
+        assertKeyStore();
         initPrivateKey();
         this.x509Certificate = CredentialUtil.getX509Certificate(keyStore, alias);
         this.publicKey = x509Certificate.getPublicKey();

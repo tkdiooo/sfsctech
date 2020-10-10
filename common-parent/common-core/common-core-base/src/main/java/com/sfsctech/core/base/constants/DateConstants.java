@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class DateConstants
@@ -118,7 +120,7 @@ public class DateConstants {
             return BaseEnum.findKey(value, values());
         }
 
-        private static List<BaseEnum<Integer, String>> options = new ArrayList<>(Arrays.asList(values()));
+        private static List<BaseEnum<Integer, String>> options = Stream.of(values()).collect(Collectors.toList());
 
         public static List<BaseEnum<Integer, String>> getOptions() {
             return options;

@@ -8,6 +8,7 @@ package com.sfsctech.web.starter;
  */
 
 import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.core.exception.controller.GlobalErrorController;
 import com.sfsctech.core.exception.handler.GlobalExceptionHandler;
 import com.sfsctech.core.logger.config.LogbackConfig;
 import com.sfsctech.core.web.config.WebConfig;
@@ -20,7 +21,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import({WebConfig.class, RestTemplateFactoryConfig.class, GlobalExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
+@Import({WebConfig.class, RestTemplateFactoryConfig.class, GlobalErrorController.class, GlobalExceptionHandler.class, CacheConfig.class, LogbackConfig.class})
 @SpringBootApplication
 public @interface WebStarter {
 

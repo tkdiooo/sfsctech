@@ -221,7 +221,28 @@ public class Aes {
         }
     }
 
-    public static void main(String[] args) {
+    /**
+     * aes 解密C#
+     *
+     * @param data 密文
+     * @return
+     */
+    public static String decryptC3(String data, String key, String IV) {
+        try {
+            byte[] encrypted = Base64.decrypt(data);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec keyspec = new SecretKeySpec(key.getBytes(), "AES");
+            IvParameterSpec ivspec = new IvParameterSpec(IV.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
+            byte[] original = cipher.doFinal(encrypted);
+            return new String(original, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static void main(String[] args) throws Exception {
 //        String access_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, "fsg-itss-datamonitor:access_token_id:admin:2020-02-13 14:20:10.123");
 //        System.out.println(access_Jwt_Token);
 //        System.out.println(EncrypterTool.decrypt(EncrypterTool.Security.AesCBC, access_Jwt_Token));
@@ -235,17 +256,19 @@ public class Aes {
 //        }
 //        sb.append("}");
 //        String content = "tes发的时刻开房大厦fkldsfjslkdjfsd8538432-942jldskds fds jffld!@#$%^&*()_t";
-        String content = "Timestamp=" + System.currentTimeMillis();
-        System.out.println("明文：" + content);
-        String password = "84fde0de80864730bd0783a626e23285";
-        System.out.println("密钥：" + password);
+//        String content = "Timestamp=" + System.currentTimeMillis();
+//        System.out.println("明文：" + content);
+        String password = "84fde0de80864730";
+//        System.out.println("密钥：" + password);
 //        try {
-            String token = "token";
-            System.out.println("原始token：" + token);
-            System.out.println("加密后token：" + encryptCBC("300093", "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
-            System.out.println("加密后time：" + encryptCBC(String.valueOf(System.currentTimeMillis()), "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
+//        String token = "1588923412";
+//        System.out.println("原始token：" + token);
+//        System.out.println("加密1后token：" + encryptCBC(token, "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
+//        System.out.println("加密后time：" + encryptCBC(String.valueOf(System.currentTimeMillis()), "84fde0de80864730bd0783a626e23285", "b41f7ad90a4f4330".getBytes()));
 //            System.out.println("网络传输编码后token：" + URLEncoder.encode(mytoken, "UTF-8"));
-
+        String tempContent = "9toUMxdDpxcjoqXIYbwVVw..";
+        tempContent = decryptC3(tempContent, password, "b41f7ad90a4f4330");
+        System.out.println("解密后：\n" + tempContent);
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
@@ -256,19 +279,19 @@ public class Aes {
 //        System.out.println("加密后：" + HexUtil.toHexString(s.getBytes()));
 //        // 解密
 //        System.out.println("解密后：" + decrypt(s, password));
-        System.out.println("AES CBC加密");
+//        System.out.println("AES CBC加密");
 //        System.out.println("明文：" + content);
-        String s1 = Base64.encrypt(encryptCBC(content, password, "b41f7ad90a4f4330".getBytes()).getBytes());
-        System.out.println("加密后：" + s1);
+//        String s1 = Base64.encrypt(encryptCBC(content, password, "b41f7ad90a4f4330".getBytes()).getBytes());
+//        System.out.println("加密后：" + s1);
 
-        System.out.println("解密后：" + decryptCBC(new String(Base64.decrypt(s1)), password, "b41f7ad90a4f4330".getBytes()));
+//        System.out.println("解密后：" + decryptCBC(new String(Base64.decrypt(s1)), password, "b41f7ad90a4f4330".getBytes()));
 //        System.out.println("密钥：" + CBC_SALT);
 //        System.out.println("向量：" + sb.toString());
-        System.out.println("向量：{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}");
+//        System.out.println("向量：{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}");
 //
 //        System.out.println(new String(new byte[]{0x4b, 0x28, 0x52, 0x39, 0x33, 0x30, 0x34, 0x4a, 0x40, 0x24, 0x4f, 0x38, 0x4b, 0x2a, 0x31, 0x37}));
 //        System.out.println(decryptCBC(encryptCBC(content)));
-        String t = encryptCBC(content, "D%H@6przcRAs7@#3", new byte[]{0x48, 0x45, 0x4c, 0x4c, 0x4f, 0x57, 0x4f, 0x52, 0x4c, 0x44, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36});
+//        String t = encryptCBC(content, "D%H@6przcRAs7@#3", new byte[]{0x48, 0x45, 0x4c, 0x4c, 0x4f, 0x57, 0x4f, 0x52, 0x4c, 0x44, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36});
 //        System.out.println(t);
 //        System.out.println(Aes.decryptCBC(t, "D%H@6przcRAs7@#3", new byte[]{0x48, 0x45, 0x4c, 0x4c, 0x4f, 0x57, 0x4f, 0x52, 0x4c, 0x44, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36}));
 

@@ -239,7 +239,7 @@ public abstract class ExcelHelper {
      * @param <T>        范型类
      * @return List&lt;T&gt;
      */
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
     public static <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
 //        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
 //        AssertUtil.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");

@@ -12,7 +12,7 @@ public class FastJsonFilter implements ValueFilter {
 
     @Override
     public Object process(Object object, String name, Object value) {
-        System.out.println(object);
-        return null;
+        System.out.println("FastJsonFilter: name[" + name + "],value[" + value + "]");
+        return object;
     }
 }
