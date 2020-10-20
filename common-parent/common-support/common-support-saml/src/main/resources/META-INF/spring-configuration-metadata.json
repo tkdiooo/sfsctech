@@ -62,6 +62,12 @@
       "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
+      "name": "saml.sp.config.certificate-tag",
+      "type": "java.lang.String",
+      "description": "IDP Response证书标签名称",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
       "name": "saml.sp.config.redirect-url",
       "type": "java.lang.String",
       "description": "服务重定向路径",

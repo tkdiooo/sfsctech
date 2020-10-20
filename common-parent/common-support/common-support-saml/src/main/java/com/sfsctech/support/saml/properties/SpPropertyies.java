@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.sfsctech.support.saml.secret.SPCredentials;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @version Description:
  */
 @Component
+@RefreshScope
 @ConfigurationProperties(
         prefix = "saml.sp"
 )
@@ -38,6 +40,7 @@ public class SpPropertyies {
         private String entityId;
         private String cerPath;
         private String keyPath;
+        private String certificateTag;
         private SPCredentials spCredential;
 
         private String attributeName;
@@ -137,6 +140,14 @@ public class SpPropertyies {
 
         public void setVerifyAssertionSignature(boolean verifyAssertionSignature) {
             this.verifyAssertionSignature = verifyAssertionSignature;
+        }
+
+        public String getCertificateTag() {
+            return certificateTag;
+        }
+
+        public void setCertificateTag(String certificateTag) {
+            this.certificateTag = certificateTag;
         }
     }
 }
