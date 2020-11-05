@@ -1,6 +1,6 @@
 package com.sfsctech.support.saml.secret;
 
-import com.sfsctech.core.exception.ex.BizException;
+import com.sfsctech.core.base.ex.BizException;
 import com.sfsctech.support.common.util.CredentialUtil;
 import com.sfsctech.support.common.util.FileUtil;
 import com.sfsctech.support.common.util.ThrowableUtil;

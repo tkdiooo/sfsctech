@@ -1,7 +1,11 @@
 package com.sfsctech.core.cache.factory;
 
 
+import com.sfsctech.core.cache.redis.RedisCacheClient;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class CacheFactory
@@ -13,13 +17,21 @@ public class CacheFactory<I extends CacheProxy<String, Object>> implements Cache
 
     private I cacheProxy;
 
-    public CacheFactory(I cacheProxy) {
+    private Map<String, I> extraCacheProxy;
+
+    public CacheFactory(I cacheProxy, Map<String, I> extraCacheProxy) {
         this.cacheProxy = cacheProxy;
+        this.extraCacheProxy = extraCacheProxy;
     }
 
     @Override
     public I getCacheClient() {
         return cacheProxy;
+    }
+
+    @Override
+    public I getExtraCacheClient(String key) {
+        return extraCacheProxy.get(key);
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})

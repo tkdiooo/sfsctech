@@ -1,9 +1,9 @@
 package com.sfsctech.core.web.tools.breadcrumb;
 
 import com.google.common.collect.Lists;
+import com.sfsctech.core.base.ex.BizException;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
-import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -32,6 +32,13 @@ public class SpPropertyies {
         this.config = config;
     }
 
+    /**
+     * Session保持类型
+     */
+    public enum AuthnContextComparisonTypeEnumeration {
+        exact, minimum, maximum, better
+    }
+
     public static class SpConfig {
 
         private String IPDSSODestination;
@@ -41,12 +48,14 @@ public class SpPropertyies {
         private String cerPath;
         private String keyPath;
         private String certificateTag;
+        private String encryptionSeparated;
         private SPCredentials spCredential;
 
         private String attributeName;
         private String redirectUrl;
         private boolean verifyDestinationLifetime;
         private boolean verifyAssertionSignature;
+        private boolean isRequestedAuthnContext;
 
         public String getProtocolBinding() {
             return protocolBinding;
@@ -148,6 +157,22 @@ public class SpPropertyies {
 
         public void setCertificateTag(String certificateTag) {
             this.certificateTag = certificateTag;
+        }
+
+        public String getEncryptionSeparated() {
+            return encryptionSeparated;
+        }
+
+        public void setEncryptionSeparated(String encryptionSeparated) {
+            this.encryptionSeparated = encryptionSeparated;
+        }
+
+        public boolean isRequestedAuthnContext() {
+            return isRequestedAuthnContext;
+        }
+
+        public void setRequestedAuthnContext(boolean requestedAuthnContext) {
+            isRequestedAuthnContext = requestedAuthnContext;
         }
     }
 }

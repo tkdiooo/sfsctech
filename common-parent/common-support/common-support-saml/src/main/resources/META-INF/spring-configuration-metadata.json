@@ -68,6 +68,12 @@
       "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     },
     {
+      "name": "saml.sp.config.encryption-separated",
+      "type": "java.lang.String",
+      "description": "服务重定向加密分隔符",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
       "name": "saml.sp.config.redirect-url",
       "type": "java.lang.String",
       "description": "服务重定向路径",
@@ -83,6 +89,12 @@
       "name": "saml.sp.config.verify-assertion-signature",
       "type": "java.lang.Boolean",
       "description": "是否验证断言签名",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.is-requested-authn-context",
+      "type": "java.lang.Boolean",
+      "description": "是否开启SP认证要求",
       "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     }
   ],

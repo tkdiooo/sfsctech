@@ -1,4 +1,4 @@
-package com.sfsctech.core.exception.ex;
+package com.sfsctech.core.base.ex;
 
 import com.sfsctech.core.base.ex.ExceptionTips;
 import com.sfsctech.core.base.ex.GenericException;

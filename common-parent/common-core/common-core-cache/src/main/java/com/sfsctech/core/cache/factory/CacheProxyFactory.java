@@ -12,4 +12,6 @@ public interface CacheProxyFactory<T extends CacheProxy<String, Object>> {
      * 获取Cache客户端
      */
     T getCacheClient();
+
+    T getExtraCacheClient(String key);
 }

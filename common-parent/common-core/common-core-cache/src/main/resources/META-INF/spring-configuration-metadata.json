@@ -1,0 +1,14 @@
+{
+  "groups": [
+  ],
+  "properties": [
+    {
+      "name": "spring.redis.extra",
+      "type": "java.util.Map<java.lang.String, org.springframework.boot.autoconfigure.data.redis.RedisProperties>",
+      "description": "Redis多数据源",
+      "sourceType": "com.sfsctech.core.cache.properties.ExtraRedisProperties"
+    }
+  ],
+  "hints": [
+  ]
+}

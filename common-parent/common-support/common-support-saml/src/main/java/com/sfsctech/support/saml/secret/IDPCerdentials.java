@@ -1,6 +1,7 @@
 package com.sfsctech.support.saml.secret;
 
-import com.sfsctech.core.exception.ex.BizException;
+
+import com.sfsctech.core.base.ex.BizException;
 import com.sfsctech.support.common.security.CredentialTool;
 import com.sfsctech.support.common.util.ThrowableUtil;
 import org.opensaml.security.credential.Credential;
