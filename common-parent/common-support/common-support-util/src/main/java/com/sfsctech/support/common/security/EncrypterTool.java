@@ -174,7 +174,7 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        String[] params = {"代雪韵", "徐萌", "申少康", "蔡洪福", "陈志勇", "赵祯仕", "宋雨", "曹智勇"};
+        String[] params = {"李海", "朱湘林", "朱贤斌", "刘苏", "高枫", "汪杰","邹舒翔"};
         StringBuilder sb = new StringBuilder();
         for (String param : params) {
             String name = Cn2SpellUtil.converterToSpell(param);

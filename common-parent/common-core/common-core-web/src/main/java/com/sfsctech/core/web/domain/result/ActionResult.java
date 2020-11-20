@@ -74,21 +74,21 @@ public class ActionResult<T> extends BaseResult {
     }
 
     public static <T> ActionResult<T> forSuccess(T t) {
-        return new ActionResult<>(t, ResourceUtil.getMessage(I18NConstants.Tips.OperateSuccess.getCode(), ActionHolder.getRequest().getLocale()));
+        return new ActionResult<>(t, ResourceUtil.getMessage(I18NConstants.Tips.OperateSuccess.getCode(), ActionHolder.getLocale()));
     }
 
     public static <T> ActionResult<T> forSuccessInfo(TipsEnum<String, String> tips, String... params) {
         ActionResult<T> result = new ActionResult<>();
-        result.addMessages(ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
+        result.addMessages(ResourceUtil.getMessage(tips.getCode(), ActionHolder.getLocale(), params));
         return result;
     }
 
     public static <T> ActionResult<T> forSuccessInfo(T t, TipsEnum<String, String> tips, String... params) {
-        return new ActionResult<>(t, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
+        return new ActionResult<>(t, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getLocale(), params));
     }
 
     public static <T> ActionResult<T> forFailure() {
-        return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), ActionHolder.getRequest().getLocale()));
+        return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), ActionHolder.getLocale()));
     }
 
     public static <T> ActionResult<T> forFailure(Locale locale) {
@@ -96,22 +96,27 @@ public class ActionResult<T> extends BaseResult {
     }
 
     public static <T> ActionResult<T> forFailure(T t) {
-        return new ActionResult<>(t, RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), ActionHolder.getRequest().getLocale()));
+        return new ActionResult<>(t, RpcConstants.Status.Failure, ResourceUtil.getMessage(I18NConstants.Tips.OperateFailure.getCode(), ActionHolder.getLocale()));
     }
 
     public static <T> ActionResult<T> forFailureInfo(TipsEnum<String, String> tips, String... params) {
-        return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
+        return new ActionResult<>(RpcConstants.Status.Failure, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getLocale(), params));
     }
 
     public static <T> ActionResult<T> forFailureInfo(T t, TipsEnum<String, String> tips, String... params) {
-        return new ActionResult<>(t, RpcConstants.Status.Failure, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
+        return new ActionResult<>(t, RpcConstants.Status.Failure, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getLocale(), params));
     }
 
     public static <T> ActionResult<T> forStatus(T t, RpcConstants.Status status, TipsEnum<String, String> tips, String... params) {
-        return new ActionResult<>(t, status, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getRequest().getLocale(), params));
+        return new ActionResult<>(t, status, ResourceUtil.getMessage(tips.getCode(), ActionHolder.getLocale(), params));
     }
 
     public static <T> ActionResult<T> forRpcResult(RpcResult<T> rpcResult) {
         return new ActionResult<>(rpcResult.getResult(), rpcResult.getStatus(), rpcResult.getMessages().toArray(new String[]{}));
+    }
+
+    public static void main(String[] args) {
+        ActionResult result = new ActionResult<>();
+        System.out.println(result);
     }
 }

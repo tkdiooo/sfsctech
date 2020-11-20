@@ -1,10 +1,10 @@
 package com.sfsctech.demo.test.redis;
 
-import com.sfsctech.core.auth.sso.base.util.CacheKeyUtil;
 import com.sfsctech.core.base.constants.CacheConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.demo.test.redis.service.RedisService;
+import com.sfsctech.support.common.util.UUIDUtil;
 import oracle.jdbc.pool.OracleDataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -99,8 +99,10 @@ public class RedisTest {
 //        }
         List<String> keys = new ArrayList<>();
         for (int i = 0; i < 300; i++) {
-            keys.add(CacheKeyUtil.getSaltCacheKey());
+            keys.add(UUIDUtil.base58Uuid());
         }
+
+        factory.getExtraCacheClient("test").putTimeOut("abc", "test11", CacheConstants.MilliSecond.Minutes30.getContent());
 
         keys.forEach(key -> {
             factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent());
@@ -109,7 +111,7 @@ public class RedisTest {
         });
 
         keys.forEach(key -> System.out.println(factory.get(key).toString()));
-        String key = CacheKeyUtil.getSaltCacheKey();
+        String key = UUIDUtil.base58Uuid();
         factory.getCacheClient().putTimeOut(key, "abc:" + key, CacheConstants.MilliSecond.Minutes30.getContent());
         System.out.println(factory.get(key).toString());
         System.out.println(factory.getCacheClient().ttl("ukc6twTVirQaCp9l2X5yokjK##%!##@$%|$#$%(^)$}$*{^*+%"));
