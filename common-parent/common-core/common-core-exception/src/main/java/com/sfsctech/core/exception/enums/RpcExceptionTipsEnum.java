@@ -15,7 +15,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public enum RpcExceptionTipsEnum implements ExceptionTips<String, String> {
 
     NetworkError("001", "网络连接错误", ExceptionTypeEnum.System, ExceptionLevelEnum.Error),
-    ServiceError("002", "服务器错误", ExceptionTypeEnum.System, ExceptionLevelEnum.Error);
+    ServiceError("002", "服务器错误", ExceptionTypeEnum.System, ExceptionLevelEnum.Error),
+    RpcError("003", "远程调用接口错误", ExceptionTypeEnum.System, ExceptionLevelEnum.Error);
 
     private String code;
     private String description;
@@ -47,10 +48,5 @@ public enum RpcExceptionTipsEnum implements ExceptionTips<String, String> {
     @Override
     public String getDescription() {
         return this.description;
-    }
-
-    @Override
-    public String toString() {
-        return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("name", "ordinal").toString();
     }
 }

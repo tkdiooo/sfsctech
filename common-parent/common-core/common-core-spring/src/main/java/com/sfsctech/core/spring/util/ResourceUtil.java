@@ -1,8 +1,8 @@
 package com.sfsctech.core.spring.util;
 
-import com.sfsctech.core.base.enums.BaseEnum;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.util.Locale;
 
@@ -14,7 +14,7 @@ import java.util.Locale;
  */
 public class ResourceUtil {
 
-    private static MessageSource messageSource = SpringContextUtil.getBean(MessageSource.class);
+    private static MessageSource messageSource = SpringContextUtil.getBean(ReloadableResourceBundleMessageSource.class);
 
     /**
      * 获取messageSource

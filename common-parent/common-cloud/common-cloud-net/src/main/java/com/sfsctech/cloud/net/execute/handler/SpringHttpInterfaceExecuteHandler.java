@@ -17,7 +17,6 @@ import com.sfsctech.support.common.util.AssertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,15 +29,15 @@ import java.util.Map;
 
 public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     private Map<Method, ServiceInterfacePoint> pointMap;
-    private RestTemplate httpClient;
+    private RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
 
     private final Logger logger = LoggerFactory.getLogger(SpringHttpInterfaceExecuteHandler.class);
 
-    public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate httpClient) {
+    public SpringHttpInterfaceExecuteHandler(ServiceInterface interfaceInfo, RestTemplate restTemplate) {
         checkInterface(interfaceInfo);
         this.pointMap = convertToClientPointMap(interfaceInfo.getServiceInterfacePoint());
-        this.httpClient = httpClient;
+        this.restTemplate = restTemplate;
         this.httpHeaders = buildCommonHttpHeaders();
     }
 
@@ -48,21 +47,23 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         ServiceInterfacePoint servicePointInfo = pointMap.get(method);
+        BaseDto request = null;
+        if (null != args) {
+            request = (BaseDto) args[0];
+            logger.info(request.toString());
+        }
 
-        BaseDto request = (BaseDto) args[0];
-        logger.info(request.toString());
-
-        ParameterizedTypeReference<RpcResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
+//        ParameterizedTypeReference<RpcResult> typeReference = ParameterizedTypeReference.forType(servicePointInfo.getResult());
         HttpEntity<BaseDto> httpEntity = new HttpEntity<>(request, httpHeaders);
-        ResponseEntity<RpcResult> responseEntity = httpClient.exchange(servicePointInfo.getServiceUrl(), HttpMethod.POST, httpEntity, typeReference);
+        ResponseEntity<RpcResult> responseEntity = restTemplate.postForEntity(servicePointInfo.getServiceUrl(), httpEntity, RpcResult.class);
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             logger.warn(responseEntity.toString());
             throw new HttpExecuteErrorException(httpEntity);
         } else {
             RpcResult result = responseEntity.getBody();
-            logger.info("result:[{}]", result.toString());
-            if (!result.isSuccess() && result.getStatus().equals(RpcConstants.Status.ServerError)) {
-                throw new GenericException(RpcExceptionTipsEnum.ServiceError);
+            logger.info("result:[{}]", result);
+            if (!(null != result && null != result.getStatus() && result.getStatus().equals(RpcConstants.Status.Successful))) {
+                throw new GenericException(RpcExceptionTipsEnum.RpcError);
             }
             return result;
         }
@@ -106,7 +107,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
             interfacePoints.forEach(point -> {
                 AssertUtil.notNull(point.getMethod(), "接口信息不合法，方法对象method为空");
                 AssertUtil.notNull(point.getResult(), "接口信息不合法，方法返回结果为空");
-                AssertUtil.notNull(point.getParams(), "接口信息不合法，方法参数为空");
+//                AssertUtil.notNull(point.getParams(), "接口信息不合法，方法参数为空");
                 AssertUtil.notNull(point.getServiceUrl(), "接口信息不合法，服务Url为空");
             });
         }

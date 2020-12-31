@@ -1,11 +1,17 @@
 package com.sfsctech.support.common.util;
 
 
+import com.alibaba.fastjson.JSON;
+import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.base.json.FastJson;
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -211,6 +217,38 @@ public abstract class UUIDUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(UUIDUtil.base58Uuid());
+//        FileUtil.getFileFromFolders("F:\\tet").forEach(f -> {
+//            loadFile(f.getPath(), false);
+//        });
+        RpcResult<String> result = new RpcResult<>();
+        result.setStatus(RpcConstants.Status.Failure);
+        String str = FastJson.toJSONString(result);
+        System.out.println(str);
+
+        System.out.println(JSON.parseObject(str, RpcResult.class));
+    }
+
+    public static void loadFile(String path, boolean bool) {
+        System.out.println(path);
+        List<File> list = FileUtil.getFileFromFolders(path);
+        if (ListUtil.isNotEmpty(list)) {
+            for (File f : list) {
+                if (!f.getPath().contains(".svn")) {
+                    if (bool) {
+                        System.out.println(f.getPath());
+                        continue;
+                    }
+                    if (f.getPath().contains("trunk")) {
+                        System.out.println(f.getPath());
+                        break;
+                    }
+                    if (f.getPath().contains("branches")) {
+                        loadFile(f.getPath(), true);
+                    }
+                    loadFile(f.getPath(), false);
+                }
+            }
+        }
+
     }
 }

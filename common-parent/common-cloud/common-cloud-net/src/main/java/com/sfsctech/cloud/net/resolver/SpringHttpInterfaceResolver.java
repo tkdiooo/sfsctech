@@ -35,21 +35,24 @@ public class SpringHttpInterfaceResolver implements InterfaceResolver<Class> {
         Method[] methods = interfaceClass.getDeclaredMethods();
         for (Method method : methods) {
             Class[] parameterTypes = method.getParameterTypes();
-            if (parameterTypes.length != 1) {
+            if (parameterTypes.length > 1) {
                 throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能有一个对象");
             }
-
-            Class parameterType = parameterTypes[0];
-            if (!BaseDto.class.isAssignableFrom(parameterType)) {
-                throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能是一个继承了" + BaseDto.class.getName() + "类的对象");
+            ServiceInterfacePoint servicePointInfo = new ServiceInterfacePoint();
+            if (parameterTypes.length == 1) {
+                Class parameterType = parameterTypes[0];
+                if (!BaseDto.class.isAssignableFrom(parameterType)) {
+                    throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的参数定义, 正确的参数只能是一个继承了" + BaseDto.class.getName() + "类的对象");
+                }
+                servicePointInfo.setParams(parameterType);
             }
+
 
             if (!RpcResult.class.equals(method.getReturnType()) && !Void.TYPE.equals(method.getReturnType())) {
                 throw new InterfaceMethodException(interfaceClass.getName() + "类的" + method.getName() + "方法含有非法的返回结果定义, 正确的返回结果只能是" + RpcResult.class.getName() + "类的对象");
             }
-            ServiceInterfacePoint servicePointInfo = new ServiceInterfacePoint();
+
             servicePointInfo.setMethod(method);
-            servicePointInfo.setParams(parameterType);
             servicePointInfo.setResult(method.getGenericReturnType());
             servicePointInfo.setServiceUrl(this.buildServicePoint(interfaceClass, method));
             interfacePoints.add(servicePointInfo);

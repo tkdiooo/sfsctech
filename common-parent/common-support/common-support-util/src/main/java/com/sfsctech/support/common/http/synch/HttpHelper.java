@@ -10,6 +10,7 @@ import org.apache.http.entity.mime.content.InputStreamBody;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -345,22 +346,22 @@ public class HttpHelper {
         return result;
     }
 
-//    public static void main(String[] args) {
-//
+    public static void main(String[] args) {
+
 //        String PARAMS_GENKEY = "genKey";
-//
+
 //        String PARAMS_SUBKEY = "subKey";
-//        Map<String, String> params = new HashMap<>();
-//
+        Map<String, String> params = new HashMap<>();
+
 //        params.put(PARAMS_GENKEY, "hcm");
 //        params.put(PARAMS_SUBKEY, "TmRulesHoliday");
-//        String SequenceUrl = "http://172.16.192.51:9990/genid/genid";// 序列ID
-//        ResponseContent ret = HttpHelper.postEntity(SequenceUrl, params);
-//        try {
-//            System.out.println(ret.getContent());
+        String SequenceUrl = "http://localhost:8081/data/msg/test";// 序列ID
+        ResponseContent ret = HttpHelper.postUrl(SequenceUrl);
+        try {
+            System.out.println(ret.getContent());
 //            System.out.println(HttpHelper.sendGet(SequenceUrl, "genKey=hcm&subKey=TmRulesHoliday"));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

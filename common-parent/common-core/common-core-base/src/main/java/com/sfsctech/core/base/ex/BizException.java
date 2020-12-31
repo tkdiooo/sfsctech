@@ -1,8 +1,5 @@
 package com.sfsctech.core.base.ex;
 
-import com.sfsctech.core.base.ex.ExceptionTips;
-import com.sfsctech.core.base.ex.GenericException;
-
 /**
  * Class BizException
  *
@@ -17,8 +14,8 @@ public class BizException extends GenericException {
         super();
     }
 
-    public BizException(ExceptionTips<String, String> tips) {
-        super(tips);
+    public BizException(ExceptionTips<String, String> tips, String... params) {
+        super(tips, params);
     }
 
     public BizException(String message, String... params) {

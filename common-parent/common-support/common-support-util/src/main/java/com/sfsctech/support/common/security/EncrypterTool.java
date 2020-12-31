@@ -112,8 +112,20 @@ public class EncrypterTool {
             return null;
         }
     }
+    public static int reverse(int x) {
+        long result = 0;
+        while (x != 0){
+            result = result * 10 + x % 10;
+            x = x / 10;
+        }
+        if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE){
+            return 0;
+        }
+        return (int)result;
+    }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
+        System.out.println(EncrypterTool.reverse(123456789));
 //        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
 //        System.out.println(data);
 //        new Thread(() -> {
@@ -174,15 +186,16 @@ public class EncrypterTool {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        String[] params = {"李海", "朱湘林", "朱贤斌", "刘苏", "高枫", "汪杰","邹舒翔"};
-        StringBuilder sb = new StringBuilder();
-        for (String param : params) {
-            String name = Cn2SpellUtil.converterToSpell(param);
-            sb.append(name + ",");
-            System.out.println(name);
-            System.out.println(encrypt(Security.Aes, name).substring(0, 16));
-        }
-        System.out.println(sb);
+//        System.out.println(encrypt(Security.Aes, "temporary").substring(0, 16));
+//        String[] params = {"李海", "朱湘林", "朱贤斌", "刘苏", "高枫", "汪杰","邹舒翔"};
+//        StringBuilder sb = new StringBuilder();
+//        for (String param : params) {
+//            String name = Cn2SpellUtil.converterToSpell(param);
+//            sb.append(name + ",");
+//            System.out.println(name);
+//            System.out.println(encrypt(Security.Aes, name).substring(0, 16));
+//        }
+//        System.out.println(sb);
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
 //        System.out.println(UUIDUtil.base58Uuid());
     }

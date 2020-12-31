@@ -1,7 +1,10 @@
 package com.sfsctech.core.base.domain.result;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.sfsctech.core.base.constants.RpcConstants;
-import com.sfsctech.core.base.ex.GenericException;
+import com.sfsctech.core.base.enums.StatusEnum;
+import com.sfsctech.core.base.ex.RpcException;
+import com.sfsctech.core.base.json.RpcStatusEnumDeserializer;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -19,7 +22,7 @@ public class RpcResult<T> extends BaseResult {
     private static final long serialVersionUID = -4406532034304920638L;
 
     private T result;
-    private GenericException exception;
+    private RpcException exception;
 
     public RpcResult() {
         super();
@@ -30,13 +33,13 @@ public class RpcResult<T> extends BaseResult {
         this.result = result;
     }
 
-    public RpcResult(T result, GenericException exception) {
+    public RpcResult(T result, RpcException exception) {
         super();
         this.result = result;
         this.exception = exception;
     }
 
-    public RpcResult(T result, RpcConstants.Status status, GenericException exception) {
+    public RpcResult(T result, RpcConstants.Status status, RpcException exception) {
         super(status);
         this.result = result;
         this.exception = exception;
@@ -46,7 +49,7 @@ public class RpcResult<T> extends BaseResult {
         super(status);
     }
 
-    public RpcResult(RpcConstants.Status status, GenericException exception) {
+    public RpcResult(RpcConstants.Status status, RpcException exception) {
         super(status);
         this.exception = exception;
     }
@@ -59,17 +62,23 @@ public class RpcResult<T> extends BaseResult {
         this.result = result;
     }
 
-    public GenericException getException() {
+    public RpcException getException() {
         return exception;
     }
 
-    public void setException(GenericException exception) {
+    public void setException(RpcException exception) {
         this.exception = exception;
     }
 
     public void setMessage(String message) {
         super.getMessages().clear();
         super.addMessages(message);
+    }
+
+    @Override
+    @JSONField(deserializeUsing = RpcStatusEnumDeserializer.class)
+    public void setStatus(StatusEnum<Integer, String, Boolean> status) {
+        super.status = status;
     }
 
     @Override

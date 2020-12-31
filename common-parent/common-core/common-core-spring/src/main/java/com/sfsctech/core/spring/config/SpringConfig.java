@@ -6,13 +6,12 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.json.FastJson;
-import com.sfsctech.core.base.json.FastJsonFilter;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
+import com.sfsctech.core.spring.resource.DSMessageSource;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.dozer.config.DozerMapperConfig;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.validator.HibernateValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +30,10 @@ import java.util.List;
  * @author 张麒 2018-5-11.
  * @version Description:
  */
+@Log4j
 @Configuration
 @Import({SpringContextUtil.class, TomcatConfig.class, ApplicationInitialize.class, DozerMapperConfig.class})
 public class SpringConfig {
-
-    private final Logger logger = LoggerFactory.getLogger(SpringConfig.class);
 
     /**
      * 验证工厂类
@@ -75,8 +73,7 @@ public class SpringConfig {
     }
 
     /**
-     * 添加国际化资源<br>
-     * 静态方法保证其在系统启动时就调用
+     * 配置properties国际化资源
      *
      * @return MessageSource
      */
@@ -88,5 +85,15 @@ public class SpringConfig {
         // 缓存时间(秒)
         messageSource.setCacheSeconds(600);
         return messageSource;
+    }
+
+    /**
+     * 配置数据库国际化资源
+     *
+     * @return MessageSource
+     */
+    @Bean(name = "dsMessageSource")
+    public DSMessageSource dsMessageSource() {
+        return new DSMessageSource();
     }
 }

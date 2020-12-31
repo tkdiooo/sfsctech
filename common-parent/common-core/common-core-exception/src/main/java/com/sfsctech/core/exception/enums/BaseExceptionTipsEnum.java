@@ -48,9 +48,4 @@ public enum BaseExceptionTipsEnum implements ExceptionTips<String, String> {
     public String getDescription() {
         return this.description;
     }
-
-    @Override
-    public String toString() {
-        return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("name", "ordinal").toString();
-    }
 }

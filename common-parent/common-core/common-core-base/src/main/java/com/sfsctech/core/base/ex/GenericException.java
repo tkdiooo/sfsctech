@@ -1,6 +1,8 @@
 package com.sfsctech.core.base.ex;
 
 import com.sfsctech.core.base.constants.CommonConstants;
+import com.sfsctech.core.base.json.FastJson;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.text.MessageFormat;
 
@@ -22,9 +24,10 @@ public class GenericException extends RuntimeException implements BaseException<
         super();
     }
 
-    public GenericException(ExceptionTips<String, String> tips) {
+    public GenericException(ExceptionTips<String, String> tips, String... params) {
         super();
         this.tips = tips;
+        if (null != params) this.params = params;
     }
 
     public GenericException(String message, String... params) {
@@ -49,10 +52,15 @@ public class GenericException extends RuntimeException implements BaseException<
 
     @Override
     public String getMessage() {
-        if (params.length > 0) return MessageFormat.format(super.getMessage(), (Object[]) this.params);
-        else if (null != this.tips)
-            return tips.toString();
-        else return super.getMessage();
+        if (null != this.tips) {
+            if (params.length > 0) {
+                return FastJson.toJSONString(MessageFormat.format(tips.getDescription(), (Object[]) params));
+            } else {
+                return FastJson.toJSONString(tips);
+            }
+        } else if (params.length > 0) {
+            return MessageFormat.format(super.getMessage(), (Object[]) this.params);
+        } else return super.getMessage();
     }
 
     public String[] getParams() {
@@ -64,7 +72,7 @@ public class GenericException extends RuntimeException implements BaseException<
     }
 
     public void addParams(String param) {
-        this.params[params.length] = param;
+        ArrayUtils.add(params, param);
     }
 
     public String getViewName() {

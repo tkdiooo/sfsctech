@@ -29,7 +29,6 @@ public class UTF8PatcherForHttpClient {
         }
         converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
         converters.add(jsonConverter);
-        restTemplate.setMessageConverters(converters);
 
         return restTemplate;
     }

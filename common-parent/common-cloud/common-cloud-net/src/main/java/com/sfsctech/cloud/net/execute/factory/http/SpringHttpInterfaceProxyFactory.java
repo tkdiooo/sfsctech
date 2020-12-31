@@ -21,13 +21,13 @@ import java.lang.reflect.Proxy;
  */
 public class SpringHttpInterfaceProxyFactory implements InterfaceProxyFactory {
 
-    private RestTemplate httpClient;
+    private RestTemplate restTemplate;
     // 接口解析器
     private InterfaceResolver<Class> interfaceResolver = new SpringHttpInterfaceResolver();
     private static final Logger LOGGER = LoggerFactory.getLogger(InterfaceProxyFactory.class);
 
-    public SpringHttpInterfaceProxyFactory(RestTemplate httpClient) {
-        this.httpClient = httpClient;
+    public SpringHttpInterfaceProxyFactory(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     /**
@@ -38,7 +38,7 @@ public class SpringHttpInterfaceProxyFactory implements InterfaceProxyFactory {
     public <T> T createProxy(Class<T> cls) {
         ServiceInterface interfaceInfo = this.interfaceResolver.parse(cls);
         LOGGER.info("{} parsing the success.", cls.getName());
-        ExecuteHandler executeHandler = new SpringHttpInterfaceExecuteHandler(interfaceInfo, this.httpClient);
+        ExecuteHandler executeHandler = new SpringHttpInterfaceExecuteHandler(interfaceInfo, this.restTemplate);
         LOGGER.info("{} execute handler initialize success.", interfaceInfo.getInterfaceClass().getName());
         return (T) Proxy.newProxyInstance(cls.getClassLoader(), new Class[]{cls}, executeHandler);
     }

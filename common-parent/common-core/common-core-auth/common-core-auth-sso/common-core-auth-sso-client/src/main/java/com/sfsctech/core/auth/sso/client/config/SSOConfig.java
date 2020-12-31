@@ -18,7 +18,6 @@ import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
-import com.sfsctech.support.common.util.HttpUtil;
 import com.sfsctech.support.jwt.handler.JwtFactory;
 import com.sfsctech.support.jwt.properties.JwtProperties;
 import org.springframework.beans.factory.annotation.Autowired;

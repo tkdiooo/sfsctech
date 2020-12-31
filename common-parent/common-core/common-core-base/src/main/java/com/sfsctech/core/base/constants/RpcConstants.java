@@ -1,10 +1,10 @@
 package com.sfsctech.core.base.constants;
 
 
+import com.alibaba.fastjson.annotation.JSONType;
 import com.sfsctech.core.base.enums.BaseEnum;
+import com.sfsctech.core.base.json.RpcStatusEnumDeserializer;
 import com.sfsctech.core.base.enums.StatusEnum;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -61,11 +61,6 @@ public class RpcConstants {
         @Override
         public Boolean getSuccessful() {
             return successful;
-        }
-
-        @Override
-        public String toString() {
-            return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("name", "ordinal").toString();
         }
 
         public static Status getEnum(Integer code) {

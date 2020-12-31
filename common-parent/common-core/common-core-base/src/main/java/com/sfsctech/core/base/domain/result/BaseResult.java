@@ -1,7 +1,6 @@
 package com.sfsctech.core.base.domain.result;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.sfsctech.core.base.constants.RpcConstants.Status;
+import com.sfsctech.core.base.constants.RpcConstants;
 import com.sfsctech.core.base.domain.dto.BaseDto;
 import com.sfsctech.core.base.enums.StatusEnum;
 import org.apache.commons.lang3.ArrayUtils;
@@ -16,7 +15,7 @@ import java.util.*;
  * @author 张麒 2017/3/21.
  * @version Description:
  */
-public class BaseResult extends BaseDto {
+public abstract class BaseResult extends BaseDto {
 
     private static final long serialVersionUID = -8243241537328556858L;
     /**
@@ -26,7 +25,7 @@ public class BaseResult extends BaseDto {
     /**
      * 响应状态
      */
-    protected StatusEnum<Integer, String, Boolean> status = Status.Successful;
+    protected StatusEnum<Integer, String, Boolean> status = RpcConstants.Status.Successful;
     /**
      * 响应消息列表
      */
@@ -36,7 +35,6 @@ public class BaseResult extends BaseDto {
     }
 
     public BaseResult(StatusEnum<Integer, String, Boolean> status, String... messages) {
-        this.success = status.getSuccessful();
         this.status = status;
         if (ArrayUtils.isNotEmpty(messages)) {
             addMessages(messages);
@@ -51,14 +49,8 @@ public class BaseResult extends BaseDto {
         this.success = hasErrors;
     }
 
-    @JSONField(deserialize = false)
     public StatusEnum<Integer, String, Boolean> getStatus() {
         return status;
-    }
-
-    @JSONField(deserialize = false)
-    public void setStatus(StatusEnum<Integer, String, Boolean> status) {
-        this.status = status;
     }
 
     public List<String> getMessages() {
@@ -92,6 +84,8 @@ public class BaseResult extends BaseDto {
     public Map<String, Object> getAttachs() {
         return this.attachs;
     }
+
+    public abstract void setStatus(StatusEnum<Integer, String, Boolean> status);
 
     @Override
     public String toString() {

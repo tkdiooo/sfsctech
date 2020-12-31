@@ -43,6 +43,11 @@ public class ActionResult<T> extends BaseResult {
         super(status, messages);
     }
 
+    @Override
+    public void setStatus(StatusEnum<Integer, String, Boolean> status) {
+        super.status = status;
+    }
+
     public T getResult() {
         return result;
     }
@@ -112,7 +117,10 @@ public class ActionResult<T> extends BaseResult {
     }
 
     public static <T> ActionResult<T> forRpcResult(RpcResult<T> rpcResult) {
-        return new ActionResult<>(rpcResult.getResult(), rpcResult.getStatus(), rpcResult.getMessages().toArray(new String[]{}));
+        ActionResult<T> result = new ActionResult<>(rpcResult.getResult(), rpcResult.getStatus(), rpcResult.getMessages().toArray(new String[]{}));
+        result.setSuccess(rpcResult.isSuccess());
+        result.setAttachs(rpcResult.getAttachs());
+        return result;
     }
 
     public static void main(String[] args) {
