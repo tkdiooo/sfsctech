@@ -6,11 +6,12 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.sfsctech.core.base.constants.CommonConstants;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.json.FastJson;
+import com.sfsctech.core.base.json.FastJsonFilter;
 import com.sfsctech.core.spring.initialize.ApplicationInitialize;
 import com.sfsctech.core.spring.resource.DSMessageSource;
 import com.sfsctech.core.spring.util.SpringContextUtil;
 import com.sfsctech.support.dozer.config.DozerMapperConfig;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ import java.util.List;
  * @author 张麒 2018-5-11.
  * @version Description:
  */
-@Log4j
+@Slf4j
 @Configuration
 @Import({SpringContextUtil.class, TomcatConfig.class, ApplicationInitialize.class, DozerMapperConfig.class})
 public class SpringConfig {
@@ -63,7 +64,7 @@ public class SpringConfig {
                 SerializerFeature.WriteEnumUsingToString
         );
         // TODO 需要动态添加过滤器代码
-//        fastJsonConfig.setSerializeFilters(new FastJsonFilter());
+        fastJsonConfig.setSerializeFilters(new FastJsonFilter());
         fastJsonConfig.setSerializeConfig(FastJson.getSerializeConfig());
         fastConverter.setFastJsonConfig(fastJsonConfig);
         List<MediaType> fastMediaTypes = new ArrayList<>();

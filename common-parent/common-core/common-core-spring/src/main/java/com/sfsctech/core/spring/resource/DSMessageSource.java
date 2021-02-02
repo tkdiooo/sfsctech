@@ -1,7 +1,7 @@
 package com.sfsctech.core.spring.resource;
 
 import com.google.common.collect.Maps;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.support.AbstractMessageSource;
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author 张麒 2020-12-2.
  * @version Description:
  */
-@Log4j
+@Slf4j
 public class DSMessageSource extends AbstractMessageSource implements ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
