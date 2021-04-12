@@ -21,6 +21,7 @@
         <module>common-support-apollo</module>
         <module>common-support-dozer</module>
         <module>common-support-jwt</module>
+        <module>common-support-svn</module>
     </modules>
 
 </project>

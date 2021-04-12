@@ -56,6 +56,8 @@ public class SpPropertyies {
         private boolean verifyDestinationLifetime;
         private boolean verifyAssertionSignature;
         private boolean isRequestedAuthnContext;
+        private String oid;
+        private String next;
 
         public String getProtocolBinding() {
             return protocolBinding;
@@ -173,6 +175,22 @@ public class SpPropertyies {
 
         public void setRequestedAuthnContext(boolean requestedAuthnContext) {
             isRequestedAuthnContext = requestedAuthnContext;
+        }
+
+        public String getOid() {
+            return oid;
+        }
+
+        public void setOid(String oid) {
+            this.oid = oid;
+        }
+
+        public String getNext() {
+            return next;
+        }
+
+        public void setNext(String next) {
+            this.next = next;
         }
     }
 }

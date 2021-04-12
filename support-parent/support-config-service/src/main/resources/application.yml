@@ -1,12 +1,12 @@
 server:
-  port: 10000
+  port: 8080
 spring:
   application:
     name: config-server
 website:
   support:
     custom-config:
-      svn-uri: svn://172.16.225.98/repositories/service-config/
+      svn-uri: svn://172.16.223.24/repositories/service-config/
       svn-username: admin
-      svn-password: 4880300
+      svn-password: 4824300
       svn-path: D:\logback

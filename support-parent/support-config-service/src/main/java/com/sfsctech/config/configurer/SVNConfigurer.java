@@ -1,6 +1,7 @@
 package com.sfsctech.config.configurer;
 
 import com.sfsctech.config.util.SvnHelper;
+import com.sfsctech.config.util.SvnUtil;
 import com.sfsctech.core.web.properties.WebsiteProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,11 @@ public class SVNConfigurer {
     @Bean
     public SvnHelper svnHelper() throws Exception {
         Map<String, String> map = properties.getSupport().getCustomConfig();
-        return new SvnHelper(map.get("svn-uri"), map.get("svn-username"), "svn-password");
+        return new SvnHelper(map.get("svn-uri"), map.get("svn-username"), map.get("svn-password"));
+    }
+
+    @Bean
+    public SvnUtil svnUtil(SvnHelper svnHelper) {
+        return new SvnUtil(svnHelper, properties.getSupport().getCustomConfig().get("svn-path"));
     }
 }

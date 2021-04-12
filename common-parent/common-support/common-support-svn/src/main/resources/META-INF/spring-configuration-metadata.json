@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "svn",
+      "type": "com.sfsctech.support.svn.properties.SVNPropertyies",
+      "sourceType": "com.sfsctech.support.svn.properties.SVNPropertyies"
+    }
+  ],
+  "properties": [
+    {
+      "name": "svn.url",
+      "type": "java.lang.String",
+      "description": "SVN服务地址",
+      "sourceType": "com.sfsctech.support.svn.properties.SVNPropertyies"
+    },
+    {
+      "name": "svn.account",
+      "type": "java.lang.String",
+      "description": "SVN账号",
+      "sourceType": "com.sfsctech.support.svn.properties.SVNPropertyies"
+    },
+    {
+      "name": "svn.password",
+      "type": "java.lang.String",
+      "description": "SVN密码",
+      "sourceType": "com.sfsctech.support.svn.properties.SVNPropertyies"
+    },
+    {
+      "name": "svn.local-path",
+      "type": "java.lang.String",
+      "description": "SVN本地缓存路径",
+      "sourceType": "com.sfsctech.support.svn.properties.SVNPropertyies"
+    }
+  ],
+  "hints": [
+  ]
+}

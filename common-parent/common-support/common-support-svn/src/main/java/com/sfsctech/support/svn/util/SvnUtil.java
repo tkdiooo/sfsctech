@@ -1,4 +1,4 @@
-package com.sfsctech.config.util;
+package com.sfsctech.support.svn.util;
 
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.support.common.util.FileUtil;

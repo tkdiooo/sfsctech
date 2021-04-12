@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * Class RestConfig
  *
- * @author 张麒 2018-5-11.
+ * @author 张麒 2018-5-11.Properties
  * @version Description:
  */
 @Configuration

@@ -96,6 +96,18 @@
       "type": "java.lang.Boolean",
       "description": "是否开启SP认证要求",
       "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.oid",
+      "type": "java.lang.String",
+      "description": "大客户标识",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
+    },
+    {
+      "name": "saml.sp.config.next",
+      "type": "java.lang.String",
+      "description": "大客户类型",
+      "sourceType": "com.sfsctech.support.saml.properties.SpPropertyies$SpConfig"
     }
   ],
   "hints": [
