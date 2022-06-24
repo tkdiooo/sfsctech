@@ -1,0 +1,9 @@
+debug: true
+spring:
+  application:
+    name: demo-test-data
+  profiles:
+    active: local
+#logging:
+#  path: log
+#  config: classpath:logback-custom.xml

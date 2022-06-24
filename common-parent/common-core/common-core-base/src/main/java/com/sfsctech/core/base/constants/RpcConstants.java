@@ -1,9 +1,7 @@
 package com.sfsctech.core.base.constants;
 
 
-import com.alibaba.fastjson.annotation.JSONType;
 import com.sfsctech.core.base.enums.BaseEnum;
-import com.sfsctech.core.base.json.RpcStatusEnumDeserializer;
 import com.sfsctech.core.base.enums.StatusEnum;
 
 import javax.servlet.http.HttpServletResponse;

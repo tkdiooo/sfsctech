@@ -132,8 +132,18 @@ public class SFTPConnectionFactory {
         if (bool) {
             ChannelSftp sftp = getConnection();
             try {
+                FileInputStream is;
                 for (File file : files) {
-                    sftp.put(new FileInputStream(file), sftpDirectory + file.getName());
+                    is = new FileInputStream(file);
+                    try {
+                        sftp.put(is, sftpDirectory + file.getName());
+                    } finally {
+                        try {
+                            is.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     logger.info("上传sftp文件成功，ftp路径:{},文件名称:{}", sftpDirectory, file.getName());
                 }
             } catch (Exception e) {
@@ -181,10 +191,12 @@ public class SFTPConnectionFactory {
         boolean bool = createDirectory(sftpDirectory);
         int i = 0;
         ChannelSftp sftp = getConnection();
+        FileInputStream is = null;
         try {
             while (bool) {
                 try {
-                    sftp.put(new FileInputStream(file), sftpDirectory + file.getName());
+                    is = new FileInputStream(file);
+                    sftp.put(is, sftpDirectory + file.getName());
                     logger.info("{}sftp文件成功，ftp路径:{},文件名称:{}", (i > 0 ? "重试上传" : "上传"), sftpDirectory, file.getName());
                     bool = false;
                 } catch (Exception e) {
@@ -202,6 +214,13 @@ public class SFTPConnectionFactory {
                 }
             }
         } finally {
+            if (null != is) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             close();
         }
         return true;
@@ -280,7 +299,8 @@ public class SFTPConnectionFactory {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("ftp文件下载错误，异常信息:{}", ThrowableUtil.getRootMessage(e), e);
+            return false;
         } finally {
             close();
             if (null != fileOutputStream) {
@@ -342,6 +362,7 @@ public class SFTPConnectionFactory {
             }
         } catch (SftpException e) {
             logger.error("ftp文件删除错误，异常信息:{}", ThrowableUtil.getRootMessage(e), e);
+            return false;
         }
         return true;
     }

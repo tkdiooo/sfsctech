@@ -19,6 +19,11 @@
             <artifactId>common-support-util</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-logger</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!--poi-->
         <dependency>
             <groupId>org.apache.poi</groupId>

@@ -5,25 +5,13 @@ import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.demo.test.redis.service.RedisService;
 import com.sfsctech.support.common.util.UUIDUtil;
-import oracle.jdbc.pool.OracleDataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
-
-import oracle.jdbc.OracleConnection;
-
-import java.sql.DatabaseMetaData;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RedisServiceImpl implements RedisService {
+
     @Override
     public void test() {
         System.out.println("test");

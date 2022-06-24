@@ -5,12 +5,13 @@ import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
 import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.poi.style.CellStyles;
 import com.sfsctech.support.tools.excel.poi.style.DefaultCellStyle;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.OutputStream;
+import java.util.*;
 
 /**
  * Class ExcelModel
@@ -20,6 +21,8 @@ import java.util.Map;
  */
 public class ExcelModel extends BaseDto {
 
+    private static final long serialVersionUID = -8402771858776062521L;
+
     private ExcelConstants.ExcelVersion version = ExcelConstants.ExcelVersion.xlsx;
 
     private ExcelConstants.Verify verify = ExcelConstants.Verify.Strong;
@@ -28,16 +31,18 @@ public class ExcelModel extends BaseDto {
 
     private InputStream inputStream;
 
+    private OutputStream outputStream;
+
     /**
-     * Sheet原型
+     * Sheet对象
      * String sheet名称
      */
-    private Map<String, SheetModel<?>> sheets = new LinkedHashMap<>();
+    private Map<String, SheetModel> sheets = new LinkedHashMap<>();
 
     /**
      * 数据原型
      */
-    private final List<Class<?>> prototype;
+    private List<Class<?>> prototype;
 
     /**
      * 数据原型和ExcelSheet注解映射（Class：数据原型）
@@ -46,19 +51,25 @@ public class ExcelModel extends BaseDto {
 
     private CellStyles style = new DefaultCellStyle();
 
-    public ExcelModel(String filePath, List<Class<?>> prototype) {
+    public ExcelModel(String filePath) {
         this.filePath = filePath;
-        this.prototype = prototype;
+        this.prototype = null;
+    }
+
+    public ExcelModel(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
+
+    public ExcelModel(OutputStream outputStream) {
+        this.outputStream = outputStream;
     }
 
     public ExcelModel(InputStream inputStream, List<Class<?>> prototype) {
-        this.inputStream = inputStream;
         this.prototype = prototype;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> SheetModel<T> getSheetModel(Class<T> cls) {
-        return (SheetModel<T>) sheets.get(prototypeSheet.get(cls).name());
+    public SheetModel getSheetModel(Class<?> cls) {
+        return sheets.get(prototypeSheet.get(cls).name());
     }
 
     public ExcelConstants.ExcelVersion getVersion() {
@@ -78,6 +89,10 @@ public class ExcelModel extends BaseDto {
         return inputStream;
     }
 
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
+
     public List<Class<?>> getPrototype() {
         return prototype;
     }
@@ -94,7 +109,7 @@ public class ExcelModel extends BaseDto {
         this.style = style;
     }
 
-    public Map<String, SheetModel<?>> getSheets() {
+    public Map<String, SheetModel> getSheets() {
         return sheets;
     }
 
@@ -105,4 +120,9 @@ public class ExcelModel extends BaseDto {
     public void setVerify(ExcelConstants.Verify verify) {
         this.verify = verify;
     }
+
+    public void setSheets(Map<String, SheetModel> sheets) {
+        this.sheets = sheets;
+    }
+
 }

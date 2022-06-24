@@ -6,10 +6,14 @@ import com.sfsctech.support.common.security.des3.Des3;
 import com.sfsctech.support.common.security.des3.Des3Manager;
 import com.sfsctech.support.common.security.md5.Md5;
 import com.sfsctech.support.common.util.Cn2SpellUtil;
+import com.sfsctech.support.common.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Class EncrypterTool
@@ -112,22 +116,23 @@ public class EncrypterTool {
             return null;
         }
     }
+
     public static int reverse(int x) {
         long result = 0;
-        while (x != 0){
+        while (x != 0) {
             result = result * 10 + x % 10;
             x = x / 10;
         }
-        if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE){
+        if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
             return 0;
         }
-        return (int)result;
+        return (int) result;
     }
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(EncrypterTool.reverse(123456789));
-//        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "待加密的字符串@#@#SSS23s2433!*(");
-//        System.out.println(data);
+//        System.out.println(EncrypterTool.reverse(123456789));
+        String data = EncrypterTool.encrypt(Security.Des3ECBHex, "transwarp");
+        System.out.println(data);
 //        new Thread(() -> {
 //            while (true) {
 //                System.out.println(1);
@@ -187,16 +192,20 @@ public class EncrypterTool {
 //            e.printStackTrace();
 //        }
 //        System.out.println(encrypt(Security.Aes, "temporary").substring(0, 16));
-//        String[] params = {"李海", "朱湘林", "朱贤斌", "刘苏", "高枫", "汪杰","邹舒翔"};
+//        String[] params = {"外滩业务中心", "南京路业务中心", "徐家汇业务中心", "虹桥业务中心", "人民广场业务中心", "新天地业务中心", "陆家嘴业务中心"
+//                , "日本事业部", "长三角区域公司", "薪酬福利事业部", "招聘及灵活用工事业部", "业务外包事业部", "国企业务部"
+//                , "外服跑团", "工会跑团"};
 //        StringBuilder sb = new StringBuilder();
 //        for (String param : params) {
 //            String name = Cn2SpellUtil.converterToSpell(param);
 //            sb.append(name + ",");
 //            System.out.println(name);
-//            System.out.println(encrypt(Security.Aes, name).substring(0, 16));
+////            System.out.println(encrypt(Security.Aes, name).substring(0, 16));
 //        }
 //        System.out.println(sb);
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
 //        System.out.println(UUIDUtil.base58Uuid());
+
+
     }
 }

@@ -17,6 +17,7 @@
         <module>demo-test-jenkins</module>
         <module>demo-test-kafka</module>
         <module>demo-test-GeoLite2</module>
+        <module>demo-test-data</module>
     </modules>
     <packaging>pom</packaging>
 

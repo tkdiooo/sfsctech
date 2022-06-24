@@ -61,13 +61,13 @@ public class ExcelImportHelper extends ExcelHelper {
      *
      * @param sheet Sheet
      */
-    private <T> SheetModel<T> readSheet(Sheet sheet, int titleLine, Class<T> cls) {
+    private <T> SheetModel readSheet(Sheet sheet, int titleLine, Class<T> cls) {
         AssertUtil.notNull(sheet, "sheet 对象为空");
         logger.info("Sheet[{}]标题行号:{}", sheet.getSheetName(), titleLine);
         // 获取数据原型的标题信息（key : sheet标题名称、value : 数据原型属性名称）
         Map<Field, String> dataTitle = getHeader(cls);
         // 创建sheet对象
-        SheetModel<T> sheetModel = new SheetModel<>(sheet.getSheetName());
+        SheetModel sheetModel = SheetModel.builder().sheetName(sheet.getSheetName()).build();
         // 当前sheet标题行号
         sheetModel.setTitleLine(titleLine);
         // excel的sheet标题（key : sheet标题名称、value : 标题的列号）
@@ -88,15 +88,15 @@ public class ExcelImportHelper extends ExcelHelper {
             dataTitle.forEach((key, value) -> excelTitle.put(value, count[0]++));
         }
         // sheet数据集合
-        Map<Integer, T> rows = sheetModel.getRowData();
+        Map<Integer, Map<String, Object>> rows = sheetModel.getRows();
         // 读取数据
-        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-            if (sheetModel.getTitleLine() != i && null != sheet.getRow(i)) {
-                JSONObject jo = readRow(sheet.getRow(i), dataTitle, excelTitle);
-                rows.put(i, jo.toJavaObject(cls));
-                logger.info(jo.toString());
-            }
-        }
+//        for (int i = 0; i <= sheet.getLastRowNum(); i++) {
+//            if (sheetModel.getTitleLine() != i && null != sheet.getRow(i)) {
+//                JSONObject jo = readRow(sheet.getRow(i), dataTitle, excelTitle);
+//                rows.put(i, jo.toJavaObject(cls));
+//                logger.info(jo.toString());
+//            }
+//        }
         return sheetModel;
     }
 

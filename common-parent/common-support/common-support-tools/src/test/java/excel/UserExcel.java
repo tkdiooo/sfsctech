@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ExcelSheet(name = "Sheet1")
+@ExcelSheet(name = "Sheet1", titleLine = 0)
 public class UserExcel {
 
     @ExcelHeader("员工工号")

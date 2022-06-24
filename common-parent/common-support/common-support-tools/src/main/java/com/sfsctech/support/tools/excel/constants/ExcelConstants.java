@@ -26,7 +26,6 @@ public class ExcelConstants {
         NumericCellNL,
         BooleanCell,
         BooleanCellNL,
-
     }
 
     public enum ExcelFormat {

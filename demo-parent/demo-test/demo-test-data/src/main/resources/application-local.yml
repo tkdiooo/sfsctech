@@ -1,0 +1,23 @@
+spring:
+  hikari-datasource:
+    master:
+      auto-commit: true
+      connection-test-query: SELECT 1 FROM DUAL
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/tfs_exam?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      maximum-pool-size: 60
+      minimum-idle: 10
+      pool-name: DatebookHikariCP
+      username: root
+      password: 123456
+      # 加入上海网站测试库Oracle数据源
+    slave:
+      oracle-wz:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://172.16.229.204:3306/tfs_exam?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        type: com.zaxxer.hikari.HikariDataSource
+        maximum-pool-size: 60
+        minimum-idle: 10
+        pool-name: DatebookHikariCP
+        username: root
+        password: mysql

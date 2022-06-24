@@ -1,9 +1,6 @@
 package com.sfsctech.core.spring.initialize;
 
 import com.sfsctech.core.base.constants.LabelConstants;
-import com.sfsctech.core.base.constants.WebsiteConstants;
-import com.sfsctech.core.base.filter.FilterHandler;
-import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

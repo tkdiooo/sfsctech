@@ -6,10 +6,13 @@ import com.sfsctech.support.common.util.DateUtil;
 import com.sfsctech.support.common.util.*;
 import com.sfsctech.support.tools.excel.annotation.ExcelHeader;
 import com.sfsctech.support.tools.excel.annotation.ExcelSheet;
+import com.sfsctech.support.tools.excel.constants.ExcelConstants;
 import com.sfsctech.support.tools.excel.model.ExcelModel;
 import com.sfsctech.support.tools.excel.model.SheetModel;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,35 +133,35 @@ public abstract class ExcelHelper {
      * @return Workbook
      * @throws IOException
      */
-    public static Workbook createWorkbook(ExcelModel model) throws IOException {
-        if (StringUtil.isBlank(model.getFilePath()) && null == model.getInputStream()) {
-            throw new IllegalArgumentException("数据来源为空!");
-        }
-        if (StringUtil.isNotBlank(model.getFilePath())) {
-            File file = new File(model.getFilePath());
-            AssertUtil.isFile(file, "path文件对象不存在");
-            return WorkbookFactory.create(new FileInputStream(file));
-        } else {
+    protected Workbook createWorkbook(ExcelModel model) throws IOException {
+        if (null != model.getInputStream()) {
             return WorkbookFactory.create(model.getInputStream());
+        } else if (StringUtil.isNotBlank(model.getFilePath())) {
+            File file = new File(model.getFilePath());
+            if (file.isFile()) {
+                return WorkbookFactory.create(new FileInputStream(file));
+            }
         }
+        if (ExcelConstants.ExcelVersion.xls.equals(model.getVersion()))
+            return new HSSFWorkbook();
+        else
+            return new XSSFWorkbook();
     }
 
     /**
      * 通过Map&lt;String, Object&gt;设置Sheet的标题
      *
      * @param excelModel ExcelModel
-     * @param header     标题集合&lt;英文，中文&gt;
+     * @param header     标题集合&lt;Field，中文&gt;
      * @param sheetName  Excel Sheet name
      * @param rower      标题行标
      */
-    public static void setSheetHeader(ExcelModel excelModel, Map<String, Object> header, String sheetName, int rower) {
-//        AssertUtil.notNull(excelModel, "excelModel 对象为空");
-//        AssertUtil.notNull(header, "header 对象为空");
-//        AssertUtil.notNull(sheetName, "sheetName 对象为空");
-//        // 创建SheetModel
-//        SheetModel sheetModel = new SheetModel(rower, new HashMap<>());
-//        sheetModel.getRows().put(sheetModel.getHeaderIndex(), header);
-//        excelModel.getSheets().put(sheetName, sheetModel);
+    protected void setSheetHeader(ExcelModel excelModel, LinkedHashMap<Field, String> header, String sheetName, int rower) {
+        AssertUtil.notNull(excelModel, "excelModel 对象为空");
+        AssertUtil.notNull(header, "header 对象为空");
+        AssertUtil.notNull(sheetName, "sheetName 对象为空");
+        // 创建SheetModel
+        excelModel.getSheets().put(sheetName, SheetModel.builder().titleLine(rower).header(header).build());
     }
 
     /**
@@ -168,13 +171,13 @@ public abstract class ExcelHelper {
      * @param cls        映射Class，需要配置com.qi.common.excel.annotation.ExcelSheet
      * @param <T>        范型类
      */
-    public static <T> void setSheetHeader(ExcelModel excelModel, Class<T> cls) {
-//        AssertUtil.notNull(excelModel, "excelModel 对象为空");
-//        AssertUtil.notNull(cls, "Class<T> 对象为空");
-//        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
-//        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
-//        AssertUtil.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
-//        setSheetHeader(excelModel, getHeader(cls), excelSheet.name(), excelSheet.rower());
+    protected <T> void setSheetHeader(ExcelModel excelModel, Class<T> cls) {
+        AssertUtil.notNull(excelModel, "excelModel 对象为空");
+        AssertUtil.notNull(cls, "Class<T> 对象为空");
+        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
+        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
+        AssertUtil.isNotBlank(excelSheet.name(), "Class[" + cls.getSimpleName() + "]注解[ExcelSheet]中name参数为空");
+        setSheetHeader(excelModel, getHeader(cls), excelSheet.name(), excelSheet.titleLine());
     }
 
     /**
@@ -185,7 +188,7 @@ public abstract class ExcelHelper {
      * @param cls        映射Class，需要配置com.qi.common.excel.annotation.ExcelSheet
      * @param <T>        范型类
      */
-    public static <T> void setSheetRows(ExcelModel excelModel, List<T> dataRows, Class<T> cls) {
+    protected <T> void setSheetRows(ExcelModel excelModel, List<T> dataRows, Class<T> cls) {
         AssertUtil.notNull(excelModel, "excelModel 对象为空");
         ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
         AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
@@ -202,33 +205,33 @@ public abstract class ExcelHelper {
      * @param cls      映射Class，需要配置com.qi.common.excel.annotation.ExcelSheet
      * @param <T>      范型类
      */
-    public static <T> SheetModel getSheetModelByList(List<T> dataRows, Class<T> cls) {
-//        AssertUtil.notNull(cls, "Class<T> 对象为空");
-//        AssertUtil.notEmpty(dataRows, "dataRows 集合为空");
-//        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
-//        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
-//        SheetModel sheetModel = new SheetModel(excelSheet.rower(), new HashMap<>());
-//        Integer rower = 0;
-//        // 设置标题
-//        sheetModel.getRows().put(sheetModel.getHeaderIndex(), getHeader(cls));
-//        // 设置数据行
-//        for (T t : dataRows) {
-//            Map<String, Object> map = new HashMap<>();
-//            Field[] fields = cls.getDeclaredFields();
-//            for (Field field : fields) {
-//                ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
-//                if (null != excelHeader) {
-//                    map.put(field.getName(), BeanUtil.getPropertyValue(t, field.getName()));
-//                }
-//            }
-//            // 如果标题行标等于当前行标，当前行标+1
-//            if (sheetModel.getHeaderIndex().equals(rower)) {
-//                rower++;
-//            }
-//            sheetModel.getRows().put(rower++, map);
-//        }
-//        return sheetModel;
-        return null;
+    protected <T> SheetModel getSheetModelByList(List<T> dataRows, Class<T> cls) {
+        AssertUtil.notNull(cls, "Class<T> 对象为空");
+        AssertUtil.notEmpty(dataRows, "dataRows 集合为空");
+        ExcelSheet excelSheet = cls.getAnnotation(ExcelSheet.class);
+        AssertUtil.notNull(excelSheet, "Class[" + cls.getSimpleName() + "]没有配置注解[ExcelSheet]");
+        SheetModel sheetModel = new SheetModel();
+        sheetModel.setTitleLine(excelSheet.titleLine());
+        Integer rower = 0;
+        // 设置标题
+        sheetModel.setHeader(getHeader(cls));
+        // 设置数据行
+        for (T t : dataRows) {
+            Map<String, Object> map = new HashMap<>();
+            Field[] fields = cls.getDeclaredFields();
+            for (Field field : fields) {
+                ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
+                if (null != excelHeader) {
+                    map.put(field.getName(), BeanUtil.getPropertyValue(t, field.getName()));
+                }
+            }
+            // 如果标题行标等于当前行标，当前行标+1
+            if (sheetModel.getTitleLine().equals(rower)) {
+                rower++;
+            }
+            sheetModel.getRows().put(rower++, map);
+        }
+        return sheetModel;
     }
 
     /**
@@ -239,26 +242,26 @@ public abstract class ExcelHelper {
      * @param <T>        范型类
      * @return List&lt;T&gt;
      */
-//    @SuppressWarnings("unchecked")
-    public static <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
-//        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
-//        AssertUtil.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");
-//        AssertUtil.notNull(cls, "Class<T> 对象为空");
+    @SuppressWarnings("unchecked")
+    protected <T> List<T> getListBySheetModel(SheetModel sheetModel, Class<T> cls) {
+        AssertUtil.notNull(sheetModel, "sheetModel 对象为空");
+        AssertUtil.notEmpty(sheetModel.getRows(), "sheetModel内rows 集合为空");
+        AssertUtil.notNull(cls, "Class<T> 对象为空");
         List<T> list = new ArrayList<>();
-//        sheetModel.getRows().forEach((key, value) -> {
-//            // 不读取标题
-//            if (!key.equals(sheetModel.getHeaderIndex())) {
-//                try {
-//                    Object obj = cls.newInstance();
-//                    for (String field : value.keySet()) {
-//                        BeanUtil.setFieldValue(obj, field, value.get(field));
-//                    }
-//                    list.add((T) obj);
-//                } catch (Exception e) {
-//                    throw new RuntimeException(("Class [" + cls.getSimpleName() + "] newInstance error :" + ThrowableUtil.getRootMessage(e)));
-//                }
-//            }
-//        });
+        sheetModel.getRows().forEach((index, value) -> {
+            // 不读取标题
+            if (!index.equals(sheetModel.getTitleLine())) {
+                try {
+                    T obj = cls.newInstance();
+                    for (String field : value.keySet()) {
+                        BeanUtil.setFieldValue(obj, field, value.get(field));
+                    }
+                    list.add(obj);
+                } catch (Exception e) {
+                    throw new RuntimeException(("Class [" + cls.getSimpleName() + "] newInstance error :" + ThrowableUtil.getRootMessage(e)));
+                }
+            }
+        });
         return list;
     }
 
@@ -283,11 +286,11 @@ public abstract class ExcelHelper {
         return header;
     }
 
-    public Workbook getWorkbook() {
+    protected Workbook getWorkbook() {
         return this.workbook;
     }
 
-    public void setWorkbook(Workbook wb) {
+    protected void setWorkbook(Workbook wb) {
         this.workbook = wb;
     }
 
@@ -298,7 +301,7 @@ public abstract class ExcelHelper {
      * @param path     文件路径
      * @throws IOException
      */
-    public void writeExcel(Workbook workbook, String path) throws IOException {
+    public static void writeExcel(Workbook workbook, String path) throws IOException {
         AssertUtil.notNull(workbook, "workbook 对象为空");
         AssertUtil.isNotBlank(path, "path 对象为空");
         OutputStream os = null;
@@ -307,6 +310,32 @@ public abstract class ExcelHelper {
             workbook.write(os);
         } finally {
             FileUtil.close(os);
+            workbook.close();
+        }
+    }
+
+
+    /**
+     * 写入Excel文件
+     *
+     * @param model ExcelModel
+     * @throws IOException
+     */
+    protected void writeExcel(ExcelModel model) throws IOException {
+        AssertUtil.notNull(workbook, "workbook 对象为空");
+        AssertUtil.notNull(model, "model 对象为空");
+        OutputStream os = null;
+        if (StringUtil.isNotBlank(model.getFilePath())) {
+            os = new FileOutputStream(model.getFilePath());
+        } else if (null != model.getOutputStream()) {
+            os = model.getOutputStream();
+        }
+        AssertUtil.notNull(os, "输出流对象为空");
+        try {
+            workbook.write(os);
+        } finally {
+            FileUtil.close(os);
+            workbook.close();
         }
     }
 
@@ -316,7 +345,7 @@ public abstract class ExcelHelper {
      * @param cell  Cell
      * @param value Value
      */
-    public void setCellValue(Cell cell, Object value) {
+    protected void setCellValue(Cell cell, Object value) {
         AssertUtil.notNull(cell, "cell 对象为空");
         if (null == value) {
             cell.setCellValue("");
@@ -349,7 +378,7 @@ public abstract class ExcelHelper {
      * @param cell Cell
      * @return Cell Value
      */
-    public <T> T getCellValue(Field field, Cell cell) {
+    protected <T> T getCellValue(Field field, Cell cell) {
         AssertUtil.notNull(cell, "cell 对象为空");
         ExcelHeader excelHeader = field.getAnnotation(ExcelHeader.class);
         // 数字类型

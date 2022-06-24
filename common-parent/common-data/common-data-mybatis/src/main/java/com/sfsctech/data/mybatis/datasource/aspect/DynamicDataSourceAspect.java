@@ -5,6 +5,7 @@ import com.sfsctech.data.mybatis.datasource.support.DbTypeHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -16,6 +17,7 @@ import java.lang.reflect.Method;
  * @version Description:
  */
 @Aspect
+@Order(value = 1)
 @Component
 public class DynamicDataSourceAspect {
 
