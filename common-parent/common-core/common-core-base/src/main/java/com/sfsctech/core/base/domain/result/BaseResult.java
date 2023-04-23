@@ -22,10 +22,9 @@ public abstract class BaseResult extends BaseDto {
      * 响应状态
      */
     private boolean success = true;
-    /**
-     * 响应状态
-     */
-    protected StatusEnum<Integer, String, Boolean> status = RpcConstants.Status.Successful;
+
+    private Integer code;
+
     /**
      * 响应消息列表
      */
@@ -35,7 +34,11 @@ public abstract class BaseResult extends BaseDto {
     }
 
     public BaseResult(StatusEnum<Integer, String, Boolean> status, String... messages) {
-        this.status = status;
+        if (null != status) {
+            this.code = status.getCode();
+            this.success = status.getSuccessful();
+            addMessages(status.getDescription());
+        }
         if (ArrayUtils.isNotEmpty(messages)) {
             addMessages(messages);
         }
@@ -47,10 +50,6 @@ public abstract class BaseResult extends BaseDto {
 
     public void setSuccess(boolean hasErrors) {
         this.success = hasErrors;
-    }
-
-    public StatusEnum<Integer, String, Boolean> getStatus() {
-        return status;
     }
 
     public List<String> getMessages() {
@@ -90,5 +89,13 @@ public abstract class BaseResult extends BaseDto {
     @Override
     public String toString() {
         return (new ReflectionToStringBuilder(this, ToStringStyle.JSON_STYLE)).setExcludeFieldNames("statusCode").toString();
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

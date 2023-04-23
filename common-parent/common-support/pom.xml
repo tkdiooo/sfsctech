@@ -22,6 +22,7 @@
         <module>common-support-dozer</module>
         <module>common-support-jwt</module>
         <module>common-support-svn</module>
+        <module>common-support-mailsvc</module>
     </modules>
 
 </project>

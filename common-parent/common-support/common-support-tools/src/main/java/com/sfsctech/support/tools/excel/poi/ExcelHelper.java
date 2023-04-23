@@ -286,7 +286,7 @@ public abstract class ExcelHelper {
         return header;
     }
 
-    protected Workbook getWorkbook() {
+    public Workbook getWorkbook() {
         return this.workbook;
     }
 

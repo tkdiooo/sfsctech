@@ -79,7 +79,11 @@ public class ExcelExportHelper extends ExcelHelper {
             int columnCount = sheet.getRow(sheet.getLastRowNum()).getLastCellNum();
             for (int i = 0; i < columnCount; i++) {
                 sheet.autoSizeColumn(i, true);
-                sheet.setColumnWidth(i, sheet.getColumnWidth(i) * 17 / 10);
+                if (sheet.getColumnWidth(i) * 17 / 10 > 65280) {
+                    sheet.setColumnWidth(i, 400);
+                } else {
+                    sheet.setColumnWidth(i, sheet.getColumnWidth(i) * 17 / 10);
+                }
             }
         });
     }

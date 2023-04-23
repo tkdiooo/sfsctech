@@ -24,6 +24,12 @@ public class ActionResult<T> extends BaseResult {
 
     private T result;
 
+    /**
+     * 响应状态
+     */
+    protected StatusEnum<Integer, String, Boolean> status = RpcConstants.Status.Successful;
+
+
     private ActionResult() {
         super();
     }
@@ -37,15 +43,23 @@ public class ActionResult<T> extends BaseResult {
     private ActionResult(T result, StatusEnum<Integer, String, Boolean> status, String... messages) {
         super(status, messages);
         this.result = result;
+        this.status = status;
     }
 
     private ActionResult(StatusEnum<Integer, String, Boolean> status, String... messages) {
         super(status, messages);
     }
 
+    public StatusEnum<Integer, String, Boolean> getStatus() {
+        return status;
+    }
+
     @Override
     public void setStatus(StatusEnum<Integer, String, Boolean> status) {
-        super.status = status;
+        super.setCode(status.getCode());
+        super.setSuccess(status.getSuccessful());
+        addMessages(status.getDescription());
+        this.status = status;
     }
 
     public T getResult() {
@@ -117,14 +131,10 @@ public class ActionResult<T> extends BaseResult {
     }
 
     public static <T> ActionResult<T> forRpcResult(RpcResult<T> rpcResult) {
-        ActionResult<T> result = new ActionResult<>(rpcResult.getResult(), rpcResult.getStatus(), rpcResult.getMessages().toArray(new String[]{}));
+        ActionResult<T> result = new ActionResult<>(rpcResult.getResult(), rpcResult.getMessages().toArray(new String[]{}));
+        result.setCode(result.getCode());
         result.setSuccess(rpcResult.isSuccess());
         result.setAttachs(rpcResult.getAttachs());
         return result;
-    }
-
-    public static void main(String[] args) {
-        ActionResult result = new ActionResult<>();
-        System.out.println(result);
     }
 }

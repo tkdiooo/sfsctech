@@ -68,7 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(@Nullable @NotNull ViewControllerRegistry registry) {
-        registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("redirect:" + websiteProperties.getSupport().getWelcomeFile());
+//        registry.addViewConEnableWebMvctroller(LabelConstants.FORWARD_SLASH).setViewName("redirect:" + websiteProperties.getSupport().getWelcomeFile());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 

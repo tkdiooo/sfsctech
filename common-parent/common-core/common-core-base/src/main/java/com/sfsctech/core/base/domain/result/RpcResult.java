@@ -76,9 +76,10 @@ public class RpcResult<T> extends BaseResult {
     }
 
     @Override
-    @JSONField(deserializeUsing = RpcStatusEnumDeserializer.class)
     public void setStatus(StatusEnum<Integer, String, Boolean> status) {
-        super.status = status;
+        super.setCode(status.getCode());
+        super.setSuccess(status.getSuccessful());
+        addMessages(status.getDescription());
     }
 
     @Override

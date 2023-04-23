@@ -111,7 +111,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int insertForCache(T model) {
-        Integer key = this.insert(model);
+        int key = this.insert(model);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -124,7 +124,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int insertSelectiveForCache(T model) {
-        Integer key = this.insertSelective(model);
+        int key = this.insertSelective(model);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -144,7 +144,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int updateByExampleSelectiveForCache(T model, Example example) {
-        Integer key = this.updateByExampleSelective(model, example);
+        int key = this.updateByExampleSelective(model, example);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -159,7 +159,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int updateByExampleForCache(T model, Example example) {
-        Integer key = this.updateByExample(model, example);
+        int key = this.updateByExample(model, example);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -171,7 +171,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int updateByPrimaryKeySelectiveForCache(T model) {
-        Integer key = this.updateByPrimaryKeySelective(model);
+        int key = this.updateByPrimaryKeySelective(model);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -183,7 +183,7 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     @Override
     public int updateByPrimaryKeyForCache(T model) {
-        Integer key = this.updateByPrimaryKey(model);
+        int key = this.updateByPrimaryKey(model);
         putTimeOut(getNamespace(), String.valueOf(key), model, 60 * 10);
         return key;
     }
@@ -220,6 +220,10 @@ public abstract class MyBatisDaoSupportMonitor<T, PK extends Serializable, Examp
 
     protected <C> C queryForObject(String name, Object parameter, Class<C> cls) {
         return getSqlSession().selectOne(getStatName(name), parameter);
+    }
+
+    protected int insret(String name, Object parameter) {
+        return getSqlSession().insert(getStatName(name), parameter);
     }
 
     protected int update(String name, Object parameter) {

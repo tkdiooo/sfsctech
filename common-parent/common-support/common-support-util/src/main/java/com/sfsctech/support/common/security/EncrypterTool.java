@@ -1,5 +1,6 @@
 package com.sfsctech.support.common.security;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.support.common.security.aes.Aes;
 import com.sfsctech.support.common.security.base64.Base64;
 import com.sfsctech.support.common.security.des3.Des3;
@@ -10,10 +11,10 @@ import com.sfsctech.support.common.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Class EncrypterTool
@@ -205,7 +206,51 @@ public class EncrypterTool {
 //        System.out.println(sb);
 //        System.out.println(URLEncoder.encode("06646650B61CF129F01DCE637D319B27CE35BF37B9F66A5802B4DD3EF6A4BE5DAEF728032473784AC0E8658C92D4804B","UTF-8"));;
 //        System.out.println(UUIDUtil.base58Uuid());
-
-
+        String msg ="{\n" +
+                "    \"alert_state\": \"alerting\", \n" +
+                "    \"client\": \"Grafana\", \n" +
+                "    \"client_url\": \"http://localhost:3000/alerting/list\", \n" +
+                "    \"description\": \"[FIRING:1, RESOLVED:1]  (asdf)\", \n" +
+                "    \"details\": \"**Firing**\n" +
+                "\n" +
+                "Value: [ var='B0' metric='Value' labels={__name__=kube_pod_container_status_running, app=prometheus, chart=prometheus-9.1.0, component=kube-state-metrics, container=tomcat, heritage=Tiller, instance=10.42.2.84:8080, io_cattle_field_appId=prometheus, job=kubernetes-service-endpoints, kubernetes_name=prometheus-kube-state-metrics, kubernetes_namespace=monitor, kubernetes_node=pdkjrancher04, namespace=airflow, pod=tomcat-7b95b687bf-qxbts, release=prometheus} value=0 ]\n" +
+                "Labels:\n" +
+                " - alertname = pod_alert\n" +
+                " - key_a = asdf\n" +
+                " - key_b = rancher\n" +
+                "Annotations:\n" +
+                " - description = K8S pod {kube_pod_container_status_running} {Metric}is down\n" +
+                " - summary = K8S pod {labels.container} alert\n" +
+                "Source: http://localhost:3000/alerting/grafana/Z7gIdrRVk/view\n" +
+                "Silence: http://localhost:3000/alerting/silence/new?alertmanager=grafana&matcher=alertname%3Dpod_alert&matcher=key_a%3Dasdf&matcher=key_b%3Drancher\n" +
+                "\n" +
+                "\n" +
+                "**Resolved**\n" +
+                "\n" +
+                "Value: [no value]\n" +
+                "Labels:\n" +
+                " - alertname = Panel Title\n" +
+                " - key_a = asdf\n" +
+                "Annotations:\n" +
+                " - SendTarget = {\\\"eamil\\\":\\\"group1\\\",\\\"wechat\\\":\\\"group1\\\"}\n" +
+                " - Source = Prometheus\n" +
+                " - WarningContent = live网站心跳监控异常，服务无响应\n" +
+                " - WarningId = Panel-Title-1\n" +
+                " - WarningLevel = 警告\n" +
+                "Source: http://localhost:3000/alerting/grafana/OxOf5tg4k/view\n" +
+                "Silence: http://localhost:3000/alerting/silence/new?alertmanager=grafana&matcher=alertname%3DPanel+Title&matcher=key_a%3Dasdf\n" +
+                "Dashboard: http://localhost:3000/d/_MeudpR4k\n" +
+                "Panel: http://localhost:3000/d/_MeudpR4k?viewPanel=2\n" +
+                "\", \n" +
+                "    \"incident_key\": \"a1421bd7b320c416792bf8884f1dff336098260e4fa9c0b3a869217fa05e98f7\"\n" +
+                "}";
+        JSONObject jsonObject = JSONObject.parseObject(msg);
+        InputStream in = new ByteArrayInputStream(jsonObject.getString("").getBytes(StandardCharsets.UTF_8));
+        Properties properties = new Properties();
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -20,9 +20,9 @@
       "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
     },
     {
-      "name": "website.sso.jwt.refresh",
-      "type": "java.time.Duration",
-      "description": "jwt 刷新有效时间",
+      "name": "website.sso.jwt.subject",
+      "type": "java.lang.String",
+      "description": "jwt 主题",
       "sourceType": "com.sfsctech.support.jwt.properties.JwtProperties"
     }
   ],

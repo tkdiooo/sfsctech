@@ -62,7 +62,7 @@ public class SpringHttpInterfaceExecuteHandler implements ExecuteHandler {
         } else {
             RpcResult result = responseEntity.getBody();
             logger.info("result:[{}]", result);
-            if (!(null != result && null != result.getStatus() && result.getStatus().equals(RpcConstants.Status.Successful))) {
+            if (!(null != result && null != result.getCode() && result.getCode().equals(RpcConstants.Status.Successful.getCode()))) {
                 throw new GenericException(RpcExceptionTipsEnum.RpcError);
             }
             return result;

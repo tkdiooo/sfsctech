@@ -89,7 +89,7 @@ public class SSOConfig extends BaseWebSecurityConfig {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    public void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(new JwtAuthenticationProvider(ssoInterface));
     }
 

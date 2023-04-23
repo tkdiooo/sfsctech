@@ -1,5 +1,8 @@
 package com.sfsctech.demo.test.redis;
 
+import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
+import com.sfsctech.core.base.json.FastJson;
 import com.sfsctech.support.common.util.FileUtil;
 
 import javax.imageio.ImageIO;
@@ -58,11 +61,17 @@ public class Img {
 //        conversionImg("D:\\微信图片_20210510092901.png");
 
         // 读取文件内容以字符串返回
-        System.out.println(FileUtil.readFileToString("D:\\40916_史莎莎.txt"));
-        System.out.println("-----原始数据");
-        System.out.println(new String(FileUtil.readFileToString("D:\\40916_史莎莎.txt").getBytes(),"GBK"));
-        System.out.println("-----GBK");
-        System.out.println(FileUtil.getFileEncoding("D:\\40916_史莎莎.txt"));
-        System.out.println("-----原始数据编码");
+//        System.out.println(FileUtil.readFileToString("D:\\40916_史莎莎.txt"));
+//        System.out.println("-----原始数据");
+//        System.out.println(new String(FileUtil.readFileToString("D:\\40916_史莎莎.txt").getBytes(),"GBK"));
+//        System.out.println("-----GBK");
+//        System.out.println(FileUtil.getFileEncoding("D:\\40916_史莎莎.txt"));
+//        System.out.println("-----原始数据编码");
+
+        RpcResult<Img> result=   new RpcResult<>();
+        result.setResult(new Img());
+        result.addMessages("1212","ss");
+        result.setStatus(RpcConstants.Status.Failure);
+        System.out.println(FastJson.toJSONString(result));
     }
 }

@@ -21,9 +21,9 @@ public class JwtProperties {
     // 发行方
     private String issuer;
     // token有效时间
-    private Duration expiration = Duration.ofMillis(1800000);
-    // token刷新时间
-    private Duration refreshTime = Duration.ofMillis(3600000);
+    private Duration expiration = Duration.ofMinutes(30);
+    // 主题
+    private String subject;
 
     public String getSalt() {
         return salt;
@@ -49,11 +49,11 @@ public class JwtProperties {
         this.expiration = expiration;
     }
 
-    public Duration getRefreshTime() {
-        return refreshTime;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setRefreshTime(Duration refreshTime) {
-        this.refreshTime = refreshTime;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

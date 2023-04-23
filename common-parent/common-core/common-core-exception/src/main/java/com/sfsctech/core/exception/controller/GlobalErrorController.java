@@ -33,7 +33,7 @@ import java.util.Map;
  * @version Description:
  */
 @Controller
-@RequestMapping(value = "error")
+@RequestMapping("error")
 public class GlobalErrorController implements ErrorController {
 
     private ErrorAttributes errorAttributes;
@@ -60,7 +60,7 @@ public class GlobalErrorController implements ErrorController {
      * @param response HttpServletResponse
      * @return ModelAndView
      */
-    @RequestMapping(produces = "text/html", value = LabelConstants.NOT_FOUND)
+    @RequestMapping(produces = "text/html", value = "/" + CommonConstants.VIEW_404)
     public ModelAndView errorHtml404(HttpServletRequest request, HttpServletResponse response) {
         response.setStatus(getStatus(request).value());
         Map<String, Object> model = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML));
@@ -73,7 +73,7 @@ public class GlobalErrorController implements ErrorController {
      * @param request HttpServletRequest
      * @return ResponseEntity
      */
-    @RequestMapping(value = LabelConstants.NOT_FOUND)
+    @RequestMapping(value = "/" + CommonConstants.VIEW_404)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> error404(HttpServletRequest request) {
         Map<String, Object> body = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML));
@@ -88,7 +88,7 @@ public class GlobalErrorController implements ErrorController {
      * @param response HttpServletResponse
      * @return ModelAndView
      */
-    @RequestMapping(produces = "text/html", value = LabelConstants.INTERNAL_SERVER_ERROR)
+    @RequestMapping(produces = "text/html", value = "/" + CommonConstants.VIEW_500)
     public ModelAndView errorHtml500(HttpServletRequest request, HttpServletResponse response) {
         response.setStatus(getStatus(request).value());
         Map<String, Object> model = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML));
@@ -102,7 +102,7 @@ public class GlobalErrorController implements ErrorController {
      * @param request HttpServletRequest
      * @return ResponseEntity
      */
-    @RequestMapping(value = LabelConstants.INTERNAL_SERVER_ERROR)
+    @RequestMapping(value = "/" + CommonConstants.VIEW_500)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> error500(HttpServletRequest request) {
         Map<String, Object> body = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML));

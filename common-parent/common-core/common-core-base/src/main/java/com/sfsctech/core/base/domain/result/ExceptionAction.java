@@ -11,6 +11,8 @@ import com.sfsctech.core.base.ex.GenericException;
  */
 public class ExceptionAction extends BaseResult {
 
+    private static final long serialVersionUID = 2705843772807447979L;
+
     private GenericException exception;
 
     public ExceptionAction() {
@@ -40,6 +42,8 @@ public class ExceptionAction extends BaseResult {
 
     @Override
     public void setStatus(StatusEnum<Integer, String, Boolean> status) {
-        super.status = status;
+        super.setCode(status.getCode());
+        super.setSuccess(status.getSuccessful());
+        addMessages(status.getDescription());
     }
 }

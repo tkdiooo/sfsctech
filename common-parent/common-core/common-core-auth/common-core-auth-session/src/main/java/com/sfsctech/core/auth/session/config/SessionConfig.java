@@ -1,6 +1,8 @@
 package com.sfsctech.core.auth.session.config;
 
+import com.sfsctech.core.auth.base.config.AuthSecurityConfig;
 import com.sfsctech.core.auth.session.handler.LoginSuccessHandler;
+import com.sfsctech.core.auth.session.handler.LogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,5 +36,10 @@ public class SessionConfig extends AuthSecurityConfig {
     @Override
     protected AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new LoginSuccessHandler(config.getWelcomeFile());
+    }
+
+    @Override
+    protected org.springframework.security.web.authentication.logout.LogoutSuccessHandler logoutSuccessHandler() {
+        return new LogoutSuccessHandler(config.getWelcomeFile());
     }
 }

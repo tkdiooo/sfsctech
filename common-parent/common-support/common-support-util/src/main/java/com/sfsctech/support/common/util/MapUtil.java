@@ -77,6 +77,12 @@ public class MapUtil extends MapUtils {
         return map;
     }
 
+    public static Map<String, String> toMap(Properties properties) {
+        Map<String, String> map = new HashMap<>();
+        properties.forEach((key, value) -> map.put(String.valueOf(key), String.valueOf(value)));
+        return map;
+    }
+
     /**
      * Map根据Key排序
      *

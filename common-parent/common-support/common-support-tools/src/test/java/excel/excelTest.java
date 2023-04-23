@@ -8,6 +8,7 @@ import com.sfsctech.support.tools.excel.poi.exports.ExcelExportHelper;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -116,7 +117,22 @@ public class excelTest {
     }
 
     public static void main(String[] args) throws Exception {
-        excelTest test = new excelTest();
-        test.exportExcel();
+//        excelTest test = new excelTest();
+//        test.exportExcel();
+        List<String> list = FileUtil.readLines(new File("F:\\WeChat\\WeChat Files\\wxid_o0grbb4qph6t22\\FileStorage\\File\\2022-12\\cmdb_system_202212141406.sql"), "UTF-8");
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i);
+            if (s.startsWith("\t ('")) {
+                s = s.replace("(", "")
+                        .replaceAll("'", "")
+                        .replace(")", "");
+                String[] array = s.split(",");
+                System.out.println("    \"[" + array[0].trim() + "]\":");
+                System.out.println("      name: \"" + array[1] + "\"");
+                System.out.println("      class-name: \"" + array[2] + "\"");
+                System.out.println("      dev-group: " + array[3]);
+            }
+        }
     }
 }

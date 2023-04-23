@@ -94,7 +94,7 @@ public class JwtFactory {
         // 加密鉴权jwt的缓存key，以作为token使用
         String refresh_Jwt_Token = EncrypterTool.encrypt(EncrypterTool.Security.AesCBC, refreshJwt);
         logger.info("用户:{}，生成Refresh_Jwt_Token(加密):{}", proxy.getClaims().getSubject(), refresh_Jwt_Token);
-        return JwtResult.builder().accessToken(JwtConstants.TOKEN_PREFIX + access_Jwt_Token).refreshJwt(refresh_Jwt_Token).build();
+        return JwtResult.builder().build();
     }
 
     /**
@@ -142,7 +142,6 @@ public class JwtFactory {
                 .claims(Jwts.claims().setSubject(username))
                 .issuer(settings.getIssuer())
                 .expiration(settings.getExpiration())
-                .refreshTime(settings.getRefreshTime())
                 .key(getKey())
                 .build();
     }

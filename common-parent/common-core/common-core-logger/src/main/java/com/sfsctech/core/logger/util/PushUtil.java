@@ -42,7 +42,12 @@ public class PushUtil extends Thread {
     public void run() {
         while (isRun) {
             try {
-                kafka.push(logQueue.take());
+                while (logQueue.size() > 0) {
+                    String take = logQueue.take();
+                    logger.info(take);
+                    System.out.println(take);
+                    kafka.push(take);
+                }
             } catch (Exception e) {
                 logger.error("kafka connect error >> " + e.getMessage());
             }

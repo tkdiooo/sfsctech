@@ -15,6 +15,7 @@ import com.sfsctech.support.common.util.ThrowableUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartProperties;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -48,7 +49,7 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(BizException.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
+    public ModelAndView bizExceptionHandler(HttpServletRequest request, HttpServletResponse response, BizException e) {
         String message = getMessage(e, request);
         logger.info("业务异常:[{}]", message);
         BaseResult result = new ExceptionAction(Status.Failure, message);
@@ -59,18 +60,18 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
      * RPC异常
      */
     @ExceptionHandler(RpcException.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
-        String message = ResourceUtil.getMessage(e.getTips().getCode(), request.getLocale());
+    public ModelAndView rpcExceptionHandler(HttpServletRequest request, HttpServletResponse response, RpcException e) {
+        String message = e.getMessage();
         logger.info("RPC异常:[{}]", message, e);
         BaseResult result = new ExceptionAction(Status.RpcError, message);
-        return handleError(request, response, result, e.getViewName(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
      * 校验异常
      */
     @ExceptionHandler(VerifyException.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) {
+    public ModelAndView verifyExceptionHandler(HttpServletRequest request, HttpServletResponse response, VerifyException e) {
         String message = getMessage(e, request);
         logger.warn("校验异常:[{}]", message);
         BaseResult result = new ExceptionAction(Status.RequestEntityTooLarge, message);
@@ -100,10 +101,20 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
     }
 
     /**
+     *Request请求方法异常
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ModelAndView requestMethodHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        logger.error("系统异常:[{}]", ThrowableUtil.getStackTraceMessage(e), e);
+        BaseResult result = new ExceptionAction(Status.ServerError, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService.getCode(), request.getLocale()));
+        return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * 系统异常
      */
     @ExceptionHandler(Exception.class)
-    public ModelAndView runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
+    public ModelAndView exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception e) {
         logger.error("系统异常:[{}]", ThrowableUtil.getStackTraceMessage(e), e);
         BaseResult result = new ExceptionAction(Status.ServerError, ResourceUtil.getMessage(I18NConstants.Tips.ExceptionService.getCode(), request.getLocale()));
         return handleError(request, response, result, CommonConstants.VIEW_500, HttpStatus.INTERNAL_SERVER_ERROR);

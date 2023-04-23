@@ -18,7 +18,7 @@ public class JwtResult extends BaseDto {
 
     private static final long serialVersionUID = 5431564573523091513L;
 
-    private String accessToken;
+    private String jwt;
     private String refreshJwt;
 
 }
